@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC7171D748C8800F21F4F /* AppDelegate.swift */; };
+		240AC71A1D748C8800F21F4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC7191D748C8800F21F4F /* ViewController.swift */; };
+		240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC71B1D748C8800F21F4F /* Main.storyboard */; };
+		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
+		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
+		240AC7251D748C8800F21F4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */; };
+		240AC7301D748C8900F21F4F /* teferiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC72F1D748C8900F21F4F /* teferiTests.swift */; };
+		240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC73A1D748C8900F21F4F /* teferiUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		240AC72C1D748C8900F21F4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 240AC70C1D748C8800F21F4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 240AC7131D748C8800F21F4F;
+			remoteInfo = teferi;
+		};
+		240AC7371D748C8900F21F4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 240AC70C1D748C8800F21F4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 240AC7131D748C8800F21F4F;
+			remoteInfo = teferi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		240AC7141D748C8800F21F4F /* teferi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teferi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		240AC7171D748C8800F21F4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		240AC7191D748C8800F21F4F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		240AC71C1D748C8800F21F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
+		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		240AC7241D748C8800F21F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		240AC72B1D748C8900F21F4F /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		240AC72F1D748C8900F21F4F /* teferiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teferiTests.swift; sourceTree = "<group>"; };
+		240AC7311D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		240AC7361D748C8900F21F4F /* teferiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		240AC73A1D748C8900F21F4F /* teferiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teferiUITests.swift; sourceTree = "<group>"; };
+		240AC73C1D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		240AC7111D748C8800F21F4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		240AC7281D748C8900F21F4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		240AC7331D748C8900F21F4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		240AC70B1D748C8800F21F4F = {
+			isa = PBXGroup;
+			children = (
+				240AC7161D748C8800F21F4F /* teferi */,
+				240AC72E1D748C8900F21F4F /* teferiTests */,
+				240AC7391D748C8900F21F4F /* teferiUITests */,
+				240AC7151D748C8800F21F4F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		240AC7151D748C8800F21F4F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				240AC7141D748C8800F21F4F /* teferi.app */,
+				240AC72B1D748C8900F21F4F /* teferiTests.xctest */,
+				240AC7361D748C8900F21F4F /* teferiUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		240AC7161D748C8800F21F4F /* teferi */ = {
+			isa = PBXGroup;
+			children = (
+				240AC7171D748C8800F21F4F /* AppDelegate.swift */,
+				240AC7191D748C8800F21F4F /* ViewController.swift */,
+				240AC71B1D748C8800F21F4F /* Main.storyboard */,
+				240AC7211D748C8800F21F4F /* Assets.xcassets */,
+				240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */,
+				240AC7261D748C8800F21F4F /* Info.plist */,
+				240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */,
+			);
+			path = teferi;
+			sourceTree = "<group>";
+		};
+		240AC72E1D748C8900F21F4F /* teferiTests */ = {
+			isa = PBXGroup;
+			children = (
+				240AC72F1D748C8900F21F4F /* teferiTests.swift */,
+				240AC7311D748C8900F21F4F /* Info.plist */,
+			);
+			path = teferiTests;
+			sourceTree = "<group>";
+		};
+		240AC7391D748C8900F21F4F /* teferiUITests */ = {
+			isa = PBXGroup;
+			children = (
+				240AC73A1D748C8900F21F4F /* teferiUITests.swift */,
+				240AC73C1D748C8900F21F4F /* Info.plist */,
+			);
+			path = teferiUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		240AC7131D748C8800F21F4F /* teferi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 240AC73F1D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferi" */;
+			buildPhases = (
+				240AC7101D748C8800F21F4F /* Sources */,
+				240AC7111D748C8800F21F4F /* Frameworks */,
+				240AC7121D748C8800F21F4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = teferi;
+			productName = teferi;
+			productReference = 240AC7141D748C8800F21F4F /* teferi.app */;
+			productType = "com.apple.product-type.application";
+		};
+		240AC72A1D748C8900F21F4F /* teferiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 240AC7421D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiTests" */;
+			buildPhases = (
+				240AC7271D748C8900F21F4F /* Sources */,
+				240AC7281D748C8900F21F4F /* Frameworks */,
+				240AC7291D748C8900F21F4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				240AC72D1D748C8900F21F4F /* PBXTargetDependency */,
+			);
+			name = teferiTests;
+			productName = teferiTests;
+			productReference = 240AC72B1D748C8900F21F4F /* teferiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		240AC7351D748C8900F21F4F /* teferiUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 240AC7451D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiUITests" */;
+			buildPhases = (
+				240AC7321D748C8900F21F4F /* Sources */,
+				240AC7331D748C8900F21F4F /* Frameworks */,
+				240AC7341D748C8900F21F4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				240AC7381D748C8900F21F4F /* PBXTargetDependency */,
+			);
+			name = teferiUITests;
+			productName = teferiUITests;
+			productReference = 240AC7361D748C8900F21F4F /* teferiUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		240AC70C1D748C8800F21F4F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Toggl;
+				TargetAttributes = {
+					240AC7131D748C8800F21F4F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = W74MGFU2BJ;
+					};
+					240AC72A1D748C8900F21F4F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = W74MGFU2BJ;
+						TestTargetID = 240AC7131D748C8800F21F4F;
+					};
+					240AC7351D748C8900F21F4F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = W74MGFU2BJ;
+						TestTargetID = 240AC7131D748C8800F21F4F;
+					};
+				};
+			};
+			buildConfigurationList = 240AC70F1D748C8800F21F4F /* Build configuration list for PBXProject "teferi" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 240AC70B1D748C8800F21F4F;
+			productRefGroup = 240AC7151D748C8800F21F4F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				240AC7131D748C8800F21F4F /* teferi */,
+				240AC72A1D748C8900F21F4F /* teferiTests */,
+				240AC7351D748C8900F21F4F /* teferiUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		240AC7121D748C8800F21F4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				240AC7251D748C8800F21F4F /* LaunchScreen.storyboard in Resources */,
+				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
+				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		240AC7291D748C8900F21F4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		240AC7341D748C8900F21F4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		240AC7101D748C8800F21F4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				240AC71A1D748C8800F21F4F /* ViewController.swift in Sources */,
+				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
+				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		240AC7271D748C8900F21F4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				240AC7301D748C8900F21F4F /* teferiTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		240AC7321D748C8900F21F4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		240AC72D1D748C8900F21F4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 240AC7131D748C8800F21F4F /* teferi */;
+			targetProxy = 240AC72C1D748C8900F21F4F /* PBXContainerItemProxy */;
+		};
+		240AC7381D748C8900F21F4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 240AC7131D748C8800F21F4F /* teferi */;
+			targetProxy = 240AC7371D748C8900F21F4F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		240AC71B1D748C8800F21F4F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				240AC71C1D748C8800F21F4F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				240AC7241D748C8800F21F4F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		240AC73D1D748C8900F21F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		240AC73E1D748C8900F21F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		240AC7401D748C8900F21F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = teferi/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		240AC7411D748C8900F21F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = teferi/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		240AC7431D748C8900F21F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = teferiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
+			};
+			name = Debug;
+		};
+		240AC7441D748C8900F21F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = teferiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
+			};
+			name = Release;
+		};
+		240AC7461D748C8900F21F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = teferiUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = teferi;
+			};
+			name = Debug;
+		};
+		240AC7471D748C8900F21F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = teferiUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = teferi;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		240AC70F1D748C8800F21F4F /* Build configuration list for PBXProject "teferi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				240AC73D1D748C8900F21F4F /* Debug */,
+				240AC73E1D748C8900F21F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		240AC73F1D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				240AC7401D748C8900F21F4F /* Debug */,
+				240AC7411D748C8900F21F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		240AC7421D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				240AC7431D748C8900F21F4F /* Debug */,
+				240AC7441D748C8900F21F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		240AC7451D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				240AC7461D748C8900F21F4F /* Debug */,
+				240AC7471D748C8900F21F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */,
+			);
+			currentVersion = 240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */;
+			path = teferi.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 240AC70C1D748C8800F21F4F /* Project object */;
+}
