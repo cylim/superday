@@ -1,16 +1,10 @@
 import UIKit
+import CoreLocation
 
-class MainViewController : BaseViewController
+class MainViewController : BaseViewController<MainViewModel>
 {
-    override func viewDidLoad()
+    override func createViewModel() -> MainViewModel?
     {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        return MainViewModel(locationService: DefaultLocationService())
     }
 }

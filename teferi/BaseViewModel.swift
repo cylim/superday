@@ -1,6 +1,6 @@
 import Foundation
 
-class BaseViewModel
+protocol BaseViewModel
 {
-    
+    func start()
 }
