@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC7171D748C8800F21F4F /* AppDelegate.swift */; };
-		240AC71A1D748C8800F21F4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC7191D748C8800F21F4F /* ViewController.swift */; };
 		240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC71B1D748C8800F21F4F /* Main.storyboard */; };
 		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
 		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
 		240AC7251D748C8800F21F4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */; };
 		240AC7301D748C8900F21F4F /* teferiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC72F1D748C8900F21F4F /* teferiTests.swift */; };
 		240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC73A1D748C8900F21F4F /* teferiUITests.swift */; };
+		24D99F621D74B8D000E68163 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F5E1D74B8D000E68163 /* BaseViewController.swift */; };
+		24D99F631D74B8D000E68163 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */; };
+		24D99F641D74B8D000E68163 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F601D74B8D000E68163 /* MainViewController.swift */; };
+		24D99F651D74B8D000E68163 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F611D74B8D000E68163 /* MainViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,6 @@
 /* Begin PBXFileReference section */
 		240AC7141D748C8800F21F4F /* teferi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teferi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		240AC7171D748C8800F21F4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		240AC7191D748C8800F21F4F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		240AC71C1D748C8800F21F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,10 @@
 		240AC7361D748C8900F21F4F /* teferiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		240AC73A1D748C8900F21F4F /* teferiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teferiUITests.swift; sourceTree = "<group>"; };
 		240AC73C1D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24D99F5E1D74B8D000E68163 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		24D99F601D74B8D000E68163 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		24D99F611D74B8D000E68163 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,11 +105,12 @@
 		240AC7161D748C8800F21F4F /* teferi */ = {
 			isa = PBXGroup;
 			children = (
+				24D99F691D74B93C00E68163 /* Views */,
+				24D99F681D74B92C00E68163 /* Storyboards */,
+				24D99F671D74B91900E68163 /* ViewControllers */,
+				24D99F661D74B8D700E68163 /* ViewModels */,
 				240AC7171D748C8800F21F4F /* AppDelegate.swift */,
-				240AC7191D748C8800F21F4F /* ViewController.swift */,
-				240AC71B1D748C8800F21F4F /* Main.storyboard */,
 				240AC7211D748C8800F21F4F /* Assets.xcassets */,
-				240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */,
 				240AC7261D748C8800F21F4F /* Info.plist */,
 				240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */,
 			);
@@ -126,6 +133,40 @@
 				240AC73C1D748C8900F21F4F /* Info.plist */,
 			);
 			path = teferiUITests;
+			sourceTree = "<group>";
+		};
+		24D99F661D74B8D700E68163 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */,
+				24D99F611D74B8D000E68163 /* MainViewModel.swift */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		24D99F671D74B91900E68163 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				24D99F5E1D74B8D000E68163 /* BaseViewController.swift */,
+				24D99F601D74B8D000E68163 /* MainViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		24D99F681D74B92C00E68163 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				240AC71B1D748C8800F21F4F /* Main.storyboard */,
+				240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		24D99F691D74B93C00E68163 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,7 +303,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				240AC71A1D748C8800F21F4F /* ViewController.swift in Sources */,
+				24D99F651D74B8D000E68163 /* MainViewModel.swift in Sources */,
+				24D99F631D74B8D000E68163 /* BaseViewModel.swift in Sources */,
+				24D99F621D74B8D000E68163 /* BaseViewController.swift in Sources */,
+				24D99F641D74B8D000E68163 /* MainViewController.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 			);
@@ -489,6 +533,7 @@
 				240AC7411D748C8900F21F4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		240AC7421D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiTests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +542,7 @@
 				240AC7441D748C8900F21F4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		240AC7451D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiUITests" */ = {
 			isa = XCConfigurationList;
@@ -505,6 +551,7 @@
 				240AC7471D748C8900F21F4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

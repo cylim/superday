@@ -1,11 +1,3 @@
-//
-//  teferiTests.swift
-//  teferiTests
-//
-//  Created by Temp on 8/29/16.
-//  Copyright © 2016 Toggl. All rights reserved.
-//
-
 import XCTest
 @testable import teferi
 
