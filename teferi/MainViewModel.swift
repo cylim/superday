@@ -1,9 +1,10 @@
 import Foundation
+import RxSwift
 
 class MainViewModel : BaseViewModel
 {
-    let locationService : LocationService
-    var currentLocation : Location? = nil
+    private let locationService : LocationService
+    var currentLocation : Variable<Location> = Variable(Location(latitude: 0, longitude: 0))
     
     init(locationService : LocationService)
     {
@@ -17,6 +18,6 @@ class MainViewModel : BaseViewModel
     
     func onLocation(location: Location)
     {
-        
+        currentLocation.value = location
     }
 }

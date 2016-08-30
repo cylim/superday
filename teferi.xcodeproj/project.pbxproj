@@ -11,12 +11,15 @@
 		240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC71B1D748C8800F21F4F /* Main.storyboard */; };
 		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
 		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
-		240AC7251D748C8800F21F4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */; };
-		240AC7301D748C8900F21F4F /* teferiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC72F1D748C8900F21F4F /* teferiTests.swift */; };
+		240AC7301D748C8900F21F4F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC72F1D748C8900F21F4F /* MainViewModelTests.swift */; };
 		240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC73A1D748C8900F21F4F /* teferiUITests.swift */; };
+		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
+		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		24A25B5C1D759886009581F2 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A25B5B1D759886009581F2 /* MockLocationService.swift */; };
+		24A25B5D1D75A26E009581F2 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		24A25B5E1D75A272009581F2 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51A71D74D6E000042CDF /* LocationService.swift */; };
 		24BA51AB1D74D7A800042CDF /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51AA1D74D7A800042CDF /* Location.swift */; };
-		24D99F621D74B8D000E68163 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F5E1D74B8D000E68163 /* BaseViewController.swift */; };
 		24D99F631D74B8D000E68163 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */; };
 		24D99F641D74B8D000E68163 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F601D74B8D000E68163 /* MainViewController.swift */; };
 		24D99F651D74B8D000E68163 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F611D74B8D000E68163 /* MainViewModel.swift */; };
@@ -45,17 +48,18 @@
 		240AC71C1D748C8800F21F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		240AC7241D748C8800F21F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		240AC72B1D748C8900F21F4F /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		240AC72F1D748C8900F21F4F /* teferiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teferiTests.swift; sourceTree = "<group>"; };
+		240AC72F1D748C8900F21F4F /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		240AC7311D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		240AC7361D748C8900F21F4F /* teferiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		240AC73A1D748C8900F21F4F /* teferiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teferiUITests.swift; sourceTree = "<group>"; };
 		240AC73C1D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		24A25B5B1D759886009581F2 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
 		24BA51A71D74D6E000042CDF /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		24BA51AA1D74D7A800042CDF /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		24D99F5E1D74B8D000E68163 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		24D99F601D74B8D000E68163 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		24D99F611D74B8D000E68163 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */,
+				241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24A25B5D1D75A26E009581F2 /* RxBlocking.framework in Frameworks */,
+				24A25B5E1D75A272009581F2 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +97,8 @@
 		240AC70B1D748C8800F21F4F = {
 			isa = PBXGroup;
 			children = (
+				241977B61D7579DC00E89500 /* RxBlocking.framework */,
+				241977B41D7579CE00E89500 /* RxSwift.framework */,
 				240AC7161D748C8800F21F4F /* teferi */,
 				240AC72E1D748C8900F21F4F /* teferiTests */,
 				240AC7391D748C8900F21F4F /* teferiUITests */,
@@ -126,7 +136,8 @@
 		240AC72E1D748C8900F21F4F /* teferiTests */ = {
 			isa = PBXGroup;
 			children = (
-				240AC72F1D748C8900F21F4F /* teferiTests.swift */,
+				24A25B5A1D759878009581F2 /* Mocks */,
+				24A25B591D759865009581F2 /* ViewModelTests */,
 				240AC7311D748C8900F21F4F /* Info.plist */,
 			);
 			path = teferiTests;
@@ -139,6 +150,22 @@
 				240AC73C1D748C8900F21F4F /* Info.plist */,
 			);
 			path = teferiUITests;
+			sourceTree = "<group>";
+		};
+		24A25B591D759865009581F2 /* ViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				240AC72F1D748C8900F21F4F /* MainViewModelTests.swift */,
+			);
+			name = ViewModelTests;
+			sourceTree = "<group>";
+		};
+		24A25B5A1D759878009581F2 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				24A25B5B1D759886009581F2 /* MockLocationService.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		24BA51A51D74D69C00042CDF /* Services */ = {
@@ -169,7 +196,6 @@
 		24D99F671D74B91900E68163 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				24D99F5E1D74B8D000E68163 /* BaseViewController.swift */,
 				24D99F601D74B8D000E68163 /* MainViewController.swift */,
 			);
 			name = ViewControllers;
@@ -179,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				240AC71B1D748C8800F21F4F /* Main.storyboard */,
-				240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -201,6 +226,7 @@
 				240AC7101D748C8800F21F4F /* Sources */,
 				240AC7111D748C8800F21F4F /* Frameworks */,
 				240AC7121D748C8800F21F4F /* Resources */,
+				241977B81D757A5800E89500 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -298,7 +324,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				240AC7251D748C8800F21F4F /* LaunchScreen.storyboard in Resources */,
 				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
 			);
@@ -320,6 +345,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		241977B81D757A5800E89500 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		240AC7101D748C8800F21F4F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -328,7 +371,6 @@
 				24D99F651D74B8D000E68163 /* MainViewModel.swift in Sources */,
 				24D99F631D74B8D000E68163 /* BaseViewModel.swift in Sources */,
 				24BA51AB1D74D7A800042CDF /* Location.swift in Sources */,
-				24D99F621D74B8D000E68163 /* BaseViewController.swift in Sources */,
 				24D99F641D74B8D000E68163 /* MainViewController.swift in Sources */,
 				24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
@@ -340,7 +382,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				240AC7301D748C8900F21F4F /* teferiTests.swift in Sources */,
+				24A25B5C1D759886009581F2 /* MockLocationService.swift in Sources */,
+				240AC7301D748C8900F21F4F /* MainViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,14 +417,6 @@
 				240AC71C1D748C8800F21F4F /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		240AC7231D748C8800F21F4F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				240AC7241D748C8800F21F4F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -474,6 +509,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = teferi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
@@ -485,6 +524,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = teferi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
@@ -496,6 +539,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = teferiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
@@ -508,6 +555,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = teferiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
