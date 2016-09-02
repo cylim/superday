@@ -15,12 +15,13 @@
 		240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC73A1D748C8900F21F4F /* teferiUITests.swift */; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		2492E29D1D78DC5B00F28AB4 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */; };
+		2492E29F1D78EF1C00F28AB4 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */; };
 		24A25B5C1D759886009581F2 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A25B5B1D759886009581F2 /* MockLocationService.swift */; };
 		24A25B5D1D75A26E009581F2 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
 		24A25B5E1D75A272009581F2 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51A71D74D6E000042CDF /* LocationService.swift */; };
 		24BA51AB1D74D7A800042CDF /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51AA1D74D7A800042CDF /* Location.swift */; };
-		24D99F631D74B8D000E68163 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */; };
 		24D99F641D74B8D000E68163 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F601D74B8D000E68163 /* MainViewController.swift */; };
 		24D99F651D74B8D000E68163 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D99F611D74B8D000E68163 /* MainViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -57,10 +58,11 @@
 		240AC73C1D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		24A25B5B1D759886009581F2 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
 		24BA51A71D74D6E000042CDF /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		24BA51AA1D74D7A800042CDF /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		24D99F601D74B8D000E68163 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		24D99F611D74B8D000E68163 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,8 +189,8 @@
 		24D99F661D74B8D700E68163 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				24D99F5F1D74B8D000E68163 /* BaseViewModel.swift */,
 				24D99F611D74B8D000E68163 /* MainViewModel.swift */,
+				2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				24D99F601D74B8D000E68163 /* MainViewController.swift */,
+				2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -369,9 +372,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				24D99F651D74B8D000E68163 /* MainViewModel.swift in Sources */,
-				24D99F631D74B8D000E68163 /* BaseViewModel.swift in Sources */,
+				2492E29D1D78DC5B00F28AB4 /* TimelineViewController.swift in Sources */,
 				24BA51AB1D74D7A800042CDF /* Location.swift in Sources */,
 				24D99F641D74B8D000E68163 /* MainViewController.swift in Sources */,
+				2492E29F1D78EF1C00F28AB4 /* TimelineViewModel.swift in Sources */,
 				24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
