@@ -23,6 +23,7 @@ class MainViewController : UIPageViewController
         super.viewDidLoad()
         viewModel.start()
         
+        view.backgroundColor = UIColor.whiteColor()
         dataSource = self
         
         setViewControllers(
@@ -55,7 +56,7 @@ class MainViewController : UIPageViewController
     
     private func onNextLocation(location: Location)
     {
-        //label.text = "Latitude: \(location.latitude) | Longitude: \(location.longitude)"
+        
     }
 }
 
