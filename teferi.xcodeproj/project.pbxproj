@@ -15,6 +15,8 @@
 		240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC73A1D748C8900F21F4F /* teferiUITests.swift */; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		2492E2971D78BCE000F28AB4 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
+		2492E2981D78BCE000F28AB4 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2961D78BCE000F28AB4 /* Quick.framework */; };
 		2492E29D1D78DC5B00F28AB4 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */; };
 		2492E29F1D78EF1C00F28AB4 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */; };
 		24A25B5C1D759886009581F2 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A25B5B1D759886009581F2 /* MockLocationService.swift */; };
@@ -58,6 +60,8 @@
 		240AC73C1D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		2492E2951D78BCE000F28AB4 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		2492E2961D78BCE000F28AB4 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		24A25B5B1D759886009581F2 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 			files = (
 				24A25B5D1D75A26E009581F2 /* RxBlocking.framework in Frameworks */,
 				24A25B5E1D75A272009581F2 /* RxSwift.framework in Frameworks */,
+				2492E2971D78BCE000F28AB4 /* Nimble.framework in Frameworks */,
+				2492E2981D78BCE000F28AB4 /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +105,8 @@
 		240AC70B1D748C8800F21F4F = {
 			isa = PBXGroup;
 			children = (
+				2492E2951D78BCE000F28AB4 /* Nimble.framework */,
+				2492E2961D78BCE000F28AB4 /* Quick.framework */,
 				241977B61D7579DC00E89500 /* RxBlocking.framework */,
 				241977B41D7579CE00E89500 /* RxSwift.framework */,
 				240AC7161D748C8800F21F4F /* teferi */,
