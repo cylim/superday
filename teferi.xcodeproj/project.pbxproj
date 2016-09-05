@@ -14,6 +14,7 @@
 		2414EB931D7D9564001EFB6D /* Nimble.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2414EB951D7D9564001EFB6D /* RxBlocking.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2414EB961D7D9564001EFB6D /* RxSwift.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2414EB9B1D7DEFE1001EFB6D /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414EB9A1D7DEFE1001EFB6D /* DateExtensions.swift */; };
 		2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
@@ -71,6 +72,7 @@
 		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2414EB9A1D7DEFE1001EFB6D /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHeaderView.swift; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			children = (
 				24CD8A471D7A13800017C53E /* ColorExtensions.swift */,
 				24CD8A491D7A1BE20017C53E /* StringExtensions.swift */,
+				2414EB9A1D7DEFE1001EFB6D /* DateExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				2492E29F1D78EF1C00F28AB4 /* TimelineViewModel.swift in Sources */,
 				24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */,
 				24CD8A4A1D7A1BE20017C53E /* StringExtensions.swift in Sources */,
+				2414EB9B1D7DEFE1001EFB6D /* DateExtensions.swift in Sources */,
 				2492E29B1D78D61700F28AB4 /* CategorySelectorView.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */,

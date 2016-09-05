@@ -6,9 +6,6 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource
 {
     // MARK: Fields
     private let viewModel : MainViewModel = MainViewModel(locationService: DefaultLocationService())
-    private let label = UILabel()
-    private let timelineViewControllers : [UIViewController] = [ TimelineViewController(), TimelineViewController(), TimelineViewController() ]
-    
     private var disposeBag : DisposeBag? = DisposeBag()
     
     // MARK: Initializers
@@ -36,10 +33,10 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource
         dataSource = self
         
         setViewControllers(
-                [timelineViewControllers.first!],
-                direction: .Forward,
-                animated: false,
-                completion: nil)
+            [TimelineViewController(date: NSDate())],
+            direction: .Forward,
+            animated: false,
+            completion: nil)
     }
     
     override func viewWillAppear(animated: Bool)
@@ -68,16 +65,26 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource
     // MARK: UIPageViewControllerDataSource implementation
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
-        let previousIndex = timelineViewControllers.indexOf(viewController)!
-        let currentIndex = (previousIndex + 1) % (timelineViewControllers.count - 1)
-        return timelineViewControllers[currentIndex]
+        let timelineController = viewController as! TimelineViewController
+        let currentDate = timelineController.date
+        let nextDate = currentDate.addDays(-1)
+        return TimelineViewController(date: nextDate)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
-        let nextIndex = timelineViewControllers.indexOf(viewController)!
-        let currentIndex = nextIndex - 1 < 0 ? (timelineViewControllers.count - 1) : nextIndex - 1
-        return timelineViewControllers[currentIndex]
+        let timelineController = viewController as! TimelineViewController
+        let currentDate = timelineController.date
+        let canScrollOn = !currentDate.equalsDate(NSDate())
+        if canScrollOn
+        {
+            let nextDate = currentDate.addDays(1)
+            return TimelineViewController(date: nextDate)
+        }
+        else
+        {
+            return nil
+        }
     }
 }
 
