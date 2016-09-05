@@ -26,13 +26,14 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "240AC72A1D748C8900F21F4F"
+               BlueprintIdentifier = "24A21B651D7C3E0800CEB4F3"
                BuildableName = "teferiTests.xctest"
                BlueprintName = "teferiTests"
                ReferencedContainer = "container:teferi.xcodeproj">

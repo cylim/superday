@@ -11,22 +11,24 @@
 		240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC71B1D748C8800F21F4F /* Main.storyboard */; };
 		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
 		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
-		240AC7301D748C8900F21F4F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC72F1D748C8900F21F4F /* MainViewModelTests.swift */; };
-		240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC73A1D748C8900F21F4F /* teferiUITests.swift */; };
+		2414EB931D7D9564001EFB6D /* Nimble.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2414EB951D7D9564001EFB6D /* RxBlocking.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2414EB961D7D9564001EFB6D /* RxSwift.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		2475A2671D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */; };
+		24874DE01D7C3F770099DC1F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
+		24874DE21D7C3F9B0099DC1F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
+		24874DE31D7C3F9E0099DC1F /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		24874DE61D7C3FD60099DC1F /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24874DE51D7C3FD60099DC1F /* MockLocationService.swift */; };
 		2492E28E1D773BDB00F28AB4 /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E28D1D773BDB00F28AB4 /* TimeSlot.swift */; };
 		2492E2901D773C1000F28AB4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E28F1D773C1000F28AB4 /* Category.swift */; };
-		2492E2971D78BCE000F28AB4 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
-		2492E2981D78BCE000F28AB4 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2961D78BCE000F28AB4 /* Quick.framework */; };
 		2492E29B1D78D61700F28AB4 /* CategorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29A1D78D61700F28AB4 /* CategorySelectorView.swift */; };
 		2492E29D1D78DC5B00F28AB4 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */; };
 		2492E29F1D78EF1C00F28AB4 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */; };
 		2492E2A11D79F79A00F28AB4 /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2492E2A01D79F79A00F28AB4 /* TimelineCell.xib */; };
 		2492E2A31D79F7C300F28AB4 /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E2A21D79F7C300F28AB4 /* TimelineCell.swift */; };
-		24A25B5C1D759886009581F2 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A25B5B1D759886009581F2 /* MockLocationService.swift */; };
-		24A25B5D1D75A26E009581F2 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
-		24A25B5E1D75A272009581F2 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
+		24A21B691D7C3E0800CEB4F3 /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A21B681D7C3E0800CEB4F3 /* MainViewModelTests.swift */; };
 		24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51A71D74D6E000042CDF /* LocationService.swift */; };
 		24BA51AB1D74D7A800042CDF /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51AA1D74D7A800042CDF /* Location.swift */; };
 		24CD8A481D7A13800017C53E /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CD8A471D7A13800017C53E /* UIColorExtensions.swift */; };
@@ -36,14 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		240AC72C1D748C8900F21F4F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 240AC70C1D748C8800F21F4F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 240AC7131D748C8800F21F4F;
-			remoteInfo = teferi;
-		};
-		240AC7371D748C8900F21F4F /* PBXContainerItemProxy */ = {
+		24A21B6B1D7C3E0800CEB4F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 240AC70C1D748C8800F21F4F /* Project object */;
 			proxyType = 1;
@@ -52,6 +47,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2414EB921D7D955C001EFB6D /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				2414EB931D7D9564001EFB6D /* Nimble.framework in Copy Files */,
+				2414EB951D7D9564001EFB6D /* RxBlocking.framework in Copy Files */,
+				2414EB961D7D9564001EFB6D /* RxSwift.framework in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		240AC7141D748C8800F21F4F /* teferi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teferi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		240AC7171D748C8800F21F4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,24 +70,21 @@
 		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		240AC72B1D748C8900F21F4F /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		240AC72F1D748C8900F21F4F /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
-		240AC7311D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		240AC7361D748C8900F21F4F /* teferiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		240AC73A1D748C8900F21F4F /* teferiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teferiUITests.swift; sourceTree = "<group>"; };
-		240AC73C1D748C8900F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModelMainViewModelTests.swift; sourceTree = "<group>"; };
+		24874DE51D7C3FD60099DC1F /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
 		2492E28D1D773BDB00F28AB4 /* TimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSlot.swift; sourceTree = "<group>"; };
 		2492E28F1D773C1000F28AB4 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		2492E2951D78BCE000F28AB4 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		2492E2961D78BCE000F28AB4 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		2492E29A1D78D61700F28AB4 /* CategorySelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorView.swift; sourceTree = "<group>"; };
 		2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		2492E2A01D79F79A00F28AB4 /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineCell.xib; sourceTree = "<group>"; };
 		2492E2A21D79F7C300F28AB4 /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineCell.swift; sourceTree = "<group>"; };
-		24A25B5B1D759886009581F2 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
+		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24A21B681D7C3E0800CEB4F3 /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
+		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BA51A71D74D6E000042CDF /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		24BA51AA1D74D7A800042CDF /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		24CD8A471D7A13800017C53E /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
@@ -95,21 +103,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		240AC7281D748C8900F21F4F /* Frameworks */ = {
+		24A21B631D7C3E0800CEB4F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24A25B5D1D75A26E009581F2 /* RxBlocking.framework in Frameworks */,
-				24A25B5E1D75A272009581F2 /* RxSwift.framework in Frameworks */,
-				2492E2971D78BCE000F28AB4 /* Nimble.framework in Frameworks */,
-				2492E2981D78BCE000F28AB4 /* Quick.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		240AC7331D748C8900F21F4F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				24874DE01D7C3F770099DC1F /* Nimble.framework in Frameworks */,
+				24874DE31D7C3F9E0099DC1F /* RxBlocking.framework in Frameworks */,
+				24874DE21D7C3F9B0099DC1F /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,12 +120,10 @@
 			isa = PBXGroup;
 			children = (
 				2492E2951D78BCE000F28AB4 /* Nimble.framework */,
-				2492E2961D78BCE000F28AB4 /* Quick.framework */,
 				241977B61D7579DC00E89500 /* RxBlocking.framework */,
 				241977B41D7579CE00E89500 /* RxSwift.framework */,
 				240AC7161D748C8800F21F4F /* teferi */,
-				240AC72E1D748C8900F21F4F /* teferiTests */,
-				240AC7391D748C8900F21F4F /* teferiUITests */,
+				24A21B671D7C3E0800CEB4F3 /* teferiTests */,
 				240AC7151D748C8800F21F4F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,8 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				240AC7141D748C8800F21F4F /* teferi.app */,
-				240AC72B1D748C8900F21F4F /* teferiTests.xctest */,
-				240AC7361D748C8900F21F4F /* teferiUITests.xctest */,
+				24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,39 +155,31 @@
 			path = teferi;
 			sourceTree = "<group>";
 		};
-		240AC72E1D748C8900F21F4F /* teferiTests */ = {
+		2414EB981D7DC8D1001EFB6D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				24A25B5A1D759878009581F2 /* Mocks */,
-				24A25B591D759865009581F2 /* ViewModelTests */,
-				240AC7311D748C8900F21F4F /* Info.plist */,
+				24A21B681D7C3E0800CEB4F3 /* MainViewModelTests.swift */,
+				2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */,
 			);
-			path = teferiTests;
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
-		240AC7391D748C8900F21F4F /* teferiUITests */ = {
+		24874DE41D7C3FC40099DC1F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				240AC73A1D748C8900F21F4F /* teferiUITests.swift */,
-				240AC73C1D748C8900F21F4F /* Info.plist */,
-			);
-			path = teferiUITests;
-			sourceTree = "<group>";
-		};
-		24A25B591D759865009581F2 /* ViewModelTests */ = {
-			isa = PBXGroup;
-			children = (
-				240AC72F1D748C8900F21F4F /* MainViewModelTests.swift */,
-			);
-			name = ViewModelTests;
-			sourceTree = "<group>";
-		};
-		24A25B5A1D759878009581F2 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				24A25B5B1D759886009581F2 /* MockLocationService.swift */,
+				24874DE51D7C3FD60099DC1F /* MockLocationService.swift */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		24A21B671D7C3E0800CEB4F3 /* teferiTests */ = {
+			isa = PBXGroup;
+			children = (
+				2414EB981D7DC8D1001EFB6D /* ViewModels */,
+				24874DE41D7C3FC40099DC1F /* Mocks */,
+				24A21B6A1D7C3E0800CEB4F3 /* Info.plist */,
+			);
+			path = teferiTests;
 			sourceTree = "<group>";
 		};
 		24BA51A51D74D69C00042CDF /* Services */ = {
@@ -277,41 +266,25 @@
 			productReference = 240AC7141D748C8800F21F4F /* teferi.app */;
 			productType = "com.apple.product-type.application";
 		};
-		240AC72A1D748C8900F21F4F /* teferiTests */ = {
+		24A21B651D7C3E0800CEB4F3 /* teferiTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 240AC7421D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiTests" */;
+			buildConfigurationList = 24A21B6D1D7C3E0800CEB4F3 /* Build configuration list for PBXNativeTarget "teferiTests" */;
 			buildPhases = (
-				240AC7271D748C8900F21F4F /* Sources */,
-				240AC7281D748C8900F21F4F /* Frameworks */,
-				240AC7291D748C8900F21F4F /* Resources */,
+				24A21B621D7C3E0800CEB4F3 /* Sources */,
+				2414EB971D7D95D6001EFB6D /* ShellScript */,
+				2414EB921D7D955C001EFB6D /* Copy Files */,
+				24A21B631D7C3E0800CEB4F3 /* Frameworks */,
+				24A21B641D7C3E0800CEB4F3 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				240AC72D1D748C8900F21F4F /* PBXTargetDependency */,
+				24A21B6C1D7C3E0800CEB4F3 /* PBXTargetDependency */,
 			);
 			name = teferiTests;
 			productName = teferiTests;
-			productReference = 240AC72B1D748C8900F21F4F /* teferiTests.xctest */;
+			productReference = 24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		240AC7351D748C8900F21F4F /* teferiUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 240AC7451D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiUITests" */;
-			buildPhases = (
-				240AC7321D748C8900F21F4F /* Sources */,
-				240AC7331D748C8900F21F4F /* Frameworks */,
-				240AC7341D748C8900F21F4F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				240AC7381D748C8900F21F4F /* PBXTargetDependency */,
-			);
-			name = teferiUITests;
-			productName = teferiUITests;
-			productReference = 240AC7361D748C8900F21F4F /* teferiUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -326,13 +299,13 @@
 					240AC7131D748C8800F21F4F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = W74MGFU2BJ;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
-					240AC72A1D748C8900F21F4F = {
-						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = W74MGFU2BJ;
-						TestTargetID = 240AC7131D748C8800F21F4F;
-					};
-					240AC7351D748C8900F21F4F = {
+					24A21B651D7C3E0800CEB4F3 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = W74MGFU2BJ;
 						TestTargetID = 240AC7131D748C8800F21F4F;
@@ -353,8 +326,7 @@
 			projectRoot = "";
 			targets = (
 				240AC7131D748C8800F21F4F /* teferi */,
-				240AC72A1D748C8900F21F4F /* teferiTests */,
-				240AC7351D748C8900F21F4F /* teferiUITests */,
+				24A21B651D7C3E0800CEB4F3 /* teferiTests */,
 			);
 		};
 /* End PBXProject section */
@@ -370,14 +342,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		240AC7291D748C8900F21F4F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		240AC7341D748C8900F21F4F /* Resources */ = {
+		24A21B641D7C3E0800CEB4F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -387,6 +352,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2414EB971D7D95D6001EFB6D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		241977B81D757A5800E89500 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -426,35 +407,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		240AC7271D748C8900F21F4F /* Sources */ = {
+		24A21B621D7C3E0800CEB4F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24A25B5C1D759886009581F2 /* MockLocationService.swift in Sources */,
-				240AC7301D748C8900F21F4F /* MainViewModelTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		240AC7321D748C8900F21F4F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				240AC73B1D748C8900F21F4F /* teferiUITests.swift in Sources */,
+				24874DE61D7C3FD60099DC1F /* MockLocationService.swift in Sources */,
+				2475A2671D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift in Sources */,
+				24A21B691D7C3E0800CEB4F3 /* MainViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		240AC72D1D748C8900F21F4F /* PBXTargetDependency */ = {
+		24A21B6C1D7C3E0800CEB4F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 240AC7131D748C8800F21F4F /* teferi */;
-			targetProxy = 240AC72C1D748C8900F21F4F /* PBXContainerItemProxy */;
-		};
-		240AC7381D748C8900F21F4F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 240AC7131D748C8800F21F4F /* teferi */;
-			targetProxy = 240AC7371D748C8900F21F4F /* PBXContainerItemProxy */;
+			targetProxy = 24A21B6B1D7C3E0800CEB4F3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -557,6 +526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -572,6 +542,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -583,7 +554,7 @@
 			};
 			name = Release;
 		};
-		240AC7431D748C8900F21F4F /* Debug */ = {
+		24A21B6E1D7C3E0800CEB4F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -599,7 +570,7 @@
 			};
 			name = Debug;
 		};
-		240AC7441D748C8900F21F4F /* Release */ = {
+		24A21B6F1D7C3E0800CEB4F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -612,28 +583,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
-			};
-			name = Release;
-		};
-		240AC7461D748C8900F21F4F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = teferiUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = teferi;
-			};
-			name = Debug;
-		};
-		240AC7471D748C8900F21F4F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = teferiUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = teferi;
 			};
 			name = Release;
 		};
@@ -658,20 +607,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		240AC7421D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiTests" */ = {
+		24A21B6D1D7C3E0800CEB4F3 /* Build configuration list for PBXNativeTarget "teferiTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				240AC7431D748C8900F21F4F /* Debug */,
-				240AC7441D748C8900F21F4F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		240AC7451D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferiUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				240AC7461D748C8900F21F4F /* Debug */,
-				240AC7471D748C8900F21F4F /* Release */,
+				24A21B6E1D7C3E0800CEB4F3 /* Debug */,
+				24A21B6F1D7C3E0800CEB4F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

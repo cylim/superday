@@ -1,37 +1,38 @@
-import XCTest
+import Nimble
 import RxSwift
+import XCTest
 @testable import teferi
 
 class MainViewModelTests : XCTestCase
 {
+    private var disposable : Disposable? = nil
     private var mockLocationService = MockLocationService()
     private var viewModel = MainViewModel(locationService: MockLocationService())
     
     override func setUp()
     {
-        super.setUp()
         mockLocationService = MockLocationService()
         viewModel = MainViewModel(locationService: mockLocationService)
+        viewModel.start()
     }
     
-    func theStartMethodSubscribeToTheLocationService()
+    override func tearDown()
     {
-        viewModel.start()
-        XCTAssertTrue(mockLocationService.didSubscribe)
+        disposable?.dispose()
     }
     
-    func theLocationObservableIsUpdatedWhenTheServiceBroadcastsNewLocations()
+    func testStartMethodSubscribesToTheLocationService()
     {
-        viewModel.start()
-        
+        expect(self.mockLocationService.didSubscribe).to(equal(true))
+    }
+    
+    func testTheCurrentLocationGetsUpdatedWhenTheLocationServiceBroadcasts()
+    {
         var locationChanged = false
-        let disposable = viewModel.currentLocation.asObservable().subscribe { location in locationChanged = true }
+        disposable = self.viewModel.currentLocation.asObservable().subscribe { location in locationChanged = true }
         let location = Location(latitude: 5, longitude: 5)
-        
-        mockLocationService.setMockLocation(location)
-        
-        XCTAssertTrue(locationChanged)
-        
-        disposable.dispose()
+                        
+        self.mockLocationService.setMockLocation(location)
+        expect(locationChanged).to(equal(true))
     }
 }

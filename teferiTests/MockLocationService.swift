@@ -16,6 +16,4 @@ class MockLocationService : LocationService
     {
         onLocation!(location)
     }
-    
-    
 }
