@@ -2,13 +2,24 @@ import UIKit
 
 class TimelineCell : UITableViewCell
 {
+    private lazy var lineHeightConstraint : NSLayoutConstraint =
+    {
+        return NSLayoutConstraint(item: self.lineView!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 40)
+    }()
+    
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     
     @IBOutlet weak private var categoryIcon : UIImageView?
     @IBOutlet weak private var slotDescription : UILabel?
     @IBOutlet weak private var elapsedTime : UILabel?
-    @IBOutlet weak private var line : UIView?
+    @IBOutlet weak private var lineView : UIView?
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+        lineView?.addConstraint(lineHeightConstraint)
+    }
     
     func bindTimeSlot(timeSlot: TimeSlot)
     {
@@ -35,9 +46,14 @@ class TimelineCell : UITableViewCell
         let hours = (interval / 3600)
         
         let formatMask = hours > 0 ? hourMask : minuteMask
+        elapsedTime?.textColor = categoryColor
         elapsedTime?.text = String(format: formatMask, hours, minutes)
         
         //Cosmetic line®
-        line?.backgroundColor = categoryColor
+        let newHeight = CGFloat(40 * (hours + 1))
+        lineHeightConstraint.constant = newHeight
+        
+        lineView?.backgroundColor = categoryColor
+        lineView?.layoutIfNeeded()
     }
 }
