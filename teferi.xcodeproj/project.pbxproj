@@ -14,6 +14,7 @@
 		2414EB931D7D9564001EFB6D /* Nimble.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2414EB951D7D9564001EFB6D /* RxBlocking.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2414EB961D7D9564001EFB6D /* RxSwift.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
 		2475A2671D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */; };
@@ -70,6 +71,7 @@
 		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHeaderView.swift; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModelMainViewModelTests.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				2492E29A1D78D61700F28AB4 /* CategorySelectorView.swift */,
 				2492E2A01D79F79A00F28AB4 /* TimelineCell.xib */,
 				2492E2A21D79F7C300F28AB4 /* TimelineCell.swift */,
+				2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				24CD8A4A1D7A1BE20017C53E /* StringExtensions.swift in Sources */,
 				2492E29B1D78D61700F28AB4 /* CategorySelectorView.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
+				2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
