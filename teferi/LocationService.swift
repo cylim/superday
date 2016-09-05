@@ -20,7 +20,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
-        if (Double(UIDevice.currentDevice().systemVersion) >= 8.0)
+        if Double(UIDevice.currentDevice().systemVersion) >= 8.0
         {
             locationManager.requestWhenInUseAuthorization()
             locationManager.requestAlwaysAuthorization()
