@@ -26,7 +26,7 @@ class TimelineCell : UITableViewCell
         let categoryColor = timeSlot.category.color
         
         //Icon that indicates the slot's category
-        categoryIcon?.backgroundColor = categoryColor
+        categoryIcon?.image = UIImage(named: timeSlot.category.imageAssetName)
         
         //Description and starting time of the slot
         let formatter = NSDateFormatter()

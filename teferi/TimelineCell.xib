@@ -11,16 +11,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-EQ-YkE">
-                    <rect key="frame" x="34" y="0.0" width="37" height="37"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="37" id="bnM-yD-LUJ"/>
-                        <constraint firstAttribute="height" constant="37" id="l0h-Br-JFt"/>
-                    </constraints>
-                </imageView>
                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-R3-3Vm">
-                    <rect key="frame" x="84" y="35" width="6" height="120"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <rect key="frame" x="84" y="32" width="6" height="120"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="120" id="14b-ji-uew"/>
                         <constraint firstAttribute="height" constant="120" id="ClH-NM-vgv"/>
@@ -39,24 +32,31 @@
                     </variation>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dA-qd-byA">
-                    <rect key="frame" x="80" y="8" width="260" height="21"/>
+                    <rect key="frame" x="80" y="6" width="260" height="21"/>
                     <attributedString key="attributedText">
                         <fragment content="Commute 12:00 AM">
                             <attributes>
-                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <font key="NSFont" size="17" name="HelveticaNeue"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
-                    <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="12 h 59 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWX-Wq-cy4">
-                    <rect key="frame" x="103" y="84" width="116" height="21"/>
+                    <rect key="frame" x="103" y="82" width="116" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-EQ-YkE">
+                    <rect key="frame" x="34" y="0.0" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="32" id="bnM-yD-LUJ"/>
+                        <constraint firstAttribute="height" constant="32" id="l0h-Br-JFt"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -82,7 +82,7 @@
                 <constraint firstItem="4sb-EQ-YkE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="39" id="bxs-NP-r5z"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="fNn-m3-CiX"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="93" id="stt-O3-5bP"/>
-                <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="35" id="ug2-SG-0wv"/>
+                <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="32" id="ug2-SG-0wv"/>
                 <constraint firstItem="lWX-Wq-cy4" firstAttribute="centerY" secondItem="2Oj-R3-3Vm" secondAttribute="centerY" id="xsZ-82-AFZ"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="4sb-EQ-YkE" secondAttribute="bottom" constant="1" id="ytF-Xb-vLz"/>
             </constraints>
