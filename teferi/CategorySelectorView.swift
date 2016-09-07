@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
+import CircleMenu
 
-class CategorySelectorView : UIView
+class CategorySelectorView : CircleMenu
 {
-    
 }

@@ -2,9 +2,13 @@ import UIKit
 
 class TimelineCell : UITableViewCell
 {
+    // MARK: Static properties
+    static let minLineSize = 12
+    
+    // MARK: Fields
     private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 40)
+        return NSLayoutConstraint(item: self.lineView!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: CGFloat(TimelineCell.minLineSize))
     }()
     
     private let hourMask = "%02d h %02d min"
@@ -15,6 +19,7 @@ class TimelineCell : UITableViewCell
     @IBOutlet weak private var elapsedTime : UILabel?
     @IBOutlet weak private var lineView : UIView?
     
+    // MARK: Methods
     override func awakeFromNib()
     {
         super.awakeFromNib()
@@ -45,12 +50,11 @@ class TimelineCell : UITableViewCell
         let minutes = (interval / 60) % 60
         let hours = (interval / 3600)
         
-        let formatMask = hours > 0 ? hourMask : minuteMask
         elapsedTime?.textColor = categoryColor
-        elapsedTime?.text = String(format: formatMask, hours, minutes)
+        elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
         
         //Cosmetic line®
-        let newHeight = CGFloat(40 * (hours + 1))
+        let newHeight = CGFloat(TimelineCell.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         lineHeightConstraint.constant = newHeight
         
         lineView?.backgroundColor = categoryColor

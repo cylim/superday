@@ -1,3 +1,6 @@
+import RxSwift
+import RxCocoa
+import RxDataSources
 import UIKit
 
 class TimelineViewController : UITableViewController
@@ -12,6 +15,8 @@ class TimelineViewController : UITableViewController
     private let viewModel : TimelineViewModel
     private let baseCellHeight = 37
     private let cellIdentifier = "timelineCell"
+    private let disposeBag = DisposeBag()
+    private let dataSource = RxTableViewSectionedDataSource<SectionModel<String, TimeSlot>>()
     
     init(date: NSDate)
     {
@@ -29,19 +34,31 @@ class TimelineViewController : UITableViewController
     override func viewDidLoad() 
     {
         super.viewDidLoad()
-        
+
         tableView.separatorStyle = .None
         tableView.allowsSelection = false
         tableView.registerNib(UINib.init(nibName: "TimelineCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: cellIdentifier)
         tableView.tableHeaderView = TimelineHeaderView(date: viewModel.date)
+        
+        viewModel.timeSlots.asObservable().bindTo(tableView.rx_itemsWithCellIdentifier(cellIdentifier))
+        {
+            (row, timeSlot: TimeSlot, cell: TimelineCell) in
+                cell.bindTimeSlot(timeSlot)
+        }.addDisposableTo(disposeBag)
+    }
+    
+    // MARK: Methods
+    func addNewSlot(category: Category)
+    {
+        viewModel.addNewSlot(category)
     }
     
     // MARK: UITableViewDataSource methods
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        let interval = Int(viewModel.timeSlots[indexPath.item].duration)
+        let interval = Int(viewModel.timeSlots.value[indexPath.item].duration)
         let hours = (interval / 3600)
-        let height = baseCellHeight + 40 * (hours + 1)
+        let height = baseCellHeight + TimelineCell.minLineSize * (hours + 1)
         
         return CGFloat(height)
     }
@@ -49,13 +66,13 @@ class TimelineViewController : UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TimelineCell;
-        let timeSlot = viewModel.timeSlots[indexPath.item]
+        let timeSlot = viewModel.timeSlots.value[indexPath.item]
         cell.bindTimeSlot(timeSlot)
         return cell
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return viewModel.timeSlots.count
-    }
+//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+//    {
+//        return viewModel.timeSlots.value.count
+//    }
 }

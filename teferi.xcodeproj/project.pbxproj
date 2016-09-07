@@ -18,6 +18,8 @@
 		2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC251D804B3A0012B205 /* RxCocoa.framework */; };
+		246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC271D8056FD0012B205 /* RxDataSources.framework */; };
 		2475A2671D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */; };
 		24874DE01D7C3F770099DC1F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
 		24874DE21D7C3F9B0099DC1F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
@@ -25,12 +27,12 @@
 		24874DE61D7C3FD60099DC1F /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24874DE51D7C3FD60099DC1F /* MockLocationService.swift */; };
 		2492E28E1D773BDB00F28AB4 /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E28D1D773BDB00F28AB4 /* TimeSlot.swift */; };
 		2492E2901D773C1000F28AB4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E28F1D773C1000F28AB4 /* Category.swift */; };
-		2492E29B1D78D61700F28AB4 /* CategorySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29A1D78D61700F28AB4 /* CategorySelectorView.swift */; };
 		2492E29D1D78DC5B00F28AB4 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */; };
 		2492E29F1D78EF1C00F28AB4 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */; };
 		2492E2A11D79F79A00F28AB4 /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2492E2A01D79F79A00F28AB4 /* TimelineCell.xib */; };
 		2492E2A31D79F7C300F28AB4 /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492E2A21D79F7C300F28AB4 /* TimelineCell.swift */; };
 		24A21B691D7C3E0800CEB4F3 /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A21B681D7C3E0800CEB4F3 /* MainViewModelTests.swift */; };
+		24A395201D7F82180055DF9A /* CircleMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A3951F1D7F82180055DF9A /* CircleMenu.framework */; };
 		24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51A71D74D6E000042CDF /* LocationService.swift */; };
 		24BA51AB1D74D7A800042CDF /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA51AA1D74D7A800042CDF /* Location.swift */; };
 		24CD8A481D7A13800017C53E /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CD8A471D7A13800017C53E /* ColorExtensions.swift */; };
@@ -76,12 +78,13 @@
 		2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHeaderView.swift; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		246EBC251D804B3A0012B205 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		246EBC271D8056FD0012B205 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModelMainViewModelTests.swift; sourceTree = "<group>"; };
 		24874DE51D7C3FD60099DC1F /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
 		2492E28D1D773BDB00F28AB4 /* TimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSlot.swift; sourceTree = "<group>"; };
 		2492E28F1D773C1000F28AB4 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		2492E2951D78BCE000F28AB4 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		2492E29A1D78D61700F28AB4 /* CategorySelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorView.swift; sourceTree = "<group>"; };
 		2492E29C1D78DC5B00F28AB4 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		2492E29E1D78EF1C00F28AB4 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		2492E2A01D79F79A00F28AB4 /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineCell.xib; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A21B681D7C3E0800CEB4F3 /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24A3951F1D7F82180055DF9A /* CircleMenu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CircleMenu.framework; path = Carthage/Build/iOS/CircleMenu.framework; sourceTree = "<group>"; };
 		24BA51A71D74D6E000042CDF /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		24BA51AA1D74D7A800042CDF /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		24CD8A471D7A13800017C53E /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
@@ -102,7 +106,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24A395201D7F82180055DF9A /* CircleMenu.framework in Frameworks */,
+				246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */,
 				241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */,
+				246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */,
 				241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +130,9 @@
 		240AC70B1D748C8800F21F4F = {
 			isa = PBXGroup;
 			children = (
+				246EBC271D8056FD0012B205 /* RxDataSources.framework */,
+				246EBC251D804B3A0012B205 /* RxCocoa.framework */,
+				24A3951F1D7F82180055DF9A /* CircleMenu.framework */,
 				2492E2951D78BCE000F28AB4 /* Nimble.framework */,
 				241977B61D7579DC00E89500 /* RxBlocking.framework */,
 				241977B41D7579CE00E89500 /* RxSwift.framework */,
@@ -243,7 +253,6 @@
 		24D99F691D74B93C00E68163 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2492E29A1D78D61700F28AB4 /* CategorySelectorView.swift */,
 				2492E2A01D79F79A00F28AB4 /* TimelineCell.xib */,
 				2492E2A21D79F7C300F28AB4 /* TimelineCell.swift */,
 				2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */,
@@ -382,6 +391,9 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CircleMenu.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
 			);
 			outputPaths = (
 			);
@@ -408,7 +420,6 @@
 				24BA51A81D74D6E000042CDF /* LocationService.swift in Sources */,
 				24CD8A4A1D7A1BE20017C53E /* StringExtensions.swift in Sources */,
 				2414EB9B1D7DEFE1001EFB6D /* DateExtensions.swift in Sources */,
-				2492E29B1D78D61700F28AB4 /* CategorySelectorView.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,

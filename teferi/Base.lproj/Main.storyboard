@@ -16,11 +16,30 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhP-t4-uT1" customClass="CircleMenu">
+                                <rect key="frame" x="277" y="545" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mhP-t4-uT1" secondAttribute="bottom" constant="25" id="9Az-2u-DkB"/>
+                            <constraint firstItem="mhP-t4-uT1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qFP-PH-tXw"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="mhP-t4-uT1"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="circleMenu" destination="mhP-t4-uT1" id="mlh-rH-cYp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="248" y="316"/>
         </scene>
     </scenes>
 </document>
