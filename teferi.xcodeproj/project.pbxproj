@@ -18,6 +18,8 @@
 		2414EB9D1D7E0D01001EFB6D /* TimelineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */; };
 		241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
+		24564F421D8300CB00D9A8AE /* ColorExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F411D8300CB00D9A8AE /* ColorExtensionsTests.swift */; };
+		24564F461D8300E600D9A8AE /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F451D8300E600D9A8AE /* DateExtensionsTests.swift */; };
 		246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC251D804B3A0012B205 /* RxCocoa.framework */; };
 		246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC271D8056FD0012B205 /* RxDataSources.framework */; };
 		2475A2671D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */; };
@@ -78,6 +80,8 @@
 		2414EB9C1D7E0D01001EFB6D /* TimelineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHeaderView.swift; sourceTree = "<group>"; };
 		241977B41D7579CE00E89500 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		241977B61D7579DC00E89500 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		24564F411D8300CB00D9A8AE /* ColorExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensionsTests.swift; sourceTree = "<group>"; };
+		24564F451D8300E600D9A8AE /* DateExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
 		246EBC251D804B3A0012B205 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		246EBC271D8056FD0012B205 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		2475A2661D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModelMainViewModelTests.swift; sourceTree = "<group>"; };
@@ -178,6 +182,15 @@
 			name = ViewModels;
 			sourceTree = "<group>";
 		};
+		24564F401D82FDBB00D9A8AE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				24564F411D8300CB00D9A8AE /* ColorExtensionsTests.swift */,
+				24564F451D8300E600D9A8AE /* DateExtensionsTests.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		24874DE41D7C3FC40099DC1F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +202,7 @@
 		24A21B671D7C3E0800CEB4F3 /* teferiTests */ = {
 			isa = PBXGroup;
 			children = (
+				24564F401D82FDBB00D9A8AE /* Extensions */,
 				2414EB981D7DC8D1001EFB6D /* ViewModels */,
 				24874DE41D7C3FC40099DC1F /* Mocks */,
 				24A21B6A1D7C3E0800CEB4F3 /* Info.plist */,
@@ -433,6 +447,8 @@
 				24874DE61D7C3FD60099DC1F /* MockLocationService.swift in Sources */,
 				2475A2671D7D7B6D000153C5 /* TimelineViewModelMainViewModelTests.swift in Sources */,
 				24A21B691D7C3E0800CEB4F3 /* MainViewModelTests.swift in Sources */,
+				24564F421D8300CB00D9A8AE /* ColorExtensionsTests.swift in Sources */,
+				24564F461D8300E600D9A8AE /* DateExtensionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
