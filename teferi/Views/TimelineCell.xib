@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-R3-3Vm">
-                    <rect key="frame" x="84" y="32" width="6" height="120"/>
+                    <rect key="frame" x="61" y="32" width="6" height="120"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="120" id="14b-ji-uew"/>
@@ -32,7 +32,7 @@
                     </variation>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dA-qd-byA">
-                    <rect key="frame" x="80" y="6" width="260" height="21"/>
+                    <rect key="frame" x="57" y="6" width="260" height="21"/>
                     <attributedString key="attributedText">
                         <fragment content="Commute 12:00 AM">
                             <attributes>
@@ -45,13 +45,13 @@
                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="12 h 59 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWX-Wq-cy4">
-                    <rect key="frame" x="103" y="82" width="116" height="21"/>
+                    <rect key="frame" x="80" y="82" width="116" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-EQ-YkE">
-                    <rect key="frame" x="34" y="0.0" width="32" height="32"/>
+                    <rect key="frame" x="16" y="0.0" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="bnM-yD-LUJ"/>
                         <constraint firstAttribute="height" constant="32" id="l0h-Br-JFt"/>
@@ -67,9 +67,9 @@
                 <constraint firstItem="lWX-Wq-cy4" firstAttribute="centerY" secondItem="2Oj-R3-3Vm" secondAttribute="centerY" id="EOh-hF-EWE"/>
                 <constraint firstItem="2dA-qd-byA" firstAttribute="centerY" secondItem="4sb-EQ-YkE" secondAttribute="centerY" id="IPV-Xt-bMp"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="4sb-EQ-YkE" secondAttribute="bottom" constant="2" id="Iv0-HZ-dRT"/>
-                <constraint firstItem="4sb-EQ-YkE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="34" id="N0q-aa-J5Z"/>
+                <constraint firstItem="4sb-EQ-YkE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="N0q-aa-J5Z"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="2dA-qd-byA" secondAttribute="bottom" constant="6" id="NBP-uS-Hr4"/>
-                <constraint firstItem="2Oj-R3-3Vm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="84" id="Rrb-EU-Ie3"/>
+                <constraint firstItem="2Oj-R3-3Vm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="61" id="Rrb-EU-Ie3"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="2dA-qd-byA" secondAttribute="bottom" constant="8" id="Sjc-hs-xMO"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="UGd-hE-u9Z"/>
                 <constraint firstItem="2dA-qd-byA" firstAttribute="centerY" secondItem="4sb-EQ-YkE" secondAttribute="centerY" id="UJo-zC-r26"/>

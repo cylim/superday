@@ -29,7 +29,7 @@ class MainViewModelTests : XCTestCase
     func testTheCurrentLocationGetsUpdatedWhenTheLocationServiceBroadcasts()
     {
         var locationChanged = false
-        disposable = self.viewModel.currentLocation.asObservable().subscribe { location in locationChanged = true }
+        disposable = self.viewModel.locationObservable.subscribe { location in locationChanged = true }
         let location = Location(latitude: 5, longitude: 5)
                         
         self.mockLocationService.setMockLocation(location)

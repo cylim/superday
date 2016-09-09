@@ -38,13 +38,11 @@ class TimelineViewController : UITableViewController
         tableView.separatorStyle = .None
         tableView.allowsSelection = false
         tableView.registerNib(UINib.init(nibName: "TimelineCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: cellIdentifier)
-        tableView.tableHeaderView = TimelineHeaderView(date: viewModel.date)
         
-        viewModel.timeSlots.asObservable().bindTo(tableView.rx_itemsWithCellIdentifier(cellIdentifier))
-        {
-            (row, timeSlot: TimeSlot, cell: TimelineCell) in
-                cell.bindTimeSlot(timeSlot)
-        }.addDisposableTo(disposeBag)
+        viewModel
+            .timeSlotsObservable
+            .bindTo(tableView.rx_itemsWithCellIdentifier(cellIdentifier))(configureCell: configureCell)
+            .addDisposableTo(disposeBag)
     }
     
     // MARK: Methods
@@ -53,10 +51,15 @@ class TimelineViewController : UITableViewController
         viewModel.addNewSlot(category)
     }
     
+    private func configureCell(row: Int, timeSlot: TimeSlot, cell: TimelineCell)
+    {
+        cell.bindTimeSlot(timeSlot)
+    }
+    
     // MARK: UITableViewDataSource methods
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        let interval = Int(viewModel.timeSlots.value[indexPath.item].duration)
+        let interval = Int(viewModel.timeSlots[indexPath.item].duration)
         let hours = (interval / 3600)
         let minutes = (interval / 60) % 60
         let height = baseCellHeight + TimelineCell.minLineSize * (1 + (minutes / 15) + (hours * 4))
@@ -67,13 +70,8 @@ class TimelineViewController : UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TimelineCell;
-        let timeSlot = viewModel.timeSlots.value[indexPath.item]
+        let timeSlot = viewModel.timeSlots[indexPath.item]
         cell.bindTimeSlot(timeSlot)
         return cell
     }
-    
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-//    {
-//        return viewModel.timeSlots.value.count
-//    }
 }

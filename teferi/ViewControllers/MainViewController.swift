@@ -3,7 +3,7 @@ import CoreLocation
 import RxSwift
 import CircleMenu
 
-class MainViewController : UIPageViewController, UIPageViewControllerDataSource, CircleMenuDelegate
+class MainViewController : UIViewController, CircleMenuDelegate
 {
     // MARK: Fields
     private let menuItems : [Category] = [
@@ -14,25 +14,15 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
         Category.Food
     ]
     
-    private let currentDateViewController = TimelineViewController(date: NSDate())
     private let viewModel : MainViewModel = MainViewModel(locationService: DefaultLocationService())
     private var disposeBag : DisposeBag? = DisposeBag()
+    private var pagerViewController : PagerViewController
+    {
+        return self.childViewControllers.last as! PagerViewController
+    }
+    
     private var circleMenu : CircleMenu? = nil
-    
-    // MARK: Initializers
-    override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?)
-    {
-        super.init(transitionStyle: .Scroll,
-                   navigationOrientation: .Horizontal,
-                   options: options)
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        super.init(transitionStyle: .Scroll,
-                   navigationOrientation: .Horizontal,
-                   options: nil)
-    }
+    @IBOutlet private weak var titleLabel : UILabel?
     
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
@@ -40,16 +30,8 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
         super.viewDidLoad()
         viewModel.start()
         
-        view.backgroundColor = UIColor.whiteColor()
-        dataSource = self
-        
+        pagerViewController.onDateChanged = onDateChanged
         setMenuButton()
-        
-        setViewControllers(
-            [ currentDateViewController ],
-            direction: .Forward,
-            animated: false,
-            completion: nil)
     }
     
     override func viewWillAppear(animated: Bool)
@@ -57,9 +39,8 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
         super.viewWillAppear(animated)
         
         viewModel
-            .currentLocation
-            .asObservable()
-            .subscribe(onNext: onNextLocation)
+            .locationObservable
+            .subscribeNext(onNextLocation)
             .addDisposableTo(disposeBag!)
     }
     
@@ -73,6 +54,12 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
     private func onNextLocation(location: Location)
     {
         //TODO: Add logic for location changes
+    }
+    
+    private func onDateChanged(date: NSDate)
+    {
+        viewModel.date = date
+        titleLabel?.text = viewModel.title
     }
     
     // MARK: Methods
@@ -92,31 +79,6 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
         view.addSubview(circleMenu!)
     }
     
-    // MARK: UIPageViewControllerDataSource implementation
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
-    {
-        let timelineController = viewController as! TimelineViewController
-        let currentDate = timelineController.date
-        let nextDate = currentDate.addDays(-1)
-        return TimelineViewController(date: nextDate)
-    }
-    
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
-    {
-        let timelineController = viewController as! TimelineViewController
-        let currentDate = timelineController.date
-        let canScrollOn = !currentDate.equalsDate(NSDate())
-        if canScrollOn
-        {
-            let nextDate = currentDate.addDays(1)
-            return TimelineViewController(date: nextDate)
-        }
-        else
-        {
-            return nil
-        }
-    }
-    
     //MARK: CircleMenuDelegate implementation
     func circleMenu(circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int)
     {
@@ -133,7 +95,7 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
     
     func circleMenu(circleMenu: CircleMenu, buttonWillSelected button: UIButton, atIndex: Int)
     {
-        currentDateViewController.addNewSlot(menuItems[atIndex])
+        pagerViewController.addNewSlot(menuItems[atIndex])
     }
     
     func circleMenu(circleMenu: CircleMenu, buttonDidSelected button: UIButton, atIndex: Int)
