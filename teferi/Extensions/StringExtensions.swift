@@ -3,6 +3,11 @@ import UIKit
 
 extension String
 {
+    func translate() -> String
+    {
+        return NSBundle.mainBundle().localizedStringForKey(self, value: nil, table: nil)
+    }
+    
     func getBoldStringWithNonBoldText(nonBoldTextRange: NSRange) -> NSAttributedString
     {
         let fontSize = UIFont.systemFontSize()

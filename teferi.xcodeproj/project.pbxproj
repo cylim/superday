@@ -35,6 +35,7 @@
 		24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */; };
 		24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F6F1D83270000D9A8AE /* MockLocationService.swift */; };
 		24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F711D832A4F00D9A8AE /* PagerViewController.swift */; };
+		24564F771D837FBE00D9A8AE /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24564F751D837FBE00D9A8AE /* Main.strings */; };
 		246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC251D804B3A0012B205 /* RxCocoa.framework */; };
 		246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC271D8056FD0012B205 /* RxDataSources.framework */; };
 		24874DE01D7C3F770099DC1F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
@@ -97,6 +98,7 @@
 		24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewModelTests.swift; path = ViewModels/TimelineViewModelTests.swift; sourceTree = "<group>"; };
 		24564F6F1D83270000D9A8AE /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLocationService.swift; path = Mocks/MockLocationService.swift; sourceTree = "<group>"; };
 		24564F711D832A4F00D9A8AE /* PagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewController.swift; path = ViewControllers/PagerViewController.swift; sourceTree = "<group>"; };
+		24564F761D837FBE00D9A8AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		246EBC251D804B3A0012B205 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		246EBC271D8056FD0012B205 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		2492E2951D78BCE000F28AB4 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				240AC7211D748C8800F21F4F /* Assets.xcassets */,
 				240AC7261D748C8800F21F4F /* Info.plist */,
 				240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */,
+				24564F751D837FBE00D9A8AE /* Main.strings */,
 			);
 			path = teferi;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */,
+				24564F771D837FBE00D9A8AE /* Main.strings in Resources */,
 				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
 			);
@@ -469,6 +473,14 @@
 				240AC71C1D748C8800F21F4F /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		24564F751D837FBE00D9A8AE /* Main.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				24564F761D837FBE00D9A8AE /* en */,
+			);
+			name = Main.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

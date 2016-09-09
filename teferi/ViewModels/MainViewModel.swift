@@ -4,6 +4,8 @@ import RxSwift
 class MainViewModel
 {
     // MARK: Fields
+    private let superday = "Superday"
+    private let superyesterday = "Superyesterday"
     private let locationService : LocationService
     private let currentLocation : Variable<Location> = Variable(Location(latitude: 0, longitude: 0))
     
@@ -18,20 +20,18 @@ class MainViewModel
         
         if date.equalsDate(today)
         {
-            return "Superday"
+            return superday.translate()
         }
         else if date.equalsDate(yesterday)
         {
-            return "Superyesterday"
+            return superyesterday.translate()
         }
-        else
-        {
-            let dayOfMonthFormatter = NSDateFormatter();
-            dayOfMonthFormatter.timeZone = NSTimeZone.localTimeZone();
-            dayOfMonthFormatter.dateFormat = "dd MMMM";
-            
-            return dayOfMonthFormatter.stringFromDate(date)
-        }
+        
+        let dayOfMonthFormatter = NSDateFormatter();
+        dayOfMonthFormatter.timeZone = NSTimeZone.localTimeZone();
+        dayOfMonthFormatter.dateFormat = "dd MMMM";
+        
+        return dayOfMonthFormatter.stringFromDate(date)
     }
     
     // MARK: Initializers
