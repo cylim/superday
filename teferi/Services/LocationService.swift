@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import CoreMotion
 import UIKit
 
 protocol LocationService
@@ -17,7 +18,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         self.onLocationCallback = onLocationCallback
         
         locationManager.delegate = self
-        locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         if Double(UIDevice.currentDevice().systemVersion) >= 8.0
@@ -26,7 +26,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
             locationManager.requestAlwaysAuthorization()
         }
         
-        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
