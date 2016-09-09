@@ -1,5 +1,25 @@
 import UIKit
 
+class AssetInfo
+{
+    let medium : String
+    
+    var big : String
+    {
+        return "\(self.medium)Big"
+    }
+    
+    var small : String
+    {
+        return "\(self.medium)Small"
+    }
+    
+    init(assetName: String)
+    {
+        self.medium = assetName
+    }
+}
+
 enum Category : String
 {
     case Friends
@@ -28,22 +48,22 @@ enum Category : String
         }
     }
     
-    var imageAssetName : String
+    var assetInfo : AssetInfo
     {
         switch(self)
         {
         case Friends:
-            return "icFriendsGreen"
+            return AssetInfo(assetName: "icFriends")
         case Work:
-            return "icWorkYellow"
+            return AssetInfo(assetName: "icWork")
         case Leisure:
-            return "icLeisurePurple"
+            return AssetInfo(assetName: "icLeisure")
         case Commute:
-            return "icCommuteBlue"
+            return AssetInfo(assetName: "icCommute")
         case Food:
-            return "icFoodRed"
+            return AssetInfo(assetName: "icFood")
         case Unknown:
-            return "icCancelGrey"
+            return AssetInfo(assetName: "icCancel")
         }
     }
 }

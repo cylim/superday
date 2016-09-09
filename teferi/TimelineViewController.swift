@@ -58,7 +58,8 @@ class TimelineViewController : UITableViewController
     {
         let interval = Int(viewModel.timeSlots.value[indexPath.item].duration)
         let hours = (interval / 3600)
-        let height = baseCellHeight + TimelineCell.minLineSize * (hours + 1)
+        let minutes = (interval / 60) % 60
+        let height = baseCellHeight + TimelineCell.minLineSize * (1 + (minutes / 15) + (hours * 4))
         
         return CGFloat(height)
     }

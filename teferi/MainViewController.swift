@@ -82,8 +82,8 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
         
         circleMenu = CircleMenu(
             frame: CGRect(x: UIScreen.mainScreen().bounds.width / 2 - buttonSize / 2, y: UIScreen.mainScreen().bounds.height - 150, width: buttonSize, height: buttonSize),
-            normalIcon:"icAddGrey",
-            selectedIcon:"icCancelGrey",
+            normalIcon:"icAddBig",
+            selectedIcon:"icCancelBig",
             buttonsCount: 5,
             duration: 0.5,
             distance: 90)
@@ -123,10 +123,10 @@ class MainViewController : UIPageViewController, UIPageViewControllerDataSource,
         let category = menuItems[atIndex]
         
         button.backgroundColor = category.color
-        button.setImage(UIImage(imageLiteral: category.imageAssetName), forState: .Normal)
+        button.setImage(UIImage(imageLiteral: category.assetInfo.big), forState: .Normal)
         
         // set highlited image
-        let highlightedImage  = UIImage(imageLiteral: category.imageAssetName).imageWithRenderingMode(.AlwaysTemplate)
+        let highlightedImage  = UIImage(imageLiteral: category.assetInfo.big).imageWithRenderingMode(.AlwaysTemplate)
         button.setImage(highlightedImage, forState: .Highlighted)
         button.tintColor = UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.3)
     }
