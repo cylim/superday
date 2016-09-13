@@ -20,13 +20,13 @@ class TimelineViewController : UITableViewController
     
     init(date: NSDate)
     {
-        viewModel = TimelineViewModel(date: date)
+        viewModel = TimelineViewModel(date: date, persistencyService: CoreDataPersistencyService.instance)
         super.init(style: .Plain)
     }
     
     required init?(coder: NSCoder)
     {
-        viewModel = TimelineViewModel(date: NSDate())
+        viewModel = TimelineViewModel(date: NSDate(), persistencyService: CoreDataPersistencyService.instance)
         super.init(style: .Plain)
     }
     

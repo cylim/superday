@@ -15,14 +15,14 @@ class MainViewModel
     
     var title : String
     {
-        let today = NSDate()
-        let yesterday = today.addDays(-1)
+        let today = NSDate().ignoreTimeComponents()
+        let yesterday = today.addDays(-1).ignoreTimeComponents()
         
-        if date.equalsDate(today)
+        if date.ignoreTimeComponents().isEqualToDate(today)
         {
             return superday.translate()
         }
-        else if date.equalsDate(yesterday)
+        else if date.ignoreTimeComponents().isEqualToDate(yesterday)
         {
             return superyesterday.translate()
         }
@@ -35,7 +35,7 @@ class MainViewModel
     }
     
     // MARK: Initializers
-    init(locationService : LocationService)
+    init(locationService: LocationService)
     {
         self.locationService = locationService
         self.locationObservable = currentLocation.asObservable()

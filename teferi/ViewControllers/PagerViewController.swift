@@ -3,7 +3,7 @@ import UIKit
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private let currentDateViewController = TimelineViewController(date: NSDate())
+    private var currentDateViewController = TimelineViewController(date: NSDate())
     
     // MARK: Properties
     var onDateChanged : (NSDate -> Void)? = nil
@@ -66,12 +66,18 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
         let timelineController = viewController as! TimelineViewController
-        let currentDate = timelineController.date
-        let canScrollOn = !currentDate.equalsDate(NSDate())
+        let currentDate = timelineController.date.ignoreTimeComponents()
+        let canScrollOn = !currentDate.isEqualToDate(NSDate().ignoreTimeComponents())
         if canScrollOn
         {
             let nextDate = currentDate.addDays(1)
-            return TimelineViewController(date: nextDate)
+            let newController = TimelineViewController(date: nextDate)
+            if nextDate.ignoreTimeComponents().isEqualToDate(NSDate().ignoreTimeComponents())
+            {
+                currentDateViewController = newController
+            }
+            
+            return newController
         }
         else
         {

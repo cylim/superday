@@ -12,14 +12,10 @@ extension NSDate
         return nextDate
     }
     
-    func equalsDate(date: NSDate) -> Bool
+    func ignoreTimeComponents() -> NSDate
     {
         let units : NSCalendarUnit = [ .Year, .Month, .Day];
         let calendar = NSCalendar.currentCalendar();
-        
-        let dateWithNoTime = calendar.dateFromComponents(calendar.components(units, fromDate: self))!
-        let otherDateWithNoTime = calendar.dateFromComponents(calendar.components(units, fromDate: date))!
-        
-        return dateWithNoTime.isEqualToDate(otherDateWithNoTime)
+        return calendar.dateFromComponents(calendar.components(units, fromDate: self))!
     }
 }

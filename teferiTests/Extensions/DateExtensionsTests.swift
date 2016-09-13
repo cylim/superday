@@ -55,7 +55,7 @@ class DateExtensionsTests : XCTestCase
         expect(newComponents.month).to(equal(11))
     }
     
-    func testTheEqualsDateMethodComparesOnlyTheDatePortion()
+    func testTheIgnoreTimeComponentsMethodReturnOnlyTheDatePortionOfADate()
     {
         let components = NSDateComponents()
         components.day = 31
@@ -71,6 +71,6 @@ class DateExtensionsTests : XCTestCase
         components.hour = 13
         let date2 = calendar.dateFromComponents(components2)!
         
-        expect(date.equalsDate(date2)).to(beTrue())
+        expect(date.ignoreTimeComponents().isEqualToDate(date2.ignoreTimeComponents())).to(beTrue())
     }
 }

@@ -3,11 +3,6 @@ import CoreLocation
 import CoreMotion
 import UIKit
 
-protocol LocationService
-{
-    func subscribeToLocationChanges(onLocationCallback: Location -> ())
-}
-
 class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationService
 {
     private var onLocationCallback : (Location -> ())! = nil

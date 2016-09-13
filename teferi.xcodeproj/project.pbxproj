@@ -22,7 +22,7 @@
 		24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F501D8320FC00D9A8AE /* TimelineViewController.swift */; };
 		24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F531D83254E00D9A8AE /* TimelineCell.swift */; };
 		24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24564F541D83254E00D9A8AE /* TimelineCell.xib */; };
-		24564F5A1D83259100D9A8AE /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F591D83259100D9A8AE /* LocationService.swift */; };
+		24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F591D83259100D9A8AE /* DefaultLocationService.swift */; };
 		24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5B1D8325CC00D9A8AE /* Category.swift */; };
 		24564F5F1D8325CC00D9A8AE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5C1D8325CC00D9A8AE /* Location.swift */; };
 		24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */; };
@@ -39,6 +39,10 @@
 		24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */; };
 		246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC251D804B3A0012B205 /* RxCocoa.framework */; };
 		246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC271D8056FD0012B205 /* RxDataSources.framework */; };
+		247F05F81D87322600451BAD /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F71D87322600451BAD /* LocationService.swift */; };
+		247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F91D87325600451BAD /* PersistencyService.swift */; };
+		247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */; };
+		247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FD1D88153700451BAD /* MockPersistencyService.swift */; };
 		24874DE01D7C3F770099DC1F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
 		24874DE21D7C3F9B0099DC1F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		24874DE31D7C3F9E0099DC1F /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
@@ -86,7 +90,7 @@
 		24564F501D8320FC00D9A8AE /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewController.swift; path = ViewControllers/TimelineViewController.swift; sourceTree = "<group>"; };
 		24564F531D83254E00D9A8AE /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCell.swift; path = Views/TimelineCell.swift; sourceTree = "<group>"; };
 		24564F541D83254E00D9A8AE /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimelineCell.xib; path = Views/TimelineCell.xib; sourceTree = "<group>"; };
-		24564F591D83259100D9A8AE /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/LocationService.swift; sourceTree = "<group>"; };
+		24564F591D83259100D9A8AE /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultLocationService.swift; path = Services/DefaultLocationService.swift; sourceTree = "<group>"; };
 		24564F5B1D8325CC00D9A8AE /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
 		24564F5C1D8325CC00D9A8AE /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Models/Location.swift; sourceTree = "<group>"; };
 		24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlot.swift; path = Models/TimeSlot.swift; sourceTree = "<group>"; };
@@ -103,6 +107,10 @@
 		24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCellTests.swift; path = Views/TimelineCellTests.swift; sourceTree = "<group>"; };
 		246EBC251D804B3A0012B205 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		246EBC271D8056FD0012B205 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
+		247F05F71D87322600451BAD /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/Protocols/LocationService.swift; sourceTree = "<group>"; };
+		247F05F91D87325600451BAD /* PersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistencyService.swift; path = Services/Protocols/PersistencyService.swift; sourceTree = "<group>"; };
+		247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataPersistencyService.swift; path = Services/CoreDataPersistencyService.swift; sourceTree = "<group>"; };
+		247F05FD1D88153700451BAD /* MockPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockPersistencyService.swift; path = Mocks/MockPersistencyService.swift; sourceTree = "<group>"; };
 		2492E2951D78BCE000F28AB4 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,10 +212,20 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		247F05F61D87319700451BAD /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				247F05F71D87322600451BAD /* LocationService.swift */,
+				247F05F91D87325600451BAD /* PersistencyService.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		24874DE41D7C3FC40099DC1F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
 				24564F6F1D83270000D9A8AE /* MockLocationService.swift */,
+				247F05FD1D88153700451BAD /* MockPersistencyService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -227,7 +245,9 @@
 		24BA51A51D74D69C00042CDF /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				24564F591D83259100D9A8AE /* LocationService.swift */,
+				247F05F61D87319700451BAD /* Protocols */,
+				24564F591D83259100D9A8AE /* DefaultLocationService.swift */,
+				247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -446,11 +466,14 @@
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */,
-				24564F5A1D83259100D9A8AE /* LocationService.swift in Sources */,
+				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
+				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
 				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
+				247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
+				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
 				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,6 +485,7 @@
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
+				247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */,
 				24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */,
 				24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */,
 				24564F6D1D8326F100D9A8AE /* MainViewModelTests.swift in Sources */,
@@ -586,6 +610,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -602,6 +627,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
