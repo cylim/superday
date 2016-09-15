@@ -57,6 +57,11 @@ class TimelineViewController : UITableViewController
     }
     
     // MARK: UITableViewDataSource methods
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle
+    {
+        return .None
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         let interval = Int(viewModel.timeSlots[indexPath.item].duration)

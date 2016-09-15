@@ -29,15 +29,17 @@ class TimelineViewModel
     // MARK: Methods
     func addNewSlot(category: Category)
     {
+        let newSlot = TimeSlot(category: category)
+        
+        //TODO: Recover if saving fails
+        guard persistencyService.addNewTimeSlot(newSlot) else { return }
+        
         //Finishes last task, if needed
         if let lastTimeSlot = timeSlots.last
         {
             lastTimeSlot.endTime = NSDate()
-            persistencyService.updateTimeSlot(lastTimeSlot)
         }
         
-        let newSlot = TimeSlot(category: category)
         timeSlots.append(newSlot)
-        persistencyService.createTimeSlot(newSlot)
     }
 }

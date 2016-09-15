@@ -2,6 +2,7 @@ import UIKit
 import CoreLocation
 import RxSwift
 import CircleMenu
+import CoreMotion
 
 class MainViewController : UIViewController, CircleMenuDelegate
 {
@@ -14,7 +15,7 @@ class MainViewController : UIViewController, CircleMenuDelegate
         Category.Food
     ]
     
-    private let viewModel : MainViewModel = MainViewModel(locationService: DefaultLocationService())
+    private let viewModel : MainViewModel = MainViewModel()
     private var disposeBag : DisposeBag? = DisposeBag()
     private var pagerViewController : PagerViewController
     {
@@ -28,7 +29,6 @@ class MainViewController : UIViewController, CircleMenuDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        viewModel.start()
         
         pagerViewController.onDateChanged = onDateChanged
         setMenuButton()
@@ -37,11 +37,6 @@ class MainViewController : UIViewController, CircleMenuDelegate
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
-        
-        viewModel
-            .locationObservable
-            .subscribeNext(onNextLocation)
-            .addDisposableTo(disposeBag!)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -50,12 +45,7 @@ class MainViewController : UIViewController, CircleMenuDelegate
         super.viewWillDisappear(animated)
     }
     
-    // MARK: RxSwift callbacks
-    private func onNextLocation(location: Location)
-    {
-        //TODO: Add logic for location changes
-    }
-    
+    // MARK: Callbacks
     private func onDateChanged(date: NSDate)
     {
         viewModel.date = date

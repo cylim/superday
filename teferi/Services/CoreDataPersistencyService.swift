@@ -12,8 +12,10 @@ class CoreDataPersistencyService : PersistencyService
     
     let timeSlotEntityName = "TimeSlot"
     
-    func createTimeSlot(timeSlot: TimeSlot) -> Bool
+    func addNewTimeSlot(timeSlot: TimeSlot) -> Bool
     {
+        guard endPreviousTimeSlot() else { return false }
+        
         let managedContext = getManagedObjectContext()
         let entity =  NSEntityDescription.entityForName(timeSlotEntityName, inManagedObjectContext: managedContext)!
         let managedTimeSlot = NSManagedObject(entity: entity, insertIntoManagedObjectContext: managedContext)
@@ -24,40 +26,6 @@ class CoreDataPersistencyService : PersistencyService
         
         do
         {
-            try managedContext.save()
-            return true
-        }
-        catch
-        {
-            return false
-        }
-    }
-    
-    func updateTimeSlot(timeSlot: TimeSlot) -> Bool
-    {
-        let managedContext = getManagedObjectContext()
-        
-        let entity = NSEntityDescription.entityForName(timeSlotEntityName, inManagedObjectContext: managedContext)
-        let request = NSFetchRequest()
-        let predicate = NSPredicate(format: "startTime == %@", timeSlot.startTime)
-        
-        request.entity = entity
-        request.predicate = predicate
-        
-        // Set the sorting -- mandatory, even if you're fetching a single record/object
-        //let sortDescriptor = NSSortDescriptor() initWithKey:@"yourIdentifyingQualifier" ascending:YES];
-        //NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-        //[request setSortDescriptors:sortDescriptors];
-//        [sortDescriptors release]; sortDescriptors = nil;
-//        [sortDescriptor release]; sortDescriptor = nil;
-        
-        do
-        {
-            let managedTimeSlot = try managedContext.executeFetchRequest(request).first!;
-            managedTimeSlot.setValue(timeSlot.startTime, forKey: "startTime")
-            managedTimeSlot.setValue(timeSlot.endTime, forKey: "endTime")
-            managedTimeSlot.setValue(timeSlot.category.rawValue, forKey: "category")
-            
             try managedContext.save()
             return true
         }
@@ -103,4 +71,32 @@ class CoreDataPersistencyService : PersistencyService
         
         return timeSlot
     }
+    
+    private func endPreviousTimeSlot() -> Bool
+    {
+        let managedContext = getManagedObjectContext()
+        
+        let request = NSFetchRequest()
+        request.entity = NSEntityDescription.entityForName(timeSlotEntityName, inManagedObjectContext: managedContext)!
+        request.fetchLimit = 5
+        request.sortDescriptors = [NSSortDescriptor(key: "startTime", ascending: false)]
+        
+        do
+        {
+            guard let managedTimeSlot = try managedContext.executeFetchRequest(request).first else { return true }
+            
+            let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
+            let actualEndTime = timeSlot.startTime.dateByAddingTimeInterval(timeSlot.duration)
+            
+            managedTimeSlot.setValue(actualEndTime, forKey: "endTime")
+            
+            try managedContext.save()
+            return true
+        }
+        catch
+        {
+            return false
+        }
+    }
+    
 }

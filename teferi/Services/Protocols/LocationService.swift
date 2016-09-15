@@ -1,4 +1,10 @@
+import CoreLocation
+
 protocol LocationService
 {
-    func subscribeToLocationChanges(onLocationCallback: Location -> ())
+    func startLocationTracking()
+    
+    func stopLocationTracking()
+    
+    func subscribeToLocationChanges(onLocationCallback: CLLocation -> ())
 }
