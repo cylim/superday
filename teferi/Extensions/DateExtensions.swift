@@ -1,21 +1,21 @@
 import Foundation
 
-extension NSDate
+extension Date
 {
-    func addDays(daysToAdd: Int) -> NSDate
+    func addDays(_ daysToAdd: Int) -> Date
     {
-        let dayComponent = NSDateComponents()
+        var dayComponent = DateComponents()
         dayComponent.day = daysToAdd
         
-        let calendar = NSCalendar.currentCalendar();
-        let nextDate = calendar.dateByAddingComponents(dayComponent, toDate: self, options: NSCalendarOptions())!
+        let calendar = Calendar.current;
+        let nextDate = (calendar as NSCalendar).date(byAdding: dayComponent, to: self, options: NSCalendar.Options())!
         return nextDate
     }
     
-    func ignoreTimeComponents() -> NSDate
+    func ignoreTimeComponents() -> Date
     {
-        let units : NSCalendarUnit = [ .Year, .Month, .Day];
-        let calendar = NSCalendar.currentCalendar();
-        return calendar.dateFromComponents(calendar.components(units, fromDate: self))!
+        let units : NSCalendar.Unit = [ .year, .month, .day];
+        let calendar = Calendar.current;
+        return calendar.date(from: (calendar as NSCalendar).components(units, from: self))!
     }
 }

@@ -11,7 +11,7 @@ class UIColorExtensionsTests : XCTestCase
         let hexString = "#FFFF00"
         let color = UIColor(hexString: hexString)
         
-        let components = CGColorGetComponents(color.CGColor)
+        let components = CGColorGetComponents(color.cgColor)
         let red = components[0]
         let green = components[1]
         let blue = components[2]
@@ -26,7 +26,7 @@ class UIColorExtensionsTests : XCTestCase
         let hexString = "FF0000"
         let color = UIColor(hexString: hexString)
         
-        let components = CGColorGetComponents(color.CGColor)
+        let components = CGColorGetComponents(color.cgColor)
         let red = components[0]
         let green = components[1]
         let blue = components[2]
@@ -41,7 +41,7 @@ class UIColorExtensionsTests : XCTestCase
         let hex = 0xFF00FF
         let color = UIColor(hex: hex)
         
-        let components = CGColorGetComponents(color.CGColor)
+        let components = CGColorGetComponents(color.cgColor)
         let red = components[0]
         let green = components[1]
         let blue = components[2]
@@ -55,7 +55,7 @@ class UIColorExtensionsTests : XCTestCase
     {
         let color = UIColor(red: 255, green: 128, blue: 0)
         
-        let components = CGColorGetComponents(color.CGColor)
+        let components = CGColorGetComponents(color.cgColor)
         let red = components[0]
         let green = components[1]
         let blue = components[2]

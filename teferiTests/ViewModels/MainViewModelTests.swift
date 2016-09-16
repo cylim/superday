@@ -5,9 +5,9 @@ import XCTest
 
 class MainViewModelTests : XCTestCase
 {
-    private var disposable : Disposable? = nil
-    private var mockLocationService = MockLocationService()
-    private var viewModel = MainViewModel(locationService: MockLocationService())
+    fileprivate var disposable : Disposable? = nil
+    fileprivate var mockLocationService = MockLocationService()
+    fileprivate var viewModel = MainViewModel(locationService: MockLocationService())
     
     override func setUp()
     {
@@ -38,14 +38,14 @@ class MainViewModelTests : XCTestCase
     
     func testTheTitlePropertyReturnsSuperdayForTheCurrentDate()
     {
-        let today = NSDate()
+        let today = Date()
         viewModel.date = today
         expect(self.viewModel.title).to(equal("Superday".translate()))
     }
     
     func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
     {
-        let yesterday = NSDate().addDays(-1)
+        let yesterday = Date().addDays(-1)
         viewModel.date = yesterday
         expect(self.viewModel.title).to(equal("Superyesterday".translate()))
     }
@@ -53,13 +53,13 @@ class MainViewModelTests : XCTestCase
     func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()
     {
         
-        let olderDate = NSDate().addDays(-2)
+        let olderDate = Date().addDays(-2)
         viewModel.date = olderDate
         
-        let formatter = NSDateFormatter();
-        formatter.timeZone = NSTimeZone.localTimeZone();
+        let formatter = DateFormatter();
+        formatter.timeZone = TimeZone.autoupdatingCurrent;
         formatter.dateFormat = "dd MMMM";
-        let expectedText = formatter.stringFromDate(olderDate)
+        let expectedText = formatter.string(from: olderDate)
         
         expect(self.viewModel.title).to(equal(expectedText))
     }

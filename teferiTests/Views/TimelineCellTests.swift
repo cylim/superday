@@ -6,35 +6,35 @@ import Nimble
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
-    private let timeSlot = TimeSlot(category: .Work)
-    private var view = TimelineCell()
+    fileprivate let timeSlot = TimeSlot(category: .Work)
+    fileprivate var view = TimelineCell()
     
-    private var imageIcon : UIImageView
+    fileprivate var imageIcon : UIImageView
     {
         let view = self.view.subviews.filter { v in v is UIImageView  }.first!
         return view as! UIImageView
     }
     
-    private var slotDescription : UILabel
+    fileprivate var slotDescription : UILabel
     {
         let view = self.view.subviews.filter { v in v is UILabel  }.first!
         return view as! UILabel
     }
     
-    private var timeLabel : UILabel
+    fileprivate var timeLabel : UILabel
     {
         let view = self.view.subviews.filter { v in v is UILabel  }.last!
         return view as! UILabel
     }
     
-    private var line : UIView
+    fileprivate var line : UIView
     {
         return  self.view.subviews.first!
     }
     
     override func setUp()
     {
-        view = NSBundle.mainBundle().loadNibNamed("TimelineCell", owner: nil, options: nil).first! as! TimelineCell
+        view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil).first! as! TimelineCell
         view.bindTimeSlot(timeSlot)
     }
     
@@ -45,9 +45,9 @@ class TimelineCellTests : XCTestCase
     
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
     {
-        let formatter = NSDateFormatter()
-        formatter.timeStyle = .MediumStyle
-        let dateString = formatter.stringFromDate(timeSlot.startTime)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        let dateString = formatter.string(from: timeSlot.startTime)
         
         let expectedText = "\(timeSlot.category) \(dateString)"
         expect(self.slotDescription.text).to(equal(expectedText))
@@ -57,9 +57,9 @@ class TimelineCellTests : XCTestCase
     {
         let unknownTimeSlot = TimeSlot()
         view.bindTimeSlot(unknownTimeSlot)
-        let formatter = NSDateFormatter()
-        formatter.timeStyle = .MediumStyle
-        let dateString = formatter.stringFromDate(unknownTimeSlot.startTime)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        let dateString = formatter.string(from: unknownTimeSlot.startTime)
         
         let expectedText = " \(dateString)"
         expect(self.slotDescription.text).to(equal(expectedText))
@@ -78,7 +78,7 @@ class TimelineCellTests : XCTestCase
     func testTheElapsedTimeLabelShowsHoursAndMinutesWhenOverAnHourHasPassed()
     {
         let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = NSDate().addDays(-1)
+        newTimeSlot.startTime = Date().addDays(-1)
         view.bindTimeSlot(newTimeSlot)
         
         let hourMask = "%02d h %02d min"
@@ -95,15 +95,15 @@ class TimelineCellTests : XCTestCase
         let expectedColor = Category.Work.color
         let actualColor = timeLabel.textColor!
         
-        let expectedComponents = CGColorGetComponents(expectedColor.CGColor)
+        let expectedComponents = CGColorGetComponents(expectedColor.cgColor)
         let expectedRed = expectedComponents[0]
         let expectedGreen = expectedComponents[1]
         let expectedBlue = expectedComponents[2]
         
-        let actualComponents = CGColorGetComponents(actualColor.CGColor)
-        let actualRed = actualComponents[0]
-        let actualGreen = actualComponents[1]
-        let actualBlue = actualComponents[2]
+        let actualComponents = actualColor.cgColor.components
+        let actualRed = actualComponents?[0]
+        let actualGreen = actualComponents?[1]
+        let actualBlue = actualComponents?[2]
         
         expect(expectedRed).to(equal(actualRed))
         expect(expectedGreen).to(equal(actualGreen))
@@ -114,8 +114,8 @@ class TimelineCellTests : XCTestCase
     {
         let oldLineHeight = line.frame.height
         let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = NSDate().addDays(-1)
-        newTimeSlot.endTime = NSDate()
+        newTimeSlot.startTime = Date().addDays(-1)
+        newTimeSlot.endTime = Date()
         view.bindTimeSlot(newTimeSlot)
         view.layoutIfNeeded()
         let newLineHeight = line.frame.height
@@ -128,15 +128,15 @@ class TimelineCellTests : XCTestCase
         let expectedColor = Category.Work.color
         let actualColor = line.backgroundColor!
         
-        let expectedComponents = CGColorGetComponents(expectedColor.CGColor)
+        let expectedComponents = CGColorGetComponents(expectedColor.cgColor)
         let expectedRed = expectedComponents[0]
         let expectedGreen = expectedComponents[1]
         let expectedBlue = expectedComponents[2]
         
-        let actualComponents = CGColorGetComponents(actualColor.CGColor)
-        let actualRed = actualComponents[0]
-        let actualGreen = actualComponents[1]
-        let actualBlue = actualComponents[2]
+        let actualComponents = actualColor.cgColor.components
+        let actualRed = actualComponents?[0]
+        let actualGreen = actualComponents?[1]
+        let actualBlue = actualComponents?[2]
         
         expect(expectedRed).to(equal(actualRed))
         expect(expectedGreen).to(equal(actualGreen))

@@ -4,21 +4,21 @@ import RxSwift
 class TimelineViewModel
 {
     // MARK: Fields
-    private let persistencyService : PersistencyService
-    private let timeSlotsVariable : Variable<[TimeSlot]>
+    fileprivate let persistencyService : PersistencyService
+    fileprivate let timeSlotsVariable : Variable<[TimeSlot]>
     
     // MARK: Properties
-    let date : NSDate
+    let date : Date
     let timeSlotsObservable : Observable<[TimeSlot]>
     
-    private(set) var timeSlots : [TimeSlot]
+    fileprivate(set) var timeSlots : [TimeSlot]
     {
         get { return timeSlotsVariable.value }
         set(value) { timeSlotsVariable.value = value }
     }
     
     // MARK: Initializers
-    init(date: NSDate, persistencyService: PersistencyService)
+    init(date: Date, persistencyService: PersistencyService)
     {
         self.date = date
         self.persistencyService = persistencyService
@@ -27,7 +27,7 @@ class TimelineViewModel
     }
     
     // MARK: Methods
-    func addNewSlot(category: Category)
+    func addNewSlot(_ category: Category)
     {
         let newSlot = TimeSlot(category: category)
         
@@ -37,7 +37,7 @@ class TimelineViewModel
         //Finishes last task, if needed
         if let lastTimeSlot = timeSlots.last
         {
-            lastTimeSlot.endTime = NSDate()
+            lastTimeSlot.endTime = Date()
         }
         
         timeSlots.append(newSlot)

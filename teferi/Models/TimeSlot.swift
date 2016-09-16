@@ -1,16 +1,16 @@
 import Foundation
 
-public class TimeSlot
+open class TimeSlot
 {
     // MARK: Properties
     var category : Category = Category.Unknown
-    var startTime : NSDate = NSDate()
-    var endTime : NSDate? = nil
+    var startTime : Date = Date()
+    var endTime : Date? = nil
     
-    var duration : NSTimeInterval
+    var duration : TimeInterval
     {
         let endTime = self.endTime ?? getEndDate()
-        return endTime.timeIntervalSinceDate(startTime)
+        return endTime.timeIntervalSince(startTime)
     }
     
     // MARK: Initializers
@@ -21,11 +21,11 @@ public class TimeSlot
     }
     
     // MARK: Methods
-    private func getEndDate() -> NSDate
+    fileprivate func getEndDate() -> Date
     {
-        let date = NSDate()
+        let date = Date()
         let timeEntryLimit = startTime.addDays(1).ignoreTimeComponents()
-        let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == NSComparisonResult.OrderedDescending
+        let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == ComparisonResult.orderedDescending
         return timeEntryLastedOverOneDay ? timeEntryLimit : date
     }
 }

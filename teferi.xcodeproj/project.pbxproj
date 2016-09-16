@@ -37,7 +37,6 @@
 		24564F771D837FBE00D9A8AE /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24564F751D837FBE00D9A8AE /* Main.strings */; };
 		24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */; };
 		246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC251D804B3A0012B205 /* RxCocoa.framework */; };
-		246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246EBC271D8056FD0012B205 /* RxDataSources.framework */; };
 		247F05F81D87322600451BAD /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F71D87322600451BAD /* LocationService.swift */; };
 		247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F91D87325600451BAD /* PersistencyService.swift */; };
 		247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */; };
@@ -48,7 +47,6 @@
 		24874DE01D7C3F770099DC1F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2492E2951D78BCE000F28AB4 /* Nimble.framework */; };
 		24874DE21D7C3F9B0099DC1F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B41D7579CE00E89500 /* RxSwift.framework */; };
 		24874DE31D7C3F9E0099DC1F /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241977B61D7579DC00E89500 /* RxBlocking.framework */; };
-		24A395201D7F82180055DF9A /* CircleMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A3951F1D7F82180055DF9A /* CircleMenu.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,7 +105,6 @@
 		24564F761D837FBE00D9A8AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCellTests.swift; path = Views/TimelineCellTests.swift; sourceTree = "<group>"; };
 		246EBC251D804B3A0012B205 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
-		246EBC271D8056FD0012B205 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		247F05F71D87322600451BAD /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/Protocols/LocationService.swift; sourceTree = "<group>"; };
 		247F05F91D87325600451BAD /* PersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistencyService.swift; path = Services/Protocols/PersistencyService.swift; sourceTree = "<group>"; };
 		247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataPersistencyService.swift; path = Services/CoreDataPersistencyService.swift; sourceTree = "<group>"; };
@@ -118,7 +115,6 @@
 		2492E2951D78BCE000F28AB4 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		24A3951F1D7F82180055DF9A /* CircleMenu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CircleMenu.framework; path = Carthage/Build/iOS/CircleMenu.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,10 +122,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24A395201D7F82180055DF9A /* CircleMenu.framework in Frameworks */,
 				246EBC261D804B3A0012B205 /* RxCocoa.framework in Frameworks */,
 				241977B51D7579CE00E89500 /* RxSwift.framework in Frameworks */,
-				246EBC281D8056FD0012B205 /* RxDataSources.framework in Frameworks */,
 				241977B71D7579DC00E89500 /* RxBlocking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,9 +144,7 @@
 		240AC70B1D748C8800F21F4F = {
 			isa = PBXGroup;
 			children = (
-				246EBC271D8056FD0012B205 /* RxDataSources.framework */,
 				246EBC251D804B3A0012B205 /* RxCocoa.framework */,
-				24A3951F1D7F82180055DF9A /* CircleMenu.framework */,
 				2492E2951D78BCE000F28AB4 /* Nimble.framework */,
 				241977B61D7579DC00E89500 /* RxBlocking.framework */,
 				241977B41D7579CE00E89500 /* RxSwift.framework */,
@@ -362,12 +354,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Toggl;
 				TargetAttributes = {
 					240AC7131D748C8800F21F4F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = W74MGFU2BJ;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -377,6 +370,7 @@
 					24A21B651D7C3E0800CEB4F3 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = W74MGFU2BJ;
+						LastSwiftMigration = 0800;
 						TestTargetID = 240AC7131D748C8800F21F4F;
 					};
 				};
@@ -446,9 +440,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CircleMenu.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
 			);
 			outputPaths = (
 			);
@@ -544,8 +536,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -589,8 +583,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -609,6 +605,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -627,6 +624,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -644,6 +642,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -659,6 +658,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
 			};
 			name = Debug;
@@ -675,6 +675,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
 			};
 			name = Release;

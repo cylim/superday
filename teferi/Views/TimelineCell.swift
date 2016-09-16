@@ -6,18 +6,18 @@ class TimelineCell : UITableViewCell
     static let minLineSize = 12
     
     // MARK: Fields
-    private lazy var lineHeightConstraint : NSLayoutConstraint =
+    fileprivate lazy var lineHeightConstraint : NSLayoutConstraint =
     {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: CGFloat(TimelineCell.minLineSize))
+        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(TimelineCell.minLineSize))
     }()
     
-    private let hourMask = "%02d h %02d min"
-    private let minuteMask = "%02d min"
+    fileprivate let hourMask = "%02d h %02d min"
+    fileprivate let minuteMask = "%02d min"
     
-    @IBOutlet weak private var categoryIcon : UIImageView?
-    @IBOutlet weak private var slotDescription : UILabel?
-    @IBOutlet weak private var elapsedTime : UILabel?
-    @IBOutlet weak private var lineView : UIView?
+    @IBOutlet weak fileprivate var categoryIcon : UIImageView?
+    @IBOutlet weak fileprivate var slotDescription : UILabel?
+    @IBOutlet weak fileprivate var elapsedTime : UILabel?
+    @IBOutlet weak fileprivate var lineView : UIView?
     
     // MARK: Methods
     override func awakeFromNib()
@@ -26,7 +26,7 @@ class TimelineCell : UITableViewCell
         lineView?.addConstraint(lineHeightConstraint)
     }
     
-    func bindTimeSlot(timeSlot: TimeSlot)
+    func bindTimeSlot(_ timeSlot: TimeSlot)
     {
         let categoryColor = timeSlot.category.color
         
@@ -34,10 +34,10 @@ class TimelineCell : UITableViewCell
         categoryIcon?.image = UIImage(named: timeSlot.category.assetInfo.small)
         
         //Description and starting time of the slot
-        let formatter = NSDateFormatter()
-        formatter.timeStyle = .MediumStyle
-        let dateString = formatter.stringFromDate(timeSlot.startTime)
-        let categoryText = timeSlot.category == .Unknown ? "" : String(timeSlot.category)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        let dateString = formatter.string(from: timeSlot.startTime as Date)
+        let categoryText = timeSlot.category == .Unknown ? "" : String(describing: timeSlot.category)
         
         let description = "\(categoryText) \(dateString)"
         let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count)

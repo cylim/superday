@@ -4,30 +4,30 @@ import RxSwift
 class MainViewModel
 {
     // MARK: Fields
-    private let superday = "Superday"
-    private let superyesterday = "Superyesterday"
+    fileprivate let superday = "Superday"
+    fileprivate let superyesterday = "Superyesterday"
     
     // MARK: Properties
-    var date = NSDate()
+    var date = Date()
     
     var title : String
     {
-        let today = NSDate().ignoreTimeComponents()
+        let today = Date().ignoreTimeComponents()
         let yesterday = today.addDays(-1).ignoreTimeComponents()
         
-        if date.ignoreTimeComponents().isEqualToDate(today)
+        if date.ignoreTimeComponents() == today
         {
             return superday.translate()
         }
-        else if date.ignoreTimeComponents().isEqualToDate(yesterday)
+        else if date.ignoreTimeComponents() == yesterday
         {
             return superyesterday.translate()
         }
         
-        let dayOfMonthFormatter = NSDateFormatter();
-        dayOfMonthFormatter.timeZone = NSTimeZone.localTimeZone();
+        let dayOfMonthFormatter = DateFormatter();
+        dayOfMonthFormatter.timeZone = TimeZone.autoupdatingCurrent;
         dayOfMonthFormatter.dateFormat = "dd MMMM";
         
-        return dayOfMonthFormatter.stringFromDate(date)
+        return dayOfMonthFormatter.string(from: date)
     }
 }

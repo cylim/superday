@@ -3,22 +3,22 @@ import UIKit
 
 class CoreDataPersistencyService : PersistencyService
 {
-    private(set) static var instance = CoreDataPersistencyService()
+    fileprivate(set) static var instance = CoreDataPersistencyService()
     
-    private init()
+    fileprivate init()
     {
         
     }
     
     let timeSlotEntityName = "TimeSlot"
     
-    func addNewTimeSlot(timeSlot: TimeSlot) -> Bool
+    func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         guard endPreviousTimeSlot() else { return false }
         
         let managedContext = getManagedObjectContext()
-        let entity =  NSEntityDescription.entityForName(timeSlotEntityName, inManagedObjectContext: managedContext)!
-        let managedTimeSlot = NSManagedObject(entity: entity, insertIntoManagedObjectContext: managedContext)
+        let entity =  NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)!
+        let managedTimeSlot = NSManagedObject(entity: entity, insertInto: managedContext)
         
         managedTimeSlot.setValue(timeSlot.startTime, forKey: "startTime")
         managedTimeSlot.setValue(timeSlot.endTime, forKey: "endTime")
@@ -35,17 +35,17 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    func getTimeSlotsForDay(date: NSDate) -> [TimeSlot]
+    func getTimeSlotsForDay(_ date: Date) -> [TimeSlot]
     {
         let startTime = date.ignoreTimeComponents()
         let endTime = date.addDays(1).ignoreTimeComponents()
         
-        let fetchRequest = NSFetchRequest(entityName: timeSlotEntityName)
-        fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime, endTime)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: timeSlotEntityName)
+        fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime as NSDate, endTime as NSDate)
      
         do
         {
-            let results = try getManagedObjectContext().executeFetchRequest(fetchRequest) as! [NSManagedObject]
+            let results = try getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
             
             let timeSlots = results.map(mapManagedObjectToTimeSlot)
             return timeSlots
@@ -56,39 +56,39 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    private func getManagedObjectContext() -> NSManagedObjectContext
+    fileprivate func getManagedObjectContext() -> NSManagedObjectContext
     {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }
     
-    private func mapManagedObjectToTimeSlot(managedObject: NSManagedObject) -> TimeSlot
+    fileprivate func mapManagedObjectToTimeSlot(_ managedObject: NSManagedObject) -> TimeSlot
     {
         let timeSlot = TimeSlot()
-        timeSlot.startTime = managedObject.valueForKey("startTime") as! NSDate
-        timeSlot.endTime = managedObject.valueForKey("endTime") as? NSDate
-        timeSlot.category = Category(rawValue: managedObject.valueForKey("category") as! String)!
+        timeSlot.startTime = managedObject.value(forKey: "startTime") as! Date
+        timeSlot.endTime = managedObject.value(forKey: "endTime") as? Date
+        timeSlot.category = Category(rawValue: managedObject.value(forKey: "category") as! String)!
         
         return timeSlot
     }
     
-    private func endPreviousTimeSlot() -> Bool
+    fileprivate func endPreviousTimeSlot() -> Bool
     {
         let managedContext = getManagedObjectContext()
         
-        let request = NSFetchRequest()
-        request.entity = NSEntityDescription.entityForName(timeSlotEntityName, inManagedObjectContext: managedContext)!
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        request.entity = NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)!
         request.fetchLimit = 5
         request.sortDescriptors = [NSSortDescriptor(key: "startTime", ascending: false)]
         
         do
         {
-            guard let managedTimeSlot = try managedContext.executeFetchRequest(request).first else { return true }
+            guard let managedTimeSlot = try managedContext.fetch(request).first else { return true }
             
             let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
-            let actualEndTime = timeSlot.startTime.dateByAddingTimeInterval(timeSlot.duration)
+            let actualEndTime = timeSlot.startTime.addingTimeInterval(timeSlot.duration)
             
-            managedTimeSlot.setValue(actualEndTime, forKey: "endTime")
+            (managedTimeSlot as AnyObject).setValue(actualEndTime, forKey: "endTime")
             
             try managedContext.save()
             return true

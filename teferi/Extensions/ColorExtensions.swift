@@ -14,9 +14,9 @@ extension UIColor
     
     convenience init(hexString: String)
     {
-        let hex = hexString.hasPrefix("#") ? hexString.substringFromIndex(hexString.startIndex.advancedBy(1)) : hexString
+        let hex = hexString.hasPrefix("#") ? hexString.substring(from: hexString.characters.index(hexString.startIndex, offsetBy: 1)) : hexString
         var hexInt : UInt32 = 0
-        NSScanner(string: hex).scanHexInt(&hexInt)
+        Scanner(string: hex).scanHexInt32(&hexInt)
     
         self.init(hex: Int(hexInt))
     }

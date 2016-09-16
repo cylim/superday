@@ -3,15 +3,33 @@ import UIKit
 import CoreLocation
 import CoreMotion
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class BackgroundLocationService : NSObject, CLLocationManagerDelegate, LocationService
 {
-    typealias LocationServiceCallback = CLLocation -> ()
-    
-    private let distanceFilter = 100.0
-    private var onLocationCallbacks = [LocationServiceCallback]()
-    private let locationManager = CLLocationManager()
-    private var timer: NSTimer? = nil
+    fileprivate let distanceFilter = 100.0
+    fileprivate var onLocationCallbacks = [(CLLocation) -> ()]()
+    fileprivate let locationManager = CLLocationManager()
+    fileprivate var timer: Timer? = nil
     
     override init()
     {
@@ -20,9 +38,9 @@ class BackgroundLocationService : NSObject, CLLocationManagerDelegate, LocationS
         locationManager.delegate = self
         locationManager.distanceFilter = distanceFilter
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .Other
+        locationManager.activityType = .other
         
-        if Double(UIDevice.currentDevice().systemVersion) >= 8.0
+        if Double(UIDevice.current.systemVersion) >= 8.0
         {
             locationManager.requestWhenInUseAuthorization()
             locationManager.requestAlwaysAuthorization()
@@ -39,12 +57,12 @@ class BackgroundLocationService : NSObject, CLLocationManagerDelegate, LocationS
         locationManager.stopMonitoringSignificantLocationChanges()
     }
     
-    func subscribeToLocationChanges(onLocationCallback: LocationServiceCallback)
+    func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
     {
         onLocationCallbacks.append(onLocationCallback)
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         guard let lastLocation = locations.filter(filterLocations).last else { return }
         
@@ -52,7 +70,7 @@ class BackgroundLocationService : NSObject, CLLocationManagerDelegate, LocationS
         onLocationCallbacks.forEach { callback in callback(lastLocation) }
     }
     
-    private func filterLocations(location: CLLocation) -> Bool
+    fileprivate func filterLocations(_ location: CLLocation) -> Bool
     {
         //Location is valid
         guard location.coordinate.latitude != 0.0 && location.coordinate.latitude != 0.0 else { return false }

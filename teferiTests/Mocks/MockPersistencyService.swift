@@ -5,17 +5,17 @@ class MockPersistencyService : PersistencyService
 {
     var timeSlots = [TimeSlot]()
     
-    func createTimeSlot(timeSlot: TimeSlot) -> Bool
+    func createTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         timeSlots.append(timeSlot)
         return true
     }
     
-    func updateTimeSlot(timeSlot: TimeSlot) -> Bool
+    func updateTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
-        if let index = timeSlots.indexOf({ t in t === timeSlot })
+        if let index = timeSlots.index(where: { t in t === timeSlot })
         {
-            timeSlots.removeAtIndex(index)
+            timeSlots.remove(at: index)
             timeSlots.append(timeSlot)
             
             return true
@@ -24,11 +24,11 @@ class MockPersistencyService : PersistencyService
         return false
     }
     
-    func getTimeSlotsForDay(date: NSDate) -> [TimeSlot]
+    func getTimeSlotsForDay(_ date: Date) -> [TimeSlot]
     {
         let startDate = date.ignoreTimeComponents()
         let endDate = date.addDays(1).ignoreTimeComponents()
         
-        return timeSlots.filter { t in t.startTime.compare(startDate) == NSComparisonResult.OrderedDescending && t.startTime.compare(endDate) == NSComparisonResult.OrderedAscending   }
+        return timeSlots.filter { t in t.startTime.compare(startDate) == ComparisonResult.orderedDescending && t.startTime.compare(endDate) == ComparisonResult.orderedAscending   }
     }
 }

@@ -6,5 +6,5 @@ protocol LocationService
     
     func stopLocationTracking()
     
-    func subscribeToLocationChanges(onLocationCallback: CLLocation -> ())
+    func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
 }

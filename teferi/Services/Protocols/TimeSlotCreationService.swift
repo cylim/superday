@@ -3,7 +3,7 @@ import CoreMotion
 
 protocol TimeSlotCreationService
 {
-    func onNewMotion(activity: CMMotionActivity)
+    func onNewMotion(_ activity: CMMotionActivity)
  
-    func onNewLocation(location: CLLocation)
+    func onNewLocation(_ location: CLLocation)
 }

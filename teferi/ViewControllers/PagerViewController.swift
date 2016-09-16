@@ -3,23 +3,23 @@ import UIKit
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private var currentDateViewController = TimelineViewController(date: NSDate())
+    fileprivate var currentDateViewController = TimelineViewController(date: Date())
     
     // MARK: Properties
-    var onDateChanged : (NSDate -> Void)? = nil
+    var onDateChanged : ((Date) -> Void)? = nil
     
     // MARK: Initializers
-    override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?)
+    override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?)
     {
-        super.init(transitionStyle: .Scroll,
-                   navigationOrientation: .Horizontal,
+        super.init(transitionStyle: .scroll,
+                   navigationOrientation: .horizontal,
                    options: options)
     }
     
     required init?(coder: NSCoder)
     {
-        super.init(transitionStyle: .Scroll,
-                   navigationOrientation: .Horizontal,
+        super.init(transitionStyle: .scroll,
+                   navigationOrientation: .horizontal,
                    options: nil)
     }
     
@@ -28,34 +28,34 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         delegate = self
         dataSource = self
         
         setViewControllers(
             [ currentDateViewController ],
-            direction: .Forward,
+            direction: .forward,
             animated: false,
             completion: nil)
     }
     
     // MARK: Methods
-    func addNewSlot(category: Category)
+    func addNewSlot(_ category: Category)
     {
         currentDateViewController.addNewSlot(category)
     }
     
     // MARK: UIPageViewControllerDelegate implementation
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
     {
         guard completed else { return }
         
         let timelineController = self.viewControllers!.first as! TimelineViewController
-        onDateChanged?(timelineController.date)
+        onDateChanged?(timelineController.date as Date)
     }
     
     // MARK: UIPageViewControllerDataSource implementation
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
         let timelineController = viewController as! TimelineViewController
         let currentDate = timelineController.date
@@ -63,16 +63,16 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         return TimelineViewController(date: nextDate)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
         let timelineController = viewController as! TimelineViewController
         let currentDate = timelineController.date.ignoreTimeComponents()
-        let canScrollOn = !currentDate.isEqualToDate(NSDate().ignoreTimeComponents())
+        let canScrollOn = currentDate != Date().ignoreTimeComponents()
         if canScrollOn
         {
             let nextDate = currentDate.addDays(1)
             let newController = TimelineViewController(date: nextDate)
-            if nextDate.ignoreTimeComponents().isEqualToDate(NSDate().ignoreTimeComponents())
+            if nextDate.ignoreTimeComponents() == Date().ignoreTimeComponents()
             {
                 currentDateViewController = newController
             }

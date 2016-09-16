@@ -4,36 +4,47 @@ import Foundation
 
 class DefaultTimeSlotCreationService : TimeSlotCreationService
 {
-    private enum CurrentMotion
-    {
-        case Stationary
-        case Moving
-    }
+    // MARK: Constants
+    private let travelThreshold = 100.0
+    private let isTravelingKey = "isTravelingKey"
+    private let firstLocationFile = "firstLocationFile"
     
     // MARK: Fields
-    private let travelThreshold = 100.0
     private let persistencyService : PersistencyService
     
-    private var isTraveling = false
-    private var traveledDistance = 0.0
-    private var stopTimer : NSTimer? = nil
-    private var firstLocation : CLLocation? = nil
+    private var isTraveling : Bool
+    {
+        didSet
+        {
+            UserDefaults.setValue(isTraveling, forKey: isTravelingKey)
+        }
+    }
     
-    private var currentMotion = CurrentMotion.Stationary
+    private var firstLocation : CLLocation? = nil
+    {
+        didSet
+        {
+            NSKeyedArchiver.archiveRootObject(firstLocation, toFile: firstLocationFile)
+        }
+    }
+    
+    private var stopTimer : Timer? = nil
     
     // MARK: Init
     init(persistencyService: PersistencyService)
     {
         self.persistencyService = persistencyService
+        self.isTraveling = UserDefaults.value(forKey: isTravelingKey) as? Bool ?? false
+        self.firstLocation = NSKeyedUnarchiver.unarchiveObject(withFile: firstLocationFile) as? CLLocation
     }
     
     // TimeSlotCreationService
-    func onNewMotion(activity: CMMotionActivity)
+    func onNewMotion(_ activity: CMMotionActivity)
     {
-        currentMotion = activity.stationary ? .Stationary : .Moving
+        //TODO: Consider motion events when creating new TimeSlots
     }
     
-    func onNewLocation(location: CLLocation)
+    func onNewLocation(_ location: CLLocation)
     {
         //If no location was previously set, this is our starting point
         if firstLocation == nil
@@ -58,17 +69,17 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             guard stopTimer != nil else
             {
                 // Since the user stopped, we wait for 10 minutes. If he does not move again, we end the commute and begin a new one.
-                stopTimer = NSTimer.scheduledTimerWithTimeInterval(600, target: self, selector: #selector(stopTraveling), userInfo: nil, repeats: false)
+                stopTimer = Timer.scheduledTimer(timeInterval: 600, target: self, selector: #selector(stopTraveling), userInfo: nil, repeats: false)
                 return
             }
         }
         else
         {
-            let distance = startLocation.distanceFromLocation(location)
-            traveledDistance += distance
+            //TODO: This considers travels in a straight line. We should make this smarter later
+            let distance = startLocation.distance(from: location)
             
             // User traveled over n meters
-            guard traveledDistance > travelThreshold else { return }
+            guard distance > travelThreshold else { return }
             
             isTraveling = true
             let timeSlot = TimeSlot()
@@ -81,7 +92,6 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     {
         isTraveling = false
         firstLocation = nil
-        traveledDistance = 0.0
         
         let timeSlot = TimeSlot()
         persistencyService.addNewTimeSlot(timeSlot)

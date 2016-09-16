@@ -5,19 +5,19 @@ extension String
 {
     func translate() -> String
     {
-        return NSBundle.mainBundle().localizedStringForKey(self, value: nil, table: nil)
+        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
     }
     
-    func getBoldStringWithNonBoldText(nonBoldTextRange: NSRange) -> NSAttributedString
+    func getBoldStringWithNonBoldText(_ nonBoldTextRange: NSRange) -> NSAttributedString
     {
-        let fontSize = UIFont.systemFontSize()
+        let fontSize = UIFont.systemFontSize
         let attrs = [
-            NSFontAttributeName: UIFont.boldSystemFontOfSize(fontSize),
-            NSForegroundColorAttributeName: UIColor.blackColor()
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: fontSize),
+            NSForegroundColorAttributeName: UIColor.black
         ]
         
         let nonBoldAttribute = [
-            NSFontAttributeName: UIFont.systemFontOfSize(fontSize),
+            NSFontAttributeName: UIFont.systemFont(ofSize: fontSize),
         ]
         
         let attrStr = NSMutableAttributedString(string: self, attributes: attrs)

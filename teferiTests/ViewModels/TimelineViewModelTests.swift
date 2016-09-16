@@ -6,14 +6,14 @@ import RxSwift
 
 class TimelineViewModelTests : XCTestCase
 {
-    private var disposable : Disposable? = nil
-    private var mockPersistencyService = MockPersistencyService()
-    private var viewModel = TimelineViewModel(date: NSDate(), persistencyService: MockPersistencyService())
+    fileprivate var disposable : Disposable? = nil
+    fileprivate var mockPersistencyService = MockPersistencyService()
+    fileprivate var viewModel = TimelineViewModel(date: Date(), persistencyService: MockPersistencyService())
     
     override func setUp()
     {
         mockPersistencyService = MockPersistencyService()
-        viewModel = TimelineViewModel(date: NSDate(), persistencyService: mockPersistencyService)
+        viewModel = TimelineViewModel(date: Date(), persistencyService: mockPersistencyService)
     }
     
     override func tearDown()

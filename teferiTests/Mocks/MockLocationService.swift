@@ -3,16 +3,16 @@ import Foundation
 
 class MockLocationService : LocationService
 {
-    private var onLocation : (Location -> ())! = nil
-    private(set) var didSubscribe = false
+    fileprivate var onLocation : ((Location) -> ())! = nil
+    fileprivate(set) var didSubscribe = false
     
-    func subscribeToLocationChanges(onLocationCallback: Location -> ())
+    func subscribeToLocationChanges(_ onLocationCallback: (Location) -> ())
     {
         onLocation = onLocationCallback
         didSubscribe = true
     }
     
-    func setMockLocation(location: Location)
+    func setMockLocation(_ location: Location)
     {
         onLocation!(location)
     }
