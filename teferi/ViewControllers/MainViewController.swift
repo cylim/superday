@@ -2,11 +2,12 @@ import UIKit
 import CoreLocation
 import RxSwift
 import CoreMotion
+//import CircleMenu
 
 class MainViewController : UIViewController//, CircleMenuDelegate
 {
     // MARK: Fields
-    fileprivate let menuItems : [Category] = [
+    private let menuItems : [Category] = [
         Category.Friends,
         Category.Work,
         Category.Leisure,
@@ -14,15 +15,15 @@ class MainViewController : UIViewController//, CircleMenuDelegate
         Category.Food
     ]
     
-    fileprivate let viewModel : MainViewModel = MainViewModel()
-    fileprivate var disposeBag : DisposeBag? = DisposeBag()
-    fileprivate var pagerViewController : PagerViewController
+    private let viewModel : MainViewModel = MainViewModel()
+    private var disposeBag : DisposeBag? = DisposeBag()
+    private var pagerViewController : PagerViewController
     {
         return self.childViewControllers.last as! PagerViewController
     }
     
-    //fileprivate var circleMenu : CircleMenu? = nil
-    @IBOutlet fileprivate weak var titleLabel : UILabel?
+//    private var circleMenu : CircleMenu? = nil
+    @IBOutlet private weak var titleLabel : UILabel?
     
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
@@ -30,7 +31,6 @@ class MainViewController : UIViewController//, CircleMenuDelegate
         super.viewDidLoad()
         
         pagerViewController.onDateChanged = onDateChanged
-        setMenuButton()
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -45,15 +45,15 @@ class MainViewController : UIViewController//, CircleMenuDelegate
     }
     
     // MARK: Callbacks
-    fileprivate func onDateChanged(_ date: Date)
+    private func onDateChanged(_ date: Date)
     {
         viewModel.date = date
         titleLabel?.text = viewModel.title
     }
     
     // MARK: Methods
-    fileprivate func setMenuButton()
-    {
+//    private func setMenuButton()
+//    {
 //        let buttonSize = CGFloat(50)
 //        
 //        circleMenu = CircleMenu(
@@ -66,7 +66,7 @@ class MainViewController : UIViewController//, CircleMenuDelegate
 //        circleMenu!.delegate = self
 //        circleMenu!.layer.cornerRadius = circleMenu!.frame.size.width / 2.0
 //        view.addSubview(circleMenu!)
-    }
+//    }
     
     //MARK: CircleMenuDelegate implementation
 //    func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int)
