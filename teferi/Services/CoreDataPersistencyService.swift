@@ -1,9 +1,11 @@
 import CoreData
 import UIKit
 
+///Implementation that uses CoreData to persist information on disk.
 class CoreDataPersistencyService : PersistencyService
 {
     //MARK: Static properties
+    ///Singleton instance of this service.
     private(set) static var instance = CoreDataPersistencyService()
     
     //MARK: Initializers
@@ -19,12 +21,15 @@ class CoreDataPersistencyService : PersistencyService
     //MARK: PersistencyService implementation
     func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
+        //The previous TimeSlot needs to be finished before a new one can start
         guard endPreviousTimeSlot() else { return false }
         
+        //Gets the managed object from CoreData's context
         let managedContext = getManagedObjectContext()
         let entity =  NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)!
         let managedTimeSlot = NSManagedObject(entity: entity, insertInto: managedContext)
         
+        //Sets the properties
         managedTimeSlot.setValue(timeSlot.startTime, forKey: "startTime")
         managedTimeSlot.setValue(timeSlot.endTime, forKey: "endTime")
         managedTimeSlot.setValue(timeSlot.category.rawValue, forKey: "category")
@@ -46,6 +51,7 @@ class CoreDataPersistencyService : PersistencyService
         let startTime = date.ignoreTimeComponents()
         let endTime = date.tomorrow.ignoreTimeComponents()
         
+        //Filter in order to get only the TimeSlots for said date
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: timeSlotEntityName)
         fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime as NSDate, endTime as NSDate)
      
@@ -58,6 +64,7 @@ class CoreDataPersistencyService : PersistencyService
         }
         catch
         {
+            //Returns an empty array if anything goes wrong
             return []
         }
     }

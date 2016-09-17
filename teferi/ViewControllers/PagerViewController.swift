@@ -3,7 +3,7 @@ import UIKit
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    fileprivate var currentDateViewController = TimelineViewController(date: Date())
+    private var currentDateViewController = TimelineViewController(date: Date())
     
     // MARK: Properties
     var onDateChanged : ((Date) -> Void)? = nil

@@ -51,7 +51,6 @@ class MainViewController : UIViewController//, CircleMenuDelegate
         titleLabel?.text = viewModel.title
     }
     
-    // MARK: Methods
 //    private func setMenuButton()
 //    {
 //        let buttonSize = CGFloat(50)

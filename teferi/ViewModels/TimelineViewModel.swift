@@ -1,13 +1,14 @@
 import Foundation
 import RxSwift
 
+///ViewModel for the TimelineViewController.
 class TimelineViewModel
 {
-    // MARK: Fields
+    //MARK: Fields
     private let persistencyService : PersistencyService
     private let timeSlotsVariable : Variable<[TimeSlot]>
     
-    // MARK: Properties
+    //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
     let timeSlotsObservable : Observable<[TimeSlot]>
@@ -18,7 +19,7 @@ class TimelineViewModel
         set(value) { timeSlotsVariable.value = value }
     }
     
-    // MARK: Initializers
+    //MARK: Initializers
     init(date: Date, persistencyService: PersistencyService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
@@ -30,14 +31,19 @@ class TimelineViewModel
         self.timeSlotsVariable = Variable(persistencyService.getTimeSlots(forDay: date))
         self.timeSlotsObservable = timeSlotsVariable.asObservable()
         
-        
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
         
         persistencyService.subscribeToTimeSlotChanges(onNewTimeSlot)
     }
     
-    // MARK: Methods
+    //MARK: Methods
+    
+    /**
+     Adds and persists a new TimeSlot to this Timeline.
+     
+     - Parameter category: Category of the newly created TimeSlot.
+     */
     func addNewSlot(withCategory category: Category)
     {
         let newSlot = TimeSlot(category: category)
@@ -49,6 +55,7 @@ class TimelineViewModel
         }
     }
     
+    ///Called when the persistency service indicates that a new TimeSlot has been created.
     private func onNewTimeSlot(timeSlot: TimeSlot)
     {
         //Finishes last task, if needed

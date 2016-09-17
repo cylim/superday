@@ -6,10 +6,8 @@ import CoreMotion
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
-    //MARK: Constants
-    private let ranForTheFirstTime = "firstAppRunKey"
-    
     //MARK: Fields
+    private let ranForTheFirstTime = "firstAppRunKey"
     private let persistencyService : PersistencyService
     private let timeSlotCreationService : DefaultTimeSlotCreationService
     private var locationService : LocationService = DefaultLocationService()
@@ -23,6 +21,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         persistencyService = CoreDataPersistencyService.instance
         timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService)
     }
+    
+    //MARK: UIApplicationDelegate lifecycle
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {

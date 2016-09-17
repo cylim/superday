@@ -4,13 +4,21 @@ import CoreLocation
 import CoreMotion
 import UIKit
 
+///Default implementation for the location service.
 class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationService
 {
     //MARK: Fields
+    
+    ///Distance the user has to travel in order to trigger a new location event
     private let distanceFilter = 100.0
+    
+    ///The location manager itself
     private let locationManager = CLLocationManager()
     
+    /// Timer that allows the location service to pause and save battery
     private var timer : Timer? = nil
+    
+    /// Callbacks that get called when a new location is available
     private var onLocationCallbacks = [(CLLocation) -> ()]()
     
     //MARK: Properties

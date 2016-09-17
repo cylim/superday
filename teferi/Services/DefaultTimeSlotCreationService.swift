@@ -2,6 +2,7 @@ import CoreLocation
 import CoreMotion
 import Foundation
 
+/// Default implementation of the TimeSlotCreationService.
 class DefaultTimeSlotCreationService : TimeSlotCreationService
 {
     // MARK: Constants
@@ -12,6 +13,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     // MARK: Fields
     private let persistencyService : PersistencyService
     
+    ///Defines whether the user is currently traveling or not.
     private var isTraveling : Bool
     {
         didSet
@@ -20,11 +22,13 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         }
     }
     
+    //TODO: This needs to be persisted for more accuracy.
     private var firstLocation : CLLocation? = nil
     
+    ///Timer that controls when the current TimeSlot needs to end.
     private var stopTimer : Timer? = nil
     
-    // MARK: Init
+    //MARK: Init
     init(persistencyService: PersistencyService)
     {
         self.persistencyService = persistencyService
@@ -32,7 +36,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         self.isTraveling = UserDefaults.standard.bool(forKey: isTravelingKey)
     }
     
-    // TimeSlotCreationService
+    //MARK:  TimeSlotCreationService implementation
     func onNewMotion(_ activity: CMMotionActivity)
     {
         //TODO: Consider motion events when creating new TimeSlots
@@ -91,6 +95,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         firstLocation = nil
         
         let timeSlot = TimeSlot()
+        //TODO: Recover from creation failure
         persistencyService.addNewTimeSlot(timeSlot)
     }
 }

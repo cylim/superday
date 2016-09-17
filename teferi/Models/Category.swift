@@ -1,25 +1,15 @@
 import UIKit
 
-class AssetInfo
-{
-    let medium : String
-    
-    var big : String
-    {
-        return "\(self.medium)Big"
-    }
-    
-    var small : String
-    {
-        return "\(self.medium)Small"
-    }
-    
-    init(assetName: String)
-    {
-        self.medium = assetName
-    }
-}
-
+/**
+ Represents the possible categories for any given TimeSlot.
+ 
+ - Friends: For activities with your friends.
+ - Work: For any work-related activities.
+ - Leisure: For recreation activities.
+ - Commute: Used when the app detects the user is traveling.
+ - Food: For any work-related activities.
+ - Unknown: For app-created activities that are yet to be defined by the user.
+ */
 enum Category : String
 {
     case Friends
@@ -29,6 +19,9 @@ enum Category : String
     case Food
     case Unknown
     
+    //MARK: Properties
+    
+    /// Get the color associated with the category.
     var color : UIColor
     {
         switch(self)
@@ -48,6 +41,7 @@ enum Category : String
         }
     }
     
+    /// Get the AssetInfo for the category.
     var assetInfo : AssetInfo
     {
         switch(self)
@@ -67,3 +61,26 @@ enum Category : String
         }
     }
 }
+
+class AssetInfo
+{
+    //MARK: Properties
+    let medium : String
+    
+    var big : String
+    {
+        return "\(self.medium)Big"
+    }
+    
+    var small : String
+    {
+        return "\(self.medium)Small"
+    }
+    
+    //MARK: Initializers
+    init(assetName: String)
+    {
+        self.medium = assetName
+    }
+}
+

@@ -11,10 +11,10 @@ class TimelineViewController : UITableViewController
     }
     
     // MARK: Fields
-    fileprivate let viewModel : TimelineViewModel
-    fileprivate let baseCellHeight = 37
-    fileprivate let cellIdentifier = "timelineCell"
-    fileprivate let disposeBag = DisposeBag()
+    private let viewModel : TimelineViewModel
+    private let baseCellHeight = 37
+    private let cellIdentifier = "timelineCell"
+    private let disposeBag = DisposeBag()
     
     init(date: Date)
     {

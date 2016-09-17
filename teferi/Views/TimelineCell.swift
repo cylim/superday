@@ -1,23 +1,24 @@
 import UIKit
 
+///Cell that represents a TimeSlot in the timeline
 class TimelineCell : UITableViewCell
 {
     // MARK: Static properties
     static let minLineSize = 12
     
     // MARK: Fields
-    fileprivate lazy var lineHeightConstraint : NSLayoutConstraint =
+    private let hourMask = "%02d h %02d min"
+    private let minuteMask = "%02d min"
+    private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
         return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(TimelineCell.minLineSize))
     }()
     
-    fileprivate let hourMask = "%02d h %02d min"
-    fileprivate let minuteMask = "%02d min"
-    
-    @IBOutlet weak fileprivate var categoryIcon : UIImageView?
-    @IBOutlet weak fileprivate var slotDescription : UILabel?
-    @IBOutlet weak fileprivate var elapsedTime : UILabel?
-    @IBOutlet weak fileprivate var lineView : UIView?
+    //MARK: Outlets
+    @IBOutlet weak private var categoryIcon : UIImageView?
+    @IBOutlet weak private var slotDescription : UILabel?
+    @IBOutlet weak private var elapsedTime : UILabel?
+    @IBOutlet weak private var lineView : UIView?
     
     // MARK: Methods
     override func awakeFromNib()
@@ -26,6 +27,11 @@ class TimelineCell : UITableViewCell
         lineView?.addConstraint(lineHeightConstraint)
     }
     
+    /**
+     Binds the current TimeSlot in order to change the UI accordingly.
+     
+     - Parameter timeSlot: TimeSlot that will be bound.
+     */
     func bindTimeSlot(_ timeSlot: TimeSlot)
     {
         let categoryColor = timeSlot.category.color

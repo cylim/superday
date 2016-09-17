@@ -1,15 +1,17 @@
 import Foundation
 import RxSwift
 
+///ViewModel for the MainViewController.
 class MainViewModel
 {
     // MARK: Fields
-    fileprivate let superday = "Superday"
-    fileprivate let superyesterday = "Superyesterday"
+    private let superday = "Superday"
+    private let superyesterday = "Superyesterday"
     
     // MARK: Properties
     var currentDate = Date()
     
+    ///Gets the title for the header. Changes on new locations.
     var title : String
     {
         let today = Date().ignoreTimeComponents()
