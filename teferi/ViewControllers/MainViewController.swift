@@ -47,7 +47,7 @@ class MainViewController : UIViewController//, CircleMenuDelegate
     // MARK: Callbacks
     private func onDateChanged(_ date: Date)
     {
-        viewModel.date = date
+        viewModel.currentDate = date
         titleLabel?.text = viewModel.title
     }
     

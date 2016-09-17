@@ -2,7 +2,17 @@ import Foundation
 
 extension Date
 {
-    func addDays(_ daysToAdd: Int) -> Date
+    var yesterday : Date
+    {
+        return self.add(days: -1)
+    }
+    
+    var tomorrow : Date
+    {
+        return self.add(days: 1)
+    }
+    
+    func add(days daysToAdd: Int) -> Date
     {
         var dayComponent = DateComponents()
         dayComponent.day = daysToAdd

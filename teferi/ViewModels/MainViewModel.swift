@@ -8,18 +8,18 @@ class MainViewModel
     fileprivate let superyesterday = "Superyesterday"
     
     // MARK: Properties
-    var date = Date()
+    var currentDate = Date()
     
     var title : String
     {
         let today = Date().ignoreTimeComponents()
-        let yesterday = today.addDays(-1).ignoreTimeComponents()
+        let yesterday = today.yesterday.ignoreTimeComponents()
         
-        if date.ignoreTimeComponents() == today
+        if currentDate.ignoreTimeComponents() == today
         {
             return superday.translate()
         }
-        else if date.ignoreTimeComponents() == yesterday
+        else if currentDate.ignoreTimeComponents() == yesterday
         {
             return superyesterday.translate()
         }
@@ -28,6 +28,6 @@ class MainViewModel
         dayOfMonthFormatter.timeZone = TimeZone.autoupdatingCurrent;
         dayOfMonthFormatter.dateFormat = "dd MMMM";
         
-        return dayOfMonthFormatter.string(from: date)
+        return dayOfMonthFormatter.string(from: currentDate)
     }
 }

@@ -32,7 +32,8 @@ class TimelineViewController : UITableViewController
     override func viewDidLoad() 
     {
         super.viewDidLoad()
-
+        
+        tableView.dataSource = nil
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
@@ -41,15 +42,26 @@ class TimelineViewController : UITableViewController
             .timeSlotsObservable
             .bindTo(tableView.rx.items(cellIdentifier: cellIdentifier))(configureCell)
             .addDisposableTo(disposeBag)
+        
+        viewModel
+            .timeObservable
+            .subscribe(onNext: onTimeTick)
+            .addDisposableTo(disposeBag)
     }
     
     // MARK: Methods
-    func addNewSlot(_ category: Category)
+    func addNewSlot(withCategory category: Category)
     {
-        viewModel.addNewSlot(category)
+        viewModel.addNewSlot(withCategory: category)
     }
     
-    fileprivate func configureCell(_ row: Int, timeSlot: TimeSlot, cell: TimelineCell)
+    private func onTimeTick(time: Int)
+    {
+        let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+    
+    private func configureCell(_ row: Int, timeSlot: TimeSlot, cell: TimelineCell)
     {
         cell.bindTimeSlot(timeSlot)
     }

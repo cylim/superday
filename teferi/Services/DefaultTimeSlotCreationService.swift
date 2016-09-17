@@ -16,17 +16,11 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     {
         didSet
         {
-            UserDefaults.setValue(isTraveling, forKey: isTravelingKey)
+            UserDefaults.standard.setValue(isTraveling, forKey: isTravelingKey)
         }
     }
     
     private var firstLocation : CLLocation? = nil
-    {
-        didSet
-        {
-            NSKeyedArchiver.archiveRootObject(firstLocation, toFile: firstLocationFile)
-        }
-    }
     
     private var stopTimer : Timer? = nil
     
@@ -34,8 +28,8 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     init(persistencyService: PersistencyService)
     {
         self.persistencyService = persistencyService
-        self.isTraveling = UserDefaults.value(forKey: isTravelingKey) as? Bool ?? false
-        self.firstLocation = NSKeyedUnarchiver.unarchiveObject(withFile: firstLocationFile) as? CLLocation
+        
+        self.isTraveling = UserDefaults.standard.bool(forKey: isTravelingKey)
     }
     
     // TimeSlotCreationService
@@ -46,15 +40,6 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     
     func onNewLocation(_ location: CLLocation)
     {
-        //If no location was previously set, this is our starting point
-        if firstLocation == nil
-        {
-            firstLocation = location
-            return
-        }
-        
-        let startLocation = firstLocation!
-        
         if isTraveling
         {
             // User is still traveling
@@ -69,12 +54,21 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             guard stopTimer != nil else
             {
                 // Since the user stopped, we wait for 10 minutes. If he does not move again, we end the commute and begin a new one.
-                stopTimer = Timer.scheduledTimer(timeInterval: 600, target: self, selector: #selector(stopTraveling), userInfo: nil, repeats: false)
+                stopTimer = Timer.scheduledTimer(timeInterval: 600 - location.timestamp.timeIntervalSinceNow, target: self, selector: #selector(stopTraveling), userInfo: nil, repeats: false)
                 return
             }
         }
         else
         {
+            //If no location was previously set, this is our starting point
+            if firstLocation == nil
+            {
+                firstLocation = location
+                return
+            }
+            
+            let startLocation = firstLocation!
+            
             //TODO: This considers travels in a straight line. We should make this smarter later
             let distance = startLocation.distance(from: location)
             
@@ -82,9 +76,12 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             guard distance > travelThreshold else { return }
             
             isTraveling = true
-            let timeSlot = TimeSlot()
-            timeSlot.category = .Commute
-            persistencyService.addNewTimeSlot(timeSlot)
+            let timeSlot = TimeSlot(category: .Commute)
+            
+            if !persistencyService.addNewTimeSlot(timeSlot)
+            {
+                //TODO: Recover from failure
+            }
         }
     }
     

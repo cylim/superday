@@ -1,24 +1,48 @@
 import UIKit
+import RxSwift
 import CoreData
 import CoreMotion
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
+    //MARK: Constants
+    private let ranForTheFirstTime = "firstAppRunKey"
+    
+    //MARK: Fields
+    private let persistencyService : PersistencyService
+    private let timeSlotCreationService : DefaultTimeSlotCreationService
+    private var locationService : LocationService = DefaultLocationService()
+    
+    //MARK: Properties
     var window: UIWindow?
     
-    fileprivate let timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: CoreDataPersistencyService.instance)
-    fileprivate var locationService : LocationService = DefaultLocationService()
+    //Initializers
+    override init()
+    {
+        persistencyService = CoreDataPersistencyService.instance
+        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService)
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
-        if launchOptions?[UIApplicationLaunchOptionsKey.location] != nil
-        {
-            locationService = BackgroundLocationService()
-        }
+        let isInBackground = launchOptions?[UIApplicationLaunchOptionsKey.location] != nil
+        locationService.isInBackground = isInBackground
         
+        //Starts location tracking
         locationService.subscribeToLocationChanges(timeSlotCreationService.onNewLocation)
         locationService.startLocationTracking()
+        
+        if !UserDefaults.standard.bool(forKey: ranForTheFirstTime)
+        {
+            //App is running for the first time
+            let firstTimeSlot = TimeSlot()
+            if persistencyService.addNewTimeSlot(firstTimeSlot)
+            {
+                UserDefaults.standard.set(true, forKey: ranForTheFirstTime)
+            }
+        }
+        
         return true
     }
     
@@ -34,8 +58,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
         locationService.stopLocationTracking()
-        locationService = BackgroundLocationService()
-        locationService.subscribeToLocationChanges(timeSlotCreationService.onNewLocation)
+        locationService.isInBackground = true
         locationService.startLocationTracking()
     }
 

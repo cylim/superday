@@ -40,9 +40,9 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     }
     
     // MARK: Methods
-    func addNewSlot(_ category: Category)
+    func addNewSlot(withCategory category: Category)
     {
-        currentDateViewController.addNewSlot(category)
+        currentDateViewController.addNewSlot(withCategory: category)
     }
     
     // MARK: UIPageViewControllerDelegate implementation
@@ -59,7 +59,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         let timelineController = viewController as! TimelineViewController
         let currentDate = timelineController.date
-        let nextDate = currentDate.addDays(-1)
+        let nextDate = currentDate.yesterday
         return TimelineViewController(date: nextDate)
     }
     
@@ -70,7 +70,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         let canScrollOn = currentDate != Date().ignoreTimeComponents()
         if canScrollOn
         {
-            let nextDate = currentDate.addDays(1)
+            let nextDate = currentDate.tomorrow
             let newController = TimelineViewController(date: nextDate)
             if nextDate.ignoreTimeComponents() == Date().ignoreTimeComponents()
             {

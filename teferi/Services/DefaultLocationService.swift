@@ -6,14 +6,30 @@ import UIKit
 
 class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationService
 {
-
-    typealias LocationServiceCallback = (CLLocation) -> ()
+    //MARK: Fields
+    private let distanceFilter = 100.0
+    private let locationManager = CLLocationManager()
     
-    fileprivate let distanceFilter = 100.0
-    fileprivate var onLocationCallbacks = [LocationServiceCallback]()
-    fileprivate let locationManager = CLLocationManager()
-    fileprivate var timer : Timer? = nil
+    private var timer : Timer? = nil
+    private var onLocationCallbacks = [(CLLocation) -> ()]()
     
+    //MARK: Properties
+    var isInBackground : Bool = false
+    {
+        didSet
+        {
+            if isInBackground
+            {
+                locationManager.requestAlwaysAuthorization()
+            }
+            else
+            {
+                locationManager.requestWhenInUseAuthorization()
+            }
+        }
+    }
+    
+    //MARK: Initializers
     override init()
     {
         super.init()
@@ -23,19 +39,31 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.activityType = .other
         locationManager.pausesLocationUpdatesAutomatically = true
-        
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
     }
     
+    //MARK: LocationService implementation
     func startLocationTracking()
     {
-        locationManager.startUpdatingLocation()
+        if isInBackground
+        {
+            locationManager.startUpdatingLocation()
+        }
+        else
+        {
+            locationManager.startMonitoringSignificantLocationChanges()
+        }
     }
     
     func stopLocationTracking()
     {
-        locationManager.stopUpdatingLocation()
+        if isInBackground
+        {
+            locationManager.startUpdatingLocation()
+        }
+        else
+        {
+            locationManager.stopMonitoringSignificantLocationChanges()
+        }
     }
     
     func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
@@ -43,6 +71,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         onLocationCallbacks.append(onLocationCallback)
     }
     
+    //MARK: CLLocationManagerDelegate Implementation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         guard let lastLocation = locations.filter(filterLocations).last else { return }
@@ -59,15 +88,12 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopLocationTracking), userInfo: nil, repeats: false);
     }
     
-    fileprivate func filterLocations(_ location: CLLocation) -> Bool
+    //MARK: Methods
+    private func filterLocations(_ location: CLLocation) -> Bool
     {
         //Location is valid
         guard location.coordinate.latitude != 0.0 && location.coordinate.latitude != 0.0 else { return false }
-        
-        //Location is up-to-date
-        let locationAge = -location.timestamp.timeIntervalSinceNow
-        guard locationAge > 30 else { return false }
-        
+                
         //Location is accurate enough
         guard 0 ... 2000 ~= location.horizontalAccuracy else { return false }
         

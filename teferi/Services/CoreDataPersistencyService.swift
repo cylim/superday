@@ -3,15 +3,20 @@ import UIKit
 
 class CoreDataPersistencyService : PersistencyService
 {
-    fileprivate(set) static var instance = CoreDataPersistencyService()
+    //MARK: Static properties
+    private(set) static var instance = CoreDataPersistencyService()
     
-    fileprivate init()
+    //MARK: Initializers
+    private init()
     {
         
     }
     
-    let timeSlotEntityName = "TimeSlot"
+    //MARK: Fields
+    private let timeSlotEntityName = "TimeSlot"
+    private var callbacks = [(TimeSlot) -> ()]()
     
+    //MARK: PersistencyService implementation
     func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         guard endPreviousTimeSlot() else { return false }
@@ -27,6 +32,7 @@ class CoreDataPersistencyService : PersistencyService
         do
         {
             try managedContext.save()
+            callbacks.forEach { callback in callback(timeSlot) }
             return true
         }
         catch
@@ -35,10 +41,10 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    func getTimeSlotsForDay(_ date: Date) -> [TimeSlot]
+    func getTimeSlots(forDay date: Date) -> [TimeSlot]
     {
         let startTime = date.ignoreTimeComponents()
-        let endTime = date.addDays(1).ignoreTimeComponents()
+        let endTime = date.tomorrow.ignoreTimeComponents()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: timeSlotEntityName)
         fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime as NSDate, endTime as NSDate)
@@ -56,13 +62,27 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    fileprivate func getManagedObjectContext() -> NSManagedObjectContext
+    func getLastTimeSlot() -> TimeSlot
+    {
+        guard let managedTimeSlot = getLastManagedTimeSlot() else { return TimeSlot() }
+        
+        let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
+        return timeSlot
+    }
+    
+    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    {
+        callbacks.append(callback)
+    }
+    
+    //MARK: Methods
+    private func getManagedObjectContext() -> NSManagedObjectContext
     {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }
     
-    fileprivate func mapManagedObjectToTimeSlot(_ managedObject: NSManagedObject) -> TimeSlot
+    private func mapManagedObjectToTimeSlot(_ managedObject: NSManagedObject) -> TimeSlot
     {
         let timeSlot = TimeSlot()
         timeSlot.startTime = managedObject.value(forKey: "startTime") as! Date
@@ -72,7 +92,7 @@ class CoreDataPersistencyService : PersistencyService
         return timeSlot
     }
     
-    fileprivate func endPreviousTimeSlot() -> Bool
+    private func getLastManagedTimeSlot() -> AnyObject?
     {
         let managedContext = getManagedObjectContext()
         
@@ -83,14 +103,26 @@ class CoreDataPersistencyService : PersistencyService
         
         do
         {
-            guard let managedTimeSlot = try managedContext.fetch(request).first else { return true }
-            
+            guard let managedTimeSlot = try managedContext.fetch(request).first else { return nil }
+            return managedTimeSlot as AnyObject?
+        }
+        catch
+        {
+            return nil
+        }
+    }
+    
+    private func endPreviousTimeSlot() -> Bool
+    {
+        do
+        {
+            guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
             let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
             let actualEndTime = timeSlot.startTime.addingTimeInterval(timeSlot.duration)
             
-            (managedTimeSlot as AnyObject).setValue(actualEndTime, forKey: "endTime")
+            managedTimeSlot.setValue(actualEndTime, forKey: "endTime")
             
-            try managedContext.save()
+            try getManagedObjectContext().save()
             return true
         }
         catch
@@ -98,5 +130,4 @@ class CoreDataPersistencyService : PersistencyService
             return false
         }
     }
-    
 }

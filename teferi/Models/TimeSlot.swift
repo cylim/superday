@@ -3,9 +3,9 @@ import Foundation
 open class TimeSlot
 {
     // MARK: Properties
-    var category : Category = Category.Unknown
     var startTime : Date = Date()
     var endTime : Date? = nil
+    var category : Category = Category.Unknown
     
     var duration : TimeInterval
     {
@@ -24,7 +24,7 @@ open class TimeSlot
     fileprivate func getEndDate() -> Date
     {
         let date = Date()
-        let timeEntryLimit = startTime.addDays(1).ignoreTimeComponents()
+        let timeEntryLimit = startTime.tomorrow.ignoreTimeComponents()
         let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == ComparisonResult.orderedDescending
         return timeEntryLastedOverOneDay ? timeEntryLimit : date
     }
