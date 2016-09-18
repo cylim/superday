@@ -1,6 +1,5 @@
 import UIKit
 import XCTest
-import Nimble
 import CoreGraphics
 @testable import teferi
 
@@ -11,14 +10,12 @@ class UIColorExtensionsTests : XCTestCase
         let hexString = "#FFFF00"
         let color = UIColor(hexString: hexString)
         
-        let components = CGColorGetComponents(color.cgColor)
-        let red = components[0]
-        let green = components[1]
-        let blue = components[2]
+        var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        expect(red).to(equal(1.0))
-        expect(green).to(equal(1.0))
-        expect(blue).to(equal(0))
+        XCTAssertEqual(red, 1.0)
+        XCTAssertEqual(green, 1.0)
+        XCTAssertEqual(blue, 0)
     }
     
     func testInitFromHexStringWorksWithoutAPrefixHash()
@@ -26,14 +23,12 @@ class UIColorExtensionsTests : XCTestCase
         let hexString = "FF0000"
         let color = UIColor(hexString: hexString)
         
-        let components = CGColorGetComponents(color.cgColor)
-        let red = components[0]
-        let green = components[1]
-        let blue = components[2]
+        var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        expect(red).to(equal(1.0))
-        expect(green).to(equal(0))
-        expect(blue).to(equal(0))
+        XCTAssertEqual(red, 1.0)
+        XCTAssertEqual(green, 0)
+        XCTAssertEqual(blue, 0)
     }
     
     func testInitFromHexWorksWithAHexLiteral()
@@ -41,27 +36,23 @@ class UIColorExtensionsTests : XCTestCase
         let hex = 0xFF00FF
         let color = UIColor(hex: hex)
         
-        let components = CGColorGetComponents(color.cgColor)
-        let red = components[0]
-        let green = components[1]
-        let blue = components[2]
+        var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        expect(red).to(equal(1.0))
-        expect(green).to(equal(0))
-        expect(blue).to(equal(1.0))
+        XCTAssertEqual(red, 1.0)
+        XCTAssertEqual(green, 0)
+        XCTAssertEqual(blue, 1.0)
     }
     
     func testInitFromIntWorksWithIntegerRepresentationsOfHexValues()
     {
-        let color = UIColor(red: 255, green: 128, blue: 0)
+        let color = UIColor(red: 255, green: 0, blue: 0)
         
-        let components = CGColorGetComponents(color.cgColor)
-        let red = components[0]
-        let green = components[1]
-        let blue = components[2]
+        var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        expect(red).to(equal(1.0))
-        expect(green).to(beCloseTo(0.5, within: 0.02))
-        expect(blue).to(equal(0))
+        XCTAssertEqual(red, 1.0)
+        XCTAssertEqual(green, 0)
+        XCTAssertEqual(blue, 0)
     }
 }

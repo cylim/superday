@@ -13,8 +13,6 @@ target 'teferi' do
     inherit! :search_paths
     # Pods for testing
     pod 'RxSwift',    '~> 3.0.0-beta.1'
-    pod 'Quick'
-    pod 'Nimble'
   end
   
   post_install do |installer|

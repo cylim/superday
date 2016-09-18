@@ -1,19 +1,36 @@
 import Foundation
+import CoreLocation
 @testable import teferi
 
 class MockLocationService : LocationService
 {
-    fileprivate var onLocation : ((Location) -> ())! = nil
-    fileprivate(set) var didSubscribe = false
+    //MARK: Fields
+    private var onLocationCallbacks = [(CLLocation) -> ()]()
     
-    func subscribeToLocationChanges(_ onLocationCallback: (Location) -> ())
+    //MARK: Properties
+    private(set) var locationStarted = false
+    
+    //MARK: LocationService implementation
+    var isInBackground : Bool = false
+    
+    func startLocationTracking()
     {
-        onLocation = onLocationCallback
-        didSubscribe = true
+        locationStarted = true
     }
     
-    func setMockLocation(_ location: Location)
+    func stopLocationTracking()
     {
-        onLocation!(location)
+        locationStarted = false
+    }
+    
+    func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
+    {
+        onLocationCallbacks.append(onLocationCallback)
+    }
+    
+    //MARK: Methods
+    func setMockLocation(_ location: CLLocation)
+    {
+        onLocationCallbacks.forEach { locationCallback in locationCallback(location) }
     }
 }

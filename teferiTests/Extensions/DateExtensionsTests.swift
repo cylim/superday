@@ -1,18 +1,19 @@
 import Foundation
 import XCTest
-import Nimble
 @testable import teferi
 
 class DateExtensionsTests : XCTestCase
 {
-    fileprivate var calendar = Calendar.current
+    //MARK: Fields
+    private var calendar : Calendar = Calendar.current
     
+    //MARK: Test lifecycle
     override func setUp()
     {
         calendar = Calendar.current
-        
     }
     
+    //MARK: Tests
     func testTheAddDaysMethodAddsNDaysToTheCurrentDate()
     {
         var components = DateComponents()
@@ -20,10 +21,10 @@ class DateExtensionsTests : XCTestCase
         components.month = 10
         components.year = 2016
         let octoberTen = calendar.date(from: components)!
-        let octoberEleven = octoberTen.addDays(1)
+        let octoberThirteen = octoberTen.add(days: 3)
         
-        let newComponents = (calendar as Calendar).components(.day, from: octoberEleven)
-        expect(newComponents.day).to(equal(11))
+        let newComponents = (calendar as Calendar).dateComponents([.day], from: octoberThirteen)
+        XCTAssertEqual(newComponents.day, 13)
     }
     
     func testTheAddDaysMethodRemovesDaysFromTheCurrentDateIfTheParameterIsNegative()
@@ -33,12 +34,11 @@ class DateExtensionsTests : XCTestCase
         components.month = 10
         components.year = 2016
         let octoberTen = calendar.date(from: components)!
-        let octoberNine = octoberTen.addDays(-1)
+        let octoberEight = octoberTen.add(days: -2)
         
-        let newComponents = (calendar as Calendar).components(.day, from: octoberNine)
-        expect(newComponents.day).to(equal(9))
+        let newComponents = (calendar as Calendar).dateComponents([.day], from: octoberEight)
+        XCTAssertEqual(newComponents.day, 8)
     }
-    
     
     func testTheAddDaysMethodWorksEvenOnTheEndOfMonth()
     {
@@ -47,12 +47,12 @@ class DateExtensionsTests : XCTestCase
         components.month = 10
         components.year = 2016
         let halloween = calendar.date(from: components)!
-        let novemberFirst = halloween.addDays(1)
+        let novemberFirst = halloween.add(days: 1)
         
-        let newComponents = (calendar as Calendar).components([.day, .month], from: novemberFirst)
+        let newComponents = (calendar as Calendar).dateComponents([.day, .month], from: novemberFirst)
         
-        expect(newComponents.day).to(equal(1))
-        expect(newComponents.month).to(equal(11))
+        XCTAssertEqual(newComponents.day, 1)
+        XCTAssertEqual(newComponents.month, 11)
     }
     
     func testTheIgnoreTimeComponentsMethodReturnOnlyTheDatePortionOfADate()
@@ -71,6 +71,6 @@ class DateExtensionsTests : XCTestCase
         components.hour = 13
         let date2 = calendar.date(from: components2)!
         
-        expect(date.ignoreTimeComponents() == date2.ignoreTimeComponents()).to(beTrue())
+        XCTAssertTrue(date.ignoreTimeComponents() == date2.ignoreTimeComponents())
     }
 }

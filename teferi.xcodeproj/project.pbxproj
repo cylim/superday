@@ -1,2284 +1,1017 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>00B20CBA66D17AE2580ADF08</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-teferi.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-teferi/Pods-teferi.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>03AF93FC566488D9E337DDFA</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>03B30B73DD8EB78B4E96F162</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-teferiTests.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>03BB2FC12FBBF7CE970E4CE5</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>0588D5620A41A329F27EAE6E</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>0B990FDC87B227B22C0C95DC</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>326FBECEEBCDD54BD7B16CF8</string>
-				<string>00B20CBA66D17AE2580ADF08</string>
-				<string>03B30B73DD8EB78B4E96F162</string>
-				<string>924EEB50371CD17ACC6BCFF9</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>122CB97ECAD8DBEE22614F14</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>240AC70B1D748C8800F21F4F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>240AC7161D748C8800F21F4F</string>
-				<string>24A21B671D7C3E0800CEB4F3</string>
-				<string>240AC7151D748C8800F21F4F</string>
-				<string>0B990FDC87B227B22C0C95DC</string>
-				<string>ED14C2EC617C158AAE12C910</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC70C1D748C8800F21F4F</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>LastSwiftUpdateCheck</key>
-				<string>0730</string>
-				<key>LastUpgradeCheck</key>
-				<string>0800</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Toggl</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>240AC7131D748C8800F21F4F</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>7.3.1</string>
-						<key>DevelopmentTeam</key>
-						<string>W74MGFU2BJ</string>
-						<key>LastSwiftMigration</key>
-						<string>0800</string>
-						<key>SystemCapabilities</key>
-						<dict>
-							<key>com.apple.BackgroundModes</key>
-							<dict>
-								<key>enabled</key>
-								<string>1</string>
-							</dict>
-						</dict>
-					</dict>
-					<key>24A21B651D7C3E0800CEB4F3</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>7.3.1</string>
-						<key>DevelopmentTeam</key>
-						<string>W74MGFU2BJ</string>
-						<key>LastSwiftMigration</key>
-						<string>0800</string>
-						<key>TestTargetID</key>
-						<string>240AC7131D748C8800F21F4F</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>240AC70F1D748C8800F21F4F</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-				<string>Base</string>
-			</array>
-			<key>mainGroup</key>
-			<string>240AC70B1D748C8800F21F4F</string>
-			<key>productRefGroup</key>
-			<string>240AC7151D748C8800F21F4F</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>240AC7131D748C8800F21F4F</string>
-				<string>24A21B651D7C3E0800CEB4F3</string>
-			</array>
-		</dict>
-		<key>240AC70F1D748C8800F21F4F</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>240AC73D1D748C8900F21F4F</string>
-				<string>240AC73E1D748C8900F21F4F</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>240AC7101D748C8800F21F4F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>24564F651D83265900D9A8AE</string>
-				<string>24564F561D83254E00D9A8AE</string>
-				<string>24564F721D832A4F00D9A8AE</string>
-				<string>24564F4E1D83207900D9A8AE</string>
-				<string>24564F511D8320FC00D9A8AE</string>
-				<string>24564F5E1D8325CC00D9A8AE</string>
-				<string>24564F601D8325CC00D9A8AE</string>
-				<string>247F06061D88A78300451BAD</string>
-				<string>24564F521D8320FC00D9A8AE</string>
-				<string>24564F5A1D83259100D9A8AE</string>
-				<string>247F05F81D87322600451BAD</string>
-				<string>24564F661D83265900D9A8AE</string>
-				<string>247F05FC1D87337300451BAD</string>
-				<string>240AC7181D748C8800F21F4F</string>
-				<string>247F06041D88A75E00451BAD</string>
-				<string>240AC7201D748C8800F21F4F</string>
-				<string>24564F4D1D83207900D9A8AE</string>
-				<string>247F05FA1D87325600451BAD</string>
-				<string>24564F641D83265900D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>240AC7111D748C8800F21F4F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>8584336EB8DEB2CEBEFB3918</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>240AC7121D748C8800F21F4F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>24564F571D83254E00D9A8AE</string>
-				<string>24564F771D837FBE00D9A8AE</string>
-				<string>240AC7221D748C8800F21F4F</string>
-				<string>240AC71D1D748C8800F21F4F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>240AC7131D748C8800F21F4F</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>240AC73F1D748C8900F21F4F</string>
-			<key>buildPhases</key>
-			<array>
-				<string>03AF93FC566488D9E337DDFA</string>
-				<string>B6B8FA27DE18221515F8176A</string>
-				<string>03BB2FC12FBBF7CE970E4CE5</string>
-				<string>6822A442545352FE6D56DE66</string>
-				<string>FC6EC524D2876882281CE023</string>
-				<string>240AC7101D748C8800F21F4F</string>
-				<string>240AC7111D748C8800F21F4F</string>
-				<string>240AC7121D748C8800F21F4F</string>
-				<string>241977B81D757A5800E89500</string>
-				<string>A183DA66225D9AABE97CB6E9</string>
-				<string>EA8C2DEDDF2BEA382ED8FD74</string>
-				<string>402CC9BDF8C661CBF2276FA1</string>
-				<string>9B04A745BDA5E7FEEC3F5901</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>teferi</string>
-			<key>productName</key>
-			<string>teferi</string>
-			<key>productReference</key>
-			<string>240AC7141D748C8800F21F4F</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>240AC7141D748C8800F21F4F</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>teferi.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>240AC7151D748C8800F21F4F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>240AC7141D748C8800F21F4F</string>
-				<string>24A21B661D7C3E0800CEB4F3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC7161D748C8800F21F4F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24CD8A461D7A13560017C53E</string>
-				<string>24BA51A91D74D79C00042CDF</string>
-				<string>24BA51A51D74D69C00042CDF</string>
-				<string>24D99F681D74B92C00E68163</string>
-				<string>24D99F671D74B91900E68163</string>
-				<string>24D99F661D74B8D700E68163</string>
-				<string>24D99F691D74B93C00E68163</string>
-				<string>240AC7171D748C8800F21F4F</string>
-				<string>240AC7211D748C8800F21F4F</string>
-				<string>240AC7261D748C8800F21F4F</string>
-				<string>240AC71E1D748C8800F21F4F</string>
-				<string>24564F751D837FBE00D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>teferi</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC7171D748C8800F21F4F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>AppDelegate.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC7181D748C8800F21F4F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>240AC7171D748C8800F21F4F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>240AC71B1D748C8800F21F4F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>240AC71C1D748C8800F21F4F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>Main.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC71C1D748C8800F21F4F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.storyboard</string>
-			<key>name</key>
-			<string>Base</string>
-			<key>path</key>
-			<string>Base.lproj/Main.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC71D1D748C8800F21F4F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>240AC71B1D748C8800F21F4F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>240AC71E1D748C8800F21F4F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>240AC71F1D748C8800F21F4F</string>
-			</array>
-			<key>currentVersion</key>
-			<string>240AC71F1D748C8800F21F4F</string>
-			<key>isa</key>
-			<string>XCVersionGroup</string>
-			<key>path</key>
-			<string>teferi.xcdatamodeld</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-			<key>versionGroupType</key>
-			<string>wrapper.xcdatamodel</string>
-		</dict>
-		<key>240AC71F1D748C8800F21F4F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.xcdatamodel</string>
-			<key>path</key>
-			<string>teferi.xcdatamodel</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC7201D748C8800F21F4F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>240AC71E1D748C8800F21F4F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>240AC7211D748C8800F21F4F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Assets.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC7221D748C8800F21F4F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>240AC7211D748C8800F21F4F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>240AC7261D748C8800F21F4F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>240AC73D1D748C8900F21F4F</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ANALYZER_NONNULL</key>
-				<string>YES</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INFINITE_RECURSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
-				<string>YES</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>ENABLE_TESTABILITY</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.3</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SWIFT_OPTIMIZATION_LEVEL</key>
-				<string>-Onone</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>240AC73E1D748C8900F21F4F</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ANALYZER_NONNULL</key>
-				<string>YES</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INFINITE_RECURSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
-				<string>YES</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.3</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SWIFT_OPTIMIZATION_LEVEL</key>
-				<string>-Owholemodule</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>240AC73F1D748C8900F21F4F</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>240AC7401D748C8900F21F4F</string>
-				<string>240AC7411D748C8900F21F4F</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>240AC7401D748C8900F21F4F</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>326FBECEEBCDD54BD7B16CF8</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES</key>
-				<string>NO</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(PROJECT_DIR)/Carthage/Build/iOS</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>teferi/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.toggl.teferi</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>240AC7411D748C8900F21F4F</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>00B20CBA66D17AE2580ADF08</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES</key>
-				<string>NO</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(PROJECT_DIR)/Carthage/Build/iOS</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>teferi/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.toggl.teferi</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>2414EB921D7D955C001EFB6D</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>dstPath</key>
-			<string></string>
-			<key>dstSubfolderSpec</key>
-			<string>7</string>
-			<key>files</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXCopyFilesBuildPhase</string>
-			<key>name</key>
-			<string>Copy Files</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>2414EB971D7D95D6001EFB6D</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array>
-				<string>$(SRCROOT)/Carthage/Build/iOS/Nimble.framework</string>
-				<string>$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework</string>
-				<string>$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework</string>
-			</array>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>/usr/local/bin/carthage copy-frameworks</string>
-		</dict>
-		<key>2414EB981D7DC8D1001EFB6D</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F6B1D8326F100D9A8AE</string>
-				<string>24564F6C1D8326F100D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>ViewModels</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>241977B81D757A5800E89500</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>/usr/local/bin/carthage copy-frameworks</string>
-		</dict>
-		<key>24564F401D82FDBB00D9A8AE</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F671D8326E700D9A8AE</string>
-				<string>24564F681D8326E700D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Extensions</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F4B1D83207900D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>MainViewModel.swift</string>
-			<key>path</key>
-			<string>ViewModels/MainViewModel.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F4C1D83207900D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimelineViewModel.swift</string>
-			<key>path</key>
-			<string>ViewModels/TimelineViewModel.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F4D1D83207900D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F4B1D83207900D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F4E1D83207900D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F4C1D83207900D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F4F1D8320FC00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>MainViewController.swift</string>
-			<key>path</key>
-			<string>ViewControllers/MainViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F501D8320FC00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimelineViewController.swift</string>
-			<key>path</key>
-			<string>ViewControllers/TimelineViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F511D8320FC00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F4F1D8320FC00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F521D8320FC00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F501D8320FC00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F531D83254E00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimelineCell.swift</string>
-			<key>path</key>
-			<string>Views/TimelineCell.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F541D83254E00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>name</key>
-			<string>TimelineCell.xib</string>
-			<key>path</key>
-			<string>Views/TimelineCell.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F561D83254E00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F531D83254E00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F571D83254E00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F541D83254E00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F591D83259100D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>DefaultLocationService.swift</string>
-			<key>path</key>
-			<string>Services/DefaultLocationService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F5A1D83259100D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F591D83259100D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F5B1D8325CC00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>Category.swift</string>
-			<key>path</key>
-			<string>Models/Category.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F5D1D8325CC00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimeSlot.swift</string>
-			<key>path</key>
-			<string>Models/TimeSlot.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F5E1D8325CC00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F5B1D8325CC00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F601D8325CC00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F5D1D8325CC00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F611D83265900D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>ColorExtensions.swift</string>
-			<key>path</key>
-			<string>Extensions/ColorExtensions.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F621D83265900D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>DateExtensions.swift</string>
-			<key>path</key>
-			<string>Extensions/DateExtensions.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F631D83265900D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>StringExtensions.swift</string>
-			<key>path</key>
-			<string>Extensions/StringExtensions.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F641D83265900D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F611D83265900D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F651D83265900D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F621D83265900D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F661D83265900D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F631D83265900D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F671D8326E700D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>ColorExtensionsTests.swift</string>
-			<key>path</key>
-			<string>Extensions/ColorExtensionsTests.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F681D8326E700D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>DateExtensionsTests.swift</string>
-			<key>path</key>
-			<string>Extensions/DateExtensionsTests.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F691D8326E700D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F671D8326E700D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F6A1D8326E700D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F681D8326E700D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F6B1D8326F100D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>MainViewModelTests.swift</string>
-			<key>path</key>
-			<string>ViewModels/MainViewModelTests.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F6C1D8326F100D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimelineViewModelTests.swift</string>
-			<key>path</key>
-			<string>ViewModels/TimelineViewModelTests.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F6D1D8326F100D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F6B1D8326F100D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F6E1D8326F100D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F6C1D8326F100D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F6F1D83270000D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>MockLocationService.swift</string>
-			<key>path</key>
-			<string>Mocks/MockLocationService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F701D83270000D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F6F1D83270000D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F711D832A4F00D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>PagerViewController.swift</string>
-			<key>path</key>
-			<string>ViewControllers/PagerViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F721D832A4F00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F711D832A4F00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F751D837FBE00D9A8AE</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F761D837FBE00D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>Main.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F761D837FBE00D9A8AE</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/Main.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F771D837FBE00D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F751D837FBE00D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24564F7B1D83891100D9A8AE</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F7C1D83893900D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Views</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F7C1D83893900D9A8AE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimelineCellTests.swift</string>
-			<key>path</key>
-			<string>Views/TimelineCellTests.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24564F7D1D83893900D9A8AE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>24564F7C1D83893900D9A8AE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>247F05F61D87319700451BAD</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>247F05F71D87322600451BAD</string>
-				<string>247F05F91D87325600451BAD</string>
-				<string>247F06031D88A75E00451BAD</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Protocols</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F05F71D87322600451BAD</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>LocationService.swift</string>
-			<key>path</key>
-			<string>Services/Protocols/LocationService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F05F81D87322600451BAD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>247F05F71D87322600451BAD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>247F05F91D87325600451BAD</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>PersistencyService.swift</string>
-			<key>path</key>
-			<string>Services/Protocols/PersistencyService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F05FA1D87325600451BAD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>247F05F91D87325600451BAD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>247F05FB1D87337300451BAD</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>CoreDataPersistencyService.swift</string>
-			<key>path</key>
-			<string>Services/CoreDataPersistencyService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F05FC1D87337300451BAD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>247F05FB1D87337300451BAD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>247F05FD1D88153700451BAD</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>MockPersistencyService.swift</string>
-			<key>path</key>
-			<string>Mocks/MockPersistencyService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F05FE1D88153700451BAD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>247F05FD1D88153700451BAD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>247F06031D88A75E00451BAD</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>TimeSlotCreationService.swift</string>
-			<key>path</key>
-			<string>Services/Protocols/TimeSlotCreationService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F06041D88A75E00451BAD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>247F06031D88A75E00451BAD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>247F06051D88A78300451BAD</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>name</key>
-			<string>DefaultTimeSlotCreationService.swift</string>
-			<key>path</key>
-			<string>Services/DefaultTimeSlotCreationService.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>247F06061D88A78300451BAD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>247F06051D88A78300451BAD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>24874DE41D7C3FC40099DC1F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F6F1D83270000D9A8AE</string>
-				<string>247F05FD1D88153700451BAD</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Mocks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24A21B621D7C3E0800CEB4F3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>24564F701D83270000D9A8AE</string>
-				<string>24564F6E1D8326F100D9A8AE</string>
-				<string>24564F7D1D83893900D9A8AE</string>
-				<string>247F05FE1D88153700451BAD</string>
-				<string>24564F6A1D8326E700D9A8AE</string>
-				<string>24564F691D8326E700D9A8AE</string>
-				<string>24564F6D1D8326F100D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>24A21B631D7C3E0800CEB4F3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>86499C439951BA9133439EF2</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>24A21B641D7C3E0800CEB4F3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>24A21B651D7C3E0800CEB4F3</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>24A21B6D1D7C3E0800CEB4F3</string>
-			<key>buildPhases</key>
-			<array>
-				<string>DF5E0292C7A9CFEFB1BA13CC</string>
-				<string>CA7BC18640F124EC423698FE</string>
-				<string>5D5009C8A0C8C480B64FB05F</string>
-				<string>D056E9F8A84F20A1F9C3F70A</string>
-				<string>E1C304288BF4D49DA86EAC9F</string>
-				<string>24A21B621D7C3E0800CEB4F3</string>
-				<string>2414EB971D7D95D6001EFB6D</string>
-				<string>2414EB921D7D955C001EFB6D</string>
-				<string>24A21B631D7C3E0800CEB4F3</string>
-				<string>24A21B641D7C3E0800CEB4F3</string>
-				<string>0588D5620A41A329F27EAE6E</string>
-				<string>BDF80C0A1DD9DB3BB223CA5C</string>
-				<string>122CB97ECAD8DBEE22614F14</string>
-				<string>A496B8A6FB9673F5851483E8</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>24A21B6C1D7C3E0800CEB4F3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>teferiTests</string>
-			<key>productName</key>
-			<string>teferiTests</string>
-			<key>productReference</key>
-			<string>24A21B661D7C3E0800CEB4F3</string>
-			<key>productType</key>
-			<string>com.apple.product-type.bundle.unit-test</string>
-		</dict>
-		<key>24A21B661D7C3E0800CEB4F3</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>teferiTests.xctest</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>24A21B671D7C3E0800CEB4F3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F401D82FDBB00D9A8AE</string>
-				<string>2414EB981D7DC8D1001EFB6D</string>
-				<string>24564F7B1D83891100D9A8AE</string>
-				<string>24874DE41D7C3FC40099DC1F</string>
-				<string>24A21B6A1D7C3E0800CEB4F3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>teferiTests</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24A21B6A1D7C3E0800CEB4F3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24A21B6B1D7C3E0800CEB4F3</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>240AC70C1D748C8800F21F4F</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>240AC7131D748C8800F21F4F</string>
-			<key>remoteInfo</key>
-			<string>teferi</string>
-		</dict>
-		<key>24A21B6C1D7C3E0800CEB4F3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>target</key>
-			<string>240AC7131D748C8800F21F4F</string>
-			<key>targetProxy</key>
-			<string>24A21B6B1D7C3E0800CEB4F3</string>
-		</dict>
-		<key>24A21B6D1D7C3E0800CEB4F3</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>24A21B6E1D7C3E0800CEB4F3</string>
-				<string>24A21B6F1D7C3E0800CEB4F3</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>24A21B6E1D7C3E0800CEB4F3</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>03B30B73DD8EB78B4E96F162</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(TEST_HOST)</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(PROJECT_DIR)/Carthage/Build/iOS</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>teferiTests/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.toggl.teferiTests</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-				<key>TEST_HOST</key>
-				<string>$(BUILT_PRODUCTS_DIR)/teferi.app/teferi</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>24A21B6F1D7C3E0800CEB4F3</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>924EEB50371CD17ACC6BCFF9</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(TEST_HOST)</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(PROJECT_DIR)/Carthage/Build/iOS</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>teferiTests/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.toggl.teferiTests</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SWIFT_VERSION</key>
-				<string>3.0</string>
-				<key>TEST_HOST</key>
-				<string>$(BUILT_PRODUCTS_DIR)/teferi.app/teferi</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>24BA51A51D74D69C00042CDF</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>247F05F61D87319700451BAD</string>
-				<string>24564F591D83259100D9A8AE</string>
-				<string>247F05FB1D87337300451BAD</string>
-				<string>247F06051D88A78300451BAD</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Services</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24BA51A91D74D79C00042CDF</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F5B1D8325CC00D9A8AE</string>
-				<string>24564F5D1D8325CC00D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Models</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24CD8A461D7A13560017C53E</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F611D83265900D9A8AE</string>
-				<string>24564F621D83265900D9A8AE</string>
-				<string>24564F631D83265900D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Extensions</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24D99F661D74B8D700E68163</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F4B1D83207900D9A8AE</string>
-				<string>24564F4C1D83207900D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>ViewModels</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24D99F671D74B91900E68163</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F4F1D8320FC00D9A8AE</string>
-				<string>24564F711D832A4F00D9A8AE</string>
-				<string>24564F501D8320FC00D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>ViewControllers</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24D99F681D74B92C00E68163</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>240AC71B1D748C8800F21F4F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Storyboards</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>24D99F691D74B93C00E68163</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>24564F531D83254E00D9A8AE</string>
-				<string>24564F541D83254E00D9A8AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Views</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>326FBECEEBCDD54BD7B16CF8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-teferi.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>402CC9BDF8C661CBF2276FA1</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>43617E462FAF7C2B30BED3B4</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_teferiTests.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>5D5009C8A0C8C480B64FB05F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>6822A442545352FE6D56DE66</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>8584336EB8DEB2CEBEFB3918</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B0E298043A2BB331608A8FD2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>86499C439951BA9133439EF2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>43617E462FAF7C2B30BED3B4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>924EEB50371CD17ACC6BCFF9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-teferiTests.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>9B04A745BDA5E7FEEC3F5901</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>A183DA66225D9AABE97CB6E9</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>A496B8A6FB9673F5851483E8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>B0E298043A2BB331608A8FD2</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_teferi.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>B6B8FA27DE18221515F8176A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>BDF80C0A1DD9DB3BB223CA5C</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>CA7BC18640F124EC423698FE</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>D056E9F8A84F20A1F9C3F70A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>DF5E0292C7A9CFEFB1BA13CC</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>E1C304288BF4D49DA86EAC9F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>EA8C2DEDDF2BEA382ED8FD74</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>ED14C2EC617C158AAE12C910</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B0E298043A2BB331608A8FD2</string>
-				<string>43617E462FAF7C2B30BED3B4</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>FC6EC524D2876882281CE023</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>240AC70C1D748C8800F21F4F</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AC7171D748C8800F21F4F /* AppDelegate.swift */; };
+		240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC71B1D748C8800F21F4F /* Main.storyboard */; };
+		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
+		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
+		24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F4B1D83207900D9A8AE /* MainViewModel.swift */; };
+		24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */; };
+		24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F4F1D8320FC00D9A8AE /* MainViewController.swift */; };
+		24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F501D8320FC00D9A8AE /* TimelineViewController.swift */; };
+		24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F531D83254E00D9A8AE /* TimelineCell.swift */; };
+		24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24564F541D83254E00D9A8AE /* TimelineCell.xib */; };
+		24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F591D83259100D9A8AE /* DefaultLocationService.swift */; };
+		24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5B1D8325CC00D9A8AE /* Category.swift */; };
+		24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */; };
+		24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* ColorExtensions.swift */; };
+		24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F621D83265900D9A8AE /* DateExtensions.swift */; };
+		24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F631D83265900D9A8AE /* StringExtensions.swift */; };
+		24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F671D8326E700D9A8AE /* ColorExtensionsTests.swift */; };
+		24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F681D8326E700D9A8AE /* DateExtensionsTests.swift */; };
+		24564F6D1D8326F100D9A8AE /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F6B1D8326F100D9A8AE /* MainViewModelTests.swift */; };
+		24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */; };
+		24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F6F1D83270000D9A8AE /* MockLocationService.swift */; };
+		24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F711D832A4F00D9A8AE /* PagerViewController.swift */; };
+		24564F771D837FBE00D9A8AE /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24564F751D837FBE00D9A8AE /* Main.strings */; };
+		24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */; };
+		247F05F81D87322600451BAD /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F71D87322600451BAD /* LocationService.swift */; };
+		247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F91D87325600451BAD /* PersistencyService.swift */; };
+		247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */; };
+		247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FD1D88153700451BAD /* MockPersistencyService.swift */; };
+		247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */; };
+		247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */; };
+		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
+		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		24A21B6B1D7C3E0800CEB4F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 240AC70C1D748C8800F21F4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 240AC7131D748C8800F21F4F;
+			remoteInfo = teferi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2414EB921D7D955C001EFB6D /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00B20CBA66D17AE2580ADF08 /* Pods-teferi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.release.xcconfig"; sourceTree = "<group>"; };
+		03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		240AC7141D748C8800F21F4F /* teferi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teferi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		240AC7171D748C8800F21F4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		240AC71C1D748C8800F21F4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
+		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24564F4B1D83207900D9A8AE /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewModel.swift; path = ViewModels/MainViewModel.swift; sourceTree = "<group>"; };
+		24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewModel.swift; path = ViewModels/TimelineViewModel.swift; sourceTree = "<group>"; };
+		24564F4F1D8320FC00D9A8AE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ViewControllers/MainViewController.swift; sourceTree = "<group>"; };
+		24564F501D8320FC00D9A8AE /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewController.swift; path = ViewControllers/TimelineViewController.swift; sourceTree = "<group>"; };
+		24564F531D83254E00D9A8AE /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCell.swift; path = Views/TimelineCell.swift; sourceTree = "<group>"; };
+		24564F541D83254E00D9A8AE /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimelineCell.xib; path = Views/TimelineCell.xib; sourceTree = "<group>"; };
+		24564F591D83259100D9A8AE /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultLocationService.swift; path = Services/DefaultLocationService.swift; sourceTree = "<group>"; };
+		24564F5B1D8325CC00D9A8AE /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
+		24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlot.swift; path = Models/TimeSlot.swift; sourceTree = "<group>"; };
+		24564F611D83265900D9A8AE /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorExtensions.swift; path = Extensions/ColorExtensions.swift; sourceTree = "<group>"; };
+		24564F621D83265900D9A8AE /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = Extensions/DateExtensions.swift; sourceTree = "<group>"; };
+		24564F631D83265900D9A8AE /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = Extensions/StringExtensions.swift; sourceTree = "<group>"; };
+		24564F671D8326E700D9A8AE /* ColorExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorExtensionsTests.swift; path = Extensions/ColorExtensionsTests.swift; sourceTree = "<group>"; };
+		24564F681D8326E700D9A8AE /* DateExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateExtensionsTests.swift; path = Extensions/DateExtensionsTests.swift; sourceTree = "<group>"; };
+		24564F6B1D8326F100D9A8AE /* MainViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewModelTests.swift; path = ViewModels/MainViewModelTests.swift; sourceTree = "<group>"; };
+		24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewModelTests.swift; path = ViewModels/TimelineViewModelTests.swift; sourceTree = "<group>"; };
+		24564F6F1D83270000D9A8AE /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLocationService.swift; path = Mocks/MockLocationService.swift; sourceTree = "<group>"; };
+		24564F711D832A4F00D9A8AE /* PagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewController.swift; path = ViewControllers/PagerViewController.swift; sourceTree = "<group>"; };
+		24564F761D837FBE00D9A8AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCellTests.swift; path = Views/TimelineCellTests.swift; sourceTree = "<group>"; };
+		247F05F71D87322600451BAD /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/Protocols/LocationService.swift; sourceTree = "<group>"; };
+		247F05F91D87325600451BAD /* PersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistencyService.swift; path = Services/Protocols/PersistencyService.swift; sourceTree = "<group>"; };
+		247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataPersistencyService.swift; path = Services/CoreDataPersistencyService.swift; sourceTree = "<group>"; };
+		247F05FD1D88153700451BAD /* MockPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockPersistencyService.swift; path = Mocks/MockPersistencyService.swift; sourceTree = "<group>"; };
+		247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlotCreationService.swift; path = Services/Protocols/TimeSlotCreationService.swift; sourceTree = "<group>"; };
+		247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeSlotCreationService.swift; path = Services/DefaultTimeSlotCreationService.swift; sourceTree = "<group>"; };
+		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
+		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
+		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		240AC7111D748C8800F21F4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24A21B631D7C3E0800CEB4F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B990FDC87B227B22C0C95DC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */,
+				00B20CBA66D17AE2580ADF08 /* Pods-teferi.release.xcconfig */,
+				03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */,
+				924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		240AC70B1D748C8800F21F4F = {
+			isa = PBXGroup;
+			children = (
+				240AC7161D748C8800F21F4F /* teferi */,
+				24A21B671D7C3E0800CEB4F3 /* teferiTests */,
+				240AC7151D748C8800F21F4F /* Products */,
+				0B990FDC87B227B22C0C95DC /* Pods */,
+				ED14C2EC617C158AAE12C910 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		240AC7151D748C8800F21F4F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				240AC7141D748C8800F21F4F /* teferi.app */,
+				24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		240AC7161D748C8800F21F4F /* teferi */ = {
+			isa = PBXGroup;
+			children = (
+				24CD8A461D7A13560017C53E /* Extensions */,
+				24BA51A91D74D79C00042CDF /* Models */,
+				24BA51A51D74D69C00042CDF /* Services */,
+				24D99F681D74B92C00E68163 /* Storyboards */,
+				24D99F671D74B91900E68163 /* ViewControllers */,
+				24D99F661D74B8D700E68163 /* ViewModels */,
+				24D99F691D74B93C00E68163 /* Views */,
+				240AC7171D748C8800F21F4F /* AppDelegate.swift */,
+				240AC7211D748C8800F21F4F /* Assets.xcassets */,
+				240AC7261D748C8800F21F4F /* Info.plist */,
+				240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */,
+				24564F751D837FBE00D9A8AE /* Main.strings */,
+			);
+			path = teferi;
+			sourceTree = "<group>";
+		};
+		2414EB981D7DC8D1001EFB6D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				24564F6B1D8326F100D9A8AE /* MainViewModelTests.swift */,
+				24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		24564F401D82FDBB00D9A8AE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				24564F671D8326E700D9A8AE /* ColorExtensionsTests.swift */,
+				24564F681D8326E700D9A8AE /* DateExtensionsTests.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		24564F7B1D83891100D9A8AE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		247F05F61D87319700451BAD /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				247F05F71D87322600451BAD /* LocationService.swift */,
+				247F05F91D87325600451BAD /* PersistencyService.swift */,
+				247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		24874DE41D7C3FC40099DC1F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				24564F6F1D83270000D9A8AE /* MockLocationService.swift */,
+				247F05FD1D88153700451BAD /* MockPersistencyService.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		24A21B671D7C3E0800CEB4F3 /* teferiTests */ = {
+			isa = PBXGroup;
+			children = (
+				24564F401D82FDBB00D9A8AE /* Extensions */,
+				2414EB981D7DC8D1001EFB6D /* ViewModels */,
+				24564F7B1D83891100D9A8AE /* Views */,
+				24874DE41D7C3FC40099DC1F /* Mocks */,
+				24A21B6A1D7C3E0800CEB4F3 /* Info.plist */,
+			);
+			path = teferiTests;
+			sourceTree = "<group>";
+		};
+		24BA51A51D74D69C00042CDF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				247F05F61D87319700451BAD /* Protocols */,
+				24564F591D83259100D9A8AE /* DefaultLocationService.swift */,
+				247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */,
+				247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		24BA51A91D74D79C00042CDF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				24564F5B1D8325CC00D9A8AE /* Category.swift */,
+				24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		24CD8A461D7A13560017C53E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				24564F611D83265900D9A8AE /* ColorExtensions.swift */,
+				24564F621D83265900D9A8AE /* DateExtensions.swift */,
+				24564F631D83265900D9A8AE /* StringExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		24D99F661D74B8D700E68163 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
+				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		24D99F671D74B91900E68163 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				24564F4F1D8320FC00D9A8AE /* MainViewController.swift */,
+				24564F711D832A4F00D9A8AE /* PagerViewController.swift */,
+				24564F501D8320FC00D9A8AE /* TimelineViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		24D99F681D74B92C00E68163 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				240AC71B1D748C8800F21F4F /* Main.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		24D99F691D74B93C00E68163 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				24564F531D83254E00D9A8AE /* TimelineCell.swift */,
+				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		ED14C2EC617C158AAE12C910 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */,
+				43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		240AC7131D748C8800F21F4F /* teferi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 240AC73F1D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferi" */;
+			buildPhases = (
+				03AF93FC566488D9E337DDFA /* [CP] Check Pods Manifest.lock */,
+				B6B8FA27DE18221515F8176A /* [CP] Check Pods Manifest.lock */,
+				03BB2FC12FBBF7CE970E4CE5 /* [CP] Check Pods Manifest.lock */,
+				6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */,
+				FC6EC524D2876882281CE023 /* [CP] Check Pods Manifest.lock */,
+				240AC7101D748C8800F21F4F /* Sources */,
+				240AC7111D748C8800F21F4F /* Frameworks */,
+				240AC7121D748C8800F21F4F /* Resources */,
+				241977B81D757A5800E89500 /* ShellScript */,
+				A183DA66225D9AABE97CB6E9 /* [CP] Embed Pods Frameworks */,
+				EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */,
+				402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */,
+				9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = teferi;
+			productName = teferi;
+			productReference = 240AC7141D748C8800F21F4F /* teferi.app */;
+			productType = "com.apple.product-type.application";
+		};
+		24A21B651D7C3E0800CEB4F3 /* teferiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24A21B6D1D7C3E0800CEB4F3 /* Build configuration list for PBXNativeTarget "teferiTests" */;
+			buildPhases = (
+				DF5E0292C7A9CFEFB1BA13CC /* [CP] Check Pods Manifest.lock */,
+				CA7BC18640F124EC423698FE /* [CP] Check Pods Manifest.lock */,
+				5D5009C8A0C8C480B64FB05F /* [CP] Check Pods Manifest.lock */,
+				D056E9F8A84F20A1F9C3F70A /* [CP] Check Pods Manifest.lock */,
+				E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */,
+				24A21B621D7C3E0800CEB4F3 /* Sources */,
+				2414EB971D7D95D6001EFB6D /* ShellScript */,
+				2414EB921D7D955C001EFB6D /* Copy Files */,
+				24A21B631D7C3E0800CEB4F3 /* Frameworks */,
+				24A21B641D7C3E0800CEB4F3 /* Resources */,
+				0588D5620A41A329F27EAE6E /* [CP] Embed Pods Frameworks */,
+				BDF80C0A1DD9DB3BB223CA5C /* [CP] Copy Pods Resources */,
+				122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */,
+				A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24A21B6C1D7C3E0800CEB4F3 /* PBXTargetDependency */,
+			);
+			name = teferiTests;
+			productName = teferiTests;
+			productReference = 24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		240AC70C1D748C8800F21F4F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Toggl;
+				TargetAttributes = {
+					240AC7131D748C8800F21F4F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = W74MGFU2BJ;
+						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+					24A21B651D7C3E0800CEB4F3 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = W74MGFU2BJ;
+						LastSwiftMigration = 0800;
+						TestTargetID = 240AC7131D748C8800F21F4F;
+					};
+				};
+			};
+			buildConfigurationList = 240AC70F1D748C8800F21F4F /* Build configuration list for PBXProject "teferi" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 240AC70B1D748C8800F21F4F;
+			productRefGroup = 240AC7151D748C8800F21F4F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				240AC7131D748C8800F21F4F /* teferi */,
+				24A21B651D7C3E0800CEB4F3 /* teferiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		240AC7121D748C8800F21F4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */,
+				24564F771D837FBE00D9A8AE /* Main.strings in Resources */,
+				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
+				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24A21B641D7C3E0800CEB4F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03AF93FC566488D9E337DDFA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		03BB2FC12FBBF7CE970E4CE5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		0588D5620A41A329F27EAE6E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2414EB971D7D95D6001EFB6D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		241977B81D757A5800E89500 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5D5009C8A0C8C480B64FB05F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A183DA66225D9AABE97CB6E9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6B8FA27DE18221515F8176A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BDF80C0A1DD9DB3BB223CA5C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA7BC18640F124EC423698FE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D056E9F8A84F20A1F9C3F70A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DF5E0292C7A9CFEFB1BA13CC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC6EC524D2876882281CE023 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		240AC7101D748C8800F21F4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */,
+				24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */,
+				24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */,
+				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
+				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
+				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
+				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
+				247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */,
+				24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */,
+				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
+				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
+				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
+				247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */,
+				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
+				247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */,
+				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
+				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
+				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
+				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24A21B621D7C3E0800CEB4F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
+				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
+				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
+				247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */,
+				24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */,
+				24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */,
+				24564F6D1D8326F100D9A8AE /* MainViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		24A21B6C1D7C3E0800CEB4F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 240AC7131D748C8800F21F4F /* teferi */;
+			targetProxy = 24A21B6B1D7C3E0800CEB4F3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		240AC71B1D748C8800F21F4F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				240AC71C1D748C8800F21F4F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		24564F751D837FBE00D9A8AE /* Main.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				24564F761D837FBE00D9A8AE /* en */,
+			);
+			name = Main.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		240AC73D1D748C8900F21F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		240AC73E1D748C8900F21F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		240AC7401D748C8900F21F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = teferi/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		240AC7411D748C8900F21F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00B20CBA66D17AE2580ADF08 /* Pods-teferi.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = teferi/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		24A21B6E1D7C3E0800CEB4F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = teferiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
+			};
+			name = Debug;
+		};
+		24A21B6F1D7C3E0800CEB4F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = teferiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		240AC70F1D748C8800F21F4F /* Build configuration list for PBXProject "teferi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				240AC73D1D748C8900F21F4F /* Debug */,
+				240AC73E1D748C8900F21F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		240AC73F1D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				240AC7401D748C8900F21F4F /* Debug */,
+				240AC7411D748C8900F21F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24A21B6D1D7C3E0800CEB4F3 /* Build configuration list for PBXNativeTarget "teferiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24A21B6E1D7C3E0800CEB4F3 /* Debug */,
+				24A21B6F1D7C3E0800CEB4F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */,
+			);
+			currentVersion = 240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */;
+			path = teferi.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 240AC70C1D748C8800F21F4F /* Project object */;
+}

@@ -1,4 +1,3 @@
-import Nimble
 import Foundation
 import XCTest
 import RxSwift
@@ -6,9 +5,9 @@ import RxSwift
 
 class TimelineViewModelTests : XCTestCase
 {
-    fileprivate var disposable : Disposable? = nil
-    fileprivate var mockPersistencyService = MockPersistencyService()
-    fileprivate var viewModel = TimelineViewModel(date: Date(), persistencyService: MockPersistencyService())
+    private var disposable : Disposable? = nil
+    private var mockPersistencyService = MockPersistencyService()
+    private var viewModel = TimelineViewModel(date: Date(), persistencyService: MockPersistencyService())
     
     override func setUp()
     {
@@ -24,26 +23,26 @@ class TimelineViewModelTests : XCTestCase
     func testTheAddNewSlotsMethodAddsANewSlot()
     {
         let oldSlotCount = viewModel.timeSlots.count
-        viewModel.addNewSlot(.Commute)
+        viewModel.addNewSlot(withCategory: .Commute)
         let newSlotCount = viewModel.timeSlots.count
         
-        expect(newSlotCount).to(equal(oldSlotCount + 1))
+        XCTAssertEqual(newSlotCount, oldSlotCount + 1)
     }
     
     func testTheNewlyAddedSlotHasNoEndTime()
     {
-        viewModel.addNewSlot(.Commute)
+        viewModel.addNewSlot(withCategory: .Commute)
         let lastSlot = viewModel.timeSlots.last!
         
-        expect(lastSlot.endTime).to(beNil())
+        XCTAssertNil(lastSlot.endTime)
     }
     
     func testTheAddNewSlotsMethodEndsThePreviousTimeSlot()
     {
-        viewModel.addNewSlot(.Commute)
+        viewModel.addNewSlot(withCategory: .Commute)
         let firstSlot = viewModel.timeSlots.first!
-        viewModel.addNewSlot(.Work)
+        viewModel.addNewSlot(withCategory: .Work)
         
-        expect(firstSlot.endTime).notTo(beNil())
+        XCTAssertNotNil(firstSlot.endTime)
     }
 }

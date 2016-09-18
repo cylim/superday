@@ -3,32 +3,41 @@ import Foundation
 
 class MockPersistencyService : PersistencyService
 {
-    var timeSlots = [TimeSlot]()
+    //MARK: Fields
+    private var newTimeSlotCallbacks = [(TimeSlot) -> ()]()
     
-    func createTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    //MARK: Properties
+    private(set) var timeSlots = [TimeSlot]()
+    
+    //PersistencyService implementation
+    func getLastTimeSlot() -> TimeSlot
     {
+        return timeSlots.last!
+    }
+    
+    func getTimeSlots(forDay day: Date) -> [TimeSlot]
+    {
+        let startDate = day.ignoreTimeComponents()
+        let endDate = day.tomorrow.ignoreTimeComponents()
+        
+        return timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
+    }
+    
+    func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    {
+        if let lastTimeSlot = timeSlots.last
+        {
+            lastTimeSlot.endTime = Date()
+        }
+        
         timeSlots.append(timeSlot)
+        newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
+        
         return true
     }
     
-    func updateTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
     {
-        if let index = timeSlots.index(where: { t in t === timeSlot })
-        {
-            timeSlots.remove(at: index)
-            timeSlots.append(timeSlot)
-            
-            return true
-        }
-        
-        return false
-    }
-    
-    func getTimeSlotsForDay(_ date: Date) -> [TimeSlot]
-    {
-        let startDate = date.ignoreTimeComponents()
-        let endDate = date.addDays(1).ignoreTimeComponents()
-        
-        return timeSlots.filter { t in t.startTime.compare(startDate) == ComparisonResult.orderedDescending && t.startTime.compare(endDate) == ComparisonResult.orderedAscending   }
+        newTimeSlotCallbacks.append(callback)
     }
 }

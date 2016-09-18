@@ -1,46 +1,45 @@
 import Foundation
 import XCTest
-import Nimble
 @testable import teferi
 
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
-    fileprivate let timeSlot = TimeSlot(category: .Work)
-    fileprivate var view = TimelineCell()
+    private let timeSlot = TimeSlot(category: .Work)
+    private var view = TimelineCell()
     
-    fileprivate var imageIcon : UIImageView
+    private var imageIcon : UIImageView
     {
         let view = self.view.subviews.filter { v in v is UIImageView  }.first!
         return view as! UIImageView
     }
     
-    fileprivate var slotDescription : UILabel
+    private var slotDescription : UILabel
     {
         let view = self.view.subviews.filter { v in v is UILabel  }.first!
         return view as! UILabel
     }
     
-    fileprivate var timeLabel : UILabel
+    private var timeLabel : UILabel
     {
         let view = self.view.subviews.filter { v in v is UILabel  }.last!
         return view as! UILabel
     }
     
-    fileprivate var line : UIView
+    private var line : UIView
     {
         return  self.view.subviews.first!
     }
     
     override func setUp()
     {
-        view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil).first! as! TimelineCell
+        view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
         view.bindTimeSlot(timeSlot)
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
     {
-        expect(self.imageIcon.image).notTo(beNil())
+        XCTAssertNotNil(self.imageIcon.image)
     }
     
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
@@ -50,7 +49,7 @@ class TimelineCellTests : XCTestCase
         let dateString = formatter.string(from: timeSlot.startTime)
         
         let expectedText = "\(timeSlot.category) \(dateString)"
-        expect(self.slotDescription.text).to(equal(expectedText))
+        XCTAssertEqual(self.slotDescription.text, expectedText)
     }
     
     func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknown()
@@ -62,7 +61,7 @@ class TimelineCellTests : XCTestCase
         let dateString = formatter.string(from: unknownTimeSlot.startTime)
         
         let expectedText = " \(dateString)"
-        expect(self.slotDescription.text).to(equal(expectedText))
+        XCTAssertEqual(self.slotDescription.text, expectedText)
     }
     
     func testTheElapsedTimeLabelShowsOnlyMinutesWhenLessThanAnHourHasPassed()
@@ -72,13 +71,13 @@ class TimelineCellTests : XCTestCase
         let minutes = (interval / 60) % 60
         
         let expectedText = String(format: minuteMask, minutes)
-        expect(self.timeLabel.text).to(equal(expectedText))
+        XCTAssertEqual(self.timeLabel.text, expectedText)
     }
     
     func testTheElapsedTimeLabelShowsHoursAndMinutesWhenOverAnHourHasPassed()
     {
         let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = Date().addDays(-1)
+        newTimeSlot.startTime = Date().yesterday
         view.bindTimeSlot(newTimeSlot)
         
         let hourMask = "%02d h %02d min"
@@ -87,7 +86,7 @@ class TimelineCellTests : XCTestCase
         let hours = (interval / 3600)
         
         let expectedText = String(format: hourMask, hours, minutes)
-        expect(self.timeLabel.text).to(equal(expectedText))
+        XCTAssertEqual(self.timeLabel.text, expectedText)
     }
     
     func testTheElapsedTimeLabelColorChangesAccordingToTheBoundTimeSlot()
@@ -95,32 +94,28 @@ class TimelineCellTests : XCTestCase
         let expectedColor = Category.Work.color
         let actualColor = timeLabel.textColor!
         
-        let expectedComponents = CGColorGetComponents(expectedColor.cgColor)
-        let expectedRed = expectedComponents[0]
-        let expectedGreen = expectedComponents[1]
-        let expectedBlue = expectedComponents[2]
+        var expectedRed : CGFloat = 0, expectedGreen : CGFloat = 0, expectedBlue : CGFloat = 0, expectedAlpha : CGFloat = 0
+        expectedColor.getRed(&expectedRed, green: &expectedGreen, blue: &expectedBlue, alpha: &expectedAlpha)
         
-        let actualComponents = actualColor.cgColor.components
-        let actualRed = actualComponents?[0]
-        let actualGreen = actualComponents?[1]
-        let actualBlue = actualComponents?[2]
+        var actualRed : CGFloat = 0, actualGreen : CGFloat = 0, actualBlue : CGFloat = 0, actualAlpha : CGFloat = 0
+        actualColor.getRed(&actualRed, green: &actualGreen, blue: &actualBlue, alpha: &actualAlpha)
         
-        expect(expectedRed).to(equal(actualRed))
-        expect(expectedGreen).to(equal(actualGreen))
-        expect(expectedBlue).to(equal(actualBlue))
+        XCTAssertEqual(expectedRed, actualRed)
+        XCTAssertEqual(expectedGreen, actualGreen)
+        XCTAssertEqual(expectedBlue, actualBlue)
     }
     
     func testTheTimelineCellLineHeightChangesAccordingToTheBoundTimeSlot()
     {
         let oldLineHeight = line.frame.height
         let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = Date().addDays(-1)
+        newTimeSlot.startTime = Date().add(days: -1)
         newTimeSlot.endTime = Date()
         view.bindTimeSlot(newTimeSlot)
         view.layoutIfNeeded()
         let newLineHeight = line.frame.height
         
-        expect(oldLineHeight).to(beLessThan(newLineHeight))
+        XCTAssertLessThan(oldLineHeight, newLineHeight)
     }
     
     func testTheLineColorChangesAccordingToTheBoundTimeSlot()
@@ -128,18 +123,14 @@ class TimelineCellTests : XCTestCase
         let expectedColor = Category.Work.color
         let actualColor = line.backgroundColor!
         
-        let expectedComponents = CGColorGetComponents(expectedColor.cgColor)
-        let expectedRed = expectedComponents[0]
-        let expectedGreen = expectedComponents[1]
-        let expectedBlue = expectedComponents[2]
+        var expectedRed : CGFloat = 0, expectedGreen : CGFloat = 0, expectedBlue : CGFloat = 0, expectedAlpha : CGFloat = 0
+        expectedColor.getRed(&expectedRed, green: &expectedGreen, blue: &expectedBlue, alpha: &expectedAlpha)
         
-        let actualComponents = actualColor.cgColor.components
-        let actualRed = actualComponents?[0]
-        let actualGreen = actualComponents?[1]
-        let actualBlue = actualComponents?[2]
+        var actualRed : CGFloat = 0, actualGreen : CGFloat = 0, actualBlue : CGFloat = 0, actualAlpha : CGFloat = 0
+        actualColor.getRed(&actualRed, green: &actualGreen, blue: &actualBlue, alpha: &actualAlpha)
         
-        expect(expectedRed).to(equal(actualRed))
-        expect(expectedGreen).to(equal(actualGreen))
-        expect(expectedBlue).to(equal(actualBlue))
+        XCTAssertEqual(expectedRed, actualRed)
+        XCTAssertEqual(expectedGreen, actualGreen)
+        XCTAssertEqual(expectedBlue, actualBlue)
     }
 }

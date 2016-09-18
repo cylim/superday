@@ -1,19 +1,17 @@
-import Nimble
 import RxSwift
 import XCTest
 @testable import teferi
 
 class MainViewModelTests : XCTestCase
 {
-    fileprivate var disposable : Disposable? = nil
-    fileprivate var mockLocationService = MockLocationService()
-    fileprivate var viewModel = MainViewModel(locationService: MockLocationService())
+    private var disposable : Disposable? = nil
+    private var mockLocationService = MockLocationService()
+    private var viewModel = MainViewModel()
     
     override func setUp()
     {
         mockLocationService = MockLocationService()
-        viewModel = MainViewModel(locationService: mockLocationService)
-        viewModel.start()
+        viewModel = MainViewModel()
     }
     
     override func tearDown()
@@ -21,46 +19,30 @@ class MainViewModelTests : XCTestCase
         disposable?.dispose()
     }
     
-    func testStartMethodSubscribesToTheLocationService()
-    {
-        expect(self.mockLocationService.didSubscribe).to(equal(true))
-    }
-    
-    func testTheCurrentLocationGetsUpdatedWhenTheLocationServiceBroadcasts()
-    {
-        var locationChanged = false
-        disposable = viewModel.locationObservable.subscribe { location in locationChanged = true }
-        let location = Location(latitude: 5, longitude: 5)
-        
-        self.mockLocationService.setMockLocation(location)
-        expect(locationChanged).to(beTrue())
-    }
-    
     func testTheTitlePropertyReturnsSuperdayForTheCurrentDate()
     {
         let today = Date()
-        viewModel.date = today
-        expect(self.viewModel.title).to(equal("Superday".translate()))
+        viewModel.currentDate = today
+        XCTAssertEqual(self.viewModel.title, "Superday".translate())
     }
     
     func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
     {
-        let yesterday = Date().addDays(-1)
-        viewModel.date = yesterday
-        expect(self.viewModel.title).to(equal("Superyesterday".translate()))
+        let yesterday = Date().yesterday
+        viewModel.currentDate = yesterday
+        XCTAssertEqual(self.viewModel.title, "Superyesterday".translate())
     }
     
     func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()
     {
-        
-        let olderDate = Date().addDays(-2)
-        viewModel.date = olderDate
+        let olderDate = Date().add(days: -2)
+        viewModel.currentDate = olderDate
         
         let formatter = DateFormatter();
         formatter.timeZone = TimeZone.autoupdatingCurrent;
         formatter.dateFormat = "dd MMMM";
         let expectedText = formatter.string(from: olderDate)
         
-        expect(self.viewModel.title).to(equal(expectedText))
+        XCTAssertEqual(self.viewModel.title, expectedText)
     }
 }
