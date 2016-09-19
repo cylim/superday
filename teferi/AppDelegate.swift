@@ -8,22 +8,25 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 {
     //MARK: Fields
     private let ranForTheFirstTime = "firstAppRunKey"
-    private let persistencyService : PersistencyService
-    private let timeSlotCreationService : DefaultTimeSlotCreationService
-    private var locationService : LocationService = DefaultLocationService()
+    private var locationService : LocationService
+    private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
     var window: UIWindow?
+    let loggingService : LoggingService
+    let persistencyService : PersistencyService
     
     //Initializers
     override init()
     {
-        persistencyService = CoreDataPersistencyService.instance
-        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService)
+        loggingService = SwiftyBeaverLoggingService()
+        
+        locationService = DefaultLocationService(loggingService: loggingService)
+        persistencyService = CoreDataPersistencyService(loggingService: loggingService)
+        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
         let isInBackground = launchOptions?[UIApplicationLaunchOptionsKey.location] != nil

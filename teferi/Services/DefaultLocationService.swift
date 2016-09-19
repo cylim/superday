@@ -2,12 +2,12 @@ import Foundation
 import UIKit
 import CoreLocation
 import CoreMotion
-import UIKit
 
 ///Default implementation for the location service.
 class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationService
 {
     //MARK: Fields
+    private let loggingService : LoggingService
     
     ///Distance the user has to travel in order to trigger a new location event
     private let distanceFilter = 100.0
@@ -28,18 +28,22 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         {
             if isInBackground
             {
+                loggingService.log(withLogLevel: .info, message: "App is now on Background")
                 locationManager.requestAlwaysAuthorization()
             }
             else
             {
+                loggingService.log(withLogLevel: .info, message: "App is now on Foreground")
                 locationManager.requestWhenInUseAuthorization()
             }
         }
     }
     
     //MARK: Initializers
-    override init()
+    init(loggingService: LoggingService)
     {
+        self.loggingService = loggingService
+        
         super.init()
         
         locationManager.delegate = self
@@ -47,11 +51,15 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.activityType = .other
         locationManager.pausesLocationUpdatesAutomatically = true
+        
+        loggingService.log(withLogLevel: .verbose, message: "DefaultLocationService Initialized")
     }
     
     //MARK: LocationService implementation
     func startLocationTracking()
     {
+        loggingService.log(withLogLevel: .debug, message: "DefaultLocationService started")
+        
         if isInBackground
         {
             locationManager.startUpdatingLocation()
@@ -64,6 +72,8 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     
     func stopLocationTracking()
     {
+        loggingService.log(withLogLevel: .debug, message: "DefaultLocationService stoped")
+        
         if isInBackground
         {
             locationManager.startUpdatingLocation()
@@ -76,6 +86,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     
     func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
     {
+        loggingService.log(withLogLevel: .verbose, message: "Subscribing to DefaultLocationService")
         onLocationCallbacks.append(onLocationCallback)
     }
     
@@ -100,10 +111,18 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     private func filterLocations(_ location: CLLocation) -> Bool
     {
         //Location is valid
-        guard location.coordinate.latitude != 0.0 && location.coordinate.latitude != 0.0 else { return false }
+        guard location.coordinate.latitude != 0.0 && location.coordinate.latitude != 0.0 else
+        {
+            loggingService.log(withLogLevel: .debug, message: "Received an invalid location")
+            return false
+        }
                 
         //Location is accurate enough
-        guard 0 ... 2000 ~= location.horizontalAccuracy else { return false }
+        guard 0 ... 2000 ~= location.horizontalAccuracy else
+        {
+            loggingService.log(withLogLevel: .debug, message: "Received an inaccurate location")
+            return false
+        }
         
         return true
     }

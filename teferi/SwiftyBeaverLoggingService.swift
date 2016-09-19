@@ -3,14 +3,11 @@ import SwiftyBeaver
 /// Implementation of LoggingService that depends on the SwiftyBeaver library
 class SwiftyBeaverLoggingService : LoggingService
 {
-    //MARK: Static properties
-    static let instance = SwiftyBeaverLoggingService()
-
     //MARK: Fields
     private let swiftBeaver = SwiftyBeaver.self
 
     //MARK: Initializers
-    private init()
+    init()
     {
         let file = FileDestination()
         swiftBeaver.addDestination(file)
