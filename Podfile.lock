@@ -2,15 +2,18 @@ PODS:
   - RxCocoa (3.0.0-beta.1):
     - RxSwift (~> 3.0.0-beta.1)
   - RxSwift (3.0.0-beta.1)
+  - SwiftyBeaver (1.0.2)
 
 DEPENDENCIES:
   - RxCocoa (~> 3.0.0-beta.1)
   - RxSwift (~> 3.0.0-beta.1)
+  - SwiftyBeaver
 
 SPEC CHECKSUMS:
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
+  SwiftyBeaver: 8b0b22eaf4b36b26c16ebf27a8657650943a5027
 
-PODFILE CHECKSUM: 408a1c4d49398575f5ed6ce4ee6edc3772b633d9
+PODFILE CHECKSUM: 40279da50ff9f442a117e95da2b5ea8ac0f7f1ce
 
 COCOAPODS: 1.0.1

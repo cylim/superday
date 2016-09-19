@@ -8,6 +8,7 @@ target 'teferi' do
   # Pods for teferi
     pod 'RxSwift',    '~> 3.0.0-beta.1'
     pod 'RxCocoa',    '~> 3.0.0-beta.1'
+    pod 'SwiftyBeaver'
 
   target 'teferiTests' do
     inherit! :search_paths
