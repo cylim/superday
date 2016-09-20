@@ -1,7 +1,6 @@
 import UIKit
 import RxSwift
 import CoreData
-import CoreMotion
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
@@ -11,6 +10,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let persistencyService : PersistencyService
     private let timeSlotCreationService : DefaultTimeSlotCreationService
     private var locationService : LocationService = DefaultLocationService()
+    private let metricsService : MetricsService
     
     //MARK: Properties
     var window: UIWindow?
@@ -18,6 +18,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //Initializers
     override init()
     {
+        metricsService = HockeyAppMetricsService()
         persistencyService = CoreDataPersistencyService.instance
         timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService)
     }
@@ -32,6 +33,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         //Starts location tracking
         locationService.subscribeToLocationChanges(timeSlotCreationService.onNewLocation)
         locationService.startLocationTracking()
+        
+        metricsService.initialize()
         
         if !UserDefaults.standard.bool(forKey: ranForTheFirstTime)
         {
