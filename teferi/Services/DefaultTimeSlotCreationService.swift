@@ -5,11 +5,6 @@ import Foundation
 /// Default implementation of the TimeSlotCreationService.
 class DefaultTimeSlotCreationService : TimeSlotCreationService
 {
-    // MARK: Constants
-    private let travelThreshold = 100.0
-    private let isTravelingKey = "isTravelingKey"
-    private let firstLocationFile = "firstLocationFile"
-    
     // MARK: Fields
     private let persistencyService : PersistencyService
     
@@ -18,7 +13,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     {
         didSet
         {
-            UserDefaults.standard.setValue(isTraveling, forKey: isTravelingKey)
+            UserDefaults.standard.setValue(isTraveling, forKey: Constants.isTravelingKey)
         }
     }
     
@@ -33,7 +28,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     {
         self.persistencyService = persistencyService
         
-        self.isTraveling = UserDefaults.standard.bool(forKey: isTravelingKey)
+        self.isTraveling = UserDefaults.standard.bool(forKey: Constants.isTravelingKey)
     }
     
     //MARK:  TimeSlotCreationService implementation
@@ -77,7 +72,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             let distance = startLocation.distance(from: location)
             
             // User traveled over n meters
-            guard distance > travelThreshold else { return }
+            guard distance > Constants.distanceFilter else { return }
             
             isTraveling = true
             let timeSlot = TimeSlot(category: .Commute)

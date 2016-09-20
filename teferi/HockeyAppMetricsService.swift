@@ -8,7 +8,7 @@ class HockeyAppMetricsService : MetricsService
     ///Perform any framework specific initialization
     func initialize()
     {
-        BITHockeyManager.shared().configure(withIdentifier: "{HockeyAppIdentifier}")
+        BITHockeyManager.shared().configure(withIdentifier: Constants.hockeyAppIdentifier)
         // Do some additional configuration if needed here
         BITHockeyManager.shared().start()
         BITHockeyManager.shared().authenticator.authenticateInstallation()

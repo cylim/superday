@@ -6,7 +6,6 @@ import CoreData
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
     //MARK: Fields
-    private let ranForTheFirstTime = "firstAppRunKey"
     private let persistencyService : PersistencyService
     private let timeSlotCreationService : DefaultTimeSlotCreationService
     private var locationService : LocationService = DefaultLocationService()
@@ -36,13 +35,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         metricsService.initialize()
         
-        if !UserDefaults.standard.bool(forKey: ranForTheFirstTime)
+        if !UserDefaults.standard.bool(forKey: Constants.ranForTheFirstTime)
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
             if persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                UserDefaults.standard.set(true, forKey: ranForTheFirstTime)
+                UserDefaults.standard.set(true, forKey: Constants.ranForTheFirstTime)
             }
         }
         

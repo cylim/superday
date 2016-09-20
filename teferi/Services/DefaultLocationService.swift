@@ -9,9 +9,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
 {
     //MARK: Fields
     
-    ///Distance the user has to travel in order to trigger a new location event
-    private let distanceFilter = 100.0
-    
     ///The location manager itself
     private let locationManager = CLLocationManager()
     
@@ -43,9 +40,11 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         super.init()
         
         locationManager.delegate = self
-        locationManager.distanceFilter = distanceFilter
+        locationManager.distanceFilter = Constants.distanceFilter
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.activityType = .other
+        
+        //TODO: We might need to disable this if we are getting poor location results...
         locationManager.pausesLocationUpdatesAutomatically = true
     }
     
