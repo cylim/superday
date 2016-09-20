@@ -19,5 +19,5 @@ class Constants
     //MARK: Those values get replaced during build time
     
     ///AppId for HockeyApp.
-    static let hockeyAppIdentifier = "{HockeyAppIdentifier}"
+    static let hockeyAppIdentifier = "HOCKEY_APP_IDENTIFIER"
 }
