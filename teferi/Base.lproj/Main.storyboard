@@ -20,28 +20,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icSuperday" translatesAutoresizingMaskIntoConstraints="NO" id="4Kc-Yx-eCd">
-                                <frame key="frameInset" minX="20" minY="32" width="24" height="24"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSuperday" translatesAutoresizingMaskIntoConstraints="NO" id="4Kc-Yx-eCd">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="ReQ-mH-PFH"/>
                                     <constraint firstAttribute="width" constant="24" id="vfv-Q4-kSa"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Superday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpB-7h-JKy">
-                                <frame key="frameInset" minX="58" minY="32" width="86" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Superday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpB-7h-JKy">
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OG6-wl-hm1">
-                                <frame key="frameInset" minY="80" width="600" height="520"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG6-wl-hm1">
                                 <connections>
                                     <segue destination="7OT-Wf-TWW" kind="embed" id="6ps-b0-68Z"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xU-Bh-AWX">
-                                <frame key="frameInset" minX="265" minY="29" width="94" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xU-Bh-AWX">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="AZY-S3-HKw"/>
+                                    <constraint firstAttribute="width" constant="87" id="hx9-d4-IxQ"/>
+                                </constraints>
                                 <state key="normal" title="Send logs"/>
                                 <connections>
                                     <action selector="onSendLogButtonTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lgm-de-7Fb"/>
@@ -51,6 +50,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="24" id="A3N-lY-965"/>
+                            <constraint firstItem="1xU-Bh-AWX" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="15" id="AcC-Ld-BOw"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="leading" secondItem="4Kc-Yx-eCd" secondAttribute="trailing" constant="14" id="Amn-5j-mEJ"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="12" id="COh-mY-Shc"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="centerY" secondItem="4Kc-Yx-eCd" secondAttribute="centerY" id="K64-gf-Qso"/>
@@ -58,6 +58,7 @@
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="NaU-fU-1yf"/>
                             <constraint firstAttribute="trailing" secondItem="OG6-wl-hm1" secondAttribute="trailing" id="VX2-IW-m1O"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:25" id="VxF-hB-2dp"/>
+                            <constraint firstItem="1xU-Bh-AWX" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="bMf-TF-49G"/>
                             <constraint firstAttribute="leadingMargin" secondItem="4Kc-Yx-eCd" secondAttribute="leading" id="cqR-yZ-pr8"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="lht-ho-e0D"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pya-Vf-OrV"/>
@@ -88,7 +89,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Q2i-wf-CNf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0JV-at-uhw">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="520"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="587"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
