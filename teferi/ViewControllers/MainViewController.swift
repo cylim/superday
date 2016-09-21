@@ -2,9 +2,10 @@ import UIKit
 import CoreLocation
 import RxSwift
 import CoreMotion
+import MessageUI
 //import CircleMenu
 
-class MainViewController : UIViewController//, CircleMenuDelegate
+class MainViewController : UIViewController, MFMailComposeViewControllerDelegate//, CircleMenuDelegate
 {
     // MARK: Fields
     private let menuItems : [Category] = [
@@ -23,7 +24,7 @@ class MainViewController : UIViewController//, CircleMenuDelegate
     }
     
 //    private var circleMenu : CircleMenu? = nil
-    @IBOutlet private weak var titleLabel : UILabel?
+    @IBOutlet private weak var titleLabel : UILabel!
     
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
@@ -44,11 +45,52 @@ class MainViewController : UIViewController//, CircleMenuDelegate
         super.viewWillDisappear(animated)
     }
     
+    // MARK: Actions
+    @IBAction func onSendLogButtonTouchUpInside()
+    {
+        guard MFMailComposeViewController.canSendMail() else
+        {
+            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to send emails at this time.")
+        }
+        
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.mailComposeDelegate = self
+        mailComposer.setSubject("Superday tracking log")
+        mailComposer.setMessageBody("The log is attached.", isHTML: false)
+        
+        guard let filePath = Bundle.main.path(forResource: "swiftybeaver", ofType: "log") else
+        {
+            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+        }
+        
+        guard let fileData = NSData(contentsOfFile: filePath) as? Data else
+        {
+            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+        }
+        
+        mailComposer.addAttachmentData(fileData, mimeType: "text/plain", fileName: "superday.log")
+        
+        self.present(mailComposer, animated: true, completion: nil)
+    }
+    
+    func showAlert(withTitle title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate implementation
+    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     // MARK: Callbacks
     private func onDateChanged(_ date: Date)
     {
         viewModel.currentDate = date
-        titleLabel?.text = viewModel.title
+        titleLabel.text = viewModel.title
     }
     
 //    private func setMenuButton()

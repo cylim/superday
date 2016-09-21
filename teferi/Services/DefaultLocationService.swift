@@ -21,6 +21,9 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     /// Callbacks that get called when a new location is available
     private var onLocationCallbacks = [(CLLocation) -> ()]()
     
+    // for logging date/time of received location updates
+    private let dateTimeFormatter = DateFormatter()
+    
     //MARK: Properties
     var isInBackground : Bool = false
     {
@@ -28,12 +31,12 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         {
             if isInBackground
             {
-                loggingService.log(withLogLevel: .info, message: "App is now on Background")
+                loggingService.log(withLogLevel: .info, message: "App is now in Background")
                 locationManager.requestAlwaysAuthorization()
             }
             else
             {
-                loggingService.log(withLogLevel: .info, message: "App is now on Foreground")
+                loggingService.log(withLogLevel: .info, message: "App is now in Foreground")
                 locationManager.requestWhenInUseAuthorization()
             }
         }
@@ -51,6 +54,8 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.activityType = .other
         locationManager.pausesLocationUpdatesAutomatically = true
+        
+        dateTimeFormatter.dateFormat = "yyyy-mm-dd HH:mm"
         
         loggingService.log(withLogLevel: .verbose, message: "DefaultLocationService Initialized")
     }
@@ -107,23 +112,35 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopLocationTracking), userInfo: nil, repeats: false);
     }
     
+    
     //MARK: Methods
     private func filterLocations(_ location: CLLocation) -> Bool
     {
         //Location is valid
         guard location.coordinate.latitude != 0.0 && location.coordinate.latitude != 0.0 else
         {
-            loggingService.log(withLogLevel: .debug, message: "Received an invalid location")
+            logLocationUpdate(location, "Received an invalid location")
             return false
         }
                 
         //Location is accurate enough
         guard 0 ... 2000 ~= location.horizontalAccuracy else
         {
-            loggingService.log(withLogLevel: .debug, message: "Received an inaccurate location")
+            logLocationUpdate(location, "Received an inaccurate location")
             return false
         }
         
+        logLocationUpdate(location, "Received a valid location")
         return true
+    }
+    
+    private func logLocationUpdate(_ location: CLLocation, _ message: String)
+    {
+        let text = "\(message) <\(location.coordinate.latitude),\(location.coordinate.longitude)>"
+                 + " ~\(max(location.horizontalAccuracy, location.verticalAccuracy))m"
+                 + " (speed: \(location.speed)m/s course: \(location.course))"
+                 + " at \(dateTimeFormatter.string(from: location.timestamp))"
+        
+        loggingService.log(withLogLevel: .debug, message: text)
     }
 }
