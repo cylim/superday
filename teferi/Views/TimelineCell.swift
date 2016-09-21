@@ -3,15 +3,12 @@ import UIKit
 ///Cell that represents a TimeSlot in the timeline
 class TimelineCell : UITableViewCell
 {
-    // MARK: Static properties
-    static let minLineSize = 12
-    
     // MARK: Fields
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(TimelineCell.minLineSize))
+        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
     }()
     
     //MARK: Outlets
@@ -60,7 +57,7 @@ class TimelineCell : UITableViewCell
         elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
         
         //Cosmetic line®
-        let newHeight = CGFloat(TimelineCell.minLineSize * (1 + (minutes / 15) + (hours * 4)))
+        let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         lineHeightConstraint.constant = newHeight
         
         lineView?.backgroundColor = categoryColor

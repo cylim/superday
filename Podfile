@@ -9,6 +9,7 @@ target 'teferi' do
     pod 'RxSwift',    '~> 3.0.0-beta.1'
     pod 'RxCocoa',    '~> 3.0.0-beta.1'
     pod 'SwiftyBeaver'
+    pod 'HockeySDK', '~> 4.1.1'
 
   target 'teferiTests' do
     inherit! :search_paths

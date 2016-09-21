@@ -1,13 +1,12 @@
 import UIKit
 import RxSwift
 import CoreData
-import CoreMotion
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
     //MARK: Fields
-    private let ranForTheFirstTime = "firstAppRunKey"
+    private let metricsService : MetricsService
     private var locationService : LocationService
     private let timeSlotCreationService : TimeSlotCreationService
     
@@ -19,8 +18,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //Initializers
     override init()
     {
+        metricsService = HockeyAppMetricsService()
         loggingService = SwiftyBeaverLoggingService()
-        
         locationService = DefaultLocationService(loggingService: loggingService)
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
         timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService)
@@ -36,13 +35,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService.subscribeToLocationChanges(timeSlotCreationService.onNewLocation)
         locationService.startLocationTracking()
         
-        if !UserDefaults.standard.bool(forKey: ranForTheFirstTime)
+        metricsService.initialize()
+        
+        if !UserDefaults.standard.bool(forKey: Constants.ranForTheFirstTime)
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
             if persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                UserDefaults.standard.set(true, forKey: ranForTheFirstTime)
+                UserDefaults.standard.set(true, forKey: Constants.ranForTheFirstTime)
             }
         }
         
