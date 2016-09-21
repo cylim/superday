@@ -10,6 +10,7 @@ class SwiftyBeaverLoggingService : LoggingService
     init()
     {
         let file = FileDestination()
+        file.format = "$Dyyyy-MM-dd HH:mm:ss.fff:$d $L => $M"
         swiftBeaver.addDestination(file)
     }
     

@@ -55,7 +55,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         locationManager.activityType = .other
         locationManager.pausesLocationUpdatesAutomatically = true
         
-        dateTimeFormatter.dateFormat = "yyyy-mm-dd HH:mm"
+        dateTimeFormatter.dateFormat = "yyyy-mm-dd HH:mm:ss"
         
         loggingService.log(withLogLevel: .verbose, message: "DefaultLocationService Initialized")
     }
