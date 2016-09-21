@@ -6,24 +6,26 @@ import CoreData
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
     //MARK: Fields
-    private let persistencyService : PersistencyService
-    private let timeSlotCreationService : DefaultTimeSlotCreationService
-    private var locationService : LocationService = DefaultLocationService()
     private let metricsService : MetricsService
+    private var locationService : LocationService
+    private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
     var window: UIWindow?
+    let loggingService : LoggingService
+    let persistencyService : PersistencyService
     
     //Initializers
     override init()
     {
         metricsService = HockeyAppMetricsService()
-        persistencyService = CoreDataPersistencyService.instance
-        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService)
+        loggingService = SwiftyBeaverLoggingService()
+        locationService = DefaultLocationService(loggingService: loggingService)
+        persistencyService = CoreDataPersistencyService(loggingService: loggingService)
+        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
         let isInBackground = launchOptions?[UIApplicationLaunchOptionsKey.location] != nil

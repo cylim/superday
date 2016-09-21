@@ -4,19 +4,16 @@ import UIKit
 ///Implementation that uses CoreData to persist information on disk.
 class CoreDataPersistencyService : PersistencyService
 {
-    //MARK: Static properties
-    ///Singleton instance of this service.
-    private(set) static var instance = CoreDataPersistencyService()
-    
-    //MARK: Initializers
-    private init()
-    {
-        
-    }
-    
     //MARK: Fields
     private let timeSlotEntityName = "TimeSlot"
+    private let loggingService : LoggingService
     private var callbacks = [(TimeSlot) -> ()]()
+    
+    //MARK: Initializers
+    init(loggingService: LoggingService)
+    {
+        self.loggingService = loggingService
+    }
     
     //MARK: PersistencyService implementation
     func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
@@ -38,10 +35,13 @@ class CoreDataPersistencyService : PersistencyService
         {
             try managedContext.save()
             callbacks.forEach { callback in callback(timeSlot) }
+            
+            loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
             return true
         }
         catch
         {
+            loggingService.log(withLogLevel: .error, message: "Failed to create new TimeSlot")
             return false
         }
     }
@@ -60,11 +60,13 @@ class CoreDataPersistencyService : PersistencyService
             let results = try getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
             
             let timeSlots = results.map(mapManagedObjectToTimeSlot)
+            loggingService.log(withLogLevel: .info, message: "\(timeSlots.count) TimeSlots found")
             return timeSlots
         }
         catch
         {
             //Returns an empty array if anything goes wrong
+            loggingService.log(withLogLevel: .warning, message: "No TimeSlots found, return empty array")
             return []
         }
     }
@@ -115,25 +117,28 @@ class CoreDataPersistencyService : PersistencyService
         }
         catch
         {
+            loggingService.log(withLogLevel: .warning, message: "No TimeSlots found")
             return nil
         }
     }
     
     private func endPreviousTimeSlot() -> Bool
     {
+        guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
+        let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
+        let actualEndTime = timeSlot.startTime.addingTimeInterval(timeSlot.duration)
+        
+        managedTimeSlot.setValue(actualEndTime, forKey: "endTime")
+        
         do
         {
-            guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
-            let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
-            let actualEndTime = timeSlot.startTime.addingTimeInterval(timeSlot.duration)
-            
-            managedTimeSlot.setValue(actualEndTime, forKey: "endTime")
-            
             try getManagedObjectContext().save()
+            loggingService.log(withLogLevel: .error, message: "TimeSlot created at \(timeSlot.startTime) ended at \(timeSlot.endTime)")
             return true
         }
         catch
         {
+            loggingService.log(withLogLevel: .error, message: "Failed to end TimeSlot started at \(timeSlot.startTime) with category \(timeSlot.category)")
             return false
         }
     }

@@ -2,9 +2,9 @@ import UIKit
 import CoreLocation
 import RxSwift
 import CoreMotion
-//import CircleMenu
+import MessageUI
 
-class MainViewController : UIViewController//, CircleMenuDelegate
+class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private let menuItems : [Category] = [
@@ -22,8 +22,7 @@ class MainViewController : UIViewController//, CircleMenuDelegate
         return self.childViewControllers.last as! PagerViewController
     }
     
-//    private var circleMenu : CircleMenu? = nil
-    @IBOutlet private weak var titleLabel : UILabel?
+    @IBOutlet private weak var titleLabel : UILabel!
     
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
@@ -44,52 +43,55 @@ class MainViewController : UIViewController//, CircleMenuDelegate
         super.viewWillDisappear(animated)
     }
     
-    // MARK: Callbacks
+    // MARK: Actions
+    @IBAction func onSendLogButtonTouchUpInside()
+    {
+        guard MFMailComposeViewController.canSendMail() else
+        {
+            return showAlert(withTitle: "Something went wrong :(", message: "You need to set up an email account before sending emails.")
+        }
+        
+        guard let baseURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else
+        {
+            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+        }
+        
+        let fileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
+        
+        guard let fileData = try? Data(contentsOf: fileURL) else
+        {
+            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+        }
+        
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.mailComposeDelegate = self
+        mailComposer.setSubject("Superday tracking log")
+        mailComposer.setMessageBody("The log is attached.", isHTML: false)
+        mailComposer.setToRecipients(["paul@toggl.com", "william@toggl.com"])
+        mailComposer.addAttachmentData(fileData, mimeType: "text/plain", fileName: "superday.log")
+        
+        self.present(mailComposer, animated: true, completion: nil)
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate implementation
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?)
+    {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: Methods
     private func onDateChanged(_ date: Date)
     {
         viewModel.currentDate = date
-        titleLabel?.text = viewModel.title
+        titleLabel.text = viewModel.title
     }
     
-//    private func setMenuButton()
-//    {
-//        let buttonSize = CGFloat(50)
-//        
-//        circleMenu = CircleMenu(
-//            frame: CGRect(x: UIScreen.main.bounds.width / 2 - buttonSize / 2, y: UIScreen.main.bounds.height - 150, width: buttonSize, height: buttonSize),
-//            normalIcon:"icAddBig",
-//            selectedIcon:"icCancelBig",
-//            buttonsCount: 5,
-//            duration: 0.5,
-//            distance: 90)
-//        circleMenu!.delegate = self
-//        circleMenu!.layer.cornerRadius = circleMenu!.frame.size.width / 2.0
-//        view.addSubview(circleMenu!)
-//    }
-    
-    //MARK: CircleMenuDelegate implementation
-//    func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int)
-//    {
-//        let category = menuItems[atIndex]
-//        
-//        button.backgroundColor = category.color
-//        button.setImage(UIImage(imageLiteral: category.assetInfo.big), for: UIControlState())
-//        
-//        // set highlited image
-//        let highlightedImage  = UIImage(imageLiteral: category.assetInfo.big).withRenderingMode(.alwaysTemplate)
-//        button.setImage(highlightedImage, for: .highlighted)
-//        button.tintColor = UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.3)
-//    }
-//    
-//    func circleMenu(_ circleMenu: CircleMenu, buttonWillSelected button: UIButton, atIndex: Int)
-//    {
-//        pagerViewController.addNewSlot(menuItems[atIndex])
-//    }
-//    
-//    func circleMenu(_ circleMenu: CircleMenu, buttonDidSelected button: UIButton, atIndex: Int)
-//    {
-//        print("button did selected: \(atIndex)")
-//    }
+    func showAlert(withTitle title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 
