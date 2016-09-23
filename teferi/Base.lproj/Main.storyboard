@@ -73,6 +73,8 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="icon" destination="4Kc-Yx-eCd" id="ocm-Tt-kFk"/>
+                        <outlet property="logButton" destination="1xU-Bh-AWX" id="tu8-d5-lhy"/>
                         <outlet property="titleLabel" destination="mpB-7h-JKy" id="TYT-Ml-lqN"/>
                     </connections>
                 </viewController>

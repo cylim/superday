@@ -4,10 +4,12 @@ import UIKit
 
 class TimelineViewController : UITableViewController
 {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+ 
     // MARK: Properties
     var date : Date
     {
-        return viewModel.date as Date
+        return viewModel.date
     }
     
     // MARK: Fields
@@ -15,41 +17,42 @@ class TimelineViewController : UITableViewController
     private let baseCellHeight = 37
     private let cellIdentifier = "timelineCell"
     private let disposeBag = DisposeBag()
+    private var currentlyEditingIndex = -1
     
     init(date: Date)
     {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        viewModel = TimelineViewModel(date: date, persistencyService: appDelegate.persistencyService)
+        viewModel = TimelineViewModel(date: date, persistencyService: self.appDelegate.persistencyService)
         super.init(style: .plain)
     }
     
     required init?(coder: NSCoder)
     {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        viewModel = TimelineViewModel(date: Date(), persistencyService: appDelegate.persistencyService)
+        viewModel = TimelineViewModel(date: Date(), persistencyService: self.appDelegate.persistencyService)
         super.init(style: .plain)
     }
     
     // MARK: UIViewController lifecycle
-    override func viewDidLoad() 
+    override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        tableView.dataSource = nil
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
         
         viewModel
             .timeSlotsObservable
-            .bindTo(tableView.rx.items(cellIdentifier: cellIdentifier))(configureCell)
+            .subscribe(onNext: onNewTimeSlotAvailable)
             .addDisposableTo(disposeBag)
         
         viewModel
             .timeObservable
             .subscribe(onNext: onTimeTick)
+            .addDisposableTo(disposeBag)
+        
+        self.appDelegate
+            .isEditingObservable
+            .subscribe(onNext: onIsEditing)
             .addDisposableTo(disposeBag)
     }
     
@@ -59,21 +62,68 @@ class TimelineViewController : UITableViewController
         viewModel.addNewSlot(withCategory: category)
     }
     
+    private func onNewTimeSlotAvailable(_ timeSlots: [TimeSlot])
+    {
+        let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+    
+    private func onIsEditing(_ isEditing: Bool)
+    {
+        self.tableView.isEditing = isEditing
+        self.tableView.isScrollEnabled = !isEditing
+        
+        self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
+    }
+    
     private func onTimeTick(time: Int)
     {
         let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
         self.tableView.reloadRows(at: [indexPath], with: .fade)
     }
     
-    private func configureCell(_ row: Int, timeSlot: TimeSlot, cell: TimelineCell)
+    private func onCategoryTapped(index: Int)
     {
-        cell.bindTimeSlot(timeSlot)
+        if tableView.isEditing
+        {
+            guard index == currentlyEditingIndex else { return }
+            self.appDelegate.isEditing = false
+        }
+        else
+        {
+            currentlyEditingIndex = index
+            self.appDelegate.isEditing = true
+        }
     }
     
     // MARK: UITableViewDataSource methods
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle
     {
         return .none
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return viewModel.timeSlots.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let index = indexPath.item
+        let timeSlot = viewModel.timeSlots[index]
+        let categoryIsBeingEdited = index == currentlyEditingIndex
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
+        
+        cell.bind(withTimeSlot: timeSlot, shouldFade: tableView.isEditing, index: index, isEditingCategory: categoryIsBeingEdited)
+        
+        if !cell.isSubscribedToClickObservable
+        {
+            cell.editClickObservable
+                .subscribe(onNext: onCategoryTapped)
+                .addDisposableTo(disposeBag)
+        }
+        
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -84,13 +134,5 @@ class TimelineViewController : UITableViewController
         let height = baseCellHeight + Constants.minLineSize * (1 + (minutes / 15) + (hours * 4))
         
         return CGFloat(height)
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
-        let timeSlot = viewModel.timeSlots[(indexPath as NSIndexPath).item]
-        cell.bindTimeSlot(timeSlot)
-        return cell
     }
 }

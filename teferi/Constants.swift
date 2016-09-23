@@ -1,6 +1,11 @@
+import CoreGraphics
+
 ///Contains the app's constants.
 class Constants
 {
+    ///All possible categories
+    static let categories =  [ Category.Friends, Category.Work, Category.Leisure, Category.Commute, Category.Food, Category.Unknown ]
+    
     ///Distance the user has to travel in order to trigger a new location event.
     static let distanceFilter = 100.0
     
@@ -15,6 +20,9 @@ class Constants
     
     ///Name of the file that stores information regarding the first location detected since the user's last travel.
     static let firstLocationFile = "firstLocationFile"
+    
+    ///Alpha of views when the user is editing a TimeSlot
+    static let editingAlpha = CGFloat(0.4)
     
     //MARK: Those values get replaced during build time
     

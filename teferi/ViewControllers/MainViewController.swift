@@ -7,14 +7,6 @@ import MessageUI
 class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
-    private let menuItems : [Category] = [
-        Category.Friends,
-        Category.Work,
-        Category.Leisure,
-        Category.Commute,
-        Category.Food
-    ]
-    
     private let viewModel : MainViewModel = MainViewModel()
     private var disposeBag : DisposeBag? = DisposeBag()
     private var pagerViewController : PagerViewController
@@ -22,6 +14,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         return self.childViewControllers.last as! PagerViewController
     }
     
+    @IBOutlet private weak var icon : UIImageView!
+    @IBOutlet private weak var logButton : UIButton!
     @IBOutlet private weak var titleLabel : UILabel!
     
     // MARK: UIViewController lifecycle
@@ -30,6 +24,12 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         super.viewDidLoad()
         
         pagerViewController.onDateChanged = onDateChanged
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate
+            .isEditingObservable
+            .subscribe(onNext: onEditChanged)
+            .addDisposableTo(disposeBag!)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -45,7 +45,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     // MARK: Actions
     @IBAction func onSendLogButtonTouchUpInside()
-    {
+    {   
         guard MFMailComposeViewController.canSendMail() else
         {
             return showAlert(withTitle: "Something went wrong :(", message: "You need to set up an email account before sending emails.")
@@ -84,6 +84,17 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         viewModel.currentDate = date
         titleLabel.text = viewModel.title
+    }
+    
+    private func onEditChanged(_ isEditing: Bool)
+    {
+        let alpha = isEditing ? Constants.editingAlpha : 1
+        
+        icon.alpha = alpha
+        logButton.alpha = alpha
+        titleLabel.alpha = alpha
+        
+        logButton.isUserInteractionEnabled = !isEditing
     }
     
     func showAlert(withTitle title: String, message: String)
