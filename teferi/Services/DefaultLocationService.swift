@@ -29,12 +29,11 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
             if isInBackground
             {
                 loggingService.log(withLogLevel: .info, message: "App is now in Background")
-                locationManager.requestAlwaysAuthorization()
             }
             else
             {
                 loggingService.log(withLogLevel: .info, message: "App is now in Foreground")
-                locationManager.requestWhenInUseAuthorization()
+                locationManager.requestAlwaysAuthorization()
             }
         }
     }
