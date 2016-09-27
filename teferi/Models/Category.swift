@@ -46,17 +46,17 @@ enum Category : String
     {
         switch(self)
         {
-        case .Friends:
-        case .Work:
-        case .Leisure:
-        case .Commute:
-        case .Food:
-        case .Unknown:
+        case .friends:
             return "icFriends"
+        case .work:
             return "icWork"
+        case .leisure:
             return "icLeisure"
+        case .commute:
             return "icCommute"
+        case .food:
             return "icFood"
+        case .unknown:
             return "icCancel"
         }
     }

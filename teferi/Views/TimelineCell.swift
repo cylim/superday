@@ -72,7 +72,7 @@ class TimelineCell : UITableViewCell
         guard editButtons == nil else { return }
         
         editButtons = Constants.categories
-            .filter { c in (c != .Unknown && timeSlot.category == .Unknown) || timeSlot.category != c }
+            .filter { c in c != .unknown && c != timeSlot.category }
             .map(mapCategoryIntoView)
         
         var previousImageView = categoryIcon!
@@ -109,7 +109,7 @@ class TimelineCell : UITableViewCell
         let formatter = DateFormatter()
         formatter.timeStyle = .medium
         let dateString = formatter.string(from: startTime)
-        let categoryText = category == .Unknown ? "" : String(describing: category)
+        let categoryText = category == .unknown ? "" : String(describing: category)
         
         let description = "\(categoryText) \(dateString)"
         let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count)

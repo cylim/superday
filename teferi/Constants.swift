@@ -4,7 +4,7 @@ import CoreGraphics
 class Constants
 {
     ///All possible categories
-    static let categories =  [ Category.Friends, Category.Work, Category.Leisure, Category.Commute, Category.Food, Category.Unknown ]
+    static let categories =  [ Category.friends, Category.work, Category.leisure, Category.commute, Category.food, Category.unknown ]
     
     ///Distance the user has to travel in order to trigger a new location event.
     static let distanceFilter = 100.0

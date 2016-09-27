@@ -4,9 +4,9 @@ import Foundation
 class TimeSlot
 {
     // MARK: Properties
-    var startTime : Date = Date()
+    var startTime = Date()
     var endTime : Date? = nil
-    var category : Category = Category.Unknown
+    var category = Category.unknown
     
     ///Calculates and returns the total duration for the TimeSlot.
     var duration : TimeInterval
