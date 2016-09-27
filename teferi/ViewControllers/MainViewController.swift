@@ -17,12 +17,16 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
     @IBOutlet private weak var titleLabel : UILabel!
+    @IBOutlet private weak var calendarLabel : UIButton!
     
     // MARK: UIViewController lifecycle
-    override func viewDidLoad()
+    override func viewWillAppear(_ animated: Bool)
     {
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
         
+        let currentDay = Calendar.current.component(.day, from: Date())
+        
+        calendarLabel?.setTitle(String(format: "%02d", currentDay), for: .normal)
         pagerViewController.onDateChanged = onDateChanged
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -32,11 +36,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .addDisposableTo(disposeBag!)
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewWillDisappear(_ animated: Bool)
     {
         disposeBag = nil
@@ -44,6 +43,19 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     }
     
     // MARK: Actions
+    @IBAction func onCalendarTouchUpInside()
+    {
+        let today = Date()
+        
+        pagerViewController.setViewControllers(
+            [ TimelineViewController(date: today) ],
+            direction: .forward,
+            animated: false,
+            completion: nil)
+        
+        onDateChanged(today)
+    }
+    
     @IBAction func onSendLogButtonTouchUpInside()
     {   
         guard MFMailComposeViewController.canSendMail() else
