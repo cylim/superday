@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 import RxSwift
 
 ///Cell that represents a TimeSlot in the timeline
@@ -9,9 +10,11 @@ class TimelineCell : UITableViewCell
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
-    {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
+        {
+            return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
     }()
+    
+    private var editButtons : [UIImageView]? = nil
     
     @IBOutlet weak private var lineView : UIView?
     @IBOutlet weak private var elapsedTime : UILabel?
@@ -26,7 +29,6 @@ class TimelineCell : UITableViewCell
         self.isSubscribedToClickObservable = true
         return categoryButton!.rx.tap.map { return self.currentIndex }.asObservable()
     }
-    
     
     // MARK: Methods
     override func awakeFromNib()
@@ -52,16 +54,46 @@ class TimelineCell : UITableViewCell
         
         //Updates each one of the cell's components
         layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
-        
-        layoutCategoryIcon(withImageNamed: timeSlot.category.assetInfo.small, color: categoryColor, alpha: alpha)
-        
-        layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
-        
         layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
+        layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
+        layoutCategoryIcon(withImageNamed: timeSlot.category.assetInfo.small, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
         
-        guard isEditingCategory else { return }
+        guard isEditingCategory else
+        {
+            if let viewsToRemove = editButtons
+            {
+                viewsToRemove.forEach { v in v.removeFromSuperview() }
+                editButtons = nil
+            }
+            
+            return
+        }
         
+        guard editButtons == nil else { return }
         
+        editButtons = Constants.categories
+            .filter { c in (c != .Unknown && timeSlot.category == .Unknown) || timeSlot.category != c }
+            .map(mapCategoryIntoView)
+        
+        var previousImageView = categoryIcon!
+        for imageView in editButtons!
+        {
+            self.addSubview(imageView)
+            
+            let previousSnp = previousImageView.snp
+            
+            imageView.snp.makeConstraints
+            {
+                make in
+                
+                make.width.width.equalTo(44)
+                make.width.height.equalTo(44)
+                make.left.equalTo(previousSnp.right).offset(5)
+                make.centerY.equalTo(previousSnp.centerY)
+            }
+            
+            previousImageView = imageView
+        }
     }
     
     /// Updates the icon that indicates the slot's category
@@ -104,5 +136,12 @@ class TimelineCell : UITableViewCell
         lineView?.backgroundColor = color
         lineView?.alpha = alpha
         lineView?.layoutIfNeeded()
+    }
+    
+    private func mapCategoryIntoView(category: Category) -> UIImageView
+    {
+        let image = UIImage(named: category.assetInfo.small)
+        let imageView = UIImageView(image: image)
+        return imageView
     }
 }

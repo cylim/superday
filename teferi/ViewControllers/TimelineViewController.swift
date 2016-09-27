@@ -87,11 +87,12 @@ class TimelineViewController : UITableViewController
         if tableView.isEditing
         {
             guard index == currentlyEditingIndex else { return }
+            self.currentlyEditingIndex = -1
             self.appDelegate.isEditing = false
         }
         else
         {
-            currentlyEditingIndex = index
+            self.currentlyEditingIndex = index
             self.appDelegate.isEditing = true
         }
     }
