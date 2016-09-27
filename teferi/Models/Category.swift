@@ -12,12 +12,12 @@ import UIKit
  */
 enum Category : String
 {
-    case Friends
-    case Work
-    case Leisure
-    case Commute
-    case Food
-    case Unknown
+    case friends
+    case work
+    case leisure
+    case commute
+    case food
+    case unknown
     
     //MARK: Properties
     
@@ -26,61 +26,38 @@ enum Category : String
     {
         switch(self)
         {
-        case .Friends:
+        case .friends:
             return UIColor(hexString: "#28C980")
-        case .Work:
+        case .work:
             return UIColor(hexString: "#FFC31B")
-        case .Leisure:
+        case .leisure:
             return UIColor(hexString: "#BA5EFF")
-        case .Commute:
+        case .commute:
             return UIColor(hexString: "#63D5EE")
-        case .Food:
+        case .food:
             return UIColor(hexString: "#FF6453")
-        case .Unknown:
+        case .unknown:
             return UIColor(hexString: "#CECDCD")
         }
     }
     
     /// Get the AssetInfo for the category.
-    var assetInfo : AssetInfo
+    var icon : String
     {
         switch(self)
         {
         case .Friends:
-            return AssetInfo(assetName: "icFriends")
         case .Work:
-            return AssetInfo(assetName: "icWork")
         case .Leisure:
-            return AssetInfo(assetName: "icLeisure")
         case .Commute:
-            return AssetInfo(assetName: "icCommute")
         case .Food:
-            return AssetInfo(assetName: "icFood")
         case .Unknown:
-            return AssetInfo(assetName: "icCancel")
+            return "icFriends"
+            return "icWork"
+            return "icLeisure"
+            return "icCommute"
+            return "icFood"
+            return "icCancel"
         }
     }
 }
-
-class AssetInfo
-{
-    //MARK: Properties
-    let medium : String
-    
-    var big : String
-    {
-        return "\(self.medium)Big"
-    }
-    
-    var small : String
-    {
-        return "\(self.medium)Small"
-    }
-    
-    //MARK: Initializers
-    init(assetName: String)
-    {
-        self.medium = assetName
-    }
-}
-

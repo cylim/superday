@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icAddSmall.png",
+      "filename" : "icFriends.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icAddSmall@2x.png",
+      "filename" : "icFriends@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icAddSmall@3x.png",
+      "filename" : "icFriends@3x.png",
       "scale" : "3x"
     }
   ],

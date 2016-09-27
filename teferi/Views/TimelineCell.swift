@@ -56,7 +56,7 @@ class TimelineCell : UITableViewCell
         layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
         layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
         layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
-        layoutCategoryIcon(withImageNamed: timeSlot.category.assetInfo.small, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
+        layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
         
         guard isEditingCategory else
         {
@@ -97,7 +97,7 @@ class TimelineCell : UITableViewCell
     }
     
     /// Updates the icon that indicates the slot's category
-    private func layoutCategoryIcon(withImageNamed name: String, color: UIColor, alpha: CGFloat)
+    private func layoutCategoryIcon(withImageName name: String, color: UIColor, alpha: CGFloat)
     {
         categoryIcon?.alpha = alpha
         categoryIcon?.image = UIImage(named: name)
@@ -140,7 +140,7 @@ class TimelineCell : UITableViewCell
     
     private func mapCategoryIntoView(category: Category) -> UIImageView
     {
-        let image = UIImage(named: category.assetInfo.small)
+        let image = UIImage(named: category.icon)
         let imageView = UIImageView(image: image)
         return imageView
     }
