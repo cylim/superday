@@ -23,6 +23,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     }
     
     @IBOutlet private weak var titleLabel : UILabel!
+    @IBOutlet private weak var debugView: DebugView!
     
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
@@ -30,6 +31,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         super.viewDidLoad()
         
         pagerViewController.onDateChanged = onDateChanged
+        
+        debugView.isHidden = true
+        AppDelegate.instance.locationService.subscribeToLocationChanges(debugView.onNewLocation)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -71,6 +75,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         mailComposer.addAttachmentData(fileData, mimeType: "text/plain", fileName: "superday.log")
         
         self.present(mailComposer, animated: true, completion: nil)
+    }
+    
+    @IBAction func onDebugButtonTouchUpInside()
+    {
+        debugView.isHidden = !debugView.isHidden
     }
     
     // MARK: MFMailComposeViewControllerDelegate implementation

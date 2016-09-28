@@ -46,6 +46,19 @@
                                     <action selector="onSendLogButtonTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lgm-de-7Fb"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Tf-eZ-TNl" customClass="DebugView" customModule="teferi" customModuleProvider="target">
+                                <frame key="frameInset" width="300.5" height="400" maxX="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZ4-TA-BR8">
+                                <frame key="frameInset" minY="29" width="45.5" height="30" maxX="96.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Debug"/>
+                                <connections>
+                                    <action selector="onDebugButtonTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="yQJ-YO-VQ4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -73,6 +86,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="debugView" destination="6Tf-eZ-TNl" id="izA-LG-SJP"/>
                         <outlet property="titleLabel" destination="mpB-7h-JKy" id="TYT-Ml-lqN"/>
                     </connections>
                 </viewController>

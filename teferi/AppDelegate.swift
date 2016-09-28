@@ -5,13 +5,18 @@ import CoreData
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
+    static var instance: AppDelegate
+    {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
     //MARK: Fields
     private let metricsService : MetricsService
-    private var locationService : LocationService
     private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
     var window: UIWindow?
+    var locationService : LocationService
     let loggingService : LoggingService
     let persistencyService : PersistencyService
     

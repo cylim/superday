@@ -45,6 +45,7 @@
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
 		24C72AAC1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */; };
+		515C56041D9962E700DF3CA8 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515C56031D9962E700DF3CA8 /* DebugView.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -120,6 +121,7 @@
 		24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		515C56031D9962E700DF3CA8 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
+				515C56031D9962E700DF3CA8 /* DebugView.swift */,
 				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
 			);
 			name = ViewModels;
@@ -776,6 +779,7 @@
 				247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
+				515C56041D9962E700DF3CA8 /* DebugView.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
 				24C72AAC1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
