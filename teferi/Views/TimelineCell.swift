@@ -46,7 +46,7 @@ class TimelineCell : UITableViewCell
      
      - Parameter timeSlot: TimeSlot that will be bound.
      */
-    func bind(withTimeSlot timeSlot: TimeSlot, shouldFade: Bool, index: Int, isEditingCategory: Bool)
+    func bind(toTimeSlot timeSlot: TimeSlot, shouldFade: Bool, index: Int, isEditingCategory: Bool)
     {
         self.currentIndex = index
         

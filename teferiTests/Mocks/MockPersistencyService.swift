@@ -1,5 +1,5 @@
-@testable import teferi
 import Foundation
+@testable import teferi
 
 class MockPersistencyService : PersistencyService
 {
@@ -33,6 +33,12 @@ class MockPersistencyService : PersistencyService
         timeSlots.append(timeSlot)
         newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
         
+        return true
+    }
+    
+    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: teferi.Category) -> Bool
+    {
+        timeSlot.category = category
         return true
     }
     

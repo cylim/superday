@@ -5,7 +5,7 @@ import XCTest
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
-    private let timeSlot = TimeSlot(category: .Work)
+    private let timeSlot = TimeSlot(category: .work)
     private var view = TimelineCell()
     
     private var imageIcon : UIImageView
@@ -34,7 +34,7 @@ class TimelineCellTests : XCTestCase
     override func setUp()
     {
         view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
-        view.bindTimeSlot(timeSlot)
+        view.bind(toTimeSlot: timeSlot, shouldFade: false, index: 0, isEditingCategory: false)
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
@@ -55,7 +55,7 @@ class TimelineCellTests : XCTestCase
     func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknown()
     {
         let unknownTimeSlot = TimeSlot()
-        view.bindTimeSlot(unknownTimeSlot)
+        view.bind(toTimeSlot: unknownTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
         let formatter = DateFormatter()
         formatter.timeStyle = .medium
         let dateString = formatter.string(from: unknownTimeSlot.startTime)
@@ -78,7 +78,7 @@ class TimelineCellTests : XCTestCase
     {
         let newTimeSlot = TimeSlot()
         newTimeSlot.startTime = Date().yesterday
-        view.bindTimeSlot(newTimeSlot)
+        view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
         
         let hourMask = "%02d h %02d min"
         let interval = Int(newTimeSlot.duration)
@@ -91,7 +91,7 @@ class TimelineCellTests : XCTestCase
     
     func testTheElapsedTimeLabelColorChangesAccordingToTheBoundTimeSlot()
     {
-        let expectedColor = Category.Work.color
+        let expectedColor = Category.work.color
         let actualColor = timeLabel.textColor!
         
         var expectedRed : CGFloat = 0, expectedGreen : CGFloat = 0, expectedBlue : CGFloat = 0, expectedAlpha : CGFloat = 0
@@ -111,7 +111,7 @@ class TimelineCellTests : XCTestCase
         let newTimeSlot = TimeSlot()
         newTimeSlot.startTime = Date().add(days: -1)
         newTimeSlot.endTime = Date()
-        view.bindTimeSlot(newTimeSlot)
+        view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
         view.layoutIfNeeded()
         let newLineHeight = line.frame.height
         
@@ -120,7 +120,7 @@ class TimelineCellTests : XCTestCase
     
     func testTheLineColorChangesAccordingToTheBoundTimeSlot()
     {
-        let expectedColor = Category.Work.color
+        let expectedColor = Category.work.color
         let actualColor = line.backgroundColor!
         
         var expectedRed : CGFloat = 0, expectedGreen : CGFloat = 0, expectedBlue : CGFloat = 0, expectedAlpha : CGFloat = 0

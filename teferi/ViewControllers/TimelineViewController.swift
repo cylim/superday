@@ -124,7 +124,7 @@ class TimelineViewController : UITableViewController
         let categoryIsBeingEdited = index == currentlyEditingIndex
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
         
-        cell.bind(withTimeSlot: timeSlot, shouldFade: tableView.isEditing, index: index, isEditingCategory: categoryIsBeingEdited)
+        cell.bind(toTimeSlot: timeSlot, shouldFade: tableView.isEditing, index: index, isEditingCategory: categoryIsBeingEdited)
         
         if !cell.isSubscribedToClickObservable
         {
