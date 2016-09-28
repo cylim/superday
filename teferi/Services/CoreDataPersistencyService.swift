@@ -54,7 +54,7 @@ class CoreDataPersistencyService : PersistencyService
         //Filter in order to get only the TimeSlots for said date
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: timeSlotEntityName)
         fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime as NSDate, endTime as NSDate)
-     
+        
         do
         {
             let results = try getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
@@ -77,6 +77,36 @@ class CoreDataPersistencyService : PersistencyService
         
         let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
         return timeSlot
+    }
+    
+    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
+    {
+        //No need to persist anything if the categories are the same
+        guard timeSlot.category != category else { return true }
+        
+        
+        let managedContext = getManagedObjectContext()
+        let entity = NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        let predicate = NSPredicate(format: "startTime == %@", timeSlot.startTime as CVarArg)
+        
+        request.entity = entity
+        request.predicate = predicate
+        
+        do
+        {
+            guard let managedTimeSlot = try managedContext.fetch(request).first as AnyObject? else { return false }
+            managedTimeSlot.setValue(category.rawValue, forKey: "category")
+            
+            try managedContext.save()
+            
+            return true
+        }
+        catch
+        {
+            loggingService.log(withLogLevel: .warning, message: "No TimeSlot found when trying to update")
+            return false
+        }
     }
     
     func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())

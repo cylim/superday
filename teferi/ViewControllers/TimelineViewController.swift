@@ -62,6 +62,13 @@ class TimelineViewController : UITableViewController
         viewModel.addNewSlot(withCategory: category)
     }
     
+    func onCategoryChange(index: Int, category: Category)
+    {
+        guard viewModel.updateTimeSlot(atIndex: index, withCategory: category) else { return }
+        
+        self.appDelegate.isEditing = false
+    }
+    
     private func onNewTimeSlotAvailable(_ timeSlots: [TimeSlot])
     {
         let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
@@ -72,12 +79,15 @@ class TimelineViewController : UITableViewController
     {
         self.tableView.isEditing = isEditing
         self.tableView.isScrollEnabled = !isEditing
+        self.currentlyEditingIndex = isEditing ? self.currentlyEditingIndex : -1
         
         self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
     }
     
     private func onTimeTick(time: Int)
     {
+        guard !tableView.isEditing else { return }
+        
         let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
         self.tableView.reloadRows(at: [indexPath], with: .fade)
     }
@@ -87,7 +97,6 @@ class TimelineViewController : UITableViewController
         if tableView.isEditing
         {
             guard index == currentlyEditingIndex else { return }
-            self.currentlyEditingIndex = -1
             self.appDelegate.isEditing = false
         }
         else
@@ -122,6 +131,8 @@ class TimelineViewController : UITableViewController
             cell.editClickObservable
                 .subscribe(onNext: onCategoryTapped)
                 .addDisposableTo(disposeBag)
+            
+            cell.onCategoryChange = onCategoryChange
         }
         
         return cell

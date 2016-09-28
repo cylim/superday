@@ -11,6 +11,8 @@
 		240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240AC71B1D748C8800F21F4F /* Main.storyboard */; };
 		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
 		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
+		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
+		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
 		24526A791D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */; };
@@ -44,7 +46,6 @@
 		247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */; };
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
-		24C72AAC1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,8 @@
 		240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi.xcdatamodel; sourceTree = "<group>"; };
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
+		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		24526A731D92D98800DA3FA0 /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
@@ -117,7 +120,6 @@
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24C72AA51D906BDA00DABAC3 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogLevel.swift; path = Models/LogLevel.swift; sourceTree = "<group>"; };
 		24C72AA91D90731C00DABAC3 /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Services/Protocols/LoggingService.swift; sourceTree = "<group>"; };
-		24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				24CD8A461D7A13560017C53E /* Extensions */,
+				2421F8C11D9BAC4A00AF8857 /* Helpers */,
 				24BA51A91D74D79C00042CDF /* Models */,
 				24BA51A51D74D69C00042CDF /* Services */,
 				24D99F681D74B92C00E68163 /* Storyboards */,
@@ -203,6 +206,14 @@
 				24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */,
 			);
 			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		2421F8C11D9BAC4A00AF8857 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		24564F401D82FDBB00D9A8AE /* Extensions */ = {
@@ -263,7 +274,7 @@
 				247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */,
 				247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */,
 				24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */,
-				24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */,
+				2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -761,10 +772,12 @@
 				24526A751D92D98800DA3FA0 /* Constants.swift in Sources */,
 				24526A791D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift in Sources */,
 				24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */,
+				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */,
+				2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */,
 				24526A7D1D92D9BB00DA3FA0 /* Location.swift in Sources */,
 				24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */,
 				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
@@ -777,7 +790,6 @@
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
-				24C72AAC1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

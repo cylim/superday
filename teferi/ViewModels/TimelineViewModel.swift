@@ -66,6 +66,20 @@ class TimelineViewModel
         }
     }
     
+    /**
+     Adds and persists a new TimeSlot to this Timeline.
+     
+     - Parameter category: Category of the newly created TimeSlot.
+     */
+    func updateTimeSlot(atIndex index: Int, withCategory category: Category) -> Bool
+    {
+        let timeSlot = timeSlots[index]
+        guard persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }
+        
+        timeSlot.category = category
+        return true
+    }
+    
     ///Called when the persistency service indicates that a new TimeSlot has been created.
     private func onNewTimeSlot(timeSlot: TimeSlot)
     {

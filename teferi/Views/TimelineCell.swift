@@ -1,4 +1,5 @@
 import UIKit
+import CoreGraphics
 import SnapKit
 import RxSwift
 
@@ -7,6 +8,7 @@ class TimelineCell : UITableViewCell
 {
     // MARK: Fields
     private var currentIndex = 0
+    private let animationDuration = 0.12
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
@@ -29,6 +31,8 @@ class TimelineCell : UITableViewCell
         self.isSubscribedToClickObservable = true
         return categoryButton!.rx.tap.map { return self.currentIndex }.asObservable()
     }
+    
+    var onCategoryChange : ((Int, Category) -> Void)?
     
     // MARK: Methods
     override func awakeFromNib()
@@ -60,21 +64,40 @@ class TimelineCell : UITableViewCell
         
         guard isEditingCategory else
         {
-            if let viewsToRemove = editButtons
+            if let viewsToRemove = self.editButtons
             {
-                viewsToRemove.forEach { v in v.removeFromSuperview() }
-                editButtons = nil
+                self.editButtons = nil
+                
+                var animationDelay = animationDuration * Double(viewsToRemove.count)
+                viewsToRemove.forEach
+                {
+                    view in
+                    
+                    UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [], animations:
+                    {
+                        view.removeFromSuperview()
+                    })
+                    
+                    animationDelay -= animationDuration
+                }
             }
             
             return
         }
         
-        guard editButtons == nil else { return }
+        if let viewsToRemove = self.editButtons
+        {
+            viewsToRemove.forEach { v in v.removeFromSuperview() }
+            self.editButtons = nil
+        }
+        
+        categoryIcon?.image = UIImage(named: Category.unknown.icon)
         
         editButtons = Constants.categories
             .filter { c in c != .unknown && c != timeSlot.category }
             .map(mapCategoryIntoView)
         
+        var animationDelay = 0.0
         var previousImageView = categoryIcon!
         for imageView in editButtons!
         {
@@ -82,15 +105,11 @@ class TimelineCell : UITableViewCell
             
             let previousSnp = previousImageView.snp
             
-            imageView.snp.makeConstraints
-            {
-                make in
-                
-                make.width.width.equalTo(44)
-                make.width.height.equalTo(44)
-                make.left.equalTo(previousSnp.right).offset(5)
-                make.centerY.equalTo(previousSnp.centerY)
-            }
+            imageView.snp.makeConstraints { make in makeConstraints(withMaker: make, previousSnp: previousSnp) }
+            
+            UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [], animations: { imageView.alpha = 1 })
+            
+            animationDelay += animationDuration
             
             previousImageView = imageView
         }
@@ -100,6 +119,8 @@ class TimelineCell : UITableViewCell
     private func layoutCategoryIcon(withImageName name: String, color: UIColor, alpha: CGFloat)
     {
         categoryIcon?.alpha = alpha
+        categoryIcon?.backgroundColor = color
+        categoryIcon?.layer.cornerRadius = 16
         categoryIcon?.image = UIImage(named: name)
     }
     
@@ -122,9 +143,9 @@ class TimelineCell : UITableViewCell
     ///Updates the label that shows how long the slot lasted
     private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat)
     {
+        elapsedTime?.alpha = alpha
         elapsedTime?.textColor = color
         elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
-        elapsedTime?.alpha = alpha
     }
     
     ///Updates the line that displays shows how long the TimeSlot lasted
@@ -133,8 +154,8 @@ class TimelineCell : UITableViewCell
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         lineHeightConstraint.constant = newHeight
         
-        lineView?.backgroundColor = color
         lineView?.alpha = alpha
+        lineView?.backgroundColor = color
         lineView?.layoutIfNeeded()
     }
     
@@ -142,6 +163,28 @@ class TimelineCell : UITableViewCell
     {
         let image = UIImage(named: category.icon)
         let imageView = UIImageView(image: image)
+        let gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.changeCategory(to: category) })
+        
+        imageView.alpha = 0
+        imageView.contentMode = .center
+        imageView.layer.cornerRadius = 22
+        imageView.isUserInteractionEnabled = true
+        imageView.backgroundColor = category.color
+        imageView.addGestureRecognizer(gestureRecognizer)
+        
         return imageView
+    }
+    
+    private func makeConstraints(withMaker make: ConstraintMaker, previousSnp: ConstraintViewDSL)
+    {
+        make.width.width.equalTo(44)
+        make.width.height.equalTo(44)
+        make.left.equalTo(previousSnp.right).offset(5)
+        make.centerY.equalTo(previousSnp.centerY)
+    }
+    
+    private func changeCategory(to category: Category)
+    {
+        onCategoryChange?(currentIndex, category)
     }
 }

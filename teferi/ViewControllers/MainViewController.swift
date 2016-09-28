@@ -29,6 +29,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         calendarLabel?.setTitle(String(format: "%02d", currentDay), for: .normal)
         pagerViewController.onDateChanged = onDateChanged
         
+        if disposeBag == nil
+        {
+            disposeBag = DisposeBag()
+        }
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate
             .isEditingObservable

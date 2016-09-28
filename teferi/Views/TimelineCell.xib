@@ -55,7 +55,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-EQ-YkE">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-EQ-YkE">
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="bnM-yD-LUJ"/>
                         <constraint firstAttribute="height" constant="32" id="l0h-Br-JFt"/>
@@ -97,10 +97,10 @@
             </constraints>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="UTV-Ec-m4a"/>
-                    <exclude reference="bxs-NP-r5z"/>
                     <exclude reference="UJo-zC-r26"/>
                     <exclude reference="Uar-fP-kfo"/>
+                    <exclude reference="UTV-Ec-m4a"/>
+                    <exclude reference="bxs-NP-r5z"/>
                     <exclude reference="Iv0-HZ-dRT"/>
                     <exclude reference="NBP-uS-Hr4"/>
                     <exclude reference="Sjc-hs-xMO"/>

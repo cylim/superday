@@ -54,8 +54,8 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cvs-ps-GL3">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="KyB-Yu-Hkf"/>
-                                    <constraint firstAttribute="width" constant="30" id="c0H-Sg-gp8"/>
+                                    <constraint firstAttribute="height" constant="40" id="KyB-Yu-Hkf"/>
+                                    <constraint firstAttribute="width" constant="50" id="c0H-Sg-gp8"/>
                                 </constraints>
                                 <state key="normal" title="30">
                                     <color key="titleColor" red="0.36862745099999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -70,7 +70,7 @@
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="24" id="A3N-lY-965"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="leading" secondItem="4Kc-Yx-eCd" secondAttribute="trailing" constant="14" id="Amn-5j-mEJ"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="12" id="COh-mY-Shc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="RET-NJ-inr" secondAttribute="trailing" constant="5" id="F2w-XP-2Ny"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RET-NJ-inr" secondAttribute="trailing" id="F2w-XP-2Ny"/>
                             <constraint firstItem="Cvs-ps-GL3" firstAttribute="centerX" secondItem="RET-NJ-inr" secondAttribute="centerX" id="HWh-Ix-kC4"/>
                             <constraint firstItem="Cvs-ps-GL3" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" constant="3" id="HbQ-hM-BsI"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="centerY" secondItem="4Kc-Yx-eCd" secondAttribute="centerY" id="K64-gf-Qso"/>
@@ -78,7 +78,7 @@
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="NaU-fU-1yf"/>
                             <constraint firstAttribute="trailing" secondItem="OG6-wl-hm1" secondAttribute="trailing" id="VX2-IW-m1O"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:25" id="VxF-hB-2dp"/>
-                            <constraint firstItem="RET-NJ-inr" firstAttribute="leading" secondItem="1xU-Bh-AWX" secondAttribute="trailing" constant="8" id="bJ3-dx-K9v"/>
+                            <constraint firstItem="RET-NJ-inr" firstAttribute="leading" secondItem="1xU-Bh-AWX" secondAttribute="trailing" constant="6" id="bJ3-dx-K9v"/>
                             <constraint firstItem="1xU-Bh-AWX" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="bMf-TF-49G"/>
                             <constraint firstAttribute="leadingMargin" secondItem="4Kc-Yx-eCd" secondAttribute="leading" id="cqR-yZ-pr8"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="lht-ho-e0D"/>
