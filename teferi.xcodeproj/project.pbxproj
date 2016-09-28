@@ -13,6 +13,7 @@
 		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
+		2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C61D9BEA9A00AF8857 /* DebugView.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
 		24526A791D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */; };
@@ -84,6 +85,7 @@
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
+		2421F8C61D9BEA9A00AF8857 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
 		24526A731D92D98800DA3FA0 /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 		24D99F691D74B93C00E68163 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2421F8C61D9BEA9A00AF8857 /* DebugView.swift */,
 				24564F531D83254E00D9A8AE /* TimelineCell.swift */,
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
 			);
@@ -787,6 +790,7 @@
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */,
 				247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */,
+				2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,

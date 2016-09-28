@@ -17,9 +17,20 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
     @IBOutlet private weak var titleLabel : UILabel!
+    @IBOutlet private weak var debugView : DebugView!
     @IBOutlet private weak var calendarLabel : UIButton!
     
     // MARK: UIViewController lifecycle
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        pagerViewController.onDateChanged = onDateChanged
+        
+        debugView.isHidden = true
+        AppDelegate.instance.locationService.subscribeToLocationChanges(debugView.onNewLocation)
+    }
+    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -90,6 +101,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.present(mailComposer, animated: true, completion: nil)
     }
     
+    @IBAction func onDebugButtonTouchUpInside()
+    {
+        debugView.isHidden = !debugView.isHidden
+    }
+    
     // MARK: MFMailComposeViewControllerDelegate implementation
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?)
     {
@@ -121,23 +137,3 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.present(alert, animated: true, completion: nil)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

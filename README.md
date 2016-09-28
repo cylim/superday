@@ -4,7 +4,7 @@ Superday tracks your activities, you give the context.
 
 # Contributors Guide
 
-This is meant to help new contributors submiting changes to the project
+This is meant to help new contributors submiting changes to the project.
 
 ## Getting started
 
@@ -23,15 +23,15 @@ Downloading and starting development for superday is supersimple®:
 
 ## Pull Request Etiquette
 
-Common things you should know before opening a PR
+Make pull requests for specific concerns and use clear titles and descriptions. It is your responsibility to make sure the branch is up to date with master or merges trivially. Feel free to make pull requests for work in project features to ask for feedback.
 
 ### Commit Messages
 
-Soon
+Keep it short. Keep it clear. Separate concerns.
 
 ### Emoji Styleguide
 
-Consider selecting the appropriate emoji for each of your commits (based on [Atom's emoji styleguide](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages)) 
+Consider selecting the appropriate emoji for each of your commits (based on [Atom's emoji styleguide](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages)).
 
 - :bug: `:bug:` - Bug fixes
 - :memo: `:memo:` - Adding docs
@@ -47,3 +47,4 @@ Consider selecting the appropriate emoji for each of your commits (based on [Ato
 - :lipstick: `:lipstick:` - Cosmetic changes to codestyle
 - :triangular_ruler: `:triangular_ruler:` - Pixel perfect changes to UI
 - :earth_americas: `:earth_americas:` - Changes to the location tracker
+- :chart_with_upwards_trend: `:chart_with_upwards_trend:` - General improvements
