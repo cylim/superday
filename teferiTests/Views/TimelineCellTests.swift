@@ -37,7 +37,12 @@ class TimelineCellTests : XCTestCase
         view.bind(toTimeSlot: timeSlot, shouldFade: false, index: 0, isEditingCategory: false)
     }
     
-    private func editCellSetUp(_ shouldFade: Bool = false, isEditingCategory: Bool = true)
+    override func tearDown()
+    {
+        timeSlot.category = .work
+    }
+    
+    private func editCellSetUp(_ shouldFade: Bool = true, isEditingCategory: Bool = true)
     {
         view.bind(toTimeSlot: timeSlot, shouldFade: shouldFade, index: 0, isEditingCategory: isEditingCategory)
     }
@@ -141,29 +146,73 @@ class TimelineCellTests : XCTestCase
     
     func testTheLineFadesWhenTheShouldFadeParametersIsTrue()
     {
-        editCellSetUp(true)
+        editCellSetUp()
         
         XCTAssertEqualWithAccuracy(line.alpha, Constants.editingAlpha, accuracy: 0.01)
     }
     
     func testTheTimeLabelFadesWhenTheShouldFadeParametersIsTrue()
     {
-        editCellSetUp(true)
+        editCellSetUp()
         
         XCTAssertEqualWithAccuracy(timeLabel.alpha, Constants.editingAlpha, accuracy: 0.01)
     }
     
     func testTheSlotDescriptionFadesWhenTheShouldFadeParametersIsTrue()
     {
-        editCellSetUp(true)
+        editCellSetUp()
         
         XCTAssertEqualWithAccuracy(slotDescription.alpha, Constants.editingAlpha, accuracy: 0.01)
     }
     
-    func testTheCategoryIconDoesNotFadesWhenTheShouldFadeParametersIsTrue()
+    func testTheCategoryIconDoesNotFadesWhenTheShouldFadeParametersIsTrueButTheCategoryIsBeingEdited()
     {
-        editCellSetUp(true)
+        editCellSetUp()
         
         XCTAssertEqual(imageIcon.alpha, 1.0)
+    }
+    
+    func testTheCategoryIconDoesFadesWhenTheShouldFadeParametersIsTrueAndTheCategoryIsNotBeingEdited()
+    {
+        editCellSetUp(true, isEditingCategory: false)
+        
+        XCTAssertEqualWithAccuracy(imageIcon.alpha, Constants.editingAlpha, accuracy: 0.01)
+    }
+    
+    func testBindingTheCellForEditingShowsAllPossibleCategoriesIfTheTimeSlotIsUnknown()
+    {
+        let numberOfViews = view.subviews.count
+        timeSlot.category = .unknown
+        editCellSetUp()
+        
+        XCTAssertEqual(view.subviews.count, numberOfViews + 5)
+    }
+    
+    func testBindingTheCellForEditingShowsAllPossibleCategoriesExceptTheCurrentOne()
+    {
+        let numberOfViews = view.subviews.count
+        editCellSetUp()
+        
+        XCTAssertEqual(view.subviews.count, numberOfViews + 4)
+    }
+    
+    func testRebindingACellAfterEditingRemovesTheExtraViews()
+    {
+        let numberOfViewsBeforeBinding = view.subviews.count
+        editCellSetUp()
+        editCellSetUp(true, isEditingCategory: false)
+        
+        XCTAssertEqual(view.subviews.count, numberOfViewsBeforeBinding)
+    }
+    
+    func theOnCategoryChangedCallbackGetsCalledWhenAnCategoryIsTapped()
+    {
+        var onCategoryChangedWasCalled = false
+        view.onCategoryChange = { c in onCategoryChangedWasCalled = true }
+        
+        editCellSetUp()
+        
+        
+        XCTAssertTrue(onCategoryChangedWasCalled)
     }
 }
