@@ -45,7 +45,12 @@
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
 		24C72AAC1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */; };
+		512A177E1D9CFF6100FE98A9 /* LaunchAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A177D1D9CFF6100FE98A9 /* LaunchAnimation.swift */; };
+		512A17801D9D030500FE98A9 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A177F1D9D030500FE98A9 /* Colors.swift */; };
+		512A17861D9D17AF00FE98A9 /* TimerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A17851D9D17AF00FE98A9 /* TimerExtensions.swift */; };
+		512A17881D9D1F8E00FE98A9 /* AnimationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A17871D9D1F8E00FE98A9 /* AnimationHelpers.swift */; };
 		515C56041D9962E700DF3CA8 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515C56031D9962E700DF3CA8 /* DebugView.swift */; };
+		517F68671D9C07C10027D0A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 517F68661D9C07C10027D0A4 /* LaunchScreen.storyboard */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -121,7 +126,12 @@
 		24C72AAB1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		512A177D1D9CFF6100FE98A9 /* LaunchAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchAnimation.swift; sourceTree = "<group>"; };
+		512A177F1D9D030500FE98A9 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		512A17851D9D17AF00FE98A9 /* TimerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerExtensions.swift; sourceTree = "<group>"; };
+		512A17871D9D1F8E00FE98A9 /* AnimationHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelpers.swift; sourceTree = "<group>"; };
 		515C56031D9962E700DF3CA8 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
+		517F68661D9C07C10027D0A4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -194,6 +204,7 @@
 				240AC7261D748C8800F21F4F /* Info.plist */,
 				240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */,
 				24564F751D837FBE00D9A8AE /* Main.strings */,
+				512A177F1D9D030500FE98A9 /* Colors.swift */,
 			);
 			path = teferi;
 			sourceTree = "<group>";
@@ -288,6 +299,8 @@
 				24564F611D83265900D9A8AE /* ColorExtensions.swift */,
 				24564F621D83265900D9A8AE /* DateExtensions.swift */,
 				24564F631D83265900D9A8AE /* StringExtensions.swift */,
+				512A17851D9D17AF00FE98A9 /* TimerExtensions.swift */,
+				512A17871D9D1F8E00FE98A9 /* AnimationHelpers.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -316,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				240AC71B1D748C8800F21F4F /* Main.storyboard */,
+				517F68661D9C07C10027D0A4 /* LaunchScreen.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -325,6 +339,7 @@
 			children = (
 				24564F531D83254E00D9A8AE /* TimelineCell.swift */,
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
+				512A177D1D9CFF6100FE98A9 /* LaunchAnimation.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -451,6 +466,7 @@
 				24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */,
 				24564F771D837FBE00D9A8AE /* Main.strings in Resources */,
 				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
+				517F68671D9C07C10027D0A4 /* LaunchScreen.storyboard in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -756,8 +772,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */,
+				512A17801D9D030500FE98A9 /* Colors.swift in Sources */,
 				24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */,
 				24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */,
+				512A17881D9D1F8E00FE98A9 /* AnimationHelpers.swift in Sources */,
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
 				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
@@ -770,6 +788,7 @@
 				247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */,
 				24526A7D1D92D9BB00DA3FA0 /* Location.swift in Sources */,
 				24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */,
+				512A177E1D9CFF6100FE98A9 /* LaunchAnimation.swift in Sources */,
 				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
 				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
 				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
@@ -783,6 +802,7 @@
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
 				24C72AAC1D9079F700DABAC3 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
+				512A17861D9D17AF00FE98A9 /* TimerExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

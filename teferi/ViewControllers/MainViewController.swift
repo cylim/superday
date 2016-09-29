@@ -22,6 +22,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         return self.childViewControllers.last as! PagerViewController
     }
     
+    private var launchAnim : LaunchAnimation?
+    
     @IBOutlet private weak var titleLabel : UILabel!
     @IBOutlet private weak var debugView: DebugView!
     
@@ -34,11 +36,24 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         debugView.isHidden = true
         AppDelegate.instance.locationService.subscribeToLocationChanges(debugView.onNewLocation)
+        
+        launchAnim = LaunchAnimation(frame: view.frame)
+        view.addSubview(launchAnim!)
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        
+        // small delay to give launch screen time to fade away
+        Timer.schedule(withDelay: 0.1) { _ in
+            self.launchAnim?.animate(onCompleted:
+                {
+                    self.launchAnim!.removeFromSuperview()
+                    self.launchAnim = nil
+                }
+            )
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool)
