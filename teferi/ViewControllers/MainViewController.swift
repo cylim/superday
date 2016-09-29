@@ -16,6 +16,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
+    private var launchAnim : LaunchAnimationView?
+    
     @IBOutlet private weak var titleLabel : UILabel!
     @IBOutlet private weak var debugView : DebugView!
     @IBOutlet private weak var calendarLabel : UIButton!
@@ -29,6 +31,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         debugView.isHidden = true
         AppDelegate.instance.locationService.subscribeToLocationChanges(debugView.onNewLocation)
+        
+        launchAnim = LaunchAnimationView(frame: view.frame)
+        view.addSubview(launchAnim!)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -50,6 +55,16 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .isEditingObservable
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(disposeBag!)
+        
+        // small delay to give launch screen time to fade away
+        Timer.schedule(withDelay: 0.1) { _ in
+            self.launchAnim?.animate(onCompleted:
+                {
+                    self.launchAnim!.removeFromSuperview()
+                    self.launchAnim = nil
+                }
+            )
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool)
