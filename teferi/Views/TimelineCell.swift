@@ -67,19 +67,7 @@ class TimelineCell : UITableViewCell
             if let viewsToRemove = self.editButtons
             {
                 self.editButtons = nil
-                
-                var animationDelay = animationDuration * Double(viewsToRemove.count)
-                viewsToRemove.forEach
-                {
-                    view in
-                    
-                    UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [], animations:
-                    {
-                        view.removeFromSuperview()
-                    })
-                    
-                    animationDelay -= animationDuration
-                }
+                viewsToRemove.forEach { view in view.removeFromSuperview() }
             }
             
             return

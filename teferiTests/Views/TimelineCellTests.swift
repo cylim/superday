@@ -37,6 +37,11 @@ class TimelineCellTests : XCTestCase
         view.bind(toTimeSlot: timeSlot, shouldFade: false, index: 0, isEditingCategory: false)
     }
     
+    private func editCellSetUp(_ shouldFade: Bool = false, isEditingCategory: Bool = true)
+    {
+        view.bind(toTimeSlot: timeSlot, shouldFade: shouldFade, index: 0, isEditingCategory: isEditingCategory)
+    }
+    
     func testTheImageChangesAccordingToTheBoundTimeSlot()
     {
         XCTAssertNotNil(self.imageIcon.image)
@@ -132,5 +137,33 @@ class TimelineCellTests : XCTestCase
         XCTAssertEqual(expectedRed, actualRed)
         XCTAssertEqual(expectedGreen, actualGreen)
         XCTAssertEqual(expectedBlue, actualBlue)
+    }
+    
+    func testTheLineFadesWhenTheShouldFadeParametersIsTrue()
+    {
+        editCellSetUp(true)
+        
+        XCTAssertEqualWithAccuracy(line.alpha, Constants.editingAlpha, accuracy: 0.01)
+    }
+    
+    func testTheTimeLabelFadesWhenTheShouldFadeParametersIsTrue()
+    {
+        editCellSetUp(true)
+        
+        XCTAssertEqualWithAccuracy(timeLabel.alpha, Constants.editingAlpha, accuracy: 0.01)
+    }
+    
+    func testTheSlotDescriptionFadesWhenTheShouldFadeParametersIsTrue()
+    {
+        editCellSetUp(true)
+        
+        XCTAssertEqualWithAccuracy(slotDescription.alpha, Constants.editingAlpha, accuracy: 0.01)
+    }
+    
+    func testTheCategoryIconDoesNotFadesWhenTheShouldFadeParametersIsTrue()
+    {
+        editCellSetUp(true)
+        
+        XCTAssertEqual(imageIcon.alpha, 1.0)
     }
 }

@@ -8,6 +8,10 @@ class MockPersistencyService : PersistencyService
     
     //MARK: Properties
     private(set) var timeSlots = [TimeSlot]()
+    var didSubscribe : Bool
+    {
+        return newTimeSlotCallbacks.count > 0
+    }
     
     //PersistencyService implementation
     func getLastTimeSlot() -> TimeSlot

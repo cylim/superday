@@ -45,4 +45,28 @@ class TimelineViewModelTests : XCTestCase
         
         XCTAssertNotNil(firstSlot.endTime)
     }
+    
+    func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
+    {
+        viewModel.addNewSlot(withCategory: .work)
+        let timeSlot = viewModel.timeSlots[0]
+        
+        XCTAssertTrue(viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute))
+        XCTAssertEqual(timeSlot.category, .commute)
+    }
+    
+    func testOnlyViewModelsForTheCurrentDaySubscribeForTimeSlotUpdates()
+    {
+        XCTAssertTrue(self.mockPersistencyService.didSubscribe)
+    }
+    
+    func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
+    {
+        let newMockPersistencyService = MockPersistencyService()
+        _ = TimelineViewModel(date: Date().yesterday, persistencyService: newMockPersistencyService)
+        
+        XCTAssertFalse(newMockPersistencyService.didSubscribe)
+    }
+    
+    
 }
