@@ -14,7 +14,7 @@ class TimelineViewController : UITableViewController
     
     // MARK: Fields
     private let viewModel : TimelineViewModel
-    private let baseCellHeight = 37
+    private let baseCellHeight = 40
     private let cellIdentifier = "timelineCell"
     private let disposeBag = DisposeBag()
     private var currentlyEditingIndex = -1

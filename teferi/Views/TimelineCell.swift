@@ -8,7 +8,7 @@ class TimelineCell : UITableViewCell
 {
     // MARK: Fields
     private var currentIndex = 0
-    private let animationDuration = 0.12
+    private let animationDuration = 0.1
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
@@ -95,7 +95,7 @@ class TimelineCell : UITableViewCell
             
             imageView.snp.makeConstraints { make in makeConstraints(withMaker: make, previousSnp: previousSnp) }
             
-            UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [], animations: { imageView.alpha = 1 })
+            UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [ .curveEaseInOut ], animations: { imageView.alpha = 1 })
             
             animationDelay += animationDuration
             

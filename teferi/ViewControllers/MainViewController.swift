@@ -81,7 +81,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         pagerViewController.setViewControllers(
             [ TimelineViewController(date: today) ],
             direction: .forward,
-            animated: false,
+            animated: true,
             completion: nil)
         
         onDateChanged(today)
@@ -143,6 +143,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         titleLabel.alpha = alpha
         
         logButton.isUserInteractionEnabled = !isEditing
+        calendarLabel.isUserInteractionEnabled = !isEditing
     }
     
     func showAlert(withTitle title: String, message: String)

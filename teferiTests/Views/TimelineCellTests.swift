@@ -204,15 +204,4 @@ class TimelineCellTests : XCTestCase
         
         XCTAssertEqual(view.subviews.count, numberOfViewsBeforeBinding)
     }
-    
-    func theOnCategoryChangedCallbackGetsCalledWhenAnCategoryIsTapped()
-    {
-        var onCategoryChangedWasCalled = false
-        view.onCategoryChange = { c in onCategoryChangedWasCalled = true }
-        
-        editCellSetUp()
-        
-        
-        XCTAssertTrue(onCategoryChangedWasCalled)
-    }
 }
