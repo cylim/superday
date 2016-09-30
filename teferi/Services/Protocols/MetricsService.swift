@@ -9,5 +9,5 @@ protocol MetricsService
     func initialize()
     
     ///Used to send custom events to the framework
-    func log(customEvent event: CustomEvent)
+    func log(event: CustomEvent)
 }

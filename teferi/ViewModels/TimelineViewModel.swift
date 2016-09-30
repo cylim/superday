@@ -6,6 +6,7 @@ class TimelineViewModel
 {
     //MARK: Fields
     private let persistencyService : PersistencyService
+    private let metricsService : MetricsService
     private let timeSlotsVariable : Variable<[TimeSlot]>
     private let isEditingVariable = Variable(false)
     
@@ -28,7 +29,7 @@ class TimelineViewModel
     }
     
     //MARK: Initializers
-    init(date: Date, persistencyService: PersistencyService)
+    init(date: Date, persistencyService: PersistencyService, metricsService : MetricsService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
         let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date)
@@ -38,6 +39,7 @@ class TimelineViewModel
         
         self.date = date
         self.persistencyService = persistencyService
+        self.metricsService = metricsService
         self.timeSlotsVariable = Variable(timeSlotsForDate)
         self.isEditingObservable = isEditingVariable.asObservable()
         self.timeSlotsObservable = timeSlotsVariable.asObservable()
@@ -75,6 +77,8 @@ class TimelineViewModel
     {
         let timeSlot = timeSlots[index]
         guard persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }
+        
+        metricsService.log(event: .timeSlotEditing)
         
         timeSlot.category = category
         return true
