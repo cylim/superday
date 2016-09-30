@@ -12,9 +12,6 @@ class Constants
     ///Minimum size of the cosmetic line that appears on a TimeSlot cell.
     static let minLineSize = 12
     
-    ///Key used for the preference that indicates whether the app is running for the first time or not.
-    static let ranForTheFirstTime = "firstAppRunKey"
-    
     ///Key used for the preference that indicates whether the user is currently traveling or not.
     static let isTravelingKey = "isTravelingKey"
     

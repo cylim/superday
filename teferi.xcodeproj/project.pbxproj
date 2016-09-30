@@ -49,6 +49,11 @@
 		247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FD1D88153700451BAD /* MockPersistencyService.swift */; };
 		247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */; };
 		247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */; };
+		24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */; };
+		24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5A1D9E4D1100452D16 /* SettingsService.swift */; };
+		24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */; };
+		24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5E1D9E5BB900452D16 /* PagerViewModelTests.swift */; };
+		24B03B611D9E5DEE00452D16 /* MockSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */; };
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
@@ -128,6 +133,11 @@
 		247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeSlotCreationService.swift; path = Services/DefaultTimeSlotCreationService.swift; sourceTree = "<group>"; };
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewModel.swift; path = ViewModels/PagerViewModel.swift; sourceTree = "<group>"; };
+		24B03B5A1D9E4D1100452D16 /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsService.swift; path = Services/Protocols/SettingsService.swift; sourceTree = "<group>"; };
+		24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultSettingsService.swift; path = Services/DefaultSettingsService.swift; sourceTree = "<group>"; };
+		24B03B5E1D9E5BB900452D16 /* PagerViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewModelTests.swift; path = ViewModels/PagerViewModelTests.swift; sourceTree = "<group>"; };
+		24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockSettingsService.swift; path = Mocks/MockSettingsService.swift; sourceTree = "<group>"; };
 		24C72AA51D906BDA00DABAC3 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogLevel.swift; path = Models/LogLevel.swift; sourceTree = "<group>"; };
 		24C72AA91D90731C00DABAC3 /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Services/Protocols/LoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -213,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				24564F6B1D8326F100D9A8AE /* MainViewModelTests.swift */,
+				24B03B5E1D9E5BB900452D16 /* PagerViewModelTests.swift */,
 				24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */,
 			);
 			name = ViewModels;
@@ -252,6 +263,7 @@
 				247F05F91D87325600451BAD /* PersistencyService.swift */,
 				247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */,
 				24C72AA91D90731C00DABAC3 /* LoggingService.swift */,
+				24B03B5A1D9E4D1100452D16 /* SettingsService.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -261,6 +273,7 @@
 			children = (
 				24564F6F1D83270000D9A8AE /* MockLocationService.swift */,
 				247F05FD1D88153700451BAD /* MockPersistencyService.swift */,
+				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -286,6 +299,7 @@
 				247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */,
 				24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */,
 				2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */,
+				24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -317,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
+				24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */,
 				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
 			);
 			name = ViewModels;
@@ -786,6 +801,7 @@
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
+				24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */,
 				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
 				24526A751D92D98800DA3FA0 /* Constants.swift in Sources */,
 				24526A791D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift in Sources */,
@@ -801,12 +817,14 @@
 				24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */,
 				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
 				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
+				24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */,
 				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
 				247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */,
 				247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */,
 				2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */,
+				24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
@@ -820,9 +838,11 @@
 			files = (
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
+				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
 				247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */,
 				24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */,
+				24B03B611D9E5DEE00452D16 /* MockSettingsService.swift in Sources */,
 				24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */,
 				24564F6D1D8326F100D9A8AE /* MainViewModelTests.swift in Sources */,
 			);

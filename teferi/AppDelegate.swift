@@ -17,9 +17,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     
     //MARK: Properties
     var window: UIWindow?
-    var locationService : LocationService
+    
     let loggingService : LoggingService
+    var locationService : LocationService
+    let settingsService : SettingsService
     let persistencyService : PersistencyService
+    
     let isEditingObservable : Observable<Bool>
     var isEditing : Bool
     {
@@ -30,6 +33,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //Initializers
     override init()
     {
+        settingsService = DefaultSettingsService()
         metricsService = HockeyAppMetricsService()
         loggingService = SwiftyBeaverLoggingService()
         locationService = DefaultLocationService(loggingService: loggingService)
@@ -51,13 +55,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         metricsService.initialize()
         
-        if !UserDefaults.standard.bool(forKey: Constants.ranForTheFirstTime)
+        if settingsService.installDate == nil
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
             if persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                UserDefaults.standard.set(true, forKey: Constants.ranForTheFirstTime)
+                settingsService.setInstallDate(date: Date())
             }
         }
         
