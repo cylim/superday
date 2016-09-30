@@ -76,5 +76,11 @@ class TimelineViewModelTests : XCTestCase
         XCTAssertFalse(newMockPersistencyService.didSubscribe)
     }
     
-    
+    func testTheUpdateMethodCallsTheMetricsServiceWhenTheUpdateMethodGetsCalled()
+    {
+        viewModel.addNewSlot(withCategory: .work)
+        
+        XCTAssertTrue(viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute))
+        XCTAssertTrue(self.mockMetricsService.didLog(event: .timeSlotEditing))
+    }
 }

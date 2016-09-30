@@ -4,6 +4,7 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
+    private let viewModel = PagerViewModel(settingsService: AppDelegate.instance.settingsService)
     private let disposeBag = DisposeBag()
     private lazy var currentDateViewController : TimelineViewController =
     {
@@ -80,19 +81,20 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
         let timelineController = viewController as! TimelineViewController
-        let currentDate = timelineController.date
-        let nextDate = currentDate.yesterday
+        let nextDate = timelineController.date.yesterday
+        
+        guard viewModel.canScroll(toDate: nextDate) else { return nil }
+        
         return TimelineViewController(date: nextDate)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
         let timelineController = viewController as! TimelineViewController
-        let currentDate = timelineController.date.ignoreTimeComponents()
-        let canScrollOn = currentDate != Date().ignoreTimeComponents()
-        guard canScrollOn else { return nil }
+        let nextDate = timelineController.date.tomorrow
         
-        let nextDate = currentDate.tomorrow
+        guard viewModel.canScroll(toDate: nextDate) else { return nil }
+        
         let newController = TimelineViewController(date: nextDate)
         if nextDate.ignoreTimeComponents() == Date().ignoreTimeComponents()
         {

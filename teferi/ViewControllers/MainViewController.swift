@@ -76,7 +76,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Actions
     @IBAction func onCalendarTouchUpInside()
     {
-        let today = Date()
+        let today = Date().ignoreTimeComponents()
+        
+        guard viewModel.currentDate.ignoreTimeComponents() != today else { return }
         
         pagerViewController.setViewControllers(
             [ TimelineViewController(date: today) ],
