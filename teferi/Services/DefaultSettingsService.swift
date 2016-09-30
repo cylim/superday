@@ -12,7 +12,6 @@ class DefaultSettingsService : SettingsService
         installDate = UserDefaults.standard.object(forKey: installDateKey) as! Date?
     }
     
-    
     func setInstallDate(date: Date)
     {
         guard installDate == nil else { return }
