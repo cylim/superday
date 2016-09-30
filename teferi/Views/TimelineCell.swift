@@ -23,6 +23,7 @@ class TimelineCell : UITableViewCell
     @IBOutlet weak private var categoryButton : UIButton?
     @IBOutlet weak private var slotDescription : UILabel?
     @IBOutlet weak private var categoryIcon : UIImageView?
+    @IBOutlet private weak var indicatorDot: UIView?
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
@@ -50,6 +51,7 @@ class TimelineCell : UITableViewCell
     {
         self.currentIndex = index
         
+        let isRunning = timeSlot.endTime == nil
         let interval = Int(timeSlot.duration)
         let minutes = (interval / 60) % 60
         let hours = (interval / 3600)
@@ -57,7 +59,7 @@ class TimelineCell : UITableViewCell
         let categoryColor = timeSlot.category.color
         
         //Updates each one of the cell's components
-        layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
+        layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha, isRunning: isRunning)
         layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
         layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
         layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
@@ -137,7 +139,7 @@ class TimelineCell : UITableViewCell
     }
     
     ///Updates the line that displays shows how long the TimeSlot lasted
-    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat)
+    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat, isRunning: Bool)
     {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         lineHeightConstraint.constant = newHeight
@@ -145,6 +147,11 @@ class TimelineCell : UITableViewCell
         lineView?.alpha = alpha
         lineView?.backgroundColor = color
         lineView?.layoutIfNeeded()
+        
+        indicatorDot?.alpha = alpha
+        indicatorDot?.backgroundColor = color
+        indicatorDot?.isHidden = !isRunning
+        indicatorDot?.layoutIfNeeded()
     }
     
     private func mapCategoryIntoView(category: Category) -> UIImageView

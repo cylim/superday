@@ -140,10 +140,14 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        let interval = Int(viewModel.timeSlots[(indexPath as NSIndexPath).item].duration)
+        let timeSlot = viewModel.timeSlots[(indexPath as NSIndexPath).item]
+        let isRunning = timeSlot.endTime == nil
+        let interval = Int(timeSlot.duration)
         let hours = (interval / 3600)
         let minutes = (interval / 60) % 60
-        let height = baseCellHeight + Constants.minLineSize * (1 + (minutes / 15) + (hours * 4))
+        let height = baseCellHeight
+            + Constants.minLineSize * (1 + (minutes / 15) + (hours * 4))
+            + (isRunning ? 8 : 0)
         
         return CGFloat(height)
     }

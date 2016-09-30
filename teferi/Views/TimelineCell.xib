@@ -13,17 +13,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-R3-3Vm">
-                    <frame key="frameInset" minX="61" minY="32" width="6" height="121"/>
+                    <frame key="frameInset" minX="61" minY="32" width="4" height="121"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="120" id="14b-ji-uew"/>
                         <constraint firstAttribute="height" constant="120" id="ClH-NM-vgv"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="6" id="f9L-Do-0P0"/>
-                        <constraint firstAttribute="width" constant="6" id="z4R-zv-o1M"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="4" id="f9L-Do-0P0"/>
+                        <constraint firstAttribute="width" constant="4" id="z4R-zv-o1M"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="3"/>
+                            <integer key="value" value="2"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <variation key="default">
@@ -45,16 +45,6 @@
                     </attributedString>
                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="12 h 59 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWX-Wq-cy4">
-                    <frame key="frameInset" minX="80" minY="82" width="116" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="CQ7-Rg-OCd"/>
-                        <constraint firstAttribute="width" constant="116" id="pU6-ML-EEi"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-EQ-YkE">
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="bnM-yD-LUJ"/>
@@ -67,6 +57,29 @@
                         <constraint firstAttribute="width" constant="60" id="QiH-Ps-cHV"/>
                     </constraints>
                 </button>
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8o1-Rs-sBZ" userLabel="Running Indicator Dot">
+                    <frame key="frameInset" minX="16.44%" minY="23.68%" width="4" height="4"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="4" id="HI2-cA-qNP"/>
+                        <constraint firstAttribute="height" constant="4" id="xaS-LH-YFU"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="12 h 59 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWX-Wq-cy4">
+                    <frame key="frameInset" minX="78" minY="82" width="116" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="CQ7-Rg-OCd"/>
+                        <constraint firstAttribute="width" constant="116" id="pU6-ML-EEi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -81,6 +94,7 @@
                 <constraint firstItem="2dA-qd-byA" firstAttribute="centerY" secondItem="4sb-EQ-YkE" secondAttribute="centerY" id="UJo-zC-r26"/>
                 <constraint firstItem="4sb-EQ-YkE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="36" id="UTV-Ec-m4a"/>
                 <constraint firstItem="2dA-qd-byA" firstAttribute="leading" secondItem="4sb-EQ-YkE" secondAttribute="trailing" constant="17" id="Uar-fP-kfo"/>
+                <constraint firstItem="8o1-Rs-sBZ" firstAttribute="centerX" secondItem="2Oj-R3-3Vm" secondAttribute="centerX" id="Vkk-E1-7Bo"/>
                 <constraint firstItem="lWX-Wq-cy4" firstAttribute="leading" secondItem="2Oj-R3-3Vm" secondAttribute="trailing" constant="8" id="YJc-Zc-tdB"/>
                 <constraint firstItem="lWX-Wq-cy4" firstAttribute="centerY" secondItem="2Oj-R3-3Vm" secondAttribute="centerY" id="Zhv-yT-HBa"/>
                 <constraint firstItem="2dA-qd-byA" firstAttribute="centerY" secondItem="4sb-EQ-YkE" secondAttribute="centerY" id="brW-Dd-M8V"/>
@@ -88,6 +102,7 @@
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="top" secondItem="2dA-qd-byA" secondAttribute="bottom" constant="6" id="eDF-pO-gQP"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="fNn-m3-CiX"/>
                 <constraint firstItem="4sb-EQ-YkE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="guc-wy-7lp"/>
+                <constraint firstItem="8o1-Rs-sBZ" firstAttribute="top" secondItem="2Oj-R3-3Vm" secondAttribute="bottom" constant="4" id="l6N-I7-sew"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="61" id="plx-h4-NNh"/>
                 <constraint firstItem="2Oj-R3-3Vm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="93" id="stt-O3-5bP"/>
                 <constraint firstItem="lWX-Wq-cy4" firstAttribute="centerY" secondItem="2Oj-R3-3Vm" secondAttribute="centerY" id="t6i-W9-Dg3"/>
@@ -97,10 +112,10 @@
             </constraints>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="UJo-zC-r26"/>
-                    <exclude reference="Uar-fP-kfo"/>
                     <exclude reference="UTV-Ec-m4a"/>
                     <exclude reference="bxs-NP-r5z"/>
+                    <exclude reference="UJo-zC-r26"/>
+                    <exclude reference="Uar-fP-kfo"/>
                     <exclude reference="Iv0-HZ-dRT"/>
                     <exclude reference="NBP-uS-Hr4"/>
                     <exclude reference="Sjc-hs-xMO"/>
@@ -117,6 +132,7 @@
                 <outlet property="categoryButton" destination="3XR-CB-WIl" id="TXI-2T-HrP"/>
                 <outlet property="categoryIcon" destination="4sb-EQ-YkE" id="pgW-OZ-pNK"/>
                 <outlet property="elapsedTime" destination="lWX-Wq-cy4" id="1Z9-0E-U6W"/>
+                <outlet property="indicatorDot" destination="8o1-Rs-sBZ" id="uGa-mE-tfh"/>
                 <outlet property="lineView" destination="2Oj-R3-3Vm" id="kYE-eO-Upc"/>
                 <outlet property="slotDescription" destination="2dA-qd-byA" id="LH0-9M-jTv"/>
             </connections>
