@@ -36,6 +36,12 @@
                                     <segue destination="7OT-Wf-TWW" kind="embed" id="6ps-b0-68Z"/>
                                 </connections>
                             </containerView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icCalendar" translatesAutoresizingMaskIntoConstraints="NO" id="RET-NJ-inr">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="ITM-gv-HOQ"/>
+                                    <constraint firstAttribute="height" constant="24" id="fkH-Zf-9tp"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xU-Bh-AWX">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="AZY-S3-HKw"/>
@@ -46,35 +52,55 @@
                                     <action selector="onSendLogButtonTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lgm-de-7Fb"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Tf-eZ-TNl" customClass="DebugView" customModule="teferi" customModuleProvider="target">
-                                <frame key="frameInset" width="300.5" height="400" maxX="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZ4-TA-BR8">
-                                <frame key="frameInset" minY="29" width="45.5" height="30" maxX="96.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Debug"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cvs-ps-GL3">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KyB-Yu-Hkf"/>
+                                    <constraint firstAttribute="width" constant="50" id="c0H-Sg-gp8"/>
+                                </constraints>
+                                <state key="normal" title="30">
+                                    <color key="titleColor" red="0.36862745099999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="onDebugButtonTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="yQJ-YO-VQ4"/>
+                                    <action selector="onCalendarTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mms-1C-bOm"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F6h-lK-FZf">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Rck-77-YlZ"/>
+                                    <constraint firstAttribute="width" constant="46" id="TOh-hH-MVP"/>
+                                </constraints>
+                                <state key="normal" title="Debug"/>
+                                <connections>
+                                    <action selector="onDebugButtonTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="J4f-rs-NJK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J4x-AG-nLx" customClass="DebugView" customModule="teferi" customModuleProvider="target">
+                                <frame key="frameInset" minX="71" minY="191" width="301" height="476"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="24" id="A3N-lY-965"/>
-                            <constraint firstItem="1xU-Bh-AWX" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="15" id="AcC-Ld-BOw"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="leading" secondItem="4Kc-Yx-eCd" secondAttribute="trailing" constant="14" id="Amn-5j-mEJ"/>
+                            <constraint firstItem="1xU-Bh-AWX" firstAttribute="leading" secondItem="F6h-lK-FZf" secondAttribute="trailing" constant="-3" id="B0A-CU-vqh"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="12" id="COh-mY-Shc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RET-NJ-inr" secondAttribute="trailing" id="F2w-XP-2Ny"/>
+                            <constraint firstItem="Cvs-ps-GL3" firstAttribute="centerX" secondItem="RET-NJ-inr" secondAttribute="centerX" id="HWh-Ix-kC4"/>
+                            <constraint firstItem="Cvs-ps-GL3" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" constant="3" id="HbQ-hM-BsI"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="centerY" secondItem="4Kc-Yx-eCd" secondAttribute="centerY" id="K64-gf-Qso"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="NCU-n0-Cem"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="NaU-fU-1yf"/>
                             <constraint firstAttribute="trailing" secondItem="OG6-wl-hm1" secondAttribute="trailing" id="VX2-IW-m1O"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:25" id="VxF-hB-2dp"/>
+                            <constraint firstItem="RET-NJ-inr" firstAttribute="leading" secondItem="1xU-Bh-AWX" secondAttribute="trailing" constant="6" id="bJ3-dx-K9v"/>
                             <constraint firstItem="1xU-Bh-AWX" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="bMf-TF-49G"/>
                             <constraint firstAttribute="leadingMargin" secondItem="4Kc-Yx-eCd" secondAttribute="leading" id="cqR-yZ-pr8"/>
+                            <constraint firstItem="F6h-lK-FZf" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="f0W-8E-aVS"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="lht-ho-e0D"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pya-Vf-OrV"/>
+                            <constraint firstItem="RET-NJ-inr" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="v4W-01-sYM"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="height" secondItem="4Kc-Yx-eCd" secondAttribute="height" id="yOY-i6-cTF"/>
                         </constraints>
                         <variation key="default">
@@ -86,13 +112,16 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="debugView" destination="6Tf-eZ-TNl" id="izA-LG-SJP"/>
+                        <outlet property="calendarLabel" destination="Cvs-ps-GL3" id="moA-oi-S7w"/>
+                        <outlet property="debugView" destination="J4x-AG-nLx" id="xcO-it-1AX"/>
+                        <outlet property="icon" destination="4Kc-Yx-eCd" id="ocm-Tt-kFk"/>
+                        <outlet property="logButton" destination="1xU-Bh-AWX" id="tu8-d5-lhy"/>
                         <outlet property="titleLabel" destination="mpB-7h-JKy" id="TYT-Ml-lqN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="247.19999999999999" y="315.29235382308849"/>
+            <point key="canvasLocation" x="260" y="299.10044977511245"/>
         </scene>
         <!--Pager View Controller-->
         <scene sceneID="ZWI-cF-Vuk">
@@ -113,6 +142,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icCalendar" width="24" height="24"/>
         <image name="icSuperday" width="24" height="24"/>
     </resources>
 </document>

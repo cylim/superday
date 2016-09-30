@@ -27,6 +27,17 @@ protocol PersistencyService
     func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     
     /**
+     Changes the category of an existing TimeSlot.
+     
+     - Parameter timeSlot: The TimeSlots to be updated.
+     
+     - Parameter category: The new category of the TimeSlot.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
+    
+    /**
      Adds a callback that gets called everytime a new TimeSlot is created.
      
      - Parameter callback: The function that gets invoked.

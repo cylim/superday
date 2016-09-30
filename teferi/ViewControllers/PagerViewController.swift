@@ -1,9 +1,14 @@
 import UIKit
+import RxSwift
 
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private var currentDateViewController = TimelineViewController(date: Date())
+    private let disposeBag = DisposeBag()
+    private lazy var currentDateViewController : TimelineViewController =
+    {
+        return TimelineViewController(date: Date())
+    }()
     
     // MARK: Properties
     var onDateChanged : ((Date) -> Void)? = nil
@@ -32,6 +37,12 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         delegate = self
         dataSource = self
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate
+            .isEditingObservable
+            .subscribe(onNext: onEditChanged)
+            .addDisposableTo(disposeBag)
+        
         setViewControllers(
             [ currentDateViewController ],
             direction: .forward,
@@ -45,13 +56,24 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         currentDateViewController.addNewSlot(withCategory: category)
     }
     
+    private func onEditChanged(_ isEditing: Bool)
+    {
+        self.view.subviews.filter { v in v is UIScrollView }.forEach
+        {
+            view in
+            
+            let scrollView = view as! UIScrollView
+            scrollView.isScrollEnabled = !isEditing
+        }
+    }
+    
     // MARK: UIPageViewControllerDelegate implementation
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
     {
         guard completed else { return }
         
         let timelineController = self.viewControllers!.first as! TimelineViewController
-        onDateChanged?(timelineController.date as Date)
+        onDateChanged?(timelineController.date)
     }
     
     // MARK: UIPageViewControllerDataSource implementation
@@ -68,20 +90,15 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         let timelineController = viewController as! TimelineViewController
         let currentDate = timelineController.date.ignoreTimeComponents()
         let canScrollOn = currentDate != Date().ignoreTimeComponents()
-        if canScrollOn
+        guard canScrollOn else { return nil }
+        
+        let nextDate = currentDate.tomorrow
+        let newController = TimelineViewController(date: nextDate)
+        if nextDate.ignoreTimeComponents() == Date().ignoreTimeComponents()
         {
-            let nextDate = currentDate.tomorrow
-            let newController = TimelineViewController(date: nextDate)
-            if nextDate.ignoreTimeComponents() == Date().ignoreTimeComponents()
-            {
-                currentDateViewController = newController
-            }
-            
-            return newController
+            currentDateViewController = newController
         }
-        else
-        {
-            return nil
-        }
+        
+        return newController
     }
 }

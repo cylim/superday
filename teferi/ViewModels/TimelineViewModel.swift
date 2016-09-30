@@ -7,11 +7,19 @@ class TimelineViewModel
     //MARK: Fields
     private let persistencyService : PersistencyService
     private let timeSlotsVariable : Variable<[TimeSlot]>
+    private let isEditingVariable = Variable(false)
     
     //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
     let timeSlotsObservable : Observable<[TimeSlot]>
+    let isEditingObservable : Observable<Bool>
+    
+    var isEditing : Bool
+    {
+        get { return isEditingVariable.value }
+        set(value) { isEditingVariable.value = value }
+    }
     
     private(set) var timeSlots : [TimeSlot]
     {
@@ -23,12 +31,15 @@ class TimelineViewModel
     init(date: Date, persistencyService: PersistencyService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
+        let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date)
         
         //UI gets notified once every n seconds that the last item might need to be redrawn
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
+        
         self.date = date
         self.persistencyService = persistencyService
-        self.timeSlotsVariable = Variable(persistencyService.getTimeSlots(forDay: date))
+        self.timeSlotsVariable = Variable(timeSlotsForDate)
+        self.isEditingObservable = isEditingVariable.asObservable()
         self.timeSlotsObservable = timeSlotsVariable.asObservable()
         
         //Only the current day subscribes for new TimeSlots
@@ -53,6 +64,20 @@ class TimelineViewModel
             //TODO: Recover if saving fails
             return
         }
+    }
+    
+    /**
+     Adds and persists a new TimeSlot to this Timeline.
+     
+     - Parameter category: Category of the newly created TimeSlot.
+     */
+    func updateTimeSlot(atIndex index: Int, withCategory category: Category) -> Bool
+    {
+        let timeSlot = timeSlots[index]
+        guard persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }
+        
+        timeSlot.category = category
+        return true
     }
     
     ///Called when the persistency service indicates that a new TimeSlot has been created.

@@ -13,12 +13,19 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //MARK: Fields
     private let metricsService : MetricsService
     private let timeSlotCreationService : TimeSlotCreationService
+    private let isEditingVariable = Variable(false)
     
     //MARK: Properties
     var window: UIWindow?
     var locationService : LocationService
     let loggingService : LoggingService
     let persistencyService : PersistencyService
+    let isEditingObservable : Observable<Bool>
+    var isEditing : Bool
+    {
+        get { return isEditingVariable.value }
+        set(value) { isEditingVariable.value = value }
+    }
     
     //Initializers
     override init()
@@ -28,6 +35,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService = DefaultLocationService(loggingService: loggingService)
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
         timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService)
+        
+        isEditingObservable = isEditingVariable.asObservable()
     }
     
     //MARK: UIApplicationDelegate lifecycle

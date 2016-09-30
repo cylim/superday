@@ -87,7 +87,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             loggingService.log(withLogLevel: .debug, message: "User traveled \(distance) meters. Creating new TimeSlot.")
             
             isTraveling = true
-            let timeSlot = TimeSlot(category: .Commute)
+            let timeSlot = TimeSlot(category: .commute)
             
             if !persistencyService.addNewTimeSlot(timeSlot)
             {

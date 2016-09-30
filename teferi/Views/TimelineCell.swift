@@ -1,21 +1,38 @@
 import UIKit
+import CoreGraphics
+import SnapKit
+import RxSwift
 
 ///Cell that represents a TimeSlot in the timeline
 class TimelineCell : UITableViewCell
 {
     // MARK: Fields
+    private var currentIndex = 0
+    private let animationDuration = 0.1
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
-    {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
+        {
+            return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
     }()
     
-    //MARK: Outlets
-    @IBOutlet weak private var categoryIcon : UIImageView?
-    @IBOutlet weak private var slotDescription : UILabel?
-    @IBOutlet weak private var elapsedTime : UILabel?
+    private var editButtons : [UIImageView]? = nil
+    
     @IBOutlet weak private var lineView : UIView?
+    @IBOutlet weak private var elapsedTime : UILabel?
+    @IBOutlet weak private var categoryButton : UIButton?
+    @IBOutlet weak private var slotDescription : UILabel?
+    @IBOutlet weak private var categoryIcon : UIImageView?
+    
+    //MARK: Properties
+    private(set) var isSubscribedToClickObservable = false
+    var editClickObservable : Observable<Int>
+    {
+        self.isSubscribedToClickObservable = true
+        return categoryButton!.rx.tap.map { return self.currentIndex }.asObservable()
+    }
+    
+    var onCategoryChange : ((Int, Category) -> Void)?
     
     // MARK: Methods
     override func awakeFromNib()
@@ -29,38 +46,133 @@ class TimelineCell : UITableViewCell
      
      - Parameter timeSlot: TimeSlot that will be bound.
      */
-    func bindTimeSlot(_ timeSlot: TimeSlot)
+    func bind(toTimeSlot timeSlot: TimeSlot, shouldFade: Bool, index: Int, isEditingCategory: Bool)
     {
+        self.currentIndex = index
+        
+        let interval = Int(timeSlot.duration)
+        let minutes = (interval / 60) % 60
+        let hours = (interval / 3600)
+        let alpha = shouldFade ? Constants.editingAlpha : 1
         let categoryColor = timeSlot.category.color
         
-        //Icon that indicates the slot's category
-        categoryIcon?.image = UIImage(named: timeSlot.category.assetInfo.small)
+        //Updates each one of the cell's components
+        layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
+        layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
+        layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
+        layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
         
-        //Description and starting time of the slot
+        guard isEditingCategory else
+        {
+            if let viewsToRemove = self.editButtons
+            {
+                self.editButtons = nil
+                viewsToRemove.forEach { view in view.removeFromSuperview() }
+            }
+            
+            return
+        }
+        
+        if let viewsToRemove = self.editButtons
+        {
+            viewsToRemove.forEach { v in v.removeFromSuperview() }
+            self.editButtons = nil
+        }
+        
+        categoryIcon?.image = UIImage(named: Category.unknown.icon)
+        
+        editButtons = Constants.categories
+            .filter { c in c != .unknown && c != timeSlot.category }
+            .map(mapCategoryIntoView)
+        
+        var animationDelay = 0.0
+        var previousImageView = categoryIcon!
+        for imageView in editButtons!
+        {
+            self.addSubview(imageView)
+            
+            let previousSnp = previousImageView.snp
+            
+            imageView.snp.makeConstraints { make in makeConstraints(withMaker: make, previousSnp: previousSnp) }
+            
+            UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [ .curveEaseInOut ], animations: { imageView.alpha = 1 })
+            
+            animationDelay += animationDuration
+            
+            previousImageView = imageView
+        }
+    }
+    
+    /// Updates the icon that indicates the slot's category
+    private func layoutCategoryIcon(withImageName name: String, color: UIColor, alpha: CGFloat)
+    {
+        categoryIcon?.alpha = alpha
+        categoryIcon?.backgroundColor = color
+        categoryIcon?.layer.cornerRadius = 16
+        categoryIcon?.image = UIImage(named: name)
+    }
+    
+    /// Updates the label that displays the description and starting time of the slot
+    private func layoutDescriptionLabel(withStartTime startTime: Date, category: Category, alpha: CGFloat)
+    {
         let formatter = DateFormatter()
         formatter.timeStyle = .medium
-        let dateString = formatter.string(from: timeSlot.startTime as Date)
-        let categoryText = timeSlot.category == .Unknown ? "" : String(describing: timeSlot.category)
+        let dateString = formatter.string(from: startTime)
+        let categoryText = category == .unknown ? "" : String(describing: category)
         
         let description = "\(categoryText) \(dateString)"
         let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count)
         let attributedText = description.getBoldStringWithNonBoldText(nonBoldRange)
-
+        
         slotDescription?.attributedText = attributedText
-        
-        //Label that shows how long the slot lasted
-        let interval = Int(timeSlot.duration)
-        let minutes = (interval / 60) % 60
-        let hours = (interval / 3600)
-        
-        elapsedTime?.textColor = categoryColor
+        slotDescription?.alpha = alpha
+    }
+    
+    ///Updates the label that shows how long the slot lasted
+    private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat)
+    {
+        elapsedTime?.alpha = alpha
+        elapsedTime?.textColor = color
         elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
-        
-        //Cosmetic line®
+    }
+    
+    ///Updates the line that displays shows how long the TimeSlot lasted
+    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat)
+    {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         lineHeightConstraint.constant = newHeight
         
-        lineView?.backgroundColor = categoryColor
+        lineView?.alpha = alpha
+        lineView?.backgroundColor = color
         lineView?.layoutIfNeeded()
+    }
+    
+    private func mapCategoryIntoView(category: Category) -> UIImageView
+    {
+        let image = UIImage(named: category.icon)
+        let imageView = UIImageView(image: image)
+        let gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.changeCategory(to: category) })
+        
+        imageView.alpha = 0
+        imageView.contentMode = .center
+        imageView.layer.cornerRadius = 22
+        imageView.isUserInteractionEnabled = true
+        imageView.backgroundColor = category.color
+        imageView.addGestureRecognizer(gestureRecognizer)
+        
+        return imageView
+    }
+    
+    private func makeConstraints(withMaker make: ConstraintMaker, previousSnp: ConstraintViewDSL)
+    {
+        make.width.width.equalTo(44)
+        make.width.height.equalTo(44)
+        make.left.equalTo(previousSnp.right).offset(5)
+        make.centerY.equalTo(previousSnp.centerY)
+    }
+    
+    private func changeCategory(to category: Category)
+    {
+        onCategoryChange?(currentIndex, category)
     }
 }
