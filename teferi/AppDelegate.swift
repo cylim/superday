@@ -11,12 +11,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     }
     
     //MARK: Fields
-    private let metricsService : MetricsService
     private let timeSlotCreationService : TimeSlotCreationService
     private let isEditingVariable = Variable(false)
     
     //MARK: Properties
     var window: UIWindow?
+    let metricsService : MetricsService
     var locationService : LocationService
     let loggingService : LoggingService
     let persistencyService : PersistencyService

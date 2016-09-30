@@ -15,8 +15,9 @@ class HockeyAppMetricsService : MetricsService
     }
     
     ///Used to send custom events to the framework
-    func log(customEvent event: CustomEvent)
+    func log(event: CustomEvent)
     {
-        //TODO: Add loggin of custom events once their UI is added
+        let metricsManager = BITHockeyManager.shared().metricsManager
+        metricsManager.trackEvent(withName: event.rawValue)
     }
 }

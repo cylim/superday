@@ -7,12 +7,18 @@ class TimelineViewModelTests : XCTestCase
 {
     private var disposable : Disposable? = nil
     private var mockPersistencyService = MockPersistencyService()
-    private var viewModel = TimelineViewModel(date: Date(), persistencyService: MockPersistencyService())
-    
+    private var mockMetricsService = MockMetricsService()
+    private var viewModel = TimelineViewModel(date: Date(),
+                                              persistencyService: MockPersistencyService(),
+                                              metricsService: MockMetricsService())
+
     override func setUp()
     {
         mockPersistencyService = MockPersistencyService()
-        viewModel = TimelineViewModel(date: Date(), persistencyService: mockPersistencyService)
+        mockMetricsService = MockMetricsService()
+        viewModel = TimelineViewModel(date: Date(),
+                                      persistencyService: mockPersistencyService,
+                                      metricsService: mockMetricsService)
     }
     
     override func tearDown()
@@ -63,7 +69,9 @@ class TimelineViewModelTests : XCTestCase
     func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
     {
         let newMockPersistencyService = MockPersistencyService()
-        _ = TimelineViewModel(date: Date().yesterday, persistencyService: newMockPersistencyService)
+        _ = TimelineViewModel(date: Date().yesterday,
+                              persistencyService: newMockPersistencyService,
+                              metricsService: mockMetricsService)
         
         XCTAssertFalse(newMockPersistencyService.didSubscribe)
     }

@@ -21,13 +21,17 @@ class TimelineViewController : UITableViewController
     
     init(date: Date)
     {
-        viewModel = TimelineViewModel(date: date, persistencyService: self.appDelegate.persistencyService)
+        viewModel = TimelineViewModel(date: date,
+                                      persistencyService: self.appDelegate.persistencyService,
+                                      metricsService: self.appDelegate.metricsService)
         super.init(style: .plain)
     }
     
     required init?(coder: NSCoder)
     {
-        viewModel = TimelineViewModel(date: Date(), persistencyService: self.appDelegate.persistencyService)
+        viewModel = TimelineViewModel(date: Date(),
+                                      persistencyService: self.appDelegate.persistencyService,
+                                      metricsService: self.appDelegate.metricsService)
         super.init(style: .plain)
     }
     
