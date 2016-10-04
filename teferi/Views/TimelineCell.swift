@@ -8,7 +8,7 @@ class TimelineCell : UITableViewCell
 {
     // MARK: Fields
     private var currentIndex = 0
-    private let animationDuration = 0.1
+    private let animationDuration = 0.08
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =

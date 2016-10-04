@@ -4,6 +4,7 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
+    private let dateVariable = Variable(Date())
     private let viewModel = PagerViewModel(settingsService: AppDelegate.instance.settingsService)
     private let disposeBag = DisposeBag()
     private lazy var currentDateViewController : TimelineViewController =
@@ -12,7 +13,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     }()
     
     // MARK: Properties
-    var onDateChanged : ((Date) -> Void)? = nil
+    var dateObservable : Observable<Date> { return dateVariable.asObservable() }
     
     // MARK: Initializers
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?)
@@ -51,12 +52,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             completion: nil)
     }
     
-    // MARK: Methods
-    func addNewSlot(withCategory category: Category)
-    {
-        currentDateViewController.addNewSlot(withCategory: category)
-    }
-    
+    // MARK: Methods    
     private func onEditChanged(_ isEditing: Bool)
     {
         self.view.subviews.filter { v in v is UIScrollView }.forEach
@@ -74,7 +70,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard completed else { return }
         
         let timelineController = self.viewControllers!.first as! TimelineViewController
-        onDateChanged?(timelineController.date)
+        dateVariable.value = timelineController.date
     }
     
     // MARK: UIPageViewControllerDataSource implementation

@@ -12,11 +12,11 @@ import UIKit
  */
 enum Category : String
 {
+    case commute
+    case food
     case friends
     case work
     case leisure
-    case commute
-    case food
     case unknown
     
     //MARK: Properties

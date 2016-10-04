@@ -53,23 +53,7 @@ class TimelineViewModel
     //MARK: Methods
     
     /**
-     Adds and persists a new TimeSlot to this Timeline.
-     
-     - Parameter category: Category of the newly created TimeSlot.
-     */
-    func addNewSlot(withCategory category: Category)
-    {
-        let newSlot = TimeSlot(category: category)
-        
-        guard persistencyService.addNewTimeSlot(newSlot) else
-        {
-            //TODO: Recover if saving fails
-            return
-        }
-    }
-    
-    /**
-     Adds and persists a new TimeSlot to this Timeline.
+     Updates a TimeSlot's category.
      
      - Parameter category: Category of the newly created TimeSlot.
      */

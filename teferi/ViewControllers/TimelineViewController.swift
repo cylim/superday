@@ -1,6 +1,7 @@
 import RxSwift
 import RxCocoa
 import UIKit
+import CoreGraphics
 
 class TimelineViewController : UITableViewController
 {
@@ -18,6 +19,7 @@ class TimelineViewController : UITableViewController
     private let cellIdentifier = "timelineCell"
     private let disposeBag = DisposeBag()
     private var currentlyEditingIndex = -1
+    private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
     init(date: Date)
     {
@@ -61,25 +63,24 @@ class TimelineViewController : UITableViewController
     }
     
     // MARK: Methods
-    func addNewSlot(withCategory category: Category)
-    {
-        viewModel.addNewSlot(withCategory: category)
-    }
-    
-    func onCategoryChange(index: Int, category: Category)
+    func onCategoryChange(atIndex index: Int, category: Category)
     {
         guard viewModel.updateTimeSlot(atIndex: index, withCategory: category) else { return }
-        
         self.appDelegate.isEditing = false
     }
     
-    private func onNewTimeSlotAvailable(_ timeSlots: [TimeSlot])
+    private func onNewTimeSlotAvailable(timeSlots: [TimeSlot])
     {
-        let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
-        self.tableView.reloadRows(at: [indexPath], with: .fade)
+        self.tableView.reloadData()
+        
+        let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+        let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
+        
+        self.tableView.reloadRows(at: [updateIndexPath], with: .top)
+        self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
     }
     
-    private func onIsEditing(_ isEditing: Bool)
+    private func onIsEditing(isEditing: Bool)
     {
         self.tableView.isEditing = isEditing
         self.tableView.isScrollEnabled = !isEditing
@@ -118,12 +119,16 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return viewModel.timeSlots.count
+        return viewModel.timeSlots.count + 1
     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let index = indexPath.item
+        
+        if index == viewModel.timeSlots.count { return footerCell }
+        
         let timeSlot = viewModel.timeSlots[index]
         let categoryIsBeingEdited = index == currentlyEditingIndex
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
@@ -144,7 +149,11 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        let timeSlot = viewModel.timeSlots[(indexPath as NSIndexPath).item]
+        let index = indexPath.item
+        
+        if index == viewModel.timeSlots.count { return 120 }
+        
+        let timeSlot = viewModel.timeSlots[index]
         let isRunning = timeSlot.endTime == nil
         let interval = Int(timeSlot.duration)
         let hours = (interval / 3600)

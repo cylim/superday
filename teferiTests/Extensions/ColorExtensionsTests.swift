@@ -46,7 +46,7 @@ class UIColorExtensionsTests : XCTestCase
     
     func testInitFromIntWorksWithIntegerRepresentationsOfHexValues()
     {
-        let color = UIColor(red: 255, green: 0, blue: 0)
+        let color = UIColor(r: 255, g: 0, b: 0)
         
         var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)

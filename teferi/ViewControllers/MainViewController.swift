@@ -1,23 +1,24 @@
 import UIKit
-import CoreLocation
 import RxSwift
-import CoreMotion
 import MessageUI
+import CoreMotion
+import CoreGraphics
+import QuartzCore
+import CoreLocation
+import SnapKit
 
 class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
-    private let viewModel : MainViewModel = MainViewModel()
     private var disposeBag : DisposeBag? = DisposeBag()
-    private var pagerViewController : PagerViewController
-    {
-        return self.childViewControllers.last as! PagerViewController
-    }
+    private let viewModel : MainViewModel = MainViewModel(persistencyService: AppDelegate.instance.persistencyService)
+    private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
+    
+    private var addButton : AddTimeSlotView?
+    private var launchAnim : LaunchAnimationView?
     
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
-    private var launchAnim : LaunchAnimationView?
-    
     @IBOutlet private weak var titleLabel : UILabel!
     @IBOutlet private weak var debugView : DebugView!
     @IBOutlet private weak var calendarLabel : UIButton!
@@ -27,13 +28,24 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         super.viewDidLoad()
         
-        pagerViewController.onDateChanged = onDateChanged
-        
+        //Debug screen
         debugView.isHidden = true
-        AppDelegate.instance.locationService.subscribeToLocationChanges(debugView.onNewLocation)
+        AppDelegate.instance
+            .locationService
+            .subscribeToLocationChanges(debugView.onNewLocation)
         
-        launchAnim = LaunchAnimationView(frame: view.frame)
-        view.addSubview(launchAnim!)
+        self.launchAnim = LaunchAnimationView(frame: view.frame)
+        self.view.addSubview(launchAnim!)
+        
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
+        self.view.addSubview(addButton!)
+        self.addButton!.snp.makeConstraints { make in
+            
+            make.height.equalTo(200)
+            make.left.equalTo(self.view.snp.left)
+            make.width.equalTo(self.view.snp.width)
+            make.bottom.equalTo(self.view.snp.bottom)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -41,19 +53,24 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         super.viewWillAppear(animated)
         
         let currentDay = Calendar.current.component(.day, from: Date())
-        
         calendarLabel?.setTitle(String(format: "%02d", currentDay), for: .normal)
-        pagerViewController.onDateChanged = onDateChanged
         
-        if disposeBag == nil
-        {
-            disposeBag = DisposeBag()
-        }
+        disposeBag = disposeBag ?? DisposeBag()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate
+        //TODO: Inject this instead
+        AppDelegate.instance
             .isEditingObservable
             .subscribe(onNext: onEditChanged)
+            .addDisposableTo(disposeBag!)
+        
+        addButton!
+            .categoryObservable
+            .subscribe(onNext: onNewCategory)
+            .addDisposableTo(disposeBag!)
+        
+        pagerViewController
+            .dateObservable
+            .subscribe(onNext: onDateChanged)
             .addDisposableTo(disposeBag!)
         
         // small delay to give launch screen time to fade away
@@ -86,7 +103,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             animated: true,
             completion: nil)
         
-        onDateChanged(today)
+        onDateChanged(date: today)
     }
     
     @IBAction func onSendLogButtonTouchUpInside()
@@ -130,10 +147,22 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     }
     
     // MARK: Methods
-    private func onDateChanged(_ date: Date)
+    private func onDateChanged(date: Date)
     {
         viewModel.currentDate = date
         titleLabel.text = viewModel.title
+        
+        let today = Date().ignoreTimeComponents()
+        let isToday = today == date.ignoreTimeComponents()
+        let scale = CGFloat(isToday ? 1 : 0)
+        
+        self.addButton!.isAdding = false
+        self.addButton!.transform = CGAffineTransform(scaleX: scale, y: scale)
+    }
+    
+    private func onNewCategory(category: Category)
+    {
+        viewModel.addNewSlot(withCategory: category)
     }
     
     private func onEditChanged(_ isEditing: Bool)

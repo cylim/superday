@@ -63,7 +63,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     {
         loggingService.log(withLogLevel: .debug, message: "DefaultLocationService started")
         
-        if isInBackground
+        if !isInBackground
         {
             locationManager.startUpdatingLocation()
         }
@@ -77,9 +77,9 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     {
         loggingService.log(withLogLevel: .debug, message: "DefaultLocationService stoped")
         
-        if isInBackground
+        if !isInBackground
         {
-            locationManager.startUpdatingLocation()
+            locationManager.stopUpdatingLocation()
         }
         else
         {

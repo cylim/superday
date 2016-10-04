@@ -5,13 +5,13 @@ import XCTest
 class MainViewModelTests : XCTestCase
 {
     private var disposable : Disposable? = nil
-    private var mockLocationService = MockLocationService()
-    private var viewModel = MainViewModel()
+    private var mockPersistencyService = MockPersistencyService()
+    private var viewModel = MainViewModel(persistencyService: MockPersistencyService())
     
     override func setUp()
     {
-        mockLocationService = MockLocationService()
-        viewModel = MainViewModel()
+        self.mockPersistencyService = MockPersistencyService()
+        self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService)
     }
     
     override func tearDown()
@@ -44,5 +44,16 @@ class MainViewModelTests : XCTestCase
         let expectedText = formatter.string(from: olderDate)
         
         XCTAssertEqual(self.viewModel.title, expectedText)
+    }
+    
+    func testTheAddNewSlotsMethodAddsANewSlot()
+    {
+        var didAdd = false
+        
+        self.mockPersistencyService.subscribeToTimeSlotChanges { _ in didAdd = true }
+        
+        viewModel.addNewSlot(withCategory: .commute)
+        
+        XCTAssertTrue(didAdd)
     }
 }
