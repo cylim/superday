@@ -7,10 +7,13 @@ class MainViewModel
     // MARK: Fields
     private let superday = "Superday"
     private let superyesterday = "Superyesterday"
+    
+    private let metricsService : MetricsService
     private let persistencyService : PersistencyService
     
-    init(persistencyService: PersistencyService)
+    init(persistencyService: PersistencyService, metricsService: MetricsService)
     {
+        self.metricsService = metricsService
         self.persistencyService = persistencyService
     }
     
@@ -55,5 +58,7 @@ class MainViewModel
             //TODO: Recover if saving fails
             return
         }
+        
+        self.metricsService.log(event: .timeSlotManualCreation)
     }
 }

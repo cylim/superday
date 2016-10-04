@@ -11,7 +11,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private var disposeBag : DisposeBag? = DisposeBag()
-    private let viewModel : MainViewModel = MainViewModel(persistencyService: AppDelegate.instance.persistencyService)
+    private let viewModel : MainViewModel = MainViewModel(persistencyService: AppDelegate.instance.persistencyService, metricsService: AppDelegate.instance.metricsService)
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
     private var addButton : AddTimeSlotView?

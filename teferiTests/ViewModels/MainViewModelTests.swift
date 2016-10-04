@@ -5,13 +5,14 @@ import XCTest
 class MainViewModelTests : XCTestCase
 {
     private var disposable : Disposable? = nil
+    private var mockMetricsService = MockMetricsService()
     private var mockPersistencyService = MockPersistencyService()
-    private var viewModel = MainViewModel(persistencyService: MockPersistencyService())
+    private var viewModel = MainViewModel(persistencyService: MockPersistencyService(), metricsService: MockMetricsService())
     
     override func setUp()
     {
         self.mockPersistencyService = MockPersistencyService()
-        self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService)
+        self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService, metricsService: self.mockMetricsService)
     }
     
     override func tearDown()
@@ -55,5 +56,11 @@ class MainViewModelTests : XCTestCase
         viewModel.addNewSlot(withCategory: .commute)
         
         XCTAssertTrue(didAdd)
+    }
+    
+    func testTheAddNewSlotMethodCallsTheMetricsService()
+    {
+        viewModel.addNewSlot(withCategory: .commute)
+        XCTAssertTrue(self.mockMetricsService.didLog(event: .timeSlotManualCreation))
     }
 }
