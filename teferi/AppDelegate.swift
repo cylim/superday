@@ -54,6 +54,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService.startLocationTracking()
         
         metricsService.initialize()
+        settingsService.setInstallDate(date: Date().yesterday)
         
         if settingsService.installDate == nil
         {

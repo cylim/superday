@@ -55,6 +55,8 @@
 		24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5E1D9E5BB900452D16 /* PagerViewModelTests.swift */; };
 		24B03B611D9E5DEE00452D16 /* MockSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */; };
 		24B03B631D9E946900452D16 /* MockMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B621D9E946900452D16 /* MockMetricsService.swift */; };
+		24B03B651DA3864500452D16 /* AddTimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B641DA3864500452D16 /* AddTimeSlotView.swift */; };
+		24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B03B661DA3866400452D16 /* AddTimeSlotView.xib */; };
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
@@ -140,6 +142,8 @@
 		24B03B5E1D9E5BB900452D16 /* PagerViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewModelTests.swift; path = ViewModels/PagerViewModelTests.swift; sourceTree = "<group>"; };
 		24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockSettingsService.swift; path = Mocks/MockSettingsService.swift; sourceTree = "<group>"; };
 		24B03B621D9E946900452D16 /* MockMetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockMetricsService.swift; path = Mocks/MockMetricsService.swift; sourceTree = "<group>"; };
+		24B03B641DA3864500452D16 /* AddTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddTimeSlotView.swift; path = Views/AddTimeSlotView.swift; sourceTree = "<group>"; };
+		24B03B661DA3866400452D16 /* AddTimeSlotView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddTimeSlotView.xib; path = Views/AddTimeSlotView.xib; sourceTree = "<group>"; };
 		24C72AA51D906BDA00DABAC3 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogLevel.swift; path = Models/LogLevel.swift; sourceTree = "<group>"; };
 		24C72AA91D90731C00DABAC3 /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Services/Protocols/LoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -362,8 +366,10 @@
 		24D99F691D74B93C00E68163 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2407A9871D9D512D00066889 /* LaunchAnimationView.swift */,
+				24B03B641DA3864500452D16 /* AddTimeSlotView.swift */,
+				24B03B661DA3866400452D16 /* AddTimeSlotView.xib */,
 				2421F8C61D9BEA9A00AF8857 /* DebugView.swift */,
+				2407A9871D9D512D00066889 /* LaunchAnimationView.swift */,
 				24564F531D83254E00D9A8AE /* TimelineCell.swift */,
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
 			);
@@ -492,6 +498,7 @@
 				24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */,
 				24564F771D837FBE00D9A8AE /* Main.strings in Resources */,
 				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
+				24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */,
 				2407A98F1D9D54DB00066889 /* LaunchScreen.storyboard in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
 			);
@@ -814,6 +821,7 @@
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */,
+				24B03B651DA3864500452D16 /* AddTimeSlotView.swift in Sources */,
 				2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */,
 				24526A7D1D92D9BB00DA3FA0 /* Location.swift in Sources */,
 				24116A041D9DACCD00762BD6 /* AnimationHelpers.swift in Sources */,
