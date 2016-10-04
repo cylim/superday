@@ -41,7 +41,7 @@ class TimelineViewModelTests : XCTestCase
         XCTAssertFalse(newMockPersistencyService.didSubscribe)
     }
     
-    func testTheUpdateMethodCallsTheMetricsServiceWhenTheUpdateMethodGetsCalled()
+    func testTheUpdateMethodCallsTheMetricsService()
     {
         let timeSlot = TimeSlot(category: .work)
         XCTAssertTrue(mockPersistencyService.addNewTimeSlot(timeSlot))
