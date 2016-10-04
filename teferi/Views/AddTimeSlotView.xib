@@ -12,9 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b7d-Tp-kcU">
-                    <frame key="frameInset" width="375" height="200"/>
-                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7d-Tp-kcU"/>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6E-zf-iCr">
                     <color key="backgroundColor" red="1" green="0.3921568627" blue="0.32549019610000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>

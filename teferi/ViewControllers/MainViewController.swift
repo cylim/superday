@@ -156,8 +156,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let isToday = today == date.ignoreTimeComponents()
         let scale = CGFloat(isToday ? 1 : 0)
         
+        self.addButton!.isAdding = false
         self.addButton!.transform = CGAffineTransform(scaleX: scale, y: scale)
-        self.addButton!.
     }
     
     private func onNewCategory(category: Category)
