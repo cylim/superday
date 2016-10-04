@@ -59,6 +59,8 @@
 		24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B03B661DA3866400452D16 /* AddTimeSlotView.xib */; };
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
+		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
+		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -148,6 +150,8 @@
 		24C72AA91D90731C00DABAC3 /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Services/Protocols/LoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
+		513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewController.swift; path = Onboarding/OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -347,6 +351,7 @@
 		24D99F671D74B91900E68163 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				513535D41DA2752A00A365A9 /* Onboarding */,
 				24564F4F1D8320FC00D9A8AE /* MainViewController.swift */,
 				24564F711D832A4F00D9A8AE /* PagerViewController.swift */,
 				24564F501D8320FC00D9A8AE /* TimelineViewController.swift */,
@@ -359,6 +364,7 @@
 			children = (
 				2407A98D1D9D54DB00066889 /* LaunchScreen.storyboard */,
 				240AC71B1D748C8800F21F4F /* Main.storyboard */,
+				513535D11DA26E3B00A365A9 /* Onboarding.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -374,6 +380,14 @@
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		513535D41DA2752A00A365A9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */,
+			);
+			name = Onboarding;
 			sourceTree = "<group>";
 		};
 		ED14C2EC617C158AAE12C910 /* Frameworks */ = {
@@ -501,6 +515,7 @@
 				24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */,
 				2407A98F1D9D54DB00066889 /* LaunchScreen.storyboard in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
+				513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +835,7 @@
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
+				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
 				247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */,
 				24B03B651DA3864500452D16 /* AddTimeSlotView.swift in Sources */,
 				2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */,
@@ -893,6 +909,14 @@
 				24564F761D837FBE00D9A8AE /* en */,
 			);
 			name = Main.strings;
+			sourceTree = "<group>";
+		};
+		513535D11DA26E3B00A365A9 /* Onboarding.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				513535D21DA26E3B00A365A9 /* Base */,
+			);
+			name = Onboarding.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

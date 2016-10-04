@@ -66,6 +66,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             }
         }
         
+        guard !isInBackground else { return true }
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager")
+        self.window!.rootViewController = initialViewController
+        self.window!.makeKeyAndVisible()
+        
         return true
     }
     
