@@ -13,6 +13,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //MARK: Fields
     private let timeSlotCreationService : TimeSlotCreationService
     private let isEditingVariable = Variable(false)
+    private let notificationService : NotificationService
     
     //MARK: Properties
     var window: UIWindow?
@@ -38,7 +39,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         loggingService = SwiftyBeaverLoggingService()
         locationService = DefaultLocationService(loggingService: loggingService)
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
-        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService)
+        notificationService = DefaultNotificationService(loggingService: loggingService)
+        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService, notificationService: notificationService)
         
         isEditingObservable = isEditingVariable.asObservable()
     }

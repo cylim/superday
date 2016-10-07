@@ -9,6 +9,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     // MARK: Fields
     private let loggingService : LoggingService
     private let persistencyService : PersistencyService
+    private let notificationService : NotificationService
     
     ///Defines whether the user is currently traveling or not.
     private var isTraveling : Bool
@@ -27,10 +28,11 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     private var stopTimer : Timer? = nil
     
     //MARK: Init
-    init(persistencyService: PersistencyService, loggingService: LoggingService)
+    init(persistencyService: PersistencyService, loggingService: LoggingService, notificationService: NotificationService)
     {
         self.loggingService = loggingService
         self.persistencyService = persistencyService
+        self.notificationService = notificationService
         self.isTraveling = UserDefaults.standard.bool(forKey: Constants.isTravelingKey)
         
         loggingService.log(withLogLevel: .verbose, message: "User is \(isTraveling ? "" : "not" ) traveling")
