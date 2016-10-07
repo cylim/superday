@@ -11,11 +11,22 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private var disposeBag : DisposeBag? = DisposeBag()
-    private let viewModel : MainViewModel = MainViewModel(persistencyService: AppDelegate.instance.persistencyService, metricsService: AppDelegate.instance.metricsService)
+    private lazy var viewModel : MainViewModel =
+    {
+        return MainViewModel(persistencyService: self.persistencyService, metricsService: self.metricsService)
+    }()
+    
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
-    private var addButton : AddTimeSlotView?
-    private var launchAnim : LaunchAnimationView?
+    //Dependencies
+    private var metricsService : MetricsService!
+    private var settingsService : SettingsService!
+    private var locationService : LocationService!
+    private var isEditingVariable : Variable<Bool>!
+    private var persistencyService : PersistencyService!
+    
+    private var addButton : AddTimeSlotView!
+    private var launchAnim : LaunchAnimationView!
     
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
@@ -23,23 +34,36 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var debugView : DebugView!
     @IBOutlet private weak var calendarLabel : UIButton!
     
+    func inject(_ locationService: LocationService, _ metricsService: MetricsService, _ persistencyService: PersistencyService, _ settingsService: SettingsService, _ isEditingVariable: Variable<Bool>) -> MainViewController
+    {
+        self.metricsService = metricsService
+        self.locationService = locationService
+        self.settingsService = settingsService
+        self.isEditingVariable = isEditingVariable
+        self.persistencyService = persistencyService
+        
+        return self
+    }
+    
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        //Inject PagerViewController's dependencies
+        pagerViewController.inject(metricsService, settingsService, persistencyService, isEditingVariable)
+        
         //Debug screen
         debugView.isHidden = true
-        AppDelegate.instance
-            .locationService
-            .subscribeToLocationChanges(debugView.onNewLocation)
         
+        //Launch animation
         self.launchAnim = LaunchAnimationView(frame: view.frame)
-        self.view.addSubview(launchAnim!)
+        self.view.addSubview(launchAnim)
         
+        //Add button must be added like this due to .xib/.storyboard restrictions
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         self.view.addSubview(addButton!)
-        self.addButton!.snp.makeConstraints { make in
+        self.addButton.snp.makeConstraints { make in
             
             make.height.equalTo(200)
             make.left.equalTo(self.view.snp.left)
@@ -52,28 +76,34 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         super.viewWillAppear(animated)
         
-        let currentDay = Calendar.current.component(.day, from: Date())
-        calendarLabel?.setTitle(String(format: "%02d", currentDay), for: .normal)
-        
+        //Refresh Dispose bag, if needed
         disposeBag = disposeBag ?? DisposeBag()
         
-        //TODO: Inject this instead
-        AppDelegate.instance
-            .isEditingObservable
+        //DEBUG SCREEN
+        self.locationService
+            .locationObservable
+            .subscribe(onNext: debugView.onNewLocation)
+            .addDisposableTo(disposeBag!)
+        
+        //Edit state
+        self.isEditingVariable
+            .asObservable()
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(disposeBag!)
         
-        addButton!
+        //Category creation
+        self.addButton!
             .categoryObservable
             .subscribe(onNext: onNewCategory)
             .addDisposableTo(disposeBag!)
         
-        pagerViewController
+        //Date updates for title label
+        self.pagerViewController
             .dateObservable
             .subscribe(onNext: onDateChanged)
             .addDisposableTo(disposeBag!)
         
-        // small delay to give launch screen time to fade away
+        //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
             self.launchAnim?.animate(onCompleted:
                 {
@@ -98,7 +128,10 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         guard viewModel.currentDate.ignoreTimeComponents() != today else { return }
         
         pagerViewController.setViewControllers(
-            [ TimelineViewController(date: today) ],
+            [ TimelineViewController(date: today,
+                                     metricsService: metricsService,
+                                     persistencyService: persistencyService,
+                                     isEditingVariable: isEditingVariable) ],
             direction: .forward,
             animated: true,
             completion: nil)

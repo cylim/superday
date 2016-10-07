@@ -29,7 +29,7 @@ class TimelineViewModel
     }
     
     //MARK: Initializers
-    init(date: Date, persistencyService: PersistencyService, metricsService : MetricsService)
+    init(date: Date, metricsService : MetricsService, persistencyService: PersistencyService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
         let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date)

@@ -31,6 +31,7 @@ class MainViewModelTests : XCTestCase
     {
         let yesterday = Date().yesterday
         viewModel.currentDate = yesterday
+        
         XCTAssertEqual(self.viewModel.title, "Superyesterday".translate())
     }
     

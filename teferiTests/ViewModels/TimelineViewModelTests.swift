@@ -6,19 +6,19 @@ import RxSwift
 class TimelineViewModelTests : XCTestCase
 {
     private var disposable : Disposable? = nil
-    private var mockPersistencyService = MockPersistencyService()
-    private var mockMetricsService = MockMetricsService()
-    private var viewModel = TimelineViewModel(date: Date(),
-                                              persistencyService: MockPersistencyService(),
-                                              metricsService: MockMetricsService())
+    
+    private var viewModel : TimelineViewModel!
+    private var mockMetricsService : MockMetricsService!
+    private var mockPersistencyService : MockPersistencyService!
 
     override func setUp()
     {
-        mockPersistencyService = MockPersistencyService()
         mockMetricsService = MockMetricsService()
+        mockPersistencyService = MockPersistencyService()
+        
         viewModel = TimelineViewModel(date: Date(),
-                                      persistencyService: mockPersistencyService,
-                                      metricsService: mockMetricsService)
+                                      metricsService: mockMetricsService,
+                                      persistencyService: mockPersistencyService)
     }
     
     override func tearDown()
@@ -35,8 +35,8 @@ class TimelineViewModelTests : XCTestCase
     {
         let newMockPersistencyService = MockPersistencyService()
         _ = TimelineViewModel(date: Date().yesterday,
-                              persistencyService: newMockPersistencyService,
-                              metricsService: mockMetricsService)
+                              metricsService: mockMetricsService,
+                              persistencyService: newMockPersistencyService)
         
         XCTAssertFalse(newMockPersistencyService.didSubscribe)
     }
