@@ -18,7 +18,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     
     private var locationVariable = Variable(CLLocation())
     
-    
     // for logging date/time of received location updates
     private let dateTimeFormatter = DateFormatter()
     
@@ -97,9 +96,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         let filteredLocations = locations.filter(filterLocations)
         
         //Notifies new locations to listeners
-        filteredLocations.forEach { location in
-            onLocationCallbacks.forEach { callback in callback(location) }
-        }
+        filteredLocations.forEach { location in self.locationVariable.value = location }
         
         guard filteredLocations.count > 0 else { return }
         
