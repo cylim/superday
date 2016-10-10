@@ -1,5 +1,5 @@
 enum CustomEvent : String
 {
-    case timeSlotManualCreation
-    case timeSlotEditing
+    case timeSlotManualCreation = "Manual TimeSlot Creation"
+    case timeSlotEditing = "TimeSlot Editing"
 }

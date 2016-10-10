@@ -35,7 +35,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     override init()
     {
         settingsService = DefaultSettingsService()
-        metricsService = HockeyAppMetricsService()
+        metricsService = FabricMetricsService()
         loggingService = SwiftyBeaverLoggingService()
         locationService = DefaultLocationService(loggingService: loggingService)
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
