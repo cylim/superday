@@ -16,10 +16,10 @@ class CoreDataPersistencyService : PersistencyService
     }
     
     //MARK: PersistencyService implementation
-    func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         //The previous TimeSlot needs to be finished before a new one can start
-        guard endPreviousTimeSlot() else { return false }
+        guard endPreviousTimeSlot(atDate: timeSlot.startTime) else { return false }
         
         //Gets the managed object from CoreData's context
         let managedContext = getManagedObjectContext()
@@ -79,7 +79,7 @@ class CoreDataPersistencyService : PersistencyService
         return timeSlot
     }
     
-    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
+    @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
     {
         //No need to persist anything if the categories are the same
         guard timeSlot.category != category else { return true }
@@ -147,28 +147,25 @@ class CoreDataPersistencyService : PersistencyService
         }
         catch
         {
-            loggingService.log(withLogLevel: .warning, message: "No TimeSlots found")
+            loggingService.log(withLogLevel: .error, message: "No TimeSlots found")
             return nil
         }
     }
     
-    private func endPreviousTimeSlot() -> Bool
+    private func endPreviousTimeSlot(atDate date: Date) -> Bool
     {
         guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
-        let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
-        let actualEndTime = timeSlot.startTime.addingTimeInterval(timeSlot.duration)
-        
-        managedTimeSlot.setValue(actualEndTime, forKey: "endTime")
+        managedTimeSlot.setValue(date, forKey: "endTime")
         
         do
         {
             try getManagedObjectContext().save()
-            loggingService.log(withLogLevel: .error, message: "TimeSlot created at \(timeSlot.startTime) ended at \(timeSlot.endTime)")
+//            loggingService.log(withLogLevel: .error, message: "TimeSlot created at \(timeSlot.startTime) ended at \(timeSlot.endTime)")
             return true
         }
         catch
         {
-            loggingService.log(withLogLevel: .error, message: "Failed to end TimeSlot started at \(timeSlot.startTime) with category \(timeSlot.category)")
+//            loggingService.log(withLogLevel: .error, message: "Failed to end TimeSlot started at \(timeSlot.startTime) with category \(timeSlot.category)")
             return false
         }
     }

@@ -40,7 +40,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService = DefaultLocationService(loggingService: loggingService)
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
         notificationService = DefaultNotificationService(loggingService: loggingService)
-        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService, notificationService: notificationService)
+        timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: settingsService, persistencyService: persistencyService, loggingService: loggingService, notificationService: notificationService)
         
         isEditingObservable = isEditingVariable.asObservable()
     }
@@ -56,7 +56,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService.startLocationTracking()
         
         metricsService.initialize()
-        settingsService.setInstallDate(date: Date().yesterday)
         
         if settingsService.installDate == nil
         {
@@ -64,7 +63,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             let firstTimeSlot = TimeSlot()
             if persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                settingsService.setInstallDate(date: Date())
+                settingsService.setInstallDate(Date())
             }
         }
         
