@@ -20,9 +20,4 @@ class Constants
     
     ///Alpha of views when the user is editing a TimeSlot
     static let editingAlpha = CGFloat(0.4)
-    
-    //MARK: Those values get replaced during build time
-    
-    ///AppId for HockeyApp.
-    static let hockeyAppIdentifier = "HOCKEY_APP_IDENTIFIER"
 }
