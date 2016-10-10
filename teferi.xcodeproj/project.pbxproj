@@ -20,7 +20,6 @@
 		2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C61D9BEA9A00AF8857 /* DebugView.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
-		24526A791D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */; };
 		24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */; };
 		24526A7D1D92D9BB00DA3FA0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A7B1D92D9BB00DA3FA0 /* Location.swift */; };
 		24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F4B1D83207900D9A8AE /* MainViewModel.swift */; };
@@ -43,6 +42,9 @@
 		24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F711D832A4F00D9A8AE /* PagerViewController.swift */; };
 		24564F771D837FBE00D9A8AE /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24564F751D837FBE00D9A8AE /* Main.strings */; };
 		24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */; };
+		246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2465316F1DA7B4150066DFE0 /* NotificationService.swift */; };
+		246531721DA7B4A10066DFE0 /* DefaultNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246531711DA7B4A10066DFE0 /* DefaultNotificationService.swift */; };
+		246531741DA7DDF10066DFE0 /* FabricMetricsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */; };
 		247F05F81D87322600451BAD /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F71D87322600451BAD /* LocationService.swift */; };
 		247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F91D87325600451BAD /* PersistencyService.swift */; };
 		247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */; };
@@ -104,10 +106,8 @@
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		2421F8C61D9BEA9A00AF8857 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
-		24526A731D92D98800DA3FA0 /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
-		24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HockeyAppMetricsService.swift; path = Services/HockeyAppMetricsService.swift; sourceTree = "<group>"; };
 		24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomEvent.swift; path = Models/CustomEvent.swift; sourceTree = "<group>"; };
 		24526A7B1D92D9BB00DA3FA0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Models/Location.swift; sourceTree = "<group>"; };
 		24564F4B1D83207900D9A8AE /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewModel.swift; path = ViewModels/MainViewModel.swift; sourceTree = "<group>"; };
@@ -130,6 +130,9 @@
 		24564F711D832A4F00D9A8AE /* PagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewController.swift; path = ViewControllers/PagerViewController.swift; sourceTree = "<group>"; };
 		24564F761D837FBE00D9A8AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		24564F7C1D83893900D9A8AE /* TimelineCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCellTests.swift; path = Views/TimelineCellTests.swift; sourceTree = "<group>"; };
+		2465316F1DA7B4150066DFE0 /* NotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationService.swift; path = Services/Protocols/NotificationService.swift; sourceTree = "<group>"; };
+		246531711DA7B4A10066DFE0 /* DefaultNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultNotificationService.swift; path = Services/DefaultNotificationService.swift; sourceTree = "<group>"; };
+		246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FabricMetricsServices.swift; path = Services/FabricMetricsServices.swift; sourceTree = "<group>"; };
 		247F05F71D87322600451BAD /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/Protocols/LocationService.swift; sourceTree = "<group>"; };
 		247F05F91D87325600451BAD /* PersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistencyService.swift; path = Services/Protocols/PersistencyService.swift; sourceTree = "<group>"; };
 		247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataPersistencyService.swift; path = Services/CoreDataPersistencyService.swift; sourceTree = "<group>"; };
@@ -219,7 +222,6 @@
 				24D99F661D74B8D700E68163 /* ViewModels */,
 				24D99F691D74B93C00E68163 /* Views */,
 				240AC7171D748C8800F21F4F /* AppDelegate.swift */,
-				24526A731D92D98800DA3FA0 /* BridgingHeader.h */,
 				24526A741D92D98800DA3FA0 /* Constants.swift */,
 				240AC7211D748C8800F21F4F /* Assets.xcassets */,
 				240AC7261D748C8800F21F4F /* Info.plist */,
@@ -274,6 +276,7 @@
 				247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */,
 				24C72AA91D90731C00DABAC3 /* LoggingService.swift */,
 				24B03B5A1D9E4D1100452D16 /* SettingsService.swift */,
+				2465316F1DA7B4150066DFE0 /* NotificationService.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -305,12 +308,13 @@
 			isa = PBXGroup;
 			children = (
 				247F05F61D87319700451BAD /* Protocols */,
-				24564F591D83259100D9A8AE /* DefaultLocationService.swift */,
 				247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */,
-				247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */,
-				24526A781D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift */,
-				2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */,
+				24564F591D83259100D9A8AE /* DefaultLocationService.swift */,
+				246531711DA7B4A10066DFE0 /* DefaultNotificationService.swift */,
 				24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */,
+				247F06051D88A78300451BAD /* DefaultTimeSlotCreationService.swift */,
+				246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */,
+				2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -418,6 +422,7 @@
 				EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */,
 				402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */,
 				9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */,
+				24E0949C1DA823E70035EC19 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -601,6 +606,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "";
+		};
+		24E0949C1DA823E70035EC19 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" a6a9bdfca7594e17d7144bad53b3e0aadb2a0dcb 22ad5d692c46e5ad1a3d5b2cff3996776c53f1b5dd510ab6292921220028a812";
 		};
 		402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -821,15 +840,16 @@
 			files = (
 				24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */,
 				2407A98C1D9D534B00066889 /* TimerExtensions.swift in Sources */,
+				246531741DA7DDF10066DFE0 /* FabricMetricsServices.swift in Sources */,
 				24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */,
 				24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */,
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
+				246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */,
 				24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */,
 				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
 				24526A751D92D98800DA3FA0 /* Constants.swift in Sources */,
-				24526A791D92D9AA00DA3FA0 /* HockeyAppMetricsService.swift in Sources */,
 				24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */,
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
@@ -845,6 +865,7 @@
 				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
 				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
 				24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */,
+				246531721DA7B4A10066DFE0 /* DefaultNotificationService.swift in Sources */,
 				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
 				247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
@@ -966,6 +987,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/GoogleAnalytics/**";
 			};
 			name = Debug;
 		};
@@ -1006,6 +1028,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/GoogleAnalytics/**";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1025,6 +1048,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -1043,6 +1067,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

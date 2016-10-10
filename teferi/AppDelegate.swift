@@ -8,6 +8,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //MARK: Fields
     private let disposeBag = DisposeBag()
     private let isEditingVariable = Variable(false)
+    private let notificationService : NotificationService
     
     private let metricsService : MetricsService
     private let loggingService : LoggingService
@@ -23,11 +24,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     override init()
     {
         settingsService = DefaultSettingsService()
-        metricsService = HockeyAppMetricsService()
+        metricsService = FabricMetricsService()
         loggingService = SwiftyBeaverLoggingService()
         locationService = DefaultLocationService(loggingService: loggingService)
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
-        timeSlotCreationService = DefaultTimeSlotCreationService(persistencyService: persistencyService, loggingService: loggingService)
+        notificationService = DefaultNotificationService(loggingService: loggingService)
+        timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: settingsService, persistencyService: persistencyService, loggingService: loggingService, notificationService: notificationService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
@@ -51,16 +53,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         metricsService.initialize()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        
         var initialViewController : UIViewController!
-        
+
         if settingsService.installDate == nil
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
             if persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                settingsService.setInstallDate(date: Date())
+                settingsService.setInstallDate(Date())
             }
             
             let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
@@ -186,6 +187,4 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             }
         }
     }
-
 }
-

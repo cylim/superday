@@ -8,32 +8,17 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
 {
     // MARK: Fields
     private let loggingService : LoggingService
+    private var settingsService : SettingsService
     private let persistencyService : PersistencyService
-    
-    ///Defines whether the user is currently traveling or not.
-    private var isTraveling : Bool
-    {
-        didSet
-        {
-            loggingService.log(withLogLevel: .debug, message: "User is \(isTraveling ? "" : "not" ) traveling")
-            UserDefaults.standard.setValue(isTraveling, forKey: Constants.isTravelingKey)
-        }
-    }
-    
-    //TODO: This needs to be persisted for more accuracy.
-    private var firstLocation : CLLocation? = nil
-    
-    ///Timer that controls when the current TimeSlot needs to end.
-    private var stopTimer : Timer? = nil
+    private let notificationService : NotificationService
     
     //MARK: Init
-    init(persistencyService: PersistencyService, loggingService: LoggingService)
+    init(settingsService: SettingsService, persistencyService: PersistencyService, loggingService: LoggingService, notificationService: NotificationService)
     {
         self.loggingService = loggingService
+        self.settingsService = settingsService
         self.persistencyService = persistencyService
-        self.isTraveling = UserDefaults.standard.bool(forKey: Constants.isTravelingKey)
-        
-        loggingService.log(withLogLevel: .verbose, message: "User is \(isTraveling ? "" : "not" ) traveling")
+        self.notificationService = notificationService
     }
     
     //MARK:  TimeSlotCreationService implementation
@@ -45,70 +30,32 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     
     func onNewLocation(_ location: CLLocation)
     {
-        if isTraveling
+        let currentLocationTime = location.timestamp
+        let previousTime = settingsService.lastLocationDate
+        
+        settingsService.setLastLocationDate(currentLocationTime)
+        
+        guard let previousLocationTime = previousTime else { return }
+        
+        let currentTimeSlot = persistencyService.getLastTimeSlot()
+        
+        let difference = currentLocationTime.timeIntervalSince(previousLocationTime)
+        if (difference / 60) < 25.0
         {
-            // User is still traveling
-            guard location.speed > 0 else
-            {
-                loggingService.log(withLogLevel: .debug, message: "Received new position with speed \(location.speed)")
-                
-                stopTimer?.invalidate()
-                stopTimer = nil
-                return
-            }
+            guard currentTimeSlot.category != .unknown else { return }
             
-            //Timer not previously set
-            guard stopTimer != nil else
-            {
-                loggingService.log(withLogLevel: .debug, message: "User stopped. Starting timer.")
-                
-                // Since the user stopped, we wait for 10 minutes. If he does not move again, we end the commute and begin a new one.
-                stopTimer = Timer.scheduledTimer(timeInterval: 600 - location.timestamp.timeIntervalSinceNow, target: self, selector: #selector(stopTraveling), userInfo: nil, repeats: false)
-                return
-            }
+            persistencyService.updateTimeSlot(currentTimeSlot, withCategory: .commute)
         }
         else
         {
-            //If no location was previously set, this is our starting point
-            if firstLocation == nil
+            if currentTimeSlot.startTime != previousLocationTime
             {
-                firstLocation = location
-                return
+                let intervalTimeSlot = TimeSlot(withStartDate: previousLocationTime)
+                persistencyService.addNewTimeSlot(intervalTimeSlot)
             }
             
-            let startLocation = firstLocation!
-            
-            //TODO: This considers travels in a straight line. We should make this smarter later
-            let distance = startLocation.distance(from: location)
-            
-            // User traveled over n meters
-            guard distance > Constants.distanceFilter else { return }
-            
-            loggingService.log(withLogLevel: .debug, message: "User traveled \(distance) meters. Creating new TimeSlot.")
-            
-            isTraveling = true
-            let timeSlot = TimeSlot(category: .commute)
-            
-            if !persistencyService.addNewTimeSlot(timeSlot)
-            {
-                //TODO: Recover from failure
-                loggingService.log(withLogLevel: .debug, message: "TimeSlotCreationService failed to create a new Commute TimeSlot.")
-            }
-        }
-    }
-    
-    @objc private func stopTraveling()
-    {
-        isTraveling = false
-        firstLocation = nil
-        
-        loggingService.log(withLogLevel: .debug, message: "No movement detected for 10 minutes. Creating a new Unknown TimeSlot")
-        
-        let timeSlot = TimeSlot()
-        if !persistencyService.addNewTimeSlot(timeSlot)
-        {
-            //TODO: Recover from creation failure
-            loggingService.log(withLogLevel: .debug, message: "TimeSlotCreationService failed to create a new empty TimeSlot.")
+            let newTimeSlot = TimeSlot(withStartDate: currentLocationTime)
+            persistencyService.addNewTimeSlot(newTimeSlot)
         }
     }
 }

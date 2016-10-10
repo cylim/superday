@@ -4,19 +4,29 @@ class DefaultSettingsService : SettingsService
 {
     //MARK: Fields
     private let installDateKey = "installDate"
+    private let lastLocationDateKey = "lastLocationDate"
     
-    private(set)  var installDate : Date?
-    
-    init()
+    //MARK: Properties
+    var installDate : Date?
     {
-        installDate = UserDefaults.standard.object(forKey: installDateKey) as! Date?
+        return UserDefaults.standard.object(forKey: installDateKey) as! Date?
     }
     
-    func setInstallDate(date: Date)
+    var lastLocationDate : Date?
+    {
+        return UserDefaults.standard.object(forKey: lastLocationDateKey) as! Date?
+    }
+    
+    //MARK: Methods
+    func setInstallDate(_ date: Date)
     {
         guard installDate == nil else { return }
         
         UserDefaults.standard.set(date, forKey: installDateKey)
-        installDate = date
+    }
+    
+    func setLastLocationDate(_ date: Date)
+    {
+        UserDefaults.standard.set(date, forKey: lastLocationDateKey)
     }
 }

@@ -24,7 +24,7 @@ protocol PersistencyService
      
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
-    func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     
     /**
      Changes the category of an existing TimeSlot.
@@ -35,7 +35,7 @@ protocol PersistencyService
      
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
-    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
+    @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
     
     /**
      Adds a callback that gets called everytime a new TimeSlot is created.

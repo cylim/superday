@@ -94,10 +94,14 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     //MARK: CLLocationManagerDelegate Implementation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        guard let lastLocation = locations.filter(filterLocations).last else { return }
+        let filteredLocations = locations.filter(filterLocations)
         
-        //Notifies new location to listeners
-        locationVariable.value = lastLocation
+        //Notifies new locations to listeners
+        filteredLocations.forEach { location in
+            onLocationCallbacks.forEach { callback in callback(location) }
+        }
+        
+        guard filteredLocations.count > 0 else { return }
         
         if timer != nil && timer!.isValid { return }
         

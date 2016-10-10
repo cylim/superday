@@ -23,7 +23,7 @@ class PagerViewModelTests : XCTestCase
     func testTheViewModelCanNotAllowScrollsToDatesBeforeTheAppInstall()
     {
         let appInstallDate = Date().yesterday
-        settingsService.setInstallDate(date: appInstallDate)
+        settingsService.setInstallDate(appInstallDate)
         
         let theDayBeforeInstallDate = appInstallDate.yesterday
         
@@ -33,7 +33,7 @@ class PagerViewModelTests : XCTestCase
     func testTheViewModelAllowsScrollsToDatesAfterTheAppWasInstalledAndBeforeTheCurrentDate()
     {
         let appInstallDate = Date().add(days: -3)
-        settingsService.setInstallDate(date: appInstallDate)
+        settingsService.setInstallDate(appInstallDate)
         
         let theDayAfterInstallDate = appInstallDate.tomorrow
         
