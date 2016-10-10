@@ -105,7 +105,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         
         guard filteredLocations.count > 0 else { return }
         
-        
         if timer != nil && timer!.isValid { return }
         
         //Schedules tracking to restart in 1 minute

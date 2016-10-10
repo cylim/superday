@@ -22,6 +22,12 @@ class TimeSlot
         self.category = category
     }
     
+    convenience init(withStartDate date: Date)
+    {
+        self.init()
+        self.startTime = date
+    }
+    
     // MARK: Methods
     private func getEndDate() -> Date
     {
