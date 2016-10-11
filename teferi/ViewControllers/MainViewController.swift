@@ -76,13 +76,13 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //DEBUG SCREEN
         self.locationService
             .locationObservable
-            .subscribe(onNext: debugView.onNewLocation)
+            .subscribe(onNext: self.debugView.onNewLocation)
             .addDisposableTo(disposeBag!)
         
         //Edit state
         self.isEditingVariable
             .asObservable()
-            .subscribe(onNext: onEditChanged)
+            .subscribe(onNext: self.onEditChanged)
             .addDisposableTo(disposeBag!)
         
         //Category creation
@@ -94,7 +94,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //Date updates for title label
         self.pagerViewController
             .dateObservable
-            .subscribe(onNext: onDateChanged)
+            .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(disposeBag!)
         
         //Small delay to give launch screen time to fade away
