@@ -14,7 +14,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private let viewModel : MainViewModel = MainViewModel(persistencyService: AppDelegate.instance.persistencyService, metricsService: AppDelegate.instance.metricsService)
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
-    private var addButton : AddTimeSlotView?
+    private var addButton : AddTimeSlotView!
     private var launchAnim : LaunchAnimationView?
     
     @IBOutlet private weak var icon : UIImageView!
@@ -34,18 +34,17 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .locationService
             .subscribeToLocationChanges(debugView.onNewLocation)
         
-        self.launchAnim = LaunchAnimationView(frame: view.frame)
-        self.view.addSubview(launchAnim!)
-        
-        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
-        self.view.addSubview(addButton!)
-        self.addButton!.snp.makeConstraints { make in
-            
-            make.height.equalTo(200)
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as! AddTimeSlotView
+        self.view.addSubview(addButton)
+        self.addButton.snp.makeConstraints { make in
+            make.height.equalTo(320)
             make.left.equalTo(self.view.snp.left)
             make.width.equalTo(self.view.snp.width)
             make.bottom.equalTo(self.view.snp.bottom)
         }
+        
+        self.launchAnim = LaunchAnimationView(frame: view.frame)
+        self.view.addSubview(launchAnim!)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -63,7 +62,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(disposeBag!)
         
-        addButton!
+        addButton
             .categoryObservable
             .subscribe(onNext: onNewCategory)
             .addDisposableTo(disposeBag!)
@@ -156,8 +155,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let isToday = today == date.ignoreTimeComponents()
         let scale = CGFloat(isToday ? 1 : 0)
         
-        self.addButton!.isAdding = false
-        self.addButton!.transform = CGAffineTransform(scaleX: scale, y: scale)
+        self.addButton.isAdding = false
+        self.addButton.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
     
     private func onNewCategory(category: Category)
