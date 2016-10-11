@@ -1,11 +1,12 @@
 import XCTest
+import Nimble
 @testable import teferi
 
 class PagerViewModelTests : XCTestCase
 {
     //MARK: Fields
-    private var viewModel = PagerViewModel(settingsService: MockSettingsService())
-    private var settingsService = MockSettingsService()
+    private var viewModel : PagerViewModel!
+    private var settingsService : SettingsService!
     
     override func setUp()
     {
@@ -17,26 +18,26 @@ class PagerViewModelTests : XCTestCase
     {
         let tomorrow = Date().tomorrow
         
-        XCTAssertFalse(viewModel.canScroll(toDate: tomorrow))
+        expect(self.viewModel.canScroll(toDate: tomorrow)).to(beFalse())
     }
     
     func testTheViewModelCanNotAllowScrollsToDatesBeforeTheAppInstall()
     {
         let appInstallDate = Date().yesterday
-        settingsService.setInstallDate(appInstallDate)
+        self.settingsService.setInstallDate(appInstallDate)
         
         let theDayBeforeInstallDate = appInstallDate.yesterday
         
-        XCTAssertFalse(viewModel.canScroll(toDate: theDayBeforeInstallDate))
+        expect(self.viewModel.canScroll(toDate: theDayBeforeInstallDate)).to(beFalse())
     }
     
     func testTheViewModelAllowsScrollsToDatesAfterTheAppWasInstalledAndBeforeTheCurrentDate()
     {
         let appInstallDate = Date().add(days: -3)
-        settingsService.setInstallDate(appInstallDate)
+        self.settingsService.setInstallDate(appInstallDate)
         
         let theDayAfterInstallDate = appInstallDate.tomorrow
         
-        XCTAssertTrue(viewModel.canScroll(toDate: theDayAfterInstallDate))
+        expect(self.viewModel.canScroll(toDate: theDayAfterInstallDate)).to(beTrue())
     }
 }

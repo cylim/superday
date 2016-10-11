@@ -57,7 +57,7 @@ class TimelineViewModel
      
      - Parameter category: Category of the newly created TimeSlot.
      */
-    func updateTimeSlot(atIndex index: Int, withCategory category: Category) -> Bool
+    @discardableResult func updateTimeSlot(atIndex index: Int, withCategory category: Category) -> Bool
     {
         let timeSlot = timeSlots[index]
         guard persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }

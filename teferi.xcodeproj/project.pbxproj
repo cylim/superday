@@ -61,6 +61,8 @@
 		24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B03B661DA3866400452D16 /* AddTimeSlotView.xib */; };
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
+		313367F4407098030FDE1A4E /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
+		6534164C3584672B53A13236 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				313367F4407098030FDE1A4E /* Pods_teferi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6534164C3584672B53A13236 /* Pods_teferiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,8 +406,8 @@
 				240AC7101D748C8800F21F4F /* Sources */,
 				240AC7111D748C8800F21F4F /* Frameworks */,
 				240AC7121D748C8800F21F4F /* Resources */,
-				402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */,
-				9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */,
+				402CC9BDF8C661CBF2276FA1 /* [CP] Embed Pods Frameworks */,
+				9B04A745BDA5E7FEEC3F5901 /* [CP] Copy Pods Resources */,
 				24E0949C1DA823E70035EC19 /* Run Script */,
 			);
 			buildRules = (
@@ -425,8 +429,8 @@
 				2414EB921D7D955C001EFB6D /* Copy Files */,
 				24A21B631D7C3E0800CEB4F3 /* Frameworks */,
 				24A21B641D7C3E0800CEB4F3 /* Resources */,
-				122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */,
-				A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */,
+				122CB97ECAD8DBEE22614F14 /* [CP] Embed Pods Frameworks */,
+				A496B8A6FB9673F5851483E8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -509,19 +513,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */ = {
+		122CB97ECAD8DBEE22614F14 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi-teferiTests/Pods-teferi-teferiTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2414EB971D7D95D6001EFB6D /* ShellScript */ = {
@@ -551,19 +555,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" a6a9bdfca7594e17d7144bad53b3e0aadb2a0dcb 22ad5d692c46e5ad1a3d5b2cff3996776c53f1b5dd510ab6292921220028a812";
 		};
-		402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */ = {
+		402CC9BDF8C661CBF2276FA1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */ = {
@@ -581,14 +585,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */ = {
+		9B04A745BDA5E7FEEC3F5901 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,19 +600,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */ = {
+		A496B8A6FB9673F5851483E8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi-teferiTests/Pods-teferi-teferiTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */ = {
@@ -859,7 +863,7 @@
 		};
 		24A21B6E1D7C3E0800CEB4F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23BFCBCE3361E76CCE87C461 /* Pods-teferi-teferiTests.debug.xcconfig */;
+			baseConfigurationReference = 03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -875,7 +879,7 @@
 		};
 		24A21B6F1D7C3E0800CEB4F3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51DC24E66912A2DC9B77BBBC /* Pods-teferi-teferiTests.release.xcconfig */;
+			baseConfigurationReference = 924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

@@ -1,50 +1,53 @@
 import RxSwift
 import XCTest
+import Nimble
 @testable import teferi
 
 class MainViewModelTests : XCTestCase
 {
+    private var viewModel : MainViewModel!
     private var disposable : Disposable? = nil
-    private var mockMetricsService = MockMetricsService()
-    private var mockPersistencyService = MockPersistencyService()
-    private var viewModel = MainViewModel(persistencyService: MockPersistencyService(), metricsService: MockMetricsService())
+    private var mockMetricsService : MockMetricsService!
+    private var mockPersistencyService : MockPersistencyService!
     
     override func setUp()
     {
+        self.mockMetricsService = MockMetricsService()
         self.mockPersistencyService = MockPersistencyService()
         self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService, metricsService: self.mockMetricsService)
     }
     
     override func tearDown()
     {
-        disposable?.dispose()
+        self.disposable?.dispose()
     }
     
     func testTheTitlePropertyReturnsSuperdayForTheCurrentDate()
     {
         let today = Date()
-        viewModel.currentDate = today
-        XCTAssertEqual(self.viewModel.title, "Superday".translate())
+        self.viewModel.currentDate = today
+        
+        expect(self.viewModel.title).to(equal("Superday".translate()))
     }
     
     func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
     {
         let yesterday = Date().yesterday
-        viewModel.currentDate = yesterday
-        XCTAssertEqual(self.viewModel.title, "Superyesterday".translate())
+        self.viewModel.currentDate = yesterday
+        expect(self.viewModel.title).to(equal("Superyesterday".translate()))
     }
     
     func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()
     {
         let olderDate = Date().add(days: -2)
-        viewModel.currentDate = olderDate
+        self.viewModel.currentDate = olderDate
         
         let formatter = DateFormatter();
         formatter.timeZone = TimeZone.autoupdatingCurrent;
         formatter.dateFormat = "dd MMMM";
         let expectedText = formatter.string(from: olderDate)
         
-        XCTAssertEqual(self.viewModel.title, expectedText)
+        expect(self.viewModel.title).to(equal(expectedText))
     }
     
     func testTheAddNewSlotsMethodAddsANewSlot()
@@ -52,15 +55,14 @@ class MainViewModelTests : XCTestCase
         var didAdd = false
         
         self.mockPersistencyService.subscribeToTimeSlotChanges { _ in didAdd = true }
+        self.viewModel.addNewSlot(withCategory: .commute)
         
-        viewModel.addNewSlot(withCategory: .commute)
-        
-        XCTAssertTrue(didAdd)
+        expect(didAdd).to(beTrue())
     }
     
     func testTheAddNewSlotMethodCallsTheMetricsService()
     {
-        viewModel.addNewSlot(withCategory: .commute)
-        XCTAssertTrue(self.mockMetricsService.didLog(event: .timeSlotManualCreation))
+        self.viewModel.addNewSlot(withCategory: .commute)
+        expect(self.mockMetricsService.didLog(event: .timeSlotManualCreation)).to(beTrue())
     }
 }

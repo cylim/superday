@@ -27,7 +27,7 @@ class MockPersistencyService : PersistencyService
         return timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
     }
     
-    func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         if let lastTimeSlot = timeSlots.last
         {
@@ -40,7 +40,7 @@ class MockPersistencyService : PersistencyService
         return true
     }
     
-    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: teferi.Category) -> Bool
+    @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: teferi.Category) -> Bool
     {
         timeSlot.category = category
         return true
