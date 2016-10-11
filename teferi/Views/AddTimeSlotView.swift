@@ -20,21 +20,28 @@ class AddTimeSlotView : UIView
     //MARK: Properties
     var isAdding : Bool
     {
-        get { return isAddingVariable.value }
-        set(value) { isAddingVariable.value = value }
+        get { return self.isAddingVariable.value }
+        set(value) { self.isAddingVariable.value = value }
     }
+    
+    private lazy var buttons : [Category:UIButton] =
+    {
+        return [
+            .food : self.foodButton,
+            .work : self.workButton,
+            .leisure : self.leisureButton,
+            .friends : self.friendsButton,
+            .commute : self.commuteButton
+        ]
+    }()
     
     lazy var categoryObservable : Observable<Category> =
     {
-        let food = self.foodButton.rx.tap.map { _ in return Category.food }
-        let work = self.workButton.rx.tap.map { _ in return Category.work }
-        let leisure = self.leisureButton.rx.tap.map { _ in return Category.leisure }
-        let friends = self.friendsButton.rx.tap.map { _ in return Category.friends }
-        let commute = self.commuteButton.rx.tap.map { _ in return Category.commute }
-        
-        return Observable
-                .of(food, work, leisure, friends, commute)
-                .merge()
+        let taps = self.buttons.map
+        { (category, button) in
+            button.rx.tap.map { _ in return category }
+        }
+        return Observable.from(taps).merge()
     }()
     
     //MARK: Lifecycle methods
@@ -46,39 +53,37 @@ class AddTimeSlotView : UIView
         
         let cornerRadius = CGFloat(25)
         
+        self.buttons.values.forEach
+        { (button) in
+            button.layer.cornerRadius = cornerRadius
+            button.alpha = 0
+            button.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            button.isHidden = true
+        }
         self.addButton.layer.cornerRadius = cornerRadius
-        self.foodButton.layer.cornerRadius = cornerRadius
-        self.workButton.layer.cornerRadius = cornerRadius
-        self.leisureButton.layer.cornerRadius = cornerRadius
-        self.friendsButton.layer.cornerRadius = cornerRadius
-        self.commuteButton.layer.cornerRadius = cornerRadius
         
         //Adds some blur to the background of the buttons
+        self.blur.frame = bounds;
         let layer = CAGradientLayer()
         layer.frame = self.blur.bounds
-        layer.colors = [ UIColor(r: 255, g: 255, b: 255, a: 0.0).cgColor, UIColor.white.cgColor, UIColor.white.cgColor]
-        layer.locations = [0.0, 0.3, 1.0]
+        layer.colors = [ UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
+        layer.locations = [0.0, 1.0]
         self.blur.layer.addSublayer(layer)
-        
+        self.blur.alpha = 0
         
         //Bindings
         self.categoryObservable
             .subscribe(onNext: onNewCategory)
             .addDisposableTo(disposeBag!)
         
-        addButton.rx.tap
+        self.addButton.rx.tap
             .subscribe(onNext: onAddButtonTapped)
-            .addDisposableTo(disposeBag!)
-        
-        self.isAddingVariable
-            .asObservable()
-            .subscribe(onNext: onIsAddingChanged)
             .addDisposableTo(disposeBag!)
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool
     {
-        for subview in subviews
+        for subview in self.subviews
         {
             if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event)
             {
@@ -90,36 +95,99 @@ class AddTimeSlotView : UIView
     }
     
     //MARK: Methods
+    func close()
+    {
+        guard self.isAdding == true else { return }
+        
+        self.isAdding = false
+        self.animateButtons(isAdding: false)
+    }
+    
     private func onNewCategory(category: Category)
     {
-        isAdding = false
+        self.isAdding = false
+        self.animateButtons(isAdding: false, category: category)
     }
     
     private func onAddButtonTapped()
     {
-        isAdding = !isAdding
+        self.isAdding = !self.isAdding
+        self.animateButtons(isAdding: self.isAdding)
     }
     
-    private func onIsAddingChanged(isAdding: Bool)
+    private func animateButtons(isAdding: Bool, category: Category = .unknown)
     {
-        let scale = CGFloat(isAdding ? 1 : 0)
+        let scale = CGFloat(isAdding ? 1 : 0.01)
+        let alpha = CGFloat(isAdding ? 1.0 : 0.0)
         let degrees = isAdding ? 45.0 : 0.0
         let addButtonAlpha = CGFloat(isAdding ? 0.31 : 1.0)
+        let options = isAdding ? UIViewAnimationOptions.curveEaseOut : UIViewAnimationOptions.curveEaseIn
         
-        UIView.animate(withDuration: 0.15)
+        let categoryButtons : [UIButton]
+        let delay : TimeInterval
+        
+        if category == .unknown
         {
-            self.blur.alpha = scale
-            
-            //Category buttons
-            self.foodButton.transform = CGAffineTransform(scaleX: scale, y: scale)
-            self.workButton.transform = CGAffineTransform(scaleX: scale, y: scale)
-            self.leisureButton.transform = CGAffineTransform(scaleX: scale, y: scale)
-            self.friendsButton.transform = CGAffineTransform(scaleX: scale, y: scale)
-            self.commuteButton.transform = CGAffineTransform(scaleX: scale, y: scale)
-            
-            //Add button
-            self.addButton.alpha = addButtonAlpha
-            self.addButton.transform = CGAffineTransform(rotationAngle: CGFloat(degrees * (Double.pi / 180.0)));
+            categoryButtons = self.buttons.map { $0.1 }
+            delay = 0
         }
+        else
+        {
+            let button = self.buttons[category]!
+            categoryButtons = self.buttons.values.filter { (b) in b != button }
+            delay = 0.4 * 0.3
+            self.animateCategoryButton(button)
+        }
+        
+        categoryButtons.forEach { (button) in button.isHidden = false }
+        
+        UIView.animate(withDuration: 0.2, delay: delay,
+            options: options,
+            animations:
+            {
+                //Category buttons
+                let transform = CGAffineTransform(scaleX: scale, y: scale)
+                categoryButtons.forEach { (button) in
+                    button.transform = transform
+                    button.alpha = alpha
+                }
+                
+                //Add button
+                self.addButton.alpha = addButtonAlpha
+                self.addButton.transform = CGAffineTransform(rotationAngle: CGFloat(degrees * (Double.pi / 180.0)));
+            },
+            completion:
+            { (_) in
+                if !isAdding
+                {
+                    categoryButtons.forEach { (button) in button.isHidden = true }
+                }
+            })
+        
+        UIView.animate(withDuration: 0.25)
+        {
+            self.blur.alpha = alpha
+        }
+    }
+    
+    private func animateCategoryButton(_ button: UIButton)
+    {
+        UIView.animateKeyframes(withDuration: 0.4, delay: 0, options: .calculationModeCubic,
+            animations:
+            {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.4)
+                {
+                    button.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+                }
+                UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.6)
+                {
+                    button.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                    button.alpha = 0
+                }
+            },
+            completion:
+            { (_) in
+                button.isHidden = true
+            })
     }
 }
