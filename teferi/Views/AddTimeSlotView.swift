@@ -20,8 +20,8 @@ class AddTimeSlotView : UIView
     //MARK: Properties
     var isAdding : Bool
     {
-        get { return isAddingVariable.value }
-        set(value) { isAddingVariable.value = value }
+        get { return self.isAddingVariable.value }
+        set(value) { self.isAddingVariable.value = value }
     }
     
     private lazy var buttons : [Category:UIButton] =
@@ -53,7 +53,7 @@ class AddTimeSlotView : UIView
         
         let cornerRadius = CGFloat(25)
         
-        buttons.values.forEach
+        self.buttons.values.forEach
         { (button) in
             button.layer.cornerRadius = cornerRadius
             button.alpha = 0
@@ -76,14 +76,14 @@ class AddTimeSlotView : UIView
             .subscribe(onNext: onNewCategory)
             .addDisposableTo(disposeBag!)
         
-        addButton.rx.tap
+        self.addButton.rx.tap
             .subscribe(onNext: onAddButtonTapped)
             .addDisposableTo(disposeBag!)
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool
     {
-        for subview in subviews
+        for subview in self.subviews
         {
             if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event)
             {
@@ -97,22 +97,22 @@ class AddTimeSlotView : UIView
     //MARK: Methods
     func close()
     {
-        guard isAdding == true else { return }
+        guard self.isAdding == true else { return }
         
-        isAdding = false
-        animateButtons(isAdding: false)
+        self.isAdding = false
+        self.animateButtons(isAdding: false)
     }
     
     private func onNewCategory(category: Category)
     {
-        isAdding = false
-        animateButtons(isAdding: false, category: category)
+        self.isAdding = false
+        self.animateButtons(isAdding: false, category: category)
     }
     
     private func onAddButtonTapped()
     {
-        isAdding = !isAdding
-        animateButtons(isAdding: isAdding)
+        self.isAdding = !self.isAdding
+        self.animateButtons(isAdding: self.isAdding)
     }
     
     private func animateButtons(isAdding: Bool, category: Category = .unknown)
@@ -136,7 +136,7 @@ class AddTimeSlotView : UIView
             let button = self.buttons[category]!
             categoryButtons = self.buttons.values.filter { (b) in b != button }
             delay = 0.4 * 0.3
-            animateCategoryButton(button)
+            self.animateCategoryButton(button)
         }
         
         categoryButtons.forEach { (button) in button.isHidden = false }
