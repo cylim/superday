@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,12 +18,55 @@
                     <view key="view" contentMode="scaleToFill" id="nKa-Oy-M8V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hey there! 👋" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuV-WD-Ocn">
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We'll track your days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrO-4Q-Upd">
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="based on where you are." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fs2-z4-aLO">
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dy2-xc-LUf">
+                                <color key="backgroundColor" red="0.0" green="0.78823529411764703" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="XPW-tP-8pJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="xzX-KJ-WVp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Let's begin">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kuV-WD-Ocn" firstAttribute="leading" secondItem="nKa-Oy-M8V" secondAttribute="leadingMargin" constant="4" id="KJy-N3-S9n"/>
+                            <constraint firstItem="VrO-4Q-Upd" firstAttribute="top" secondItem="kuV-WD-Ocn" secondAttribute="bottom" constant="16" id="LfE-9u-gWf"/>
+                            <constraint firstItem="Dy2-xc-LUf" firstAttribute="centerX" secondItem="nKa-Oy-M8V" secondAttribute="centerX" id="dCN-En-8Xb"/>
+                            <constraint firstItem="zUa-9R-8ll" firstAttribute="top" secondItem="Dy2-xc-LUf" secondAttribute="bottom" constant="30" id="hR6-Ku-Tig"/>
+                            <constraint firstItem="fs2-z4-aLO" firstAttribute="leading" secondItem="nKa-Oy-M8V" secondAttribute="leadingMargin" constant="4" id="jjE-e7-dKL"/>
+                            <constraint firstItem="VrO-4Q-Upd" firstAttribute="leading" secondItem="nKa-Oy-M8V" secondAttribute="leadingMargin" constant="4" id="ove-nV-5HB"/>
+                            <constraint firstItem="kuV-WD-Ocn" firstAttribute="top" secondItem="sMw-0C-ghl" secondAttribute="bottom" constant="40" id="ubN-DQ-12O"/>
+                            <constraint firstItem="fs2-z4-aLO" firstAttribute="top" secondItem="VrO-4Q-Upd" secondAttribute="bottom" constant="1" id="zIc-sT-pm4"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pMk-hV-jhr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-985" y="841"/>
+            <point key="canvasLocation" x="-986.39999999999998" y="840.62968515742136"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="dPF-py-CZB">
@@ -35,7 +79,36 @@
                     <view key="view" contentMode="scaleToFill" id="5MA-Hd-wvw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.76470588240000004" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If we get it wrong, change it. 🤓" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9d-7g-C0Z">
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v99-Y2-jsw">
+                                <color key="backgroundColor" red="0.0" green="0.78823529410000004" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Avb-iU-ZGc"/>
+                                    <constraint firstAttribute="height" constant="50" id="L4f-He-P6b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Ok, got it">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yiN-cR-Nhd" firstAttribute="top" secondItem="v99-Y2-jsw" secondAttribute="bottom" constant="30" id="Eua-mS-1B6"/>
+                            <constraint firstItem="t9d-7g-C0Z" firstAttribute="leading" secondItem="5MA-Hd-wvw" secondAttribute="leadingMargin" constant="4" id="FXa-fI-Jsq"/>
+                            <constraint firstItem="v99-Y2-jsw" firstAttribute="centerX" secondItem="5MA-Hd-wvw" secondAttribute="centerX" id="Kdz-XZ-txg"/>
+                            <constraint firstItem="t9d-7g-C0Z" firstAttribute="top" secondItem="qeD-hJ-MhU" secondAttribute="bottom" constant="40" id="j6E-kM-eCo"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gsM-Is-BPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
