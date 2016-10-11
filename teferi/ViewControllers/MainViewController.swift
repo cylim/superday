@@ -49,12 +49,14 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+     
+        self.calendarLabel.setTitle(viewModel.calendarDay, for: .normal)
         
         //Inject PagerViewController's dependencies
-        pagerViewController.inject(metricsService, settingsService, persistencyService, isEditingVariable)
+        self.pagerViewController.inject(metricsService, settingsService, persistencyService, isEditingVariable)
         
         //Debug screen
-        debugView.isHidden = true
+        self.debugView.isHidden = true
         
         //Launch animation
         self.launchAnim = LaunchAnimationView(frame: view.frame)
@@ -69,7 +71,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         super.viewWillAppear(animated)
         
         //Refresh Dispose bag, if needed
-        disposeBag = disposeBag ?? DisposeBag()
+        self.disposeBag = self.disposeBag ?? DisposeBag()
         
         //DEBUG SCREEN
         self.locationService
@@ -86,7 +88,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //Category creation
         self.addButton
             .categoryObservable
-            .subscribe(onNext: onNewCategory)
+            .subscribe(onNext: self.viewModel.addNewSlot)
             .addDisposableTo(disposeBag!)
         
         //Date updates for title label
@@ -98,26 +100,25 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
             self.launchAnim?.animate(onCompleted:
-                {
-                    self.launchAnim!.removeFromSuperview()
-                    self.launchAnim = nil
-                    
-                    //Add button must be added like this due to .xib/.storyboard restrictions
-                    self.view.addSubview(self.addButton)
-                    self.addButton.snp.makeConstraints { make in
-                        make.height.equalTo(320)
-                        make.left.equalTo(self.view.snp.left)
-                        make.width.equalTo(self.view.snp.width)
-                        make.bottom.equalTo(self.view.snp.bottom)
-                    }
+            {
+                self.launchAnim!.removeFromSuperview()
+                self.launchAnim = nil
+                
+                //Add button must be added like this due to .xib/.storyboard restrictions
+                self.view.addSubview(self.addButton)
+                self.addButton.snp.makeConstraints { make in
+                    make.height.equalTo(320)
+                    make.left.equalTo(self.view.snp.left)
+                    make.width.equalTo(self.view.snp.width)
+                    make.bottom.equalTo(self.view.snp.bottom)
                 }
-            )
+            })
         }
     }
     
     override func viewWillDisappear(_ animated: Bool)
     {
-        disposeBag = nil
+        self.disposeBag = nil
         super.viewWillDisappear(animated)
     }
     
@@ -128,7 +129,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         guard viewModel.currentDate.ignoreTimeComponents() != today else { return }
         
-        pagerViewController.setViewControllers(
+        self.pagerViewController.setViewControllers(
             [ TimelineViewController(date: today,
                                      metricsService: metricsService,
                                      persistencyService: persistencyService,
@@ -137,26 +138,26 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             animated: true,
             completion: nil)
         
-        onDateChanged(date: today)
+        self.onDateChanged(date: today)
     }
     
     @IBAction func onSendLogButtonTouchUpInside()
     {   
         guard MFMailComposeViewController.canSendMail() else
         {
-            return showAlert(withTitle: "Something went wrong :(", message: "You need to set up an email account before sending emails.")
+            return self.showAlert(withTitle: "Something went wrong :(", message: "You need to set up an email account before sending emails.")
         }
         
         guard let baseURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else
         {
-            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+            return self.showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
         }
         
         let fileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
         
         guard let fileData = try? Data(contentsOf: fileURL) else
         {
-            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+            return self.showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
         }
         
         let mailComposer = MFMailComposeViewController()
@@ -171,7 +172,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     @IBAction func onDebugButtonTouchUpInside()
     {
-        debugView.isHidden = !debugView.isHidden
+        self.debugView.isHidden = !self.debugView.isHidden
     }
     
     // MARK: MFMailComposeViewControllerDelegate implementation
@@ -183,8 +184,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Methods
     private func onDateChanged(date: Date)
     {
-        viewModel.currentDate = date
-        titleLabel.text = viewModel.title
+        self.viewModel.currentDate = date
+        self.titleLabel.text = viewModel.title
         
         let today = Date().ignoreTimeComponents()
         let isToday = today == date.ignoreTimeComponents()
@@ -194,13 +195,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         {
             self.addButton.alpha = alpha
         }
+        
         self.addButton.close()
         self.addButton.isUserInteractionEnabled = isToday
-    }
-    
-    private func onNewCategory(category: Category)
-    {
-        viewModel.addNewSlot(withCategory: category)
     }
     
     private func onEditChanged(_ isEditing: Bool)
@@ -208,18 +205,18 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let alpha = isEditing ? Constants.editingAlpha : 1
         
         //Grey out views
-        icon.alpha = alpha
-        addButton.alpha = alpha
-        logButton.alpha = alpha
-        titleLabel.alpha = alpha
+        self.icon.alpha = alpha
+        self.addButton.alpha = alpha
+        self.logButton.alpha = alpha
+        self.titleLabel.alpha = alpha
         
         //Disable buttons
-        addButton.isUserInteractionEnabled = !isEditing
-        logButton.isUserInteractionEnabled = !isEditing
-        calendarLabel.isUserInteractionEnabled = !isEditing
+        self.addButton.isUserInteractionEnabled = !isEditing
+        self.logButton.isUserInteractionEnabled = !isEditing
+        self.calendarLabel.isUserInteractionEnabled = !isEditing
         
         //Close add menu
-        addButton.close()
+        self.addButton.close()
     }
     
     func showAlert(withTitle title: String, message: String)
