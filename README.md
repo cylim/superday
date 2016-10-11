@@ -1,4 +1,4 @@
-# Superday
+# ![](https://raw.githubusercontent.com/toggl/superday/master/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png)  Superday
 More time, more life.
 Superday tracks your activities, you give the context.
 
@@ -23,7 +23,7 @@ Downloading and starting development for superday is supersimple®:
 
 ## Pull Request Etiquette
 
-Make pull requests for specific concerns and use clear titles and descriptions. It is your responsibility to make sure the branch is up to date with master or merges trivially. Feel free to make pull requests for work in project features to ask for feedback.
+Make pull requests for specific concerns and use clear titles and descriptions. It is your responsibility to make sure the branch is up to date with master or merges trivially. Feel free to make pull requests for work in progress features to ask for feedback.
 
 ### Commit Messages
 
