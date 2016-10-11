@@ -153,10 +153,14 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         let today = Date().ignoreTimeComponents()
         let isToday = today == date.ignoreTimeComponents()
-        let scale = CGFloat(isToday ? 1 : 0)
+        let alpha = CGFloat(isToday ? 1 : 0)
         
-        self.addButton.isAdding = false
-        self.addButton.transform = CGAffineTransform(scaleX: scale, y: scale)
+        UIView.animate(withDuration: 0.3)
+        {
+            self.addButton.alpha = alpha
+        }
+        self.addButton.close()
+        self.addButton.isUserInteractionEnabled = isToday
     }
     
     private func onNewCategory(category: Category)
@@ -174,6 +178,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         logButton.isUserInteractionEnabled = !isEditing
         calendarLabel.isUserInteractionEnabled = !isEditing
+        
+        addButton.close()
     }
     
     func showAlert(withTitle title: String, message: String)

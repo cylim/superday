@@ -95,6 +95,14 @@ class AddTimeSlotView : UIView
     }
     
     //MARK: Methods
+    func close()
+    {
+        guard isAdding == true else { return }
+        
+        isAdding = false
+        animateButtons(isAdding: false)
+    }
+    
     private func onNewCategory(category: Category)
     {
         isAdding = false
