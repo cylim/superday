@@ -12,8 +12,8 @@ class TimelineCell : UITableViewCell
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
-        {
-            return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
+    {
+        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
     }()
     
     private var editButtons : [UIImageView]? = nil
@@ -39,7 +39,7 @@ class TimelineCell : UITableViewCell
     override func awakeFromNib()
     {
         super.awakeFromNib()
-        lineView?.addConstraint(lineHeightConstraint)
+        self.lineView?.addConstraint(lineHeightConstraint)
     }
     
     /**
@@ -59,10 +59,10 @@ class TimelineCell : UITableViewCell
         let categoryColor = timeSlot.category.color
         
         //Updates each one of the cell's components
-        layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha, isRunning: isRunning)
-        layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
-        layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
-        layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
+        self.layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha, isRunning: isRunning)
+        self.layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes, alpha: alpha)
+        self.layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category, alpha: alpha)
+        self.layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor, alpha: isEditingCategory ? 1 : alpha)
         
         guard isEditingCategory else
         {
@@ -81,9 +81,9 @@ class TimelineCell : UITableViewCell
             self.editButtons = nil
         }
         
-        categoryIcon?.image = UIImage(named: Category.unknown.icon)
+        self.categoryIcon?.image = UIImage(named: Category.unknown.icon)
         
-        editButtons = Constants.categories
+        self.editButtons = Constants.categories
             .filter { c in c != .unknown && c != timeSlot.category }
             .map(mapCategoryIntoView)
         
@@ -100,7 +100,6 @@ class TimelineCell : UITableViewCell
             UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [ .curveEaseInOut ], animations: { imageView.alpha = 1 })
             
             animationDelay += animationDuration
-            
             previousImageView = imageView
         }
     }
@@ -130,7 +129,7 @@ class TimelineCell : UITableViewCell
         slotDescription?.alpha = alpha
     }
     
-    ///Updates the label that shows how long the slot lasted
+    /// Updates the label that shows how long the slot lasted
     private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat)
     {
         elapsedTime?.alpha = alpha
@@ -138,7 +137,7 @@ class TimelineCell : UITableViewCell
         elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
     }
     
-    ///Updates the line that displays shows how long the TimeSlot lasted
+    /// Updates the line that displays shows how long the TimeSlot lasted
     private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, alpha: CGFloat, isRunning: Bool)
     {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))

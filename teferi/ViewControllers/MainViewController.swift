@@ -60,16 +60,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.launchAnim = LaunchAnimationView(frame: view.frame)
         self.view.addSubview(launchAnim)
         
-        //Add button must be added like this due to .xib/.storyboard restrictions
+        //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
-        self.view.addSubview(addButton!)
-        self.addButton.snp.makeConstraints { make in
-            
-            make.height.equalTo(200)
-            make.left.equalTo(self.view.snp.left)
-            make.width.equalTo(self.view.snp.width)
-            make.bottom.equalTo(self.view.snp.bottom)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -92,7 +84,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .addDisposableTo(disposeBag!)
         
         //Category creation
-        self.addButton!
+        self.addButton
             .categoryObservable
             .subscribe(onNext: onNewCategory)
             .addDisposableTo(disposeBag!)
@@ -109,6 +101,15 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 {
                     self.launchAnim!.removeFromSuperview()
                     self.launchAnim = nil
+                    
+                    //Add button must be added like this due to .xib/.storyboard restrictions
+                    self.view.addSubview(self.addButton)
+                    self.addButton.snp.makeConstraints { make in
+                        make.height.equalTo(320)
+                        make.left.equalTo(self.view.snp.left)
+                        make.width.equalTo(self.view.snp.width)
+                        make.bottom.equalTo(self.view.snp.bottom)
+                    }
                 }
             )
         }
@@ -187,10 +188,14 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         let today = Date().ignoreTimeComponents()
         let isToday = today == date.ignoreTimeComponents()
-        let scale = CGFloat(isToday ? 1 : 0)
+        let alpha = CGFloat(isToday ? 1 : 0)
         
-        self.addButton!.isAdding = false
-        self.addButton!.transform = CGAffineTransform(scaleX: scale, y: scale)
+        UIView.animate(withDuration: 0.3)
+        {
+            self.addButton.alpha = alpha
+        }
+        self.addButton.close()
+        self.addButton.isUserInteractionEnabled = isToday
     }
     
     private func onNewCategory(category: Category)
@@ -202,12 +207,19 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         let alpha = isEditing ? Constants.editingAlpha : 1
         
+        //Grey out views
         icon.alpha = alpha
+        addButton.alpha = alpha
         logButton.alpha = alpha
         titleLabel.alpha = alpha
         
+        //Disable buttons
+        addButton.isUserInteractionEnabled = !isEditing
         logButton.isUserInteractionEnabled = !isEditing
         calendarLabel.isUserInteractionEnabled = !isEditing
+        
+        //Close add menu
+        addButton.close()
     }
     
     func showAlert(withTitle title: String, message: String)
