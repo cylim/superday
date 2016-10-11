@@ -122,11 +122,11 @@ class TimelineCell : UITableViewCell
         let categoryText = category == .unknown ? "" : String(describing: category)
         
         let description = "\(categoryText) \(dateString)"
-        let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count)
+        let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count + 1)
         let attributedText = description.getBoldStringWithNonBoldText(nonBoldRange)
         
-        slotDescription?.attributedText = attributedText
         slotDescription?.alpha = alpha
+        slotDescription?.attributedText = attributedText
     }
     
     /// Updates the label that shows how long the slot lasted
