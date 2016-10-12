@@ -18,6 +18,9 @@
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
 		2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C61D9BEA9A00AF8857 /* DebugView.swift */; };
+		242D86F11DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242D86F01DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift */; };
+		242D86F31DADA97900DCE7F1 /* MockLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242D86F21DADA97900DCE7F1 /* MockLoggingService.swift */; };
+		242D86F71DADA99700DCE7F1 /* MockNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242D86F61DADA99700DCE7F1 /* MockNotificationService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
 		24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */; };
@@ -106,6 +109,9 @@
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		2421F8C61D9BEA9A00AF8857 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
+		242D86F01DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeSlotCreationServiceTests.swift; path = Services/DefaultTimeSlotCreationServiceTests.swift; sourceTree = "<group>"; };
+		242D86F21DADA97900DCE7F1 /* MockLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLoggingService.swift; path = Mocks/MockLoggingService.swift; sourceTree = "<group>"; };
+		242D86F61DADA99700DCE7F1 /* MockNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockNotificationService.swift; path = Mocks/MockNotificationService.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
 		24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomEvent.swift; path = Models/CustomEvent.swift; sourceTree = "<group>"; };
@@ -251,6 +257,14 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		242D86EF1DADA85600DCE7F1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				242D86F01DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		24564F401D82FDBB00D9A8AE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +303,8 @@
 				24564F6F1D83270000D9A8AE /* MockLocationService.swift */,
 				247F05FD1D88153700451BAD /* MockPersistencyService.swift */,
 				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
+				242D86F21DADA97900DCE7F1 /* MockLoggingService.swift */,
+				242D86F61DADA99700DCE7F1 /* MockNotificationService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -296,6 +312,7 @@
 		24A21B671D7C3E0800CEB4F3 /* teferiTests */ = {
 			isa = PBXGroup;
 			children = (
+				242D86EF1DADA85600DCE7F1 /* Services */,
 				24564F401D82FDBB00D9A8AE /* Extensions */,
 				2414EB981D7DC8D1001EFB6D /* ViewModels */,
 				24564F7B1D83891100D9A8AE /* Views */,
@@ -683,8 +700,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
+				242D86F31DADA97900DCE7F1 /* MockLoggingService.swift in Sources */,
+				242D86F11DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift in Sources */,
 				24B03B631D9E946900452D16 /* MockMetricsService.swift in Sources */,
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
+				242D86F71DADA99700DCE7F1 /* MockNotificationService.swift in Sources */,
 				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
 				247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */,
