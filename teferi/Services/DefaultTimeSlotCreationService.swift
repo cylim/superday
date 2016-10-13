@@ -35,7 +35,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         
         settingsService.setLastLocationDate(currentLocationTime)
         
-        guard let previousLocationTime = previousTime else { return }
+        guard let previousLocationTime = previousTime, currentLocationTime > previousLocationTime else { return }
         
         let currentTimeSlot = persistencyService.getLastTimeSlot()
         
@@ -48,7 +48,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         }
         else
         {
-            if currentTimeSlot.startTime != previousLocationTime
+            if currentTimeSlot.startTime < previousLocationTime
             {
                 let intervalTimeSlot = TimeSlot(withStartDate: previousLocationTime)
                 persistencyService.addNewTimeSlot(intervalTimeSlot)

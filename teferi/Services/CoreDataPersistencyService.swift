@@ -155,6 +155,14 @@ class CoreDataPersistencyService : PersistencyService
     private func endPreviousTimeSlot(atDate date: Date) -> Bool
     {
         guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
+        
+        let previousTimeSlotEndDate = managedTimeSlot.value(forKey: "startTime") as! Date
+        guard date > previousTimeSlotEndDate else
+        {
+            self.loggingService.log(withLogLevel: .error, message: "Trying to create a negative duration")
+            return false
+        }
+        
         managedTimeSlot.setValue(date, forKey: "endTime")
         
         do
