@@ -18,14 +18,14 @@ class TimelineViewModel
     
     var isEditing : Bool
     {
-        get { return isEditingVariable.value }
-        set(value) { isEditingVariable.value = value }
+        get { return self.isEditingVariable.value }
+        set(value) { self.isEditingVariable.value = value }
     }
     
     private(set) var timeSlots : [TimeSlot]
     {
-        get { return timeSlotsVariable.value }
-        set(value) { timeSlotsVariable.value = value }
+        get { return self.timeSlotsVariable.value }
+        set(value) { self.timeSlotsVariable.value = value }
     }
     
     //MARK: Initializers
@@ -38,16 +38,16 @@ class TimelineViewModel
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
         
         self.date = date
-        self.persistencyService = persistencyService
         self.metricsService = metricsService
+        self.persistencyService = persistencyService
         self.timeSlotsVariable = Variable(timeSlotsForDate)
-        self.isEditingObservable = isEditingVariable.asObservable()
-        self.timeSlotsObservable = timeSlotsVariable.asObservable()
+        self.isEditingObservable = self.isEditingVariable.asObservable()
+        self.timeSlotsObservable = self.timeSlotsVariable.asObservable()
         
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
         
-        persistencyService.subscribeToTimeSlotChanges(onNewTimeSlot)
+        self.persistencyService.subscribeToTimeSlotChanges(onNewTimeSlot)
     }
     
     //MARK: Methods
@@ -60,9 +60,9 @@ class TimelineViewModel
     @discardableResult func updateTimeSlot(atIndex index: Int, withCategory category: Category) -> Bool
     {
         let timeSlot = timeSlots[index]
-        guard persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }
+        guard self.persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }
         
-        metricsService.log(event: .timeSlotEditing)
+        self.metricsService.log(event: .timeSlotEditing)
         
         timeSlot.category = category
         return true
@@ -77,6 +77,6 @@ class TimelineViewModel
             lastTimeSlot.endTime = Date()
         }
         
-        timeSlots.append(timeSlot)
+        self.timeSlots.append(timeSlot)
     }
 }
