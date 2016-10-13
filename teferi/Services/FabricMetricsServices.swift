@@ -6,7 +6,6 @@ class FabricMetricsService : MetricsService
     ///Perform any framework specific initialization
     func initialize()
     {
-        Fabric.sharedSDK().debug = true
         Fabric.with([Answers.self, Crashlytics.self])
     }
     
