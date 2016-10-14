@@ -11,11 +11,22 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private var disposeBag : DisposeBag? = DisposeBag()
-    private let viewModel : MainViewModel = MainViewModel(persistencyService: AppDelegate.instance.persistencyService, metricsService: AppDelegate.instance.metricsService)
+    private lazy var viewModel : MainViewModel =
+    {
+        return MainViewModel(persistencyService: self.persistencyService, metricsService: self.metricsService)
+    }()
+    
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
+    //Dependencies
+    private var metricsService : MetricsService!
+    private var settingsService : SettingsService!
+    private var locationService : LocationService!
+    private var isEditingVariable : Variable<Bool>!
+    private var persistencyService : PersistencyService!
+    
     private var addButton : AddTimeSlotView!
-    private var launchAnim : LaunchAnimationView?
+    private var launchAnim : LaunchAnimationView!
     
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
@@ -23,69 +34,91 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var debugView : DebugView!
     @IBOutlet private weak var calendarLabel : UIButton!
     
+    func inject(_ locationService: LocationService, _ metricsService: MetricsService, _ persistencyService: PersistencyService, _ settingsService: SettingsService, _ isEditingVariable: Variable<Bool>) -> MainViewController
+    {
+        self.metricsService = metricsService
+        self.locationService = locationService
+        self.settingsService = settingsService
+        self.isEditingVariable = isEditingVariable
+        self.persistencyService = persistencyService
+        
+        return self
+    }
+    
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
     {
         super.viewDidLoad()
+     
+        self.calendarLabel.setTitle(viewModel.calendarDay, for: .normal)
+        
+        //Inject PagerViewController's dependencies
+        self.pagerViewController.inject(metricsService, settingsService, persistencyService, isEditingVariable)
         
         //Debug screen
-        debugView.isHidden = true
-        AppDelegate.instance
-            .locationService
-            .subscribeToLocationChanges(debugView.onNewLocation)
+        self.debugView.isHidden = true
         
-        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as! AddTimeSlotView
-        self.view.addSubview(addButton)
-        self.addButton.snp.makeConstraints { make in
-            make.height.equalTo(320)
-            make.left.equalTo(self.view.snp.left)
-            make.width.equalTo(self.view.snp.width)
-            make.bottom.equalTo(self.view.snp.bottom)
-        }
-        
+        //Launch animation
         self.launchAnim = LaunchAnimationView(frame: view.frame)
-        self.view.addSubview(launchAnim!)
+        self.view.addSubview(launchAnim)
+        
+        //Add button
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        let currentDay = Calendar.current.component(.day, from: Date())
-        calendarLabel?.setTitle(String(format: "%02d", currentDay), for: .normal)
+        //Refresh Dispose bag, if needed
+        self.disposeBag = self.disposeBag ?? DisposeBag()
         
-        disposeBag = disposeBag ?? DisposeBag()
-        
-        //TODO: Inject this instead
-        AppDelegate.instance
-            .isEditingObservable
-            .subscribe(onNext: onEditChanged)
+        //DEBUG SCREEN
+        self.locationService
+            .locationObservable
+            .subscribe(onNext: self.debugView.onNewLocation)
             .addDisposableTo(disposeBag!)
         
-        addButton
+        //Edit state
+        self.isEditingVariable
+            .asObservable()
+            .subscribe(onNext: self.onEditChanged)
+            .addDisposableTo(disposeBag!)
+        
+        //Category creation
+        self.addButton
             .categoryObservable
-            .subscribe(onNext: onNewCategory)
+            .subscribe(onNext: self.viewModel.addNewSlot)
             .addDisposableTo(disposeBag!)
         
-        pagerViewController
+        //Date updates for title label
+        self.pagerViewController
             .dateObservable
-            .subscribe(onNext: onDateChanged)
+            .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(disposeBag!)
         
-        // small delay to give launch screen time to fade away
+        //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
             self.launchAnim?.animate(onCompleted:
-                {
-                    self.launchAnim!.removeFromSuperview()
-                    self.launchAnim = nil
+            {
+                self.launchAnim!.removeFromSuperview()
+                self.launchAnim = nil
+                
+                //Add button must be added like this due to .xib/.storyboard restrictions
+                self.view.addSubview(self.addButton)
+                self.addButton.snp.makeConstraints { make in
+                    make.height.equalTo(320)
+                    make.left.equalTo(self.view.snp.left)
+                    make.width.equalTo(self.view.snp.width)
+                    make.bottom.equalTo(self.view.snp.bottom)
                 }
-            )
+            })
         }
     }
     
     override func viewWillDisappear(_ animated: Bool)
     {
-        disposeBag = nil
+        self.disposeBag = nil
         super.viewWillDisappear(animated)
     }
     
@@ -96,32 +129,35 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         guard viewModel.currentDate.ignoreTimeComponents() != today else { return }
         
-        pagerViewController.setViewControllers(
-            [ TimelineViewController(date: today) ],
+        self.pagerViewController.setViewControllers(
+            [ TimelineViewController(date: today,
+                                     metricsService: metricsService,
+                                     persistencyService: persistencyService,
+                                     isEditingVariable: isEditingVariable) ],
             direction: .forward,
             animated: true,
             completion: nil)
         
-        onDateChanged(date: today)
+        self.onDateChanged(date: today)
     }
     
     @IBAction func onSendLogButtonTouchUpInside()
     {   
         guard MFMailComposeViewController.canSendMail() else
         {
-            return showAlert(withTitle: "Something went wrong :(", message: "You need to set up an email account before sending emails.")
+            return self.showAlert(withTitle: "Something went wrong :(", message: "You need to set up an email account before sending emails.")
         }
         
         guard let baseURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else
         {
-            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+            return self.showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
         }
         
         let fileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
         
         guard let fileData = try? Data(contentsOf: fileURL) else
         {
-            return showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
+            return self.showAlert(withTitle: "Something went wrong :(", message: "We are unable to find the log file.")
         }
         
         let mailComposer = MFMailComposeViewController()
@@ -136,7 +172,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     @IBAction func onDebugButtonTouchUpInside()
     {
-        debugView.isHidden = !debugView.isHidden
+        self.debugView.isHidden = !self.debugView.isHidden
     }
     
     // MARK: MFMailComposeViewControllerDelegate implementation
@@ -148,8 +184,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Methods
     private func onDateChanged(date: Date)
     {
-        viewModel.currentDate = date
-        titleLabel.text = viewModel.title
+        self.viewModel.currentDate = date
+        self.titleLabel.text = viewModel.title
         
         let today = Date().ignoreTimeComponents()
         let isToday = today == date.ignoreTimeComponents()
@@ -159,27 +195,28 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         {
             self.addButton.alpha = alpha
         }
+        
         self.addButton.close()
         self.addButton.isUserInteractionEnabled = isToday
-    }
-    
-    private func onNewCategory(category: Category)
-    {
-        viewModel.addNewSlot(withCategory: category)
     }
     
     private func onEditChanged(_ isEditing: Bool)
     {
         let alpha = isEditing ? Constants.editingAlpha : 1
         
-        icon.alpha = alpha
-        logButton.alpha = alpha
-        titleLabel.alpha = alpha
+        //Grey out views
+        self.icon.alpha = alpha
+        self.addButton.alpha = alpha
+        self.logButton.alpha = alpha
+        self.titleLabel.alpha = alpha
         
-        logButton.isUserInteractionEnabled = !isEditing
-        calendarLabel.isUserInteractionEnabled = !isEditing
+        //Disable buttons
+        self.addButton.isUserInteractionEnabled = !isEditing
+        self.logButton.isUserInteractionEnabled = !isEditing
+        self.calendarLabel.isUserInteractionEnabled = !isEditing
         
-        addButton.close()
+        //Close add menu
+        self.addButton.close()
     }
     
     func showAlert(withTitle title: String, message: String)

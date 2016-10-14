@@ -1,11 +1,12 @@
 import Foundation
 import CoreLocation
+import RxSwift
 @testable import teferi
 
 class MockLocationService : LocationService
 {
     //MARK: Fields
-    private var onLocationCallbacks = [(CLLocation) -> ()]()
+    private var locationVariable = Variable(CLLocation())
     
     //MARK: Properties
     private(set) var locationStarted = false
@@ -23,14 +24,11 @@ class MockLocationService : LocationService
         locationStarted = false
     }
     
-    func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
-    {
-        onLocationCallbacks.append(onLocationCallback)
-    }
+    var locationObservable : Observable<CLLocation> { return locationVariable.asObservable() }
     
     //MARK: Methods
     func setMockLocation(_ location: CLLocation)
     {
-        onLocationCallbacks.forEach { locationCallback in locationCallback(location) }
+        locationVariable.value = location
     }
 }

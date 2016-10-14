@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import RxSwift
 import CoreLocation
 import CoreMotion
 
@@ -15,8 +16,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     /// Timer that allows the location service to pause and save battery
     private var timer : Timer? = nil
     
-    /// Callbacks that get called when a new location is available
-    private var onLocationCallbacks = [(CLLocation) -> ()]()
+    private var locationVariable = Variable(CLLocation())
     
     // for logging date/time of received location updates
     private let dateTimeFormatter = DateFormatter()
@@ -59,6 +59,9 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     }
     
     //MARK: LocationService implementation
+    
+    var locationObservable : Observable<CLLocation> { return locationVariable.asObservable() }
+    
     func startLocationTracking()
     {
         loggingService.log(withLogLevel: .debug, message: "DefaultLocationService started")
@@ -87,21 +90,13 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         }
     }
     
-    func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
-    {
-        loggingService.log(withLogLevel: .verbose, message: "Subscribing to DefaultLocationService")
-        onLocationCallbacks.append(onLocationCallback)
-    }
-    
     //MARK: CLLocationManagerDelegate Implementation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         let filteredLocations = locations.filter(filterLocations)
         
         //Notifies new locations to listeners
-        filteredLocations.forEach { location in
-            onLocationCallbacks.forEach { callback in callback(location) }
-        }
+        filteredLocations.forEach { location in self.locationVariable.value = location }
         
         guard filteredLocations.count > 0 else { return }
         

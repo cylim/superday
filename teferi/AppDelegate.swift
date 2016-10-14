@@ -4,32 +4,21 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
-{
-    static var instance: AppDelegate
-    {
-        return UIApplication.shared.delegate as! AppDelegate
-    }
-    
+{   
     //MARK: Fields
-    private let timeSlotCreationService : TimeSlotCreationService
+    private let disposeBag = DisposeBag()
     private let isEditingVariable = Variable(false)
     private let notificationService : NotificationService
     
+    private let metricsService : MetricsService
+    private let loggingService : LoggingService
+    private var locationService : LocationService
+    private let settingsService : SettingsService
+    private let persistencyService : PersistencyService
+    private let timeSlotCreationService : TimeSlotCreationService
+    
     //MARK: Properties
     var window: UIWindow?
-    
-    let metricsService : MetricsService
-    let loggingService : LoggingService
-    var locationService : LocationService
-    let settingsService : SettingsService
-    let persistencyService : PersistencyService
-    
-    let isEditingObservable : Observable<Bool>
-    var isEditing : Bool
-    {
-        get { return isEditingVariable.value }
-        set(value) { isEditingVariable.value = value }
-    }
     
     //Initializers
     override init()
@@ -41,8 +30,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         persistencyService = CoreDataPersistencyService(loggingService: loggingService)
         notificationService = DefaultNotificationService(loggingService: loggingService)
         timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: settingsService, persistencyService: persistencyService, loggingService: loggingService, notificationService: notificationService)
-        
-        isEditingObservable = isEditingVariable.asObservable()
     }
     
     //MARK: UIApplicationDelegate lifecycle
@@ -52,20 +39,47 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService.isInBackground = isInBackground
         
         //Starts location tracking
-        locationService.subscribeToLocationChanges(timeSlotCreationService.onNewLocation)
-        locationService.startLocationTracking()
+        self.locationService
+            .locationObservable
+            .subscribe(onNext: timeSlotCreationService.onNewLocation)
+            .addDisposableTo(disposeBag)
         
-        metricsService.initialize()
+        self.locationService.startLocationTracking()
+       
+        //Faster startup when in the app wakes up for location updates
+        guard !isInBackground else { return true }
         
-        if settingsService.installDate == nil
+        //Start metrics
+        self.metricsService.initialize()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
+        var initialViewController : UIViewController =
+            mainViewController.inject(self.locationService,
+                                      self.metricsService,
+                                      self.persistencyService,
+                                      self.settingsService,
+                                      self.isEditingVariable)
+        
+        if self.settingsService.installDate == nil
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
-            if persistencyService.addNewTimeSlot(firstTimeSlot)
+            if self.persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                settingsService.setInstallDate(Date())
+                self.settingsService.setInstallDate(Date())
             }
+            
+            let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
+            let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
+            
+            initialViewController = onboardController.inject(mainViewController)
         }
+        
+        self.window!.rootViewController = initialViewController
+        self.window!.makeKeyAndVisible()
         
         return true
     }
@@ -168,6 +182,4 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             }
         }
     }
-
 }
-

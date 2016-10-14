@@ -5,12 +5,15 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
 {
     // MARK: Fields
     private let dateVariable = Variable(Date())
-    private let viewModel = PagerViewModel(settingsService: AppDelegate.instance.settingsService)
-    private let disposeBag = DisposeBag()
-    private lazy var currentDateViewController : TimelineViewController =
-    {
-        return TimelineViewController(date: Date())
-    }()
+    private var disposeBag : DisposeBag? = DisposeBag()
+    
+    private var metricsService : MetricsService!
+    private var isEditingVariable : Variable<Bool>!
+    private var persistencyService : PersistencyService!
+    
+    private var currentDateViewController : TimelineViewController!
+    
+    private var viewModel : PagerViewModel!
     
     // MARK: Properties
     var dateObservable : Observable<Date> { return dateVariable.asObservable() }
@@ -31,6 +34,21 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     }
     
     // MARK: UIViewController lifecycle
+    
+    func inject(_ metricsService: MetricsService, _ settingsService: SettingsService, _ persistencyService: PersistencyService, _ isEditingVariable: Variable<Bool>)
+    {
+        self.metricsService = metricsService
+        self.isEditingVariable = isEditingVariable
+        self.persistencyService = persistencyService
+        
+        viewModel = PagerViewModel(settingsService: settingsService)
+        
+        currentDateViewController = TimelineViewController(date: Date(),
+                                                           metricsService: metricsService,
+                                                           persistencyService: persistencyService,
+                                                           isEditingVariable: isEditingVariable)
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -38,18 +56,27 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         view.backgroundColor = UIColor.white
         delegate = self
         dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        disposeBag = disposeBag ?? DisposeBag()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate
-            .isEditingObservable
+        self.isEditingVariable
+            .asObservable()
             .subscribe(onNext: onEditChanged)
-            .addDisposableTo(disposeBag)
+            .addDisposableTo(disposeBag!)
         
         setViewControllers(
             [ currentDateViewController ],
             direction: .forward,
             animated: false,
             completion: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        disposeBag = nil
     }
     
     // MARK: Methods    
@@ -70,6 +97,12 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard completed else { return }
         
         let timelineController = self.viewControllers!.first as! TimelineViewController
+        
+        if timelineController.date.ignoreTimeComponents() == Date().ignoreTimeComponents()
+        {
+            currentDateViewController = timelineController
+        }
+        
         dateVariable.value = timelineController.date
     }
     
@@ -81,7 +114,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         guard viewModel.canScroll(toDate: nextDate) else { return nil }
         
-        return TimelineViewController(date: nextDate)
+        return TimelineViewController(date: nextDate,
+                                      metricsService: metricsService,
+                                      persistencyService: persistencyService,
+                                      isEditingVariable: isEditingVariable)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
@@ -91,12 +127,9 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         guard viewModel.canScroll(toDate: nextDate) else { return nil }
         
-        let newController = TimelineViewController(date: nextDate)
-        if nextDate.ignoreTimeComponents() == Date().ignoreTimeComponents()
-        {
-            currentDateViewController = newController
-        }
-        
-        return newController
+        return TimelineViewController(date: nextDate,
+                                      metricsService: metricsService,
+                                      persistencyService: persistencyService,
+                                      isEditingVariable: isEditingVariable)
     }
 }

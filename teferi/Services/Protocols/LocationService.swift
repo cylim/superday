@@ -1,4 +1,5 @@
 import CoreLocation
+import RxSwift
 
 /// Responsible for tracking the users location.
 protocol LocationService
@@ -17,9 +18,7 @@ protocol LocationService
     func stopLocationTracking()
     
     /**
-     Adds a callback that gets called everytime a new location is received.
-     
-     - Parameter callback: The function that gets invoked.
+     Observable that emits events when new locations are received.
      */
-    func subscribeToLocationChanges(_ onLocationCallback: @escaping (CLLocation) -> ())
+    var locationObservable : Observable<CLLocation> { get }
 }

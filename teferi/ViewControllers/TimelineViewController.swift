@@ -5,8 +5,6 @@ import CoreGraphics
 
 class TimelineViewController : UITableViewController
 {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
- 
     // MARK: Properties
     var date : Date
     {
@@ -14,27 +12,28 @@ class TimelineViewController : UITableViewController
     }
     
     // MARK: Fields
-    private let viewModel : TimelineViewModel
     private let baseCellHeight = 40
-    private let cellIdentifier = "timelineCell"
     private let disposeBag = DisposeBag()
+    private let viewModel : TimelineViewModel
+    private let cellIdentifier = "timelineCell"
+    private let isEditingVariable : Variable<Bool>
+    
     private var currentlyEditingIndex = -1
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
-    init(date: Date)
+    init(date: Date, metricsService: MetricsService, persistencyService: PersistencyService, isEditingVariable: Variable<Bool>)
     {
-        viewModel = TimelineViewModel(date: date,
-                                      persistencyService: self.appDelegate.persistencyService,
-                                      metricsService: self.appDelegate.metricsService)
+        self.isEditingVariable = isEditingVariable
+        self.viewModel = TimelineViewModel(date: date,
+                                      metricsService: metricsService,
+                                      persistencyService: persistencyService)
+        
         super.init(style: .plain)
     }
     
     required init?(coder: NSCoder)
     {
-        viewModel = TimelineViewModel(date: Date(),
-                                      persistencyService: self.appDelegate.persistencyService,
-                                      metricsService: self.appDelegate.metricsService)
-        super.init(style: .plain)
+        fatalError("NSCoder init is not supported for this ViewController")
     }
     
     // MARK: UIViewController lifecycle
@@ -48,18 +47,18 @@ class TimelineViewController : UITableViewController
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
         
-        viewModel
+        self.viewModel
             .timeSlotsObservable
             .subscribe(onNext: onNewTimeSlotAvailable)
             .addDisposableTo(disposeBag)
         
-        viewModel
+        self.viewModel
             .timeObservable
             .subscribe(onNext: onTimeTick)
             .addDisposableTo(disposeBag)
         
-        self.appDelegate
-            .isEditingObservable
+        self.isEditingVariable
+            .asObservable()
             .subscribe(onNext: onIsEditing)
             .addDisposableTo(disposeBag)
     }
@@ -68,7 +67,7 @@ class TimelineViewController : UITableViewController
     func onCategoryChange(atIndex index: Int, category: Category)
     {
         guard viewModel.updateTimeSlot(atIndex: index, withCategory: category) else { return }
-        self.appDelegate.isEditing = false
+        isEditingVariable.value = false
     }
     
     private func onNewTimeSlotAvailable(timeSlots: [TimeSlot])
@@ -104,12 +103,12 @@ class TimelineViewController : UITableViewController
         if tableView.isEditing
         {
             guard index == currentlyEditingIndex else { return }
-            self.appDelegate.isEditing = false
+            self.isEditingVariable.value = false
         }
         else
         {
             self.currentlyEditingIndex = index
-            self.appDelegate.isEditing = true
+            self.isEditingVariable.value = true
         }
     }
     

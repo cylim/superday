@@ -20,6 +20,13 @@ class MainViewModel
     // MARK: Properties
     var currentDate = Date()
     
+    ///Current date for the calendar button
+    var calendarDay : String
+    {
+        let currentDay = Calendar.current.component(.day, from: Date())
+        return String(format: "%02d", currentDay)
+    }
+    
     ///Gets the title for the header. Changes on new locations.
     var title : String
     {

@@ -16,8 +16,8 @@ class TimelineViewModelTests : XCTestCase
         self.mockMetricsService = MockMetricsService()
         self.mockPersistencyService = MockPersistencyService()
         self.viewModel = TimelineViewModel(date: Date(),
-                                      persistencyService: self.mockPersistencyService,
-                                      metricsService: self.mockMetricsService)
+                                           metricsService: self.mockMetricsService,
+                                           persistencyService: self.mockPersistencyService)
     }
     
     override func tearDown()
@@ -34,8 +34,8 @@ class TimelineViewModelTests : XCTestCase
     {
         let newMockPersistencyService = MockPersistencyService()
         _ = TimelineViewModel(date: Date().yesterday,
-                              persistencyService: newMockPersistencyService,
-                              metricsService: self.mockMetricsService)
+                              metricsService: self.mockMetricsService,
+                              persistencyService: newMockPersistencyService)
         
         expect(newMockPersistencyService.didSubscribe).to(beFalse())
     }
