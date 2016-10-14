@@ -5,25 +5,20 @@ import CoreGraphics
 
 class TimelineViewController : UITableViewController
 {
-    // MARK: Properties
-    var date : Date
-    {
-        return viewModel.date
-    }
-    
     // MARK: Fields
     private let baseCellHeight = 40
     private let disposeBag = DisposeBag()
     private let viewModel : TimelineViewModel
     private let cellIdentifier = "timelineCell"
-    private let isEditingVariable : Variable<Bool>
+    private var editStateService : EditStateService
     
     private var currentlyEditingIndex = -1
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
-    init(date: Date, metricsService: MetricsService, persistencyService: PersistencyService, isEditingVariable: Variable<Bool>)
+    //MARK: Initializers
+    init(date: Date, metricsService: MetricsService, editStateService: EditStateService, persistencyService: PersistencyService)
     {
-        self.isEditingVariable = isEditingVariable
+        self.editStateService = editStateService
         self.viewModel = TimelineViewModel(date: date,
                                            metricsService: metricsService,
                                            persistencyService: persistencyService)
@@ -35,6 +30,9 @@ class TimelineViewController : UITableViewController
     {
         fatalError("NSCoder init is not supported for this ViewController")
     }
+    
+    // MARK: Properties
+    var date : Date { return self.viewModel.date }
     
     // MARK: UIViewController lifecycle
     override func viewDidLoad()
@@ -57,8 +55,8 @@ class TimelineViewController : UITableViewController
             .subscribe(onNext: onTimeTick)
             .addDisposableTo(disposeBag)
         
-        self.isEditingVariable
-            .asObservable()
+        self.editStateService
+            .isEditingObservable
             .subscribe(onNext: onIsEditing)
             .addDisposableTo(disposeBag)
     }
@@ -66,8 +64,8 @@ class TimelineViewController : UITableViewController
     // MARK: Methods
     func onCategoryChange(atIndex index: Int, category: Category)
     {
-        guard viewModel.updateTimeSlot(atIndex: index, withCategory: category) else { return }
-        isEditingVariable.value = false
+        guard self.viewModel.updateTimeSlot(atIndex: index, withCategory: category) else { return }
+        self.editStateService.isEditing = false
     }
     
     private func onNewTimeSlotAvailable(timeSlots: [TimeSlot])
@@ -103,12 +101,12 @@ class TimelineViewController : UITableViewController
         if tableView.isEditing
         {
             guard index == currentlyEditingIndex else { return }
-            self.isEditingVariable.value = false
+            self.editStateService.isEditing = false
         }
         else
         {
             self.currentlyEditingIndex = index
-            self.isEditingVariable.value = true
+            self.editStateService.isEditing = true
         }
     }
     
@@ -120,17 +118,16 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return viewModel.timeSlots.count + 1
+        return self.viewModel.timeSlots.count + 1
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let index = indexPath.item
         
-        if index == viewModel.timeSlots.count { return footerCell }
+        if index == self.viewModel.timeSlots.count { return footerCell }
         
-        let timeSlot = viewModel.timeSlots[index]
+        let timeSlot = self.viewModel.timeSlots[index]
         let categoryIsBeingEdited = index == currentlyEditingIndex
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
         
@@ -152,9 +149,9 @@ class TimelineViewController : UITableViewController
     {
         let index = indexPath.item
         
-        if index == viewModel.timeSlots.count { return 120 }
+        if index == self.viewModel.timeSlots.count { return 120 }
         
-        let timeSlot = viewModel.timeSlots[index]
+        let timeSlot = self.viewModel.timeSlots[index]
         let isRunning = timeSlot.endTime == nil
         let interval = Int(timeSlot.duration)
         let hours = (interval / 3600)

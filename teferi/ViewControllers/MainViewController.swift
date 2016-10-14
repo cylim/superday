@@ -22,7 +22,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var metricsService : MetricsService!
     private var settingsService : SettingsService!
     private var locationService : LocationService!
-    private var isEditingVariable : Variable<Bool>!
+    private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
     private var addButton : AddTimeSlotView!
@@ -34,12 +34,12 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var debugView : DebugView!
     @IBOutlet private weak var calendarLabel : UIButton!
     
-    func inject(_ locationService: LocationService, _ metricsService: MetricsService, _ persistencyService: PersistencyService, _ settingsService: SettingsService, _ isEditingVariable: Variable<Bool>) -> MainViewController
+    func inject(_ locationService: LocationService, _ metricsService: MetricsService, _ persistencyService: PersistencyService, _ settingsService: SettingsService, _ editStateService: EditStateService) -> MainViewController
     {
         self.metricsService = metricsService
         self.locationService = locationService
         self.settingsService = settingsService
-        self.isEditingVariable = isEditingVariable
+        self.editStateService = editStateService
         self.persistencyService = persistencyService
         
         return self
@@ -51,7 +51,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         super.viewDidLoad()
         
         //Inject PagerViewController's dependencies
-        self.pagerViewController.inject(metricsService, settingsService, persistencyService, isEditingVariable)
+        self.pagerViewController.inject(metricsService, settingsService, persistencyService, editStateService)
         
         //Debug screen
         self.debugView.isHidden = true
@@ -80,8 +80,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .addDisposableTo(disposeBag!)
         
         //Edit state
-        self.isEditingVariable
-            .asObservable()
+        self.editStateService
+            .isEditingObservable
             .subscribe(onNext: self.onEditChanged)
             .addDisposableTo(disposeBag!)
         
@@ -132,8 +132,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.pagerViewController.setViewControllers(
             [ TimelineViewController(date: today,
                                      metricsService: metricsService,
-                                     persistencyService: persistencyService,
-                                     isEditingVariable: isEditingVariable) ],
+                                     editStateService: editStateService,
+                                     persistencyService: persistencyService) ],
             direction: .forward,
             animated: true,
             completion: nil)

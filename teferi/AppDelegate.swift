@@ -7,13 +7,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 {   
     //MARK: Fields
     private let disposeBag = DisposeBag()
-    private let isEditingVariable = Variable(false)
     private let notificationService : NotificationService
     
     private let metricsService : MetricsService
     private let loggingService : LoggingService
     private var locationService : LocationService
     private let settingsService : SettingsService
+    private let editStateService : EditStateService
     private let persistencyService : PersistencyService
     private let timeSlotCreationService : TimeSlotCreationService
     
@@ -23,20 +23,24 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //Initializers
     override init()
     {
-        settingsService = DefaultSettingsService()
-        metricsService = FabricMetricsService()
-        loggingService = SwiftyBeaverLoggingService()
-        locationService = DefaultLocationService(loggingService: loggingService)
-        persistencyService = CoreDataPersistencyService(loggingService: loggingService)
-        notificationService = DefaultNotificationService(loggingService: loggingService)
-        timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: settingsService, persistencyService: persistencyService, loggingService: loggingService, notificationService: notificationService)
+        self.metricsService = FabricMetricsService()
+        self.settingsService = DefaultSettingsService()
+        self.editStateService = DefaultEditStateService()
+        self.loggingService = SwiftyBeaverLoggingService()
+        self.locationService = DefaultLocationService(loggingService: loggingService)
+        self.persistencyService = CoreDataPersistencyService(loggingService: loggingService)
+        self.notificationService = DefaultNotificationService(loggingService: loggingService)
+        self.timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: settingsService,
+                                                                      persistencyService: persistencyService,
+                                                                      loggingService: loggingService,
+                                                                      notificationService: notificationService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
         let isInBackground = launchOptions?[UIApplicationLaunchOptionsKey.location] != nil
-        locationService.isInBackground = isInBackground
+        self.locationService.isInBackground = isInBackground
         
         //Starts location tracking
         self.locationService
@@ -61,7 +65,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.metricsService,
                                       self.persistencyService,
                                       self.settingsService,
-                                      self.isEditingVariable)
+                                      self.editStateService)
         
         if self.settingsService.installDate == nil
         {

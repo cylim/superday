@@ -8,7 +8,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     private var disposeBag : DisposeBag? = DisposeBag()
     
     private var metricsService : MetricsService!
-    private var isEditingVariable : Variable<Bool>!
+    private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
     private var currentDateViewController : TimelineViewController!
@@ -35,10 +35,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     // MARK: UIViewController lifecycle
     
-    func inject(_ metricsService: MetricsService, _ settingsService: SettingsService, _ persistencyService: PersistencyService, _ isEditingVariable: Variable<Bool>)
+    func inject(_ metricsService: MetricsService, _ settingsService: SettingsService, _ persistencyService: PersistencyService, _ editStateService: EditStateService)
     {
         self.metricsService = metricsService
-        self.isEditingVariable = isEditingVariable
+        self.editStateService = editStateService
         self.persistencyService = persistencyService
         
         self.viewModel = PagerViewModel(settingsService: settingsService)
@@ -57,16 +57,16 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         self.disposeBag = self.disposeBag ?? DisposeBag()
         
-        self.isEditingVariable
-            .asObservable()
+        self.editStateService
+            .isEditingObservable
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(disposeBag!)
         
         self.currentDateViewController =
             TimelineViewController(date: Date(),
                                    metricsService: metricsService,
-                                   persistencyService: persistencyService,
-                                   isEditingVariable: isEditingVariable)
+                                   editStateService: editStateService,
+                                   persistencyService: persistencyService)
         
         self.setViewControllers(
             [ currentDateViewController ],
@@ -114,8 +114,8 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         return TimelineViewController(date: nextDate,
                                       metricsService: metricsService,
-                                      persistencyService: persistencyService,
-                                      isEditingVariable: isEditingVariable)
+                                      editStateService: editStateService,
+                                      persistencyService: persistencyService)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
@@ -127,7 +127,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         return TimelineViewController(date: nextDate,
                                       metricsService: metricsService,
-                                      persistencyService: persistencyService,
-                                      isEditingVariable: isEditingVariable)
+                                      editStateService: editStateService,
+                                      persistencyService: persistencyService)
     }
 }
