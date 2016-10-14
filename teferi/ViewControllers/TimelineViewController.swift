@@ -7,12 +7,11 @@ class TimelineViewController : UITableViewController
 {
     // MARK: Fields
     private let baseCellHeight = 40
-    private let disposeBag = DisposeBag()
     private let viewModel : TimelineViewModel
+    private var disposeBag : DisposeBag? = nil
     private let cellIdentifier = "timelineCell"
     private var editStateService : EditStateService
     
-    private var currentlyEditingIndex = -1
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
     //MARK: Initializers
@@ -44,36 +43,40 @@ class TimelineViewController : UITableViewController
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.disposeBag = self.disposeBag ?? DisposeBag()
         
         self.viewModel
             .timeSlotsObservable
-            .subscribe(onNext: onNewTimeSlotAvailable)
-            .addDisposableTo(disposeBag)
+            .subscribe(onNext: self.onNewTimeSlotAvailable)
+            .addDisposableTo(self.disposeBag!)
         
         self.viewModel
             .timeObservable
-            .subscribe(onNext: onTimeTick)
-            .addDisposableTo(disposeBag)
+            .subscribe(onNext: self.onTimeTick)
+            .addDisposableTo(self.disposeBag!)
         
         self.editStateService
             .isEditingObservable
-            .subscribe(onNext: onIsEditing)
-            .addDisposableTo(disposeBag)
+            .subscribe(onNext: self.onIsEditing)
+            .addDisposableTo(self.disposeBag!)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        self.disposeBag = nil
     }
     
     // MARK: Methods
-    func onCategoryChange(atIndex index: Int, category: Category)
-    {
-        guard self.viewModel.updateTimeSlot(atIndex: index, withCategory: category) else { return }
-        self.editStateService.isEditing = false
-    }
-    
     private func onNewTimeSlotAvailable(timeSlots: [TimeSlot])
     {
         self.tableView.reloadData()
         
-        let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
         let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
+        let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
         
         self.tableView.reloadRows(at: [updateIndexPath], with: .top)
         self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
@@ -83,7 +86,6 @@ class TimelineViewController : UITableViewController
     {
         self.tableView.isEditing = isEditing
         self.tableView.isScrollEnabled = !isEditing
-        self.currentlyEditingIndex = isEditing ? self.currentlyEditingIndex : -1
         
         self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
     }
@@ -96,18 +98,10 @@ class TimelineViewController : UITableViewController
         self.tableView.reloadRows(at: [indexPath], with: .fade)
     }
     
-    private func onCategoryTapped(index: Int)
+    private func onCategoryTapped(point: CGPoint, index: Int)
     {
-        if tableView.isEditing
-        {
-            guard index == currentlyEditingIndex else { return }
-            self.editStateService.isEditing = false
-        }
-        else
-        {
-            self.currentlyEditingIndex = index
-            self.editStateService.isEditing = true
-        }
+        self.editStateService.isEditing = true
+        self.editStateService.notifyEditingBegan(point: point, timeSlot: self.viewModel.timeSlots[index])
     }
     
     // MARK: UITableViewDataSource methods
@@ -128,18 +122,15 @@ class TimelineViewController : UITableViewController
         if index == self.viewModel.timeSlots.count { return footerCell }
         
         let timeSlot = self.viewModel.timeSlots[index]
-        let categoryIsBeingEdited = index == currentlyEditingIndex
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
         
-        cell.bind(toTimeSlot: timeSlot, shouldFade: tableView.isEditing, index: index, isEditingCategory: categoryIsBeingEdited)
+        cell.bind(toTimeSlot: timeSlot, index: index)
         
         if !cell.isSubscribedToClickObservable
         {
             cell.editClickObservable
                 .subscribe(onNext: onCategoryTapped)
-                .addDisposableTo(disposeBag)
-            
-            cell.onCategoryChange = onCategoryChange
+                .addDisposableTo(disposeBag!)
         }
         
         return cell

@@ -284,14 +284,14 @@
 		247F05F61D87319700451BAD /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				24526A761D92D99F00DA3FA0 /* MetricsService.swift */,
-				247F05F71D87322600451BAD /* LocationService.swift */,
-				247F05F91D87325600451BAD /* PersistencyService.swift */,
-				247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */,
-				24C72AA91D90731C00DABAC3 /* LoggingService.swift */,
-				24B03B5A1D9E4D1100452D16 /* SettingsService.swift */,
-				2465316F1DA7B4150066DFE0 /* NotificationService.swift */,
 				2482CB001DB14DB700E892C1 /* EditStateService.swift */,
+				247F05F71D87322600451BAD /* LocationService.swift */,
+				24C72AA91D90731C00DABAC3 /* LoggingService.swift */,
+				24526A761D92D99F00DA3FA0 /* MetricsService.swift */,
+				2465316F1DA7B4150066DFE0 /* NotificationService.swift */,
+				247F05F91D87325600451BAD /* PersistencyService.swift */,
+				24B03B5A1D9E4D1100452D16 /* SettingsService.swift */,
+				247F06031D88A75E00451BAD /* TimeSlotCreationService.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

@@ -17,7 +17,4 @@ class Constants
     
     ///Name of the file that stores information regarding the first location detected since the user's last travel.
     static let firstLocationFile = "firstLocationFile"
-    
-    ///Alpha of views when the user is editing a TimeSlot
-    static let editingAlpha = CGFloat(0.4)
 }

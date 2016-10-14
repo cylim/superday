@@ -68,4 +68,19 @@ class MainViewModel
         
         self.metricsService.log(event: .timeSlotManualCreation)
     }
+    
+    /**
+     Updates a TimeSlot's category.
+     
+     - Parameter timeSlot: TimeSlot to be updated.
+     - Parameter category: Category of the newly created TimeSlot.
+     */
+    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category)
+    {
+        self.persistencyService.updateTimeSlot(timeSlot, withCategory: category)
+        
+        self.metricsService.log(event: .timeSlotEditing)
+        
+        timeSlot.category = category
+    }
 }

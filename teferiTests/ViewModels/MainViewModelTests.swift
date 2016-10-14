@@ -65,4 +65,22 @@ class MainViewModelTests : XCTestCase
         self.viewModel.addNewSlot(withCategory: .commute)
         expect(self.mockMetricsService.didLog(event: .timeSlotManualCreation)).to(beTrue())
     }
+    
+    func testTheUpdateMethodCallsTheMetricsService()
+    {
+        let timeSlot = TimeSlot(category: .work)
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
+        
+        expect(self.mockMetricsService.didLog(event: .timeSlotEditing)).to(beTrue())
+    }
+    
+    func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
+    {
+        let timeSlot = TimeSlot(category: .work)
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
+        
+        expect(timeSlot.category).to(equal(Category.commute))
+    }
 }
