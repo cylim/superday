@@ -55,7 +55,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.window = UIWindow(frame: UIScreen.main.bounds)
         var initialViewController : UIViewController!
 
-        if settingsService.installDate == nil
+        if true || settingsService.installDate == nil
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()

@@ -1,8 +1,11 @@
 import UIKit
+import SnapKit
 
 class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDataSource
 {
     private lazy var pages : [UIViewController] = { return (1...4).map { i in self.page("\(i)") } } ()
+    
+    @IBOutlet var pager: OnboardingPager!
     
     override func viewDidLoad()
     {
@@ -14,6 +17,34 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
                            direction: .forward,
                            animated: true,
                            completion: nil)
+        
+        let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [type(of: self)])
+        
+        pageControl.currentPageIndicatorTintColor = UIColor.green
+        pageControl.pageIndicatorTintColor = UIColor.green.withAlphaComponent(0.4)
+        pageControl.backgroundColor = UIColor.clear
+        
+        self.view.addSubview(self.pager)
+        self.pager.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalTo(self.view)
+            make.height.equalTo(102)
+        }
+    }
+    
+    @IBAction func pagerButtonTouchUpInside()
+    {
+        self.goToNextPage()
+    }
+    
+    private func goToNextPage()
+    {
+        let currentPageIndex = pages.index(of: self.viewControllers!.first!)!
+        guard let nextPage = self.pageAt(index: currentPageIndex + 1) else { return }
+        
+        self.setViewControllers([nextPage],
+                                direction: .forward,
+                                animated: true,
+                                completion: nil)
     }
     
     // MARK: UIPageViewControllerDataSource
