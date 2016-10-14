@@ -39,48 +39,43 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         locationService.isInBackground = isInBackground
         
         //Starts location tracking
-        locationService
+        self.locationService
             .locationObservable
             .subscribe(onNext: timeSlotCreationService.onNewLocation)
             .addDisposableTo(disposeBag)
         
-        locationService.startLocationTracking()
+        self.locationService.startLocationTracking()
        
         //Faster startup when in the app wakes up for location updates
         guard !isInBackground else { return true }
         
         //Start metrics
-        metricsService.initialize()
+        self.metricsService.initialize()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        var initialViewController : UIViewController!
-
-        if true || settingsService.installDate == nil
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
+        var initialViewController : UIViewController =
+            mainViewController.inject(self.locationService,
+                                      self.metricsService,
+                                      self.persistencyService,
+                                      self.settingsService,
+                                      self.isEditingVariable)
+        
+        if self.settingsService.installDate == nil
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
-            if persistencyService.addNewTimeSlot(firstTimeSlot)
+            if self.persistencyService.addNewTimeSlot(firstTimeSlot)
             {
-                settingsService.setInstallDate(Date())
+                self.settingsService.setInstallDate(Date())
             }
             
             let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             
-            //TODO: Inject stuff here
-            
-            initialViewController = onboardController
-        }
-        else
-        {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
-            
-            initialViewController = mainViewController.inject(locationService,
-                                                              metricsService,
-                                                              persistencyService,
-                                                              settingsService,
-                                                              isEditingVariable)
+            initialViewController = onboardController.inject(mainViewController)
         }
         
         self.window!.rootViewController = initialViewController

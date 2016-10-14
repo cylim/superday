@@ -3,10 +3,14 @@ import SnapKit
 
 class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDataSource
 {
+    //MARK: Fields
     private lazy var pages : [UIViewController] = { return (1...4).map { i in self.page("\(i)") } } ()
     
     @IBOutlet var pager: OnboardingPager!
     
+    private var mainViewController : MainViewController!
+    
+    //MARK: ViewController lifecycle
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -19,9 +23,8 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
                            completion: nil)
         
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [type(of: self)])
-        
-        pageControl.currentPageIndicatorTintColor = UIColor.green
         pageControl.pageIndicatorTintColor = UIColor.green.withAlphaComponent(0.4)
+        pageControl.currentPageIndicatorTintColor = UIColor.green
         pageControl.backgroundColor = UIColor.clear
         
         self.view.addSubview(self.pager)
@@ -31,20 +34,38 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         }
     }
     
+    //MARK: Actions
     @IBAction func pagerButtonTouchUpInside()
     {
-        self.goToNextPage()
-    }
-    
-    private func goToNextPage()
-    {
         let currentPageIndex = pages.index(of: self.viewControllers!.first!)!
-        guard let nextPage = self.pageAt(index: currentPageIndex + 1) else { return }
+        guard let nextPage = self.pageAt(index: currentPageIndex + 1) else
+        {
+            self.present(self.mainViewController, animated: true)
+            return
+        }
         
         self.setViewControllers([nextPage],
                                 direction: .forward,
                                 animated: true,
                                 completion: nil)
+    }
+    
+    //MARK: Methods
+    func inject(_ mainViewController: MainViewController) -> OnboardingPageViewController
+    {
+        self.mainViewController = mainViewController
+        return self
+    }
+    
+    private func pageAt(index : Int) -> UIViewController?
+    {
+        return 0..<self.pages.count ~= index ? self.pages[index] : nil
+    }
+    
+    private func page(_ id: String) -> UIViewController
+    {
+        return UIStoryboard(name: "Onboarding", bundle: nil)
+            .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
     }
     
     // MARK: UIPageViewControllerDataSource
@@ -62,16 +83,5 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         guard let currentPageIndex = pages.index(of: viewController) else { return nil }
         
         return self.pageAt(index: currentPageIndex + 1)
-    }
-    
-    private func pageAt(index : Int) -> UIViewController?
-    {
-        return 0..<self.pages.count ~= index ? self.pages[index] : nil
-    }
-    
-    private func page(_ id: String) -> UIViewController
-    {
-        return UIStoryboard(name: "Onboarding", bundle: nil)
-            .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
     }
 }
