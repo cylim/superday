@@ -37,8 +37,8 @@ class TimelineViewModel
         //UI gets notified once every n seconds that the last item might need to be redrawn
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
         
-        self.date = date
         self.metricsService = metricsService
+        self.date = date.ignoreTimeComponents()
         self.persistencyService = persistencyService
         self.timeSlotsVariable = Variable(timeSlotsForDate)
         self.isEditingObservable = self.isEditingVariable.asObservable()
@@ -52,22 +52,6 @@ class TimelineViewModel
     
     //MARK: Methods
     
-    /**
-     Updates a TimeSlot's category.
-     
-     - Parameter category: Category of the newly created TimeSlot.
-     */
-    @discardableResult func updateTimeSlot(atIndex index: Int, withCategory category: Category) -> Bool
-    {
-        let timeSlot = timeSlots[index]
-        guard self.persistencyService.updateTimeSlot(timeSlot, withCategory: category) else { return false }
-        
-        self.metricsService.log(event: .timeSlotEditing)
-        
-        timeSlot.category = category
-        return true
-    }
-    
     ///Called when the persistency service indicates that a new TimeSlot has been created.
     private func onNewTimeSlot(timeSlot: TimeSlot)
     {
@@ -78,5 +62,4 @@ class TimelineViewModel
         }
         
         self.timeSlots.append(timeSlot)
-    }
-}
+    }}

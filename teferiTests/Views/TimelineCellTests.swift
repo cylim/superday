@@ -35,7 +35,7 @@ class TimelineCellTests : XCTestCase
     override func setUp()
     {
         self.view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
-        self.view.bind(toTimeSlot: timeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        self.view.bind(toTimeSlot: timeSlot, index: 0)
     }
     
     override func tearDown()
@@ -45,7 +45,7 @@ class TimelineCellTests : XCTestCase
     
     private func editCellSetUp(_ shouldFade: Bool = true, isEditingCategory: Bool = true)
     {
-        self.view.bind(toTimeSlot: timeSlot, shouldFade: shouldFade, index: 0, isEditingCategory: isEditingCategory)
+        self.view.bind(toTimeSlot: timeSlot, index: 0)
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
@@ -67,7 +67,7 @@ class TimelineCellTests : XCTestCase
     func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknown()
     {
         let unknownTimeSlot = TimeSlot()
-        view.bind(toTimeSlot: unknownTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        view.bind(toTimeSlot: unknownTimeSlot, index: 0)
         let formatter = DateFormatter()
         formatter.timeStyle = .medium
         let dateString = formatter.string(from: unknownTimeSlot.startTime)
@@ -94,7 +94,7 @@ class TimelineCellTests : XCTestCase
         let date = Date().yesterday.ignoreTimeComponents()
         newTimeSlot.startTime = date
         newTimeSlot.endTime = date.addingTimeInterval(5000)
-        self.view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        self.view.bind(toTimeSlot: newTimeSlot, index: 0)
         
         let hourMask = "%02d h %02d min"
         let interval = Int(newTimeSlot.duration)
@@ -120,7 +120,7 @@ class TimelineCellTests : XCTestCase
         let newTimeSlot = TimeSlot()
         newTimeSlot.startTime = Date().add(days: -1)
         newTimeSlot.endTime = Date()
-        self.view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        self.view.bind(toTimeSlot: newTimeSlot, index: 0)
         self.view.layoutIfNeeded()
         let newLineHeight = line.frame.height
         
@@ -133,58 +133,6 @@ class TimelineCellTests : XCTestCase
         let actualColor = self.line.backgroundColor!
         
         expect(expectedColor).to(equal(actualColor))
-    }
-    
-    func testTheLineFadesWhenTheShouldFadeParametersIsTrue()
-    {
-        self.editCellSetUp()
-        
-        expect(self.line.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
-    }
-    
-    func testTheTimeLabelFadesWhenTheShouldFadeParametersIsTrue()
-    {
-        self.editCellSetUp()
-        
-        expect(self.timeLabel.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
-    }
-    
-    func testTheSlotDescriptionFadesWhenTheShouldFadeParametersIsTrue()
-    {
-        self.editCellSetUp()
-        
-        expect(self.slotDescription.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
-    }
-    
-    func testTheCategoryIconDoesNotFadesWhenTheShouldFadeParametersIsTrueButTheCategoryIsBeingEdited()
-    {
-        self.editCellSetUp()
-        
-        expect(self.imageIcon.alpha).to(equal(1.0))
-    }
-    
-    func testTheCategoryIconDoesFadesWhenTheShouldFadeParametersIsTrueAndTheCategoryIsNotBeingEdited()
-    {
-        self.editCellSetUp(true, isEditingCategory: false)
-        
-        expect(self.imageIcon.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
-    }
-    
-    func testBindingTheCellForEditingShowsAllPossibleCategoriesIfTheTimeSlotIsUnknown()
-    {
-        let numberOfViews = view.subviews.count
-        timeSlot.category = .unknown
-        self.editCellSetUp()
-        
-        expect(self.view.subviews.count).to(equal(numberOfViews + 5))
-    }
-    
-    func testBindingTheCellForEditingShowsAllPossibleCategoriesExceptTheCurrentOne()
-    {
-        let numberOfViews = view.subviews.count
-        self.editCellSetUp()
-        
-        expect(self.view.subviews.count).to(equal(numberOfViews + 4))
     }
     
     func testRebindingACellAfterEditingRemovesTheExtraViews()

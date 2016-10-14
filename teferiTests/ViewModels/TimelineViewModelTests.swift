@@ -40,15 +40,6 @@ class TimelineViewModelTests : XCTestCase
         expect(newMockPersistencyService.didSubscribe).to(beFalse())
     }
     
-    func testTheUpdateMethodCallsTheMetricsService()
-    {
-        let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
-        self.viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute)
-        
-        expect(self.mockMetricsService.didLog(event: .timeSlotEditing)).to(beTrue())
-    }
-    
     func testTheNewlyAddedSlotHasNoEndTime()
     {
         let timeSlot = TimeSlot(category: .work)
@@ -68,14 +59,5 @@ class TimelineViewModelTests : XCTestCase
         self.mockPersistencyService.addNewTimeSlot(otherTimeSlot)
         
         expect(firstSlot.endTime).toNot(beNil())
-    }
-    
-    func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
-    {
-        let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
-        self.viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute)
-
-        expect(timeSlot.category).to(equal(Category.commute))
     }
 }
