@@ -41,9 +41,11 @@ class TimelineViewController : UITableViewController
     {
         super.viewDidLoad()
         
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
+        self.tableView.separatorStyle = .none
+        self.tableView.allowsSelection = false
+        self.tableView.showsVerticalScrollIndicator = false
+        self.tableView.showsHorizontalScrollIndicator = false
+        self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
         
         self.viewModel
             .timeSlotsObservable

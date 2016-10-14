@@ -1,81 +1,81 @@
 import Foundation
 import XCTest
 import RxSwift
+import Nimble
 @testable import teferi
 
 class TimelineViewModelTests : XCTestCase
 {
     private var disposable : Disposable? = nil
-    
     private var viewModel : TimelineViewModel!
     private var mockMetricsService : MockMetricsService!
     private var mockPersistencyService : MockPersistencyService!
 
     override func setUp()
     {
-        mockMetricsService = MockMetricsService()
-        mockPersistencyService = MockPersistencyService()
-        
-        viewModel = TimelineViewModel(date: Date(),
-                                      metricsService: mockMetricsService,
-                                      persistencyService: mockPersistencyService)
+        self.mockMetricsService = MockMetricsService()
+        self.mockPersistencyService = MockPersistencyService()
+        self.viewModel = TimelineViewModel(date: Date(),
+                                           metricsService: self.mockMetricsService,
+                                           persistencyService: self.mockPersistencyService)
     }
     
     override func tearDown()
     {
-        disposable?.dispose()
+        self.disposable?.dispose()
     }
     
     func testOnlyViewModelsForTheCurrentDaySubscribeForTimeSlotUpdates()
     {
-        XCTAssertTrue(self.mockPersistencyService.didSubscribe)
+        expect(self.mockPersistencyService.didSubscribe).to(beTrue())
     }
     
     func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
     {
         let newMockPersistencyService = MockPersistencyService()
         _ = TimelineViewModel(date: Date().yesterday,
-                              metricsService: mockMetricsService,
+                              metricsService: self.mockMetricsService,
                               persistencyService: newMockPersistencyService)
         
-        XCTAssertFalse(newMockPersistencyService.didSubscribe)
+        expect(newMockPersistencyService.didSubscribe).to(beFalse())
     }
     
     func testTheUpdateMethodCallsTheMetricsService()
     {
         let timeSlot = TimeSlot(category: .work)
-        XCTAssertTrue(mockPersistencyService.addNewTimeSlot(timeSlot))
-        XCTAssertTrue(viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute))
-        XCTAssertTrue(self.mockMetricsService.didLog(event: .timeSlotEditing))
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute)
+        
+        expect(self.mockMetricsService.didLog(event: .timeSlotEditing)).to(beTrue())
     }
     
     func testTheNewlyAddedSlotHasNoEndTime()
     {
         let timeSlot = TimeSlot(category: .work)
-        XCTAssertTrue(mockPersistencyService.addNewTimeSlot(timeSlot))
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
         let lastSlot = viewModel.timeSlots.last!
         
-        XCTAssertNil(lastSlot.endTime)
+        expect(lastSlot.endTime).to(beNil())
     }
     
     func testTheAddNewSlotsMethodEndsThePreviousTimeSlot()
     {
         let timeSlot = TimeSlot(category: .work)
-        XCTAssertTrue(mockPersistencyService.addNewTimeSlot(timeSlot))
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
         let firstSlot = viewModel.timeSlots.first!
         
         let otherTimeSlot = TimeSlot(category: .work)
-        XCTAssertTrue(mockPersistencyService.addNewTimeSlot(otherTimeSlot))
+        self.mockPersistencyService.addNewTimeSlot(otherTimeSlot)
         
-        XCTAssertNotNil(firstSlot.endTime)
+        expect(firstSlot.endTime).toNot(beNil())
     }
     
     func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
     {
         let timeSlot = TimeSlot(category: .work)
-        XCTAssertTrue(mockPersistencyService.addNewTimeSlot(timeSlot))
-        
-        XCTAssertTrue(viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute))
-        XCTAssertEqual(timeSlot.category, .commute)
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.viewModel.updateTimeSlot(atIndex: 0, withCategory: .commute)
+
+        expect(timeSlot.category).to(equal(Category.commute))
     }
 }
