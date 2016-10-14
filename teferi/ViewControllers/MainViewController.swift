@@ -49,8 +49,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
-     
-        self.calendarLabel.setTitle(viewModel.calendarDay, for: .normal)
         
         //Inject PagerViewController's dependencies
         self.pagerViewController.inject(metricsService, settingsService, persistencyService, isEditingVariable)
@@ -69,6 +67,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        
+        self.calendarLabel.setTitle(viewModel.calendarDay, for: .normal)
         
         //Refresh Dispose bag, if needed
         self.disposeBag = self.disposeBag ?? DisposeBag()

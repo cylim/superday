@@ -25,8 +25,8 @@ class TimelineViewController : UITableViewController
     {
         self.isEditingVariable = isEditingVariable
         self.viewModel = TimelineViewModel(date: date,
-                                      metricsService: metricsService,
-                                      persistencyService: persistencyService)
+                                           metricsService: metricsService,
+                                           persistencyService: persistencyService)
         
         super.init(style: .plain)
     }

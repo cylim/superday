@@ -41,33 +41,34 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.isEditingVariable = isEditingVariable
         self.persistencyService = persistencyService
         
-        viewModel = PagerViewModel(settingsService: settingsService)
-        
-        currentDateViewController = TimelineViewController(date: Date(),
-                                                           metricsService: metricsService,
-                                                           persistencyService: persistencyService,
-                                                           isEditingVariable: isEditingVariable)
+        self.viewModel = PagerViewModel(settingsService: settingsService)
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.white
-        delegate = self
-        dataSource = self
+        self.delegate = self
+        self.dataSource = self
+        self.view.backgroundColor = UIColor.white
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
-        disposeBag = disposeBag ?? DisposeBag()
+        self.disposeBag = self.disposeBag ?? DisposeBag()
         
         self.isEditingVariable
             .asObservable()
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(disposeBag!)
         
-        setViewControllers(
+        self.currentDateViewController =
+            TimelineViewController(date: Date(),
+                                   metricsService: metricsService,
+                                   persistencyService: persistencyService,
+                                   isEditingVariable: isEditingVariable)
+        
+        self.setViewControllers(
             [ currentDateViewController ],
             direction: .forward,
             animated: false,
@@ -76,19 +77,16 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     override func viewWillDisappear(_ animated: Bool)
     {
-        disposeBag = nil
+        self.disposeBag = nil
     }
     
     // MARK: Methods    
     private func onEditChanged(_ isEditing: Bool)
     {
-        self.view.subviews.filter { v in v is UIScrollView }.forEach
-        {
-            view in
-            
-            let scrollView = view as! UIScrollView
-            scrollView.isScrollEnabled = !isEditing
-        }
+        self.view
+            .subviews
+            .flatMap { v in v as? UIScrollView }
+            .forEach { scrollView in scrollView.isScrollEnabled = !isEditing }
     }
     
     // MARK: UIPageViewControllerDelegate implementation
@@ -100,10 +98,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         if timelineController.date.ignoreTimeComponents() == Date().ignoreTimeComponents()
         {
-            currentDateViewController = timelineController
+            self.currentDateViewController = timelineController
         }
         
-        dateVariable.value = timelineController.date
+        self.dateVariable.value = timelineController.date
     }
     
     // MARK: UIPageViewControllerDataSource implementation
@@ -112,7 +110,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         let timelineController = viewController as! TimelineViewController
         let nextDate = timelineController.date.yesterday
         
-        guard viewModel.canScroll(toDate: nextDate) else { return nil }
+        guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
                                       metricsService: metricsService,

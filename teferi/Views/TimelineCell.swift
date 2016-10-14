@@ -27,11 +27,11 @@ class TimelineCell : UITableViewCell
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
-    var editClickObservable : Observable<Int>
+    lazy var editClickObservable : Observable<Int> =
     {
         self.isSubscribedToClickObservable = true
-        return categoryButton!.rx.tap.map { return self.currentIndex }.asObservable()
-    }
+        return self.categoryButton!.rx.tap.map { return self.currentIndex }.asObservable()
+    }()
     
     var onCategoryChange : ((Int, Category) -> Void)?
     
@@ -179,6 +179,6 @@ class TimelineCell : UITableViewCell
     
     private func changeCategory(to category: Category)
     {
-        onCategoryChange?(currentIndex, category)
+        self.onCategoryChange?(currentIndex, category)
     }
 }
