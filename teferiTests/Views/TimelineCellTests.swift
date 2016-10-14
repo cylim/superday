@@ -91,7 +91,9 @@ class TimelineCellTests : XCTestCase
     func testTheElapsedTimeLabelShowsHoursAndMinutesWhenOverAnHourHasPassed()
     {
         let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = Date().yesterday
+        let date = Date().yesterday.ignoreTimeComponents()
+        newTimeSlot.startTime = date
+        newTimeSlot.endTime = date.addingTimeInterval(5000)
         self.view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
         
         let hourMask = "%02d h %02d min"
