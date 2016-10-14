@@ -18,6 +18,9 @@
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
 		2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C61D9BEA9A00AF8857 /* DebugView.swift */; };
+		242D86F11DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242D86F01DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift */; };
+		242D86F31DADA97900DCE7F1 /* MockLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242D86F21DADA97900DCE7F1 /* MockLoggingService.swift */; };
+		242D86F71DADA99700DCE7F1 /* MockNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242D86F61DADA99700DCE7F1 /* MockNotificationService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
 		24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */; };
@@ -61,8 +64,8 @@
 		24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B03B661DA3866400452D16 /* AddTimeSlotView.xib */; };
 		24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA51D906BDA00DABAC3 /* LogLevel.swift */; };
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
-		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
-		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
+		313367F4407098030FDE1A4E /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
+		6534164C3584672B53A13236 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,8 @@
 /* Begin PBXFileReference section */
 		00B20CBA66D17AE2580ADF08 /* Pods-teferi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.release.xcconfig"; sourceTree = "<group>"; };
 		03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0FA3EB6D5F9D7E88735D2177 /* Pods_teferi_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23BFCBCE3361E76CCE87C461 /* Pods-teferi-teferiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi-teferiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi-teferiTests/Pods-teferi-teferiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2407A9871D9D512D00066889 /* LaunchAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchAnimationView.swift; path = Views/LaunchAnimationView.swift; sourceTree = "<group>"; };
 		2407A98A1D9D534B00066889 /* TimerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerExtensions.swift; path = Extensions/TimerExtensions.swift; sourceTree = "<group>"; };
 		2407A98E1D9D54DB00066889 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -104,6 +109,9 @@
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		2421F8C61D9BEA9A00AF8857 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
+		242D86F01DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeSlotCreationServiceTests.swift; path = Services/DefaultTimeSlotCreationServiceTests.swift; sourceTree = "<group>"; };
+		242D86F21DADA97900DCE7F1 /* MockLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLoggingService.swift; path = Mocks/MockLoggingService.swift; sourceTree = "<group>"; };
+		242D86F61DADA99700DCE7F1 /* MockNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockNotificationService.swift; path = Mocks/MockNotificationService.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
 		24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomEvent.swift; path = Models/CustomEvent.swift; sourceTree = "<group>"; };
@@ -151,6 +159,7 @@
 		24C72AA91D90731C00DABAC3 /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Services/Protocols/LoggingService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51DC24E66912A2DC9B77BBBC /* Pods-teferi-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferi-teferiTests/Pods-teferi-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -160,7 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */,
+				313367F4407098030FDE1A4E /* Pods_teferi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */,
+				6534164C3584672B53A13236 /* Pods_teferiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +191,8 @@
 				00B20CBA66D17AE2580ADF08 /* Pods-teferi.release.xcconfig */,
 				03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */,
 				924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */,
+				23BFCBCE3361E76CCE87C461 /* Pods-teferi-teferiTests.debug.xcconfig */,
+				51DC24E66912A2DC9B77BBBC /* Pods-teferi-teferiTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -246,6 +257,14 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		242D86EF1DADA85600DCE7F1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				242D86F01DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		24564F401D82FDBB00D9A8AE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +303,8 @@
 				24564F6F1D83270000D9A8AE /* MockLocationService.swift */,
 				247F05FD1D88153700451BAD /* MockPersistencyService.swift */,
 				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
+				242D86F21DADA97900DCE7F1 /* MockLoggingService.swift */,
+				242D86F61DADA99700DCE7F1 /* MockNotificationService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -291,6 +312,7 @@
 		24A21B671D7C3E0800CEB4F3 /* teferiTests */ = {
 			isa = PBXGroup;
 			children = (
+				242D86EF1DADA85600DCE7F1 /* Services */,
 				24564F401D82FDBB00D9A8AE /* Extensions */,
 				2414EB981D7DC8D1001EFB6D /* ViewModels */,
 				24564F7B1D83891100D9A8AE /* Views */,
@@ -385,6 +407,7 @@
 			children = (
 				B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */,
 				43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */,
+				0FA3EB6D5F9D7E88735D2177 /* Pods_teferi_teferiTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -396,18 +419,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 240AC73F1D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferi" */;
 			buildPhases = (
-				03AF93FC566488D9E337DDFA /* [CP] Check Pods Manifest.lock */,
-				B6B8FA27DE18221515F8176A /* [CP] Check Pods Manifest.lock */,
-				03BB2FC12FBBF7CE970E4CE5 /* [CP] Check Pods Manifest.lock */,
 				6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */,
-				FC6EC524D2876882281CE023 /* [CP] Check Pods Manifest.lock */,
 				240AC7101D748C8800F21F4F /* Sources */,
 				240AC7111D748C8800F21F4F /* Frameworks */,
 				240AC7121D748C8800F21F4F /* Resources */,
-				A183DA66225D9AABE97CB6E9 /* [CP] Embed Pods Frameworks */,
-				EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */,
-				402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */,
-				9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */,
+				402CC9BDF8C661CBF2276FA1 /* [CP] Embed Pods Frameworks */,
+				9B04A745BDA5E7FEEC3F5901 /* [CP] Copy Pods Resources */,
 				24E0949C1DA823E70035EC19 /* Run Script */,
 			);
 			buildRules = (
@@ -423,20 +440,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24A21B6D1D7C3E0800CEB4F3 /* Build configuration list for PBXNativeTarget "teferiTests" */;
 			buildPhases = (
-				DF5E0292C7A9CFEFB1BA13CC /* [CP] Check Pods Manifest.lock */,
-				CA7BC18640F124EC423698FE /* [CP] Check Pods Manifest.lock */,
-				5D5009C8A0C8C480B64FB05F /* [CP] Check Pods Manifest.lock */,
-				D056E9F8A84F20A1F9C3F70A /* [CP] Check Pods Manifest.lock */,
 				E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */,
 				24A21B621D7C3E0800CEB4F3 /* Sources */,
 				2414EB971D7D95D6001EFB6D /* ShellScript */,
 				2414EB921D7D955C001EFB6D /* Copy Files */,
 				24A21B631D7C3E0800CEB4F3 /* Frameworks */,
 				24A21B641D7C3E0800CEB4F3 /* Resources */,
-				0588D5620A41A329F27EAE6E /* [CP] Embed Pods Frameworks */,
-				BDF80C0A1DD9DB3BB223CA5C /* [CP] Copy Pods Resources */,
-				122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */,
-				A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */,
+				122CB97ECAD8DBEE22614F14 /* [CP] Embed Pods Frameworks */,
+				A496B8A6FB9673F5851483E8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -519,37 +530,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03AF93FC566488D9E337DDFA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		03BB2FC12FBBF7CE970E4CE5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		0588D5620A41A329F27EAE6E /* [CP] Embed Pods Frameworks */ = {
+		122CB97ECAD8DBEE22614F14 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -557,21 +538,6 @@
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,34 +572,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" a6a9bdfca7594e17d7144bad53b3e0aadb2a0dcb 22ad5d692c46e5ad1a3d5b2cff3996776c53f1b5dd510ab6292921220028a812";
 		};
-		402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */ = {
+		402CC9BDF8C661CBF2276FA1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D5009C8A0C8C480B64FB05F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */ = {
@@ -651,14 +602,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */ = {
+		9B04A745BDA5E7FEEC3F5901 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -666,52 +617,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A183DA66225D9AABE97CB6E9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B6B8FA27DE18221515F8176A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		BDF80C0A1DD9DB3BB223CA5C /* [CP] Copy Pods Resources */ = {
+		A496B8A6FB9673F5851483E8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -724,84 +630,9 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CA7BC18640F124EC423698FE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		D056E9F8A84F20A1F9C3F70A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		DF5E0292C7A9CFEFB1BA13CC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FC6EC524D2876882281CE023 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -869,8 +700,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
+				242D86F31DADA97900DCE7F1 /* MockLoggingService.swift in Sources */,
+				242D86F11DADA87C00DCE7F1 /* DefaultTimeSlotCreationServiceTests.swift in Sources */,
 				24B03B631D9E946900452D16 /* MockMetricsService.swift in Sources */,
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
+				242D86F71DADA99700DCE7F1 /* MockNotificationService.swift in Sources */,
 				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
 				247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */,

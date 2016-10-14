@@ -1,5 +1,7 @@
 platform :ios, '9.0'
 
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'teferi' do
   use_frameworks!
 
@@ -12,6 +14,7 @@ target 'teferi' do
 
   target 'teferiTests' do
     inherit! :search_paths
+    pod 'Nimble', '~> 5.0.0'
   end
   
   post_install do |installer|

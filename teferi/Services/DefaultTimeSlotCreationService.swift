@@ -31,20 +31,25 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     func onNewLocation(_ location: CLLocation)
     {
         let currentLocationTime = location.timestamp
-        let previousTime = settingsService.lastLocationDate
         
-        settingsService.setLastLocationDate(currentLocationTime)
+        guard let previousLocationTime = self.settingsService.lastLocationDate else
+        {
+            self.settingsService.setLastLocationDate(currentLocationTime)
+            return
+        }
         
-        guard let previousLocationTime = previousTime, currentLocationTime > previousLocationTime else { return }
+        guard currentLocationTime > previousLocationTime else { return }
         
-        let currentTimeSlot = persistencyService.getLastTimeSlot()
+        self.settingsService.setLastLocationDate(currentLocationTime)
+        
+        let currentTimeSlot = self.persistencyService.getLastTimeSlot()
         
         let difference = currentLocationTime.timeIntervalSince(previousLocationTime)
         if (difference / 60) < 25.0
         {
-            guard currentTimeSlot.category != .unknown else { return }
+            guard currentTimeSlot.category == .unknown else { return }
             
-            persistencyService.updateTimeSlot(currentTimeSlot, withCategory: .commute)
+            self.persistencyService.updateTimeSlot(currentTimeSlot, withCategory: .commute)
         }
         else
         {

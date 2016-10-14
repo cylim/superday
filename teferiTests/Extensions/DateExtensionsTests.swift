@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+import Nimble
 @testable import teferi
 
 class DateExtensionsTests : XCTestCase
@@ -24,7 +25,7 @@ class DateExtensionsTests : XCTestCase
         let octoberThirteen = octoberTen.add(days: 3)
         
         let newComponents = (calendar as Calendar).dateComponents([.day], from: octoberThirteen)
-        XCTAssertEqual(newComponents.day, 13)
+        expect(newComponents.day).to(equal(13))
     }
     
     func testTheAddDaysMethodRemovesDaysFromTheCurrentDateIfTheParameterIsNegative()
@@ -37,7 +38,7 @@ class DateExtensionsTests : XCTestCase
         let octoberEight = octoberTen.add(days: -2)
         
         let newComponents = (calendar as Calendar).dateComponents([.day], from: octoberEight)
-        XCTAssertEqual(newComponents.day, 8)
+        expect(newComponents.day).to(equal(8))
     }
     
     func testTheAddDaysMethodWorksEvenOnTheEndOfMonth()
@@ -51,8 +52,8 @@ class DateExtensionsTests : XCTestCase
         
         let newComponents = (calendar as Calendar).dateComponents([.day, .month], from: novemberFirst)
         
-        XCTAssertEqual(newComponents.day, 1)
-        XCTAssertEqual(newComponents.month, 11)
+        expect(newComponents.day).to(equal(1))
+        expect(newComponents.month).to(equal(11))
     }
     
     func testTheIgnoreTimeComponentsMethodReturnOnlyTheDatePortionOfADate()
@@ -71,6 +72,6 @@ class DateExtensionsTests : XCTestCase
         components.hour = 13
         let date2 = calendar.date(from: components2)!
         
-        XCTAssertTrue(date.ignoreTimeComponents() == date2.ignoreTimeComponents())
+        expect(date.ignoreTimeComponents()).to(equal(date2.ignoreTimeComponents()))
     }
 }

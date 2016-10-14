@@ -8,6 +8,8 @@ class MockPersistencyService : PersistencyService
     
     //MARK: Properties
     private(set) var timeSlots = [TimeSlot]()
+    private(set) var getLastTimeSlotWasCalled = false
+    
     var didSubscribe : Bool
     {
         return newTimeSlotCallbacks.count > 0
@@ -16,6 +18,7 @@ class MockPersistencyService : PersistencyService
     //PersistencyService implementation
     func getLastTimeSlot() -> TimeSlot
     {
+        getLastTimeSlotWasCalled = true
         return timeSlots.last!
     }
     
@@ -27,11 +30,11 @@ class MockPersistencyService : PersistencyService
         return timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
     }
     
-    func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         if let lastTimeSlot = timeSlots.last
         {
-            lastTimeSlot.endTime = Date()
+            lastTimeSlot.endTime = timeSlot.startTime
         }
         
         timeSlots.append(timeSlot)
@@ -40,7 +43,7 @@ class MockPersistencyService : PersistencyService
         return true
     }
     
-    func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: teferi.Category) -> Bool
+    @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: teferi.Category) -> Bool
     {
         timeSlot.category = category
         return true

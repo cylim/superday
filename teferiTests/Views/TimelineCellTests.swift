@@ -1,12 +1,13 @@
 import Foundation
 import XCTest
+import Nimble
 @testable import teferi
 
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
     private let timeSlot = TimeSlot(category: .work)
-    private var view = TimelineCell()
+    private var view : TimelineCell!
     
     private var imageIcon : UIImageView
     {
@@ -33,23 +34,23 @@ class TimelineCellTests : XCTestCase
     
     override func setUp()
     {
-        view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
-        view.bind(toTimeSlot: timeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        self.view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
+        self.view.bind(toTimeSlot: timeSlot, shouldFade: false, index: 0, isEditingCategory: false)
     }
     
     override func tearDown()
     {
-        timeSlot.category = .work
+        self.timeSlot.category = .work
     }
     
     private func editCellSetUp(_ shouldFade: Bool = true, isEditingCategory: Bool = true)
     {
-        view.bind(toTimeSlot: timeSlot, shouldFade: shouldFade, index: 0, isEditingCategory: isEditingCategory)
+        self.view.bind(toTimeSlot: timeSlot, shouldFade: shouldFade, index: 0, isEditingCategory: isEditingCategory)
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
     {
-        XCTAssertNotNil(self.imageIcon.image)
+        expect(self.imageIcon.image).toNot(beNil())
     }
     
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
@@ -59,7 +60,8 @@ class TimelineCellTests : XCTestCase
         let dateString = formatter.string(from: timeSlot.startTime)
         
         let expectedText = "\(timeSlot.category) \(dateString)"
-        XCTAssertEqual(self.slotDescription.text, expectedText)
+        
+        expect(self.slotDescription.text).to(equal(expectedText))
     }
     
     func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknown()
@@ -71,7 +73,8 @@ class TimelineCellTests : XCTestCase
         let dateString = formatter.string(from: unknownTimeSlot.startTime)
         
         let expectedText = " \(dateString)"
-        XCTAssertEqual(self.slotDescription.text, expectedText)
+        
+        expect(self.slotDescription.text).to(equal(expectedText))
     }
     
     func testTheElapsedTimeLabelShowsOnlyMinutesWhenLessThanAnHourHasPassed()
@@ -81,14 +84,17 @@ class TimelineCellTests : XCTestCase
         let minutes = (interval / 60) % 60
         
         let expectedText = String(format: minuteMask, minutes)
-        XCTAssertEqual(self.timeLabel.text, expectedText)
+        
+        expect(self.timeLabel.text).to(equal(expectedText))
     }
     
     func testTheElapsedTimeLabelShowsHoursAndMinutesWhenOverAnHourHasPassed()
     {
         let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = Date().yesterday
-        view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        let date = Date().yesterday.ignoreTimeComponents()
+        newTimeSlot.startTime = date
+        newTimeSlot.endTime = date.addingTimeInterval(5000)
+        self.view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
         
         let hourMask = "%02d h %02d min"
         let interval = Int(newTimeSlot.duration)
@@ -96,7 +102,8 @@ class TimelineCellTests : XCTestCase
         let hours = (interval / 3600)
         
         let expectedText = String(format: hourMask, hours, minutes)
-        XCTAssertEqual(self.timeLabel.text, expectedText)
+        
+        expect(self.timeLabel.text).to(equal(expectedText))
     }
     
     func testTheElapsedTimeLabelColorChangesAccordingToTheBoundTimeSlot()
@@ -104,104 +111,88 @@ class TimelineCellTests : XCTestCase
         let expectedColor = Category.work.color
         let actualColor = timeLabel.textColor!
         
-        var expectedRed : CGFloat = 0, expectedGreen : CGFloat = 0, expectedBlue : CGFloat = 0, expectedAlpha : CGFloat = 0
-        expectedColor.getRed(&expectedRed, green: &expectedGreen, blue: &expectedBlue, alpha: &expectedAlpha)
-        
-        var actualRed : CGFloat = 0, actualGreen : CGFloat = 0, actualBlue : CGFloat = 0, actualAlpha : CGFloat = 0
-        actualColor.getRed(&actualRed, green: &actualGreen, blue: &actualBlue, alpha: &actualAlpha)
-        
-        XCTAssertEqual(expectedRed, actualRed)
-        XCTAssertEqual(expectedGreen, actualGreen)
-        XCTAssertEqual(expectedBlue, actualBlue)
+        expect(expectedColor).to(equal(actualColor))
     }
     
     func testTheTimelineCellLineHeightChangesAccordingToTheBoundTimeSlot()
     {
-        let oldLineHeight = line.frame.height
+        let oldLineHeight = self.line.frame.height
         let newTimeSlot = TimeSlot()
         newTimeSlot.startTime = Date().add(days: -1)
         newTimeSlot.endTime = Date()
-        view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
-        view.layoutIfNeeded()
+        self.view.bind(toTimeSlot: newTimeSlot, shouldFade: false, index: 0, isEditingCategory: false)
+        self.view.layoutIfNeeded()
         let newLineHeight = line.frame.height
         
-        XCTAssertLessThan(oldLineHeight, newLineHeight)
+        expect(oldLineHeight).to(beLessThan(newLineHeight))
     }
     
     func testTheLineColorChangesAccordingToTheBoundTimeSlot()
     {
         let expectedColor = Category.work.color
-        let actualColor = line.backgroundColor!
+        let actualColor = self.line.backgroundColor!
         
-        var expectedRed : CGFloat = 0, expectedGreen : CGFloat = 0, expectedBlue : CGFloat = 0, expectedAlpha : CGFloat = 0
-        expectedColor.getRed(&expectedRed, green: &expectedGreen, blue: &expectedBlue, alpha: &expectedAlpha)
-        
-        var actualRed : CGFloat = 0, actualGreen : CGFloat = 0, actualBlue : CGFloat = 0, actualAlpha : CGFloat = 0
-        actualColor.getRed(&actualRed, green: &actualGreen, blue: &actualBlue, alpha: &actualAlpha)
-        
-        XCTAssertEqual(expectedRed, actualRed)
-        XCTAssertEqual(expectedGreen, actualGreen)
-        XCTAssertEqual(expectedBlue, actualBlue)
+        expect(expectedColor).to(equal(actualColor))
     }
     
     func testTheLineFadesWhenTheShouldFadeParametersIsTrue()
     {
-        editCellSetUp()
+        self.editCellSetUp()
         
-        XCTAssertEqualWithAccuracy(line.alpha, Constants.editingAlpha, accuracy: 0.01)
+        expect(self.line.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
     }
     
     func testTheTimeLabelFadesWhenTheShouldFadeParametersIsTrue()
     {
-        editCellSetUp()
+        self.editCellSetUp()
         
-        XCTAssertEqualWithAccuracy(timeLabel.alpha, Constants.editingAlpha, accuracy: 0.01)
+        expect(self.timeLabel.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
     }
     
     func testTheSlotDescriptionFadesWhenTheShouldFadeParametersIsTrue()
     {
-        editCellSetUp()
+        self.editCellSetUp()
         
-        XCTAssertEqualWithAccuracy(slotDescription.alpha, Constants.editingAlpha, accuracy: 0.01)
+        expect(self.slotDescription.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
     }
     
     func testTheCategoryIconDoesNotFadesWhenTheShouldFadeParametersIsTrueButTheCategoryIsBeingEdited()
     {
-        editCellSetUp()
+        self.editCellSetUp()
         
-        XCTAssertEqual(imageIcon.alpha, 1.0)
+        expect(self.imageIcon.alpha).to(equal(1.0))
     }
     
     func testTheCategoryIconDoesFadesWhenTheShouldFadeParametersIsTrueAndTheCategoryIsNotBeingEdited()
     {
-        editCellSetUp(true, isEditingCategory: false)
+        self.editCellSetUp(true, isEditingCategory: false)
         
-        XCTAssertEqualWithAccuracy(imageIcon.alpha, Constants.editingAlpha, accuracy: 0.01)
+        expect(self.imageIcon.alpha).to(beCloseTo(Constants.editingAlpha, within: 0.01))
     }
     
     func testBindingTheCellForEditingShowsAllPossibleCategoriesIfTheTimeSlotIsUnknown()
     {
         let numberOfViews = view.subviews.count
         timeSlot.category = .unknown
-        editCellSetUp()
+        self.editCellSetUp()
         
-        XCTAssertEqual(view.subviews.count, numberOfViews + 5)
+        expect(self.view.subviews.count).to(equal(numberOfViews + 5))
     }
     
     func testBindingTheCellForEditingShowsAllPossibleCategoriesExceptTheCurrentOne()
     {
         let numberOfViews = view.subviews.count
-        editCellSetUp()
+        self.editCellSetUp()
         
-        XCTAssertEqual(view.subviews.count, numberOfViews + 4)
+        expect(self.view.subviews.count).to(equal(numberOfViews + 4))
     }
     
     func testRebindingACellAfterEditingRemovesTheExtraViews()
     {
         let numberOfViewsBeforeBinding = view.subviews.count
-        editCellSetUp()
-        editCellSetUp(true, isEditingCategory: false)
+        self.editCellSetUp()
+        self.editCellSetUp(true, isEditingCategory: false)
         
-        XCTAssertEqual(view.subviews.count, numberOfViewsBeforeBinding)
+        expect(self.view.subviews.count).to(equal(numberOfViewsBeforeBinding))
     }
 }

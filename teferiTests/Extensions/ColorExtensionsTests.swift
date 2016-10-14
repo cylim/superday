@@ -1,6 +1,7 @@
 import UIKit
 import XCTest
 import CoreGraphics
+import Nimble
 @testable import teferi
 
 class UIColorExtensionsTests : XCTestCase
@@ -13,9 +14,9 @@ class UIColorExtensionsTests : XCTestCase
         var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        XCTAssertEqual(red, 1.0)
-        XCTAssertEqual(green, 1.0)
-        XCTAssertEqual(blue, 0)
+        expect(red).to(equal(1.0))
+        expect(green).to(equal(1.0))
+        expect(blue).to(equal(0))
     }
     
     func testInitFromHexStringWorksWithoutAPrefixHash()
@@ -26,9 +27,9 @@ class UIColorExtensionsTests : XCTestCase
         var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        XCTAssertEqual(red, 1.0)
-        XCTAssertEqual(green, 0)
-        XCTAssertEqual(blue, 0)
+        expect(red).to(equal(1.0))
+        expect(green).to(equal(0))
+        expect(blue).to(equal(0))
     }
     
     func testInitFromHexWorksWithAHexLiteral()
@@ -39,9 +40,9 @@ class UIColorExtensionsTests : XCTestCase
         var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        XCTAssertEqual(red, 1.0)
-        XCTAssertEqual(green, 0)
-        XCTAssertEqual(blue, 1.0)
+        expect(red).to(equal(1.0))
+        expect(green).to(equal(0))
+        expect(blue).to(equal(1.0))
     }
     
     func testInitFromIntWorksWithIntegerRepresentationsOfHexValues()
@@ -51,8 +52,8 @@ class UIColorExtensionsTests : XCTestCase
         var red : CGFloat = 0, green : CGFloat = 0, blue : CGFloat = 0, alpha : CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
-        XCTAssertEqual(red, 1.0)
-        XCTAssertEqual(green, 0)
-        XCTAssertEqual(blue, 0)
+        expect(red).to(equal(1.0))
+        expect(green).to(equal(0))
+        expect(blue).to(equal(0))
     }
 }
