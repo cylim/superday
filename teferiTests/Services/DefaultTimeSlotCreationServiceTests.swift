@@ -104,6 +104,7 @@ class DefaultTimeSlotCreationServiceTests : XCTestCase
         
         expect(allTimeSlots.count).to(equal(5))
         expect(commutesDetected.count).to(equal(2))
+        expect(allTimeSlots[3].startTime).to(equal(dates[4]))
     }
     
     func getDate(minutesInThePast: Int) -> Date
