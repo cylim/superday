@@ -78,7 +78,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //Refresh Dispose bag, if needed
         self.disposeBag = self.disposeBag ?? DisposeBag()
         
-        self.gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.editStateService.isEditing = false })
+        self.gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.editStateService.notifyEditingEnded() })
         
         //DEBUG SCREEN
         self.locationService
@@ -299,10 +299,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let image = UIImage(named: category.icon)
         let imageView = UIImageView(image: image)
         let gestureRecognizer = ClosureGestureRecognizer(withClosure:
-            {
-                self.viewModel.updateTimeSlot(timeSlot, withCategory: category)
-                
-                self.editStateService.isEditing = false
+        {
+            self.viewModel.updateTimeSlot(timeSlot, withCategory: category)
+            self.editStateService.notifyEditingEnded()
         })
         
         imageView.alpha = 0

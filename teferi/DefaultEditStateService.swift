@@ -7,7 +7,6 @@ class DefaultEditStateService : EditStateService
     private let beganEditingVariable = Variable((CGPoint(), TimeSlot()))
     
     //MARK: Initializers
-    
     init()
     {
         self.isEditingObservable = self.isEditingVariable.asObservable()
@@ -18,14 +17,14 @@ class DefaultEditStateService : EditStateService
     let isEditingObservable : Observable<Bool>
     let beganEditingObservable : Observable<(CGPoint, TimeSlot)>
     
-    var isEditing : Bool
-    {
-        get { return self.isEditingVariable.value }
-        set(value) { self.isEditingVariable.value = value }
-    }
-    
     func notifyEditingBegan(point: CGPoint, timeSlot: TimeSlot)
     {
+        self.isEditingVariable.value = true
         self.beganEditingVariable.value = (point, timeSlot)
+    }
+    
+    func notifyEditingEnded()
+    {
+        self.isEditingVariable.value = false
     }
 }

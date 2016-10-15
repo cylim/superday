@@ -100,7 +100,6 @@ class TimelineViewController : UITableViewController
     
     private func onCategoryTapped(point: CGPoint, index: Int)
     {
-        self.editStateService.isEditing = true
         self.editStateService.notifyEditingBegan(point: point, timeSlot: self.viewModel.timeSlots[index])
     }
     
