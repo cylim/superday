@@ -7,8 +7,8 @@ class TimelineViewController : UITableViewController
 {
     // MARK: Fields
     private let baseCellHeight = 40
+    private let disposeBag = DisposeBag()
     private let viewModel : TimelineViewModel
-    private var disposeBag : DisposeBag? = nil
     private let cellIdentifier = "timelineCell"
     private var editStateService : EditStateService
     
@@ -43,31 +43,21 @@ class TimelineViewController : UITableViewController
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
-    }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-        self.disposeBag = self.disposeBag ?? DisposeBag()
-        
         self.viewModel
             .timeSlotsObservable
             .subscribe(onNext: self.onNewTimeSlotAvailable)
-            .addDisposableTo(self.disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.viewModel
             .timeObservable
             .subscribe(onNext: self.onTimeTick)
-            .addDisposableTo(self.disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.editStateService
             .isEditingObservable
             .subscribe(onNext: self.onIsEditing)
-            .addDisposableTo(self.disposeBag!)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        self.disposeBag = nil
+            .addDisposableTo(self.disposeBag)
     }
     
     // MARK: Methods
@@ -129,7 +119,7 @@ class TimelineViewController : UITableViewController
         {
             cell.editClickObservable
                 .subscribe(onNext: onCategoryTapped)
-                .addDisposableTo(disposeBag!)
+                .addDisposableTo(disposeBag)
         }
         
         return cell

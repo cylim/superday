@@ -16,7 +16,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var gestureRecognizer : UIGestureRecognizer!
     private lazy var viewModel : MainViewModel =
     {
-        return MainViewModel(persistencyService: self.persistencyService, metricsService: self.metricsService)
+        return MainViewModel(persistencyService: self.persistencyService, editStateService: self.editStateService, metricsService: self.metricsService)
     }()
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
@@ -28,11 +28,10 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
+    private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
     private var launchAnim : LaunchAnimationView!
-    private var editButtons : [UIImageView]? = nil
     
-    @IBOutlet private weak var overlay : UIView!
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var logButton : UIButton!
     @IBOutlet private weak var titleLabel : UILabel!
@@ -67,6 +66,10 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
+        
+        //Edit View
+        self.editView = EditTimeSlotView(frame: self.view.frame, editEndedCallback: self.viewModel.updateTimeSlot)
+        self.view.addSubview(self.editView)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -94,7 +97,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         self.editStateService
             .beganEditingObservable
-            .subscribe(onNext: self.onEditBegan)
+            .subscribe(onNext: self.editView.onEditBegan)
             .addDisposableTo(disposeBag!)
         
         //Category creation
@@ -109,7 +112,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(disposeBag!)
         
-        self.overlay.addGestureRecognizer(self.gestureRecognizer)
+        self.editView.addGestureRecognizer(self.gestureRecognizer)
         
         //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
@@ -119,7 +122,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 self.launchAnim = nil
                 
                 //Add button must be added like this due to .xib/.storyboard restrictions
-                self.view.insertSubview(self.addButton, belowSubview: self.overlay!)
+                self.view.insertSubview(self.addButton, belowSubview: self.editView)
                 self.addButton.snp.makeConstraints { make in
                     make.height.equalTo(320)
                     make.left.equalTo(self.view.snp.left)
@@ -133,7 +136,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     override func viewWillDisappear(_ animated: Bool)
     {
         self.disposeBag = nil
-        self.overlay.removeGestureRecognizer(self.gestureRecognizer)
+        self.editView.removeGestureRecognizer(self.gestureRecognizer)
         super.viewWillDisappear(animated)
     }
     
@@ -217,9 +220,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     private func onEditChanged(_ isEditing: Bool)
     {
-        //Grey out views
-        UIView.animate(withDuration: animationDuration) { self.overlay.isHidden = !isEditing }
-        
         //Disable buttons
         self.addButton.isUserInteractionEnabled = !isEditing
         self.logButton.isUserInteractionEnabled = !isEditing
@@ -228,90 +228,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //Close add menu
         self.addButton.close()
         
-        guard let viewsToRemove = self.editButtons else { return }
-        
-        var animationDelay = Double(viewsToRemove.count - 1) * animationDuration
-        viewsToRemove.forEach { v in
-            
-            UIView.animate(withDuration: animationDuration,
-                           delay: animationDelay,
-                           options: [ .curveEaseInOut ],
-                           animations: { v.alpha = 0 },
-                           completion: { _ in v.removeFromSuperview()} )
-            
-            animationDelay -= animationDuration
-        }
-        
-        self.editButtons = nil
-    }
-    
-    private func onEditBegan(point: CGPoint, timeSlot: TimeSlot)
-    {
-        guard point.x != 0 && point.y != 0 else { return }
-        
-        self.editButtons = Constants.categories
-            .filter { c in c != .unknown && c != timeSlot.category }
-            .map { category in return mapCategoryIntoView(category, timeSlot) }
-        
-        let firstImageView = UIImageView(image: UIImage(named: Category.unknown.icon))
-        firstImageView.backgroundColor = timeSlot.category.color
-        firstImageView.layer.cornerRadius = 16
-        firstImageView.contentMode = .center
-        
-        self.view.addSubview(firstImageView)
-        firstImageView.snp.makeConstraints { make in
-            make.width.equalTo(32)
-            make.height.equalTo(32)
-            make.top.equalTo(point.y - 24)
-            make.left.equalTo(point.x - 32)
-        }
-        
-        var animationDelay = 0.0
-        var previousImageView = firstImageView
-        for imageView in self.editButtons!
-        {
-            self.view.addSubview(imageView)
-            
-            let previousSnp = previousImageView.snp
-            
-            imageView.snp.makeConstraints { make in
-                
-                make.width.width.equalTo(44)
-                make.width.height.equalTo(44)
-                make.centerY.equalTo(previousSnp.centerY)
-                make.left.equalTo(previousSnp.right).offset(5)
-            }
-            
-            UIView.animate(withDuration: animationDuration,
-                           delay: animationDelay,
-                           options: [ .curveEaseInOut ],
-                           animations: { imageView.alpha = 1 })
-            
-            animationDelay += animationDuration
-            previousImageView = imageView
-        }
-        
-        self.editButtons!.insert(firstImageView, at: 0)
-    }
-    
-    private func mapCategoryIntoView(_ category: Category, _ timeSlot: TimeSlot) -> UIImageView
-    {
-        let image = UIImage(named: category.icon)
-        let imageView = UIImageView(image: image)
-        let gestureRecognizer = ClosureGestureRecognizer(withClosure:
-        {
-            self.viewModel.updateTimeSlot(timeSlot, withCategory: category)
-            self.editStateService.notifyEditingEnded()
-        })
-        
-        imageView.alpha = 0
-        imageView.contentMode = .center
-        imageView.layer.cornerRadius = 22
-        imageView.isUserInteractionEnabled = true
-        imageView.backgroundColor = category.color
-        imageView.addGestureRecognizer(gestureRecognizer)
-        
-        return imageView
+        //Grey out views
+        self.editView.isEditing = isEditing
     }
     
     func showAlert(withTitle title: String, message: String)

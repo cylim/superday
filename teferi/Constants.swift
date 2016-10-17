@@ -17,4 +17,7 @@ class Constants
     
     ///Name of the file that stores information regarding the first location detected since the user's last travel.
     static let firstLocationFile = "firstLocationFile"
+    
+    ///Duration of the fade in/out edit animation
+    static let editAnimationDuration = 0.08
 }
