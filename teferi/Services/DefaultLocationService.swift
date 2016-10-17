@@ -33,7 +33,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
             else
             {
                 loggingService.log(withLogLevel: .info, message: "App is now in Foreground")
-                locationManager.requestAlwaysAuthorization()
             }
         }
     }

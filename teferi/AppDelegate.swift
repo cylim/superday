@@ -20,6 +20,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //MARK: Properties
     var window: UIWindow?
     
+    let appActivated = Variable<Bool>(false)
+    
     //Initializers
     override init()
     {
@@ -79,7 +81,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             
-            initialViewController = onboardController.inject(mainViewController)
+            initialViewController = onboardController.inject(mainViewController, self)
+            mainViewController.skipLoadingAnimation()
         }
         
         self.window!.rootViewController = initialViewController
@@ -92,6 +95,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        self.appActivated.value = false
     }
 
     func applicationDidEnterBackground(_ application: UIApplication)
@@ -112,6 +116,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func applicationDidBecomeActive(_ application: UIApplication)
     {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        self.appActivated.value = true
     }
 
     func applicationWillTerminate(_ application: UIApplication)

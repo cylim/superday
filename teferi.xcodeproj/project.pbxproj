@@ -70,6 +70,7 @@
 		24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C72AA91D90731C00DABAC3 /* LoggingService.swift */; };
 		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
 		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
+		51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -169,6 +170,7 @@
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewController.swift; path = Onboarding/OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage.swift; path = Onboarding/OnboardingPage.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -411,6 +413,7 @@
 				2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */,
 				2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */,
 				513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */,
+				51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -873,6 +876,7 @@
 				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
 				24526A751D92D98800DA3FA0 /* Constants.swift in Sources */,
 				24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */,
+				51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */,
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,

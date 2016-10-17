@@ -274,6 +274,9 @@
                         <constraint firstItem="Fg4-D1-lKC" firstAttribute="top" secondItem="zYT-h6-e2J" secondAttribute="top" constant="22" id="D6I-3L-m5b"/>
                         <constraint firstAttribute="trailing" secondItem="Fg4-D1-lKC" secondAttribute="trailing" constant="24" id="jNa-Pt-QQY"/>
                     </constraints>
+                    <connections>
+                        <outlet property="nextButton" destination="Fg4-D1-lKC" id="hbv-77-ie4"/>
+                    </connections>
                 </view>
             </objects>
             <point key="canvasLocation" x="-148" y="84"/>
