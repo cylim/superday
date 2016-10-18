@@ -56,10 +56,10 @@ class TimelineCellTests : XCTestCase
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
     {
         let formatter = DateFormatter()
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
         let dateString = formatter.string(from: timeSlot.startTime)
         
-        let expectedText = "\(timeSlot.category) \(dateString)"
+        let expectedText = "\(timeSlot.category.rawValue.capitalized) \(dateString)"
         
         expect(self.slotDescription.text).to(equal(expectedText))
     }
@@ -69,7 +69,7 @@ class TimelineCellTests : XCTestCase
         let unknownTimeSlot = TimeSlot()
         view.bind(toTimeSlot: unknownTimeSlot, index: 0)
         let formatter = DateFormatter()
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
         let dateString = formatter.string(from: unknownTimeSlot.startTime)
         
         let expectedText = " \(dateString)"

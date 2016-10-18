@@ -74,9 +74,9 @@ class TimelineCell : UITableViewCell
     private func layoutDescriptionLabel(withStartTime startTime: Date, category: Category)
     {
         let formatter = DateFormatter()
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
         let dateString = formatter.string(from: startTime)
-        let categoryText = category == .unknown ? "" : String(describing: category)
+        let categoryText = category == .unknown ? "" : category.rawValue.capitalized
         
         let description = "\(categoryText) \(dateString)"
         let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count + 1)

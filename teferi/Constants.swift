@@ -4,7 +4,7 @@ import CoreGraphics
 class Constants
 {
     ///All possible categories
-    static let categories =  [ Category.friends, Category.work, Category.leisure, Category.commute, Category.food, Category.unknown ]
+    static let categories : [Category] =  [ .commute, .food, .friends, .work, .leisure ]
     
     ///Distance the user has to travel in order to trigger a new location event.
     static let distanceFilter = 100.0
@@ -17,4 +17,7 @@ class Constants
     
     ///Name of the file that stores information regarding the first location detected since the user's last travel.
     static let firstLocationFile = "firstLocationFile"
+    
+    ///Duration of the fade in/out edit animation
+    static let editAnimationDuration = 0.08
 }

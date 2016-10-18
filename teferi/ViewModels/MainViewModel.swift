@@ -9,11 +9,13 @@ class MainViewModel
     private let superyesterday = "Superyesterday"
     
     private let metricsService : MetricsService
+    private let editStateService : EditStateService
     private let persistencyService : PersistencyService
     
-    init(persistencyService: PersistencyService, metricsService: MetricsService)
+    init(persistencyService: PersistencyService, editStateService: EditStateService, metricsService: MetricsService)
     {
         self.metricsService = metricsService
+        self.editStateService = editStateService
         self.persistencyService = persistencyService
     }
     
@@ -78,9 +80,10 @@ class MainViewModel
     func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category)
     {
         self.persistencyService.updateTimeSlot(timeSlot, withCategory: category)
-        
         self.metricsService.log(event: .timeSlotEditing)
         
         timeSlot.category = category
+        
+        self.editStateService.notifyEditingEnded()
     }
 }
