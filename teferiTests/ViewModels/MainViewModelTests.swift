@@ -7,14 +7,16 @@ class MainViewModelTests : XCTestCase
 {
     private var viewModel : MainViewModel!
     private var disposable : Disposable? = nil
+    private var editStateService : EditStateService!
     private var mockMetricsService : MockMetricsService!
     private var mockPersistencyService : MockPersistencyService!
     
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
+        self.editStateService = DefaultEditStateService()
         self.mockPersistencyService = MockPersistencyService()
-        self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService, metricsService: self.mockMetricsService)
+        self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService, editStateService: self.editStateService, metricsService: self.mockMetricsService)
     }
     
     override func tearDown()
@@ -82,5 +84,19 @@ class MainViewModelTests : XCTestCase
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
         expect(timeSlot.category).to(equal(Category.commute))
+    }
+    
+    func testTheUpdateTimeSlotMethodEndsTheEditingProcess()
+    {
+        var editingEnded = false
+        let observable = self.editStateService
+            .isEditingObservable
+            .subscribe(onNext: { editingEnded = !$0 })
+        
+        let timeSlot = TimeSlot(category: .work)
+        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
+        
+        expect(editingEnded).to(beTrue())
     }
 }
