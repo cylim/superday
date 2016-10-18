@@ -64,4 +64,13 @@ class OnboardingPage: UIViewController
     {
         // override in page
     }
+    
+    
+    
+    func t(_ hours : Int, _ minutes : Int) -> Date
+    {
+        return Date()
+            .ignoreTimeComponents()
+            .addingTimeInterval(TimeInterval((hours * 60 + minutes) * 60))
+    }
 }

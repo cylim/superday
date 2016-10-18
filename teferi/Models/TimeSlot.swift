@@ -16,6 +16,15 @@ class TimeSlot
     }
     
     // MARK: Initializers
+    init() { }
+    
+    init(category: Category, startTime: Date, endTime: Date)
+    {
+        self.category = category
+        self.startTime = startTime
+        self.endTime = endTime
+    }
+    
     convenience init(category: Category)
     {
         self.init()

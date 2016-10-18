@@ -6,7 +6,7 @@ import CoreGraphics
 class TimelineViewController : UITableViewController
 {
     // MARK: Fields
-    private let baseCellHeight = 40
+    private static let baseCellHeight = 40
     private let viewModel : TimelineViewModel
     private var disposeBag : DisposeBag? = nil
     private let cellIdentifier = "timelineCell"
@@ -144,7 +144,14 @@ class TimelineViewController : UITableViewController
         
         let timeSlot = self.viewModel.timeSlots[index]
         let isRunning = timeSlot.endTime == nil
-        let interval = Int(timeSlot.duration)
+        
+        return TimelineViewController.timelineCellHeight(
+            duration: timeSlot.duration, isRunning: isRunning)
+    }
+    
+    static func timelineCellHeight(duration : TimeInterval, isRunning : Bool) -> CGFloat
+    {
+        let interval = Int(duration)
         let hours = (interval / 3600)
         let minutes = (interval / 60) % 60
         let height = baseCellHeight
