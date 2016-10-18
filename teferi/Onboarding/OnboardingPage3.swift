@@ -1,7 +1,7 @@
 import UIKit
 import CoreLocation
 
-class OnboardingPage3 : OnboardingPage
+class OnboardingPage3 : OnboardingPage, CLLocationManagerDelegate
 {
     var locationManager: CLLocationManager!
     
@@ -12,13 +12,16 @@ class OnboardingPage3 : OnboardingPage
     
     override func startAnimations()
     {
-        self.subscribeToAppActiveStatus()
         locationManager = CLLocationManager()
+        locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
     }
     
-    override func appBecameActive()
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
     {
-        self.finish()
+        if status == .authorizedAlways || status == .denied
+        {
+            self.finish()
+        }
     }
 }
