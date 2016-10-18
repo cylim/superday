@@ -15,7 +15,9 @@
 		240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */; };
 		240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240AC7211D748C8800F21F4F /* Assets.xcassets */; };
 		24116A041D9DACCD00762BD6 /* AnimationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24116A031D9DACCD00762BD6 /* AnimationHelpers.swift */; };
-		2420A8621DB4F2CB00C0478C /* EditTimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8611DB4F2CB00C0478C /* EditTimeSlotView.swift */; };
+		2420A8661DB56B5500C0478C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8651DB56B5500C0478C /* EmptyStateView.swift */; };
+		2420A8681DB56B6800C0478C /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A8671DB56B6800C0478C /* EmptyStateView.xib */; };
+		2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8691DB6271000C0478C /* EditTimeSlotView.swift */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
 		2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C61D9BEA9A00AF8857 /* DebugView.swift */; };
@@ -111,7 +113,9 @@
 		240AC7211D748C8800F21F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		240AC7261D748C8800F21F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24116A031D9DACCD00762BD6 /* AnimationHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimationHelpers.swift; path = Helpers/AnimationHelpers.swift; sourceTree = "<group>"; };
-		2420A8611DB4F2CB00C0478C /* EditTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditTimeSlotView.swift; path = Views/EditTimeSlotView.swift; sourceTree = "<group>"; };
+		2420A8651DB56B5500C0478C /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = Views/EmptyStateView.swift; sourceTree = "<group>"; };
+		2420A8671DB56B6800C0478C /* EmptyStateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStateView.xib; path = Views/EmptyStateView.xib; sourceTree = "<group>"; };
+		2420A8691DB6271000C0478C /* EditTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditTimeSlotView.swift; path = Views/EditTimeSlotView.swift; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		2421F8C61D9BEA9A00AF8857 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
@@ -397,7 +401,9 @@
 				24B03B641DA3864500452D16 /* AddTimeSlotView.swift */,
 				24B03B661DA3866400452D16 /* AddTimeSlotView.xib */,
 				2421F8C61D9BEA9A00AF8857 /* DebugView.swift */,
-				2420A8611DB4F2CB00C0478C /* EditTimeSlotView.swift */,
+				2420A8691DB6271000C0478C /* EditTimeSlotView.swift */,
+				2420A8651DB56B5500C0478C /* EmptyStateView.swift */,
+				2420A8671DB56B6800C0478C /* EmptyStateView.xib */,
 				2407A9871D9D512D00066889 /* LaunchAnimationView.swift */,
 				24564F531D83254E00D9A8AE /* TimelineCell.swift */,
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
@@ -544,6 +550,7 @@
 				24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */,
 				2407A98F1D9D54DB00066889 /* LaunchScreen.storyboard in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
+				2420A8681DB56B6800C0478C /* EmptyStateView.xib in Resources */,
 				513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -870,7 +877,6 @@
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
-				2420A8621DB4F2CB00C0478C /* EditTimeSlotView.swift in Sources */,
 				2482CB011DB14DB700E892C1 /* EditStateService.swift in Sources */,
 				246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */,
 				24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */,
@@ -882,6 +888,7 @@
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
+				2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */,
 				247F06061D88A78300451BAD /* DefaultTimeSlotCreationService.swift in Sources */,
 				24B03B651DA3864500452D16 /* AddTimeSlotView.swift in Sources */,
 				2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */,
@@ -909,6 +916,7 @@
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
 				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
+				2420A8661DB56B5500C0478C /* EmptyStateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

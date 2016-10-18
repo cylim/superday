@@ -9,8 +9,10 @@ class TimelineViewController : UITableViewController
     private let baseCellHeight = 40
     private let disposeBag = DisposeBag()
     private let viewModel : TimelineViewModel
-    private let cellIdentifier = "timelineCell"
     private var editStateService : EditStateService
+    
+    private let cellIdentifier = "timelineCell"
+    private let emptyCellIdentifier = "emptyStateView"
     
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
@@ -43,6 +45,7 @@ class TimelineViewController : UITableViewController
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
+        self.tableView.register(UINib.init(nibName: "EmptyStateView", bundle: Bundle.main), forCellReuseIdentifier: emptyCellIdentifier)
     
         self.viewModel
             .timeSlotsObservable
@@ -106,6 +109,11 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        guard self.viewModel.timeSlots.count > 0 else
+        {
+            return tableView.dequeueReusableCell(withIdentifier: emptyCellIdentifier, for: indexPath);
+        }
+        
         let index = indexPath.item
         
         if index == self.viewModel.timeSlots.count { return footerCell }
@@ -127,6 +135,11 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
+        guard self.viewModel.timeSlots.count > 0 else
+        {
+            return self.view.frame.height
+        }
+        
         let index = indexPath.item
         
         if index == self.viewModel.timeSlots.count { return 120 }
