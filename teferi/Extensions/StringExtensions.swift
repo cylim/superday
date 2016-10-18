@@ -32,6 +32,7 @@ extension String
         
         let nonBoldAttribute = [
             NSFontAttributeName: UIFont.systemFont(ofSize: fontSize),
+            NSForegroundColorAttributeName: UIColor.black//.withAlphaComponent(0.5)
         ]
         
         let attrStr = NSMutableAttributedString(string: self, attributes: attrs)
