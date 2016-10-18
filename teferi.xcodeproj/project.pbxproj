@@ -416,13 +416,13 @@
 		513535D41DA2752A00A365A9 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */,
 				2482CAF61DB12F9F00E892C1 /* OnboardingPage1.swift */,
 				2482CAF71DB12F9F00E892C1 /* OnboardingPage2.swift */,
 				2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */,
 				2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */,
 				2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */,
 				513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */,
-				51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";

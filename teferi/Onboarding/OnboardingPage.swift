@@ -1,14 +1,11 @@
 import UIKit
 import RxSwift
 
-class OnboardingPage: UIViewController
+class OnboardingPage : UIViewController
 {
     private(set) var didAppear = false
     private(set) var nextButtonText : String?
     private var onboardingPageViewController : OnboardingPageViewController!
-    private(set) var appDelegate : AppDelegate!
-    
-    private var appActiveSubscription : Disposable?
     
     init?(coder aDecoder: NSCoder, nextButtonText: String?)
     {
@@ -22,10 +19,9 @@ class OnboardingPage: UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
-    func inject(_ onboardingPageViewController: OnboardingPageViewController, _ appDelegate: AppDelegate)
+    func inject(_ onboardingPageViewController: OnboardingPageViewController)
     {
         self.onboardingPageViewController = onboardingPageViewController
-        self.appDelegate = appDelegate
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -41,20 +37,6 @@ class OnboardingPage: UIViewController
         self.onboardingPageViewController.goToNextPage()
     }
     
-    func subscribeToAppActiveStatus()
-    {
-        self.appActiveSubscription = self.appDelegate.appActivated
-            .asObservable()
-            .distinctUntilChanged()
-            .subscribe(onNext: { (active) in
-                if active
-                {
-                    self.appBecameActive()
-                    self.appActiveSubscription?.dispose()
-                }
-            })
-    }
-    
     func startAnimations()
     {
         // override in page
@@ -64,8 +46,6 @@ class OnboardingPage: UIViewController
     {
         // override in page
     }
-    
-    
     
     func t(_ hours : Int, _ minutes : Int) -> Date
     {

@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 import SnapKit
 
 class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
@@ -10,8 +11,9 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     @IBOutlet var pager: OnboardingPager!
     
+    private var settingsService : SettingsService!
     private var mainViewController : MainViewController!
-    private var appDelegate : AppDelegate!
+    private var notificationUpdateObservable : Observable<Bool>!
     
     //MARK: ViewController lifecycle
     override func viewDidLoad()
@@ -51,10 +53,11 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     }
     
     //MARK: Methods
-    func inject(_ mainViewController: MainViewController, _ appDelegate: AppDelegate) -> OnboardingPageViewController
+    func inject(_ settingsService : SettingsService, _ mainViewController: MainViewController, _ notificationUpdateObservable: Observable<Bool>) -> OnboardingPageViewController
     {
+        self.settingsService = settingsService
         self.mainViewController = mainViewController
-        self.appDelegate = appDelegate
+        self.notificationUpdateObservable = notificationUpdateObservable
         return self
     }
     
@@ -75,6 +78,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         let currentPageIndex = self.index(of: self.viewControllers!.first!)!
         guard let nextPage = self.pageAt(index: currentPageIndex + 1) else
         {
+            self.settingsService.setInstallDate(Date())
             self.present(self.mainViewController, animated: false)
             return
         }
@@ -101,8 +105,15 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         let page = UIStoryboard(name: "Onboarding", bundle: nil)
             .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
             as! OnboardingPage
-        page.inject(self, self.appDelegate)
-        return page
+        
+        guard let page4 = page as? OnboardingPage4 else
+        {
+            page.inject(self)
+            return page
+        }
+        
+        page4.inject(self, self.notificationUpdateObservable)
+        return page4
     }
     
     private func onNew(page: OnboardingPage)
