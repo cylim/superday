@@ -20,7 +20,7 @@ class TimelineCell : UITableViewCell
     @IBOutlet private weak var indicatorDot : UIView?
     @IBOutlet private weak var categoryButton : UIButton?
     @IBOutlet private weak var slotDescription : UILabel?
-    @IBOutlet private weak var categoryIcon : UIImageView?
+    @IBOutlet weak var categoryIcon : UIImageView?
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false

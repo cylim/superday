@@ -269,7 +269,6 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="6" id="Dfm-RL-05k"/>
-                                <constraint firstAttribute="width" constant="100" id="hTC-vq-LDV"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -278,10 +277,12 @@
                         <constraint firstItem="8FP-aY-FJv" firstAttribute="top" secondItem="zYT-h6-e2J" secondAttribute="top" id="1KT-cr-8SP"/>
                         <constraint firstItem="Fg4-D1-lKC" firstAttribute="leading" secondItem="zYT-h6-e2J" secondAttribute="leading" constant="24" id="67E-zF-dZY"/>
                         <constraint firstItem="Fg4-D1-lKC" firstAttribute="top" secondItem="zYT-h6-e2J" secondAttribute="top" constant="22" id="D6I-3L-m5b"/>
+                        <constraint firstItem="8FP-aY-FJv" firstAttribute="centerX" secondItem="zYT-h6-e2J" secondAttribute="centerX" id="fsQ-FP-3N8"/>
                         <constraint firstAttribute="trailing" secondItem="Fg4-D1-lKC" secondAttribute="trailing" constant="24" id="jNa-Pt-QQY"/>
                     </constraints>
                     <connections>
                         <outlet property="nextButton" destination="Fg4-D1-lKC" id="hbv-77-ie4"/>
+                        <outlet property="pageIndicatorContainer" destination="8FP-aY-FJv" id="46L-uO-hAd"/>
                     </connections>
                 </view>
             </objects>

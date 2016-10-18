@@ -37,6 +37,8 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
             make.height.equalTo(102)
         }
         
+        self.pager.createPageDots(forPageCount: self.pages.count)
+        
         self.launchAnim = LaunchAnimationView(frame: self.view.bounds)
         self.view.addSubview(self.launchAnim)
         self.startLaunchAnimation()
@@ -113,6 +115,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         {
             self.pager.hideNextButton()
         }
+        self.pager.switchPage(to: self.index(of: page)!)
     }
     
     // MARK: UIPageViewControllerDelegate

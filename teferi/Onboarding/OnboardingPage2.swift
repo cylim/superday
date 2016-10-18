@@ -4,17 +4,24 @@ class OnboardingPage2 : OnboardingPage
 {
     @IBOutlet private weak var textView: UIView!
     
-    var timelineCell : TimelineCell!
+    private var timeSlot : TimeSlot!
+    private var timelineCell : TimelineCell!
+    private var editView : EditTimeSlotView!
     
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder, nextButtonText: "Ok, got it")
         
+        self.timeSlot = TimeSlot(category: .friends, startTime: t(9, 30), endTime: t(10, 0))
+        
         self.timelineCell = Bundle.main
             .loadNibNamed("TimelineCell", owner: self, options: nil)?
             .first as! TimelineCell
-        self.timelineCell.bind(toTimeSlot: TimeSlot(
-            category: .friends, startTime: t(9, 30), endTime: t(10, 0)), index: 0)
+        self.timelineCell.bind(toTimeSlot: self.timeSlot, index: 0)
+        
+        self.editView = EditTimeSlotView(frame: self.timelineCell.bounds, editEndedCallback: { _,_ in })
+        self.editView.isUserInteractionEnabled = false
+        self.timelineCell.addSubview(self.editView)
     }
     
     override func viewDidLoad()
@@ -46,5 +53,11 @@ class OnboardingPage2 : OnboardingPage
                 self.timelineCell.alpha = 1
             },
             completion: nil)
+        
+        Timer.schedule(withDelay: 1.2, handler: { _ in
+            self.editView.onEditBegan(
+                point: self.timelineCell.categoryIcon!.convert(self.timelineCell.categoryIcon!.center, to: self.timelineCell),
+                timeSlot: self.timeSlot)
+        })
     }
 }
