@@ -104,4 +104,43 @@ class MainViewModelTests : XCTestCase
         
         expect(editingEnded).to(beTrue())
     }
+    
+    func testThePermissionStateShouldNotBeShownIfTheUserHasAlreadyAuthorized()
+    {
+        self.mockSettingsService.hasLocationPermission = true
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beFalse())
+    }
+    
+    func testIfThePermissionOverlayWasNeverShownItNeedsToBeShown()
+    {
+        self.mockSettingsService.hasLocationPermission = false
+        self.mockSettingsService.lastAskedForLocationPermission = nil
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beTrue())
+    }
+    
+    func testThePermissionStateShouldBeShownIfItWasNotShownForOver24Hours()
+    {
+        self.mockSettingsService.hasLocationPermission = false
+        self.mockSettingsService.lastAskedForLocationPermission = Date().add(days: -2)
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beTrue())
+    }
+    
+    func testThePermissionStateShouldNotBeShownIfItWasLastShownInTheLast24Hours()
+    {
+        self.mockSettingsService.hasLocationPermission = false
+        self.mockSettingsService.lastAskedForLocationPermission = Date().ignoreTimeComponents()
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beFalse())
+    }
 }

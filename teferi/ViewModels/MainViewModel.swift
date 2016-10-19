@@ -77,12 +77,7 @@ class MainViewModel
     {
         let newSlot = TimeSlot(category: category)
         
-        guard persistencyService.addNewTimeSlot(newSlot) else
-        {
-            //TODO: Recover if saving fails
-            return
-        }
-        
+        self.persistencyService.addNewTimeSlot(newSlot)
         self.metricsService.log(event: .timeSlotManualCreation)
     }
     
