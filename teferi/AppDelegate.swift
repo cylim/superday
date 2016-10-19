@@ -31,10 +31,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
         self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
         self.notificationService = DefaultNotificationService(loggingService: self.loggingService)
-        self.timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: self.settingsService,
-                                                                      persistencyService: self.persistencyService,
-                                                                      loggingService: self.loggingService,
-                                                                      notificationService: self.notificationService)
+        self.timeSlotCreationService =
+            DefaultTimeSlotCreationService(settingsService: self.settingsService,
+                                           persistencyService: self.persistencyService,
+                                           loggingService: self.loggingService,
+                                           notificationService: self.notificationService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
@@ -62,11 +63,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
         var initialViewController : UIViewController =
-            mainViewController.inject(self.locationService,
-                                      self.metricsService,
-                                      self.persistencyService,
+            mainViewController.inject(self.metricsService,
+                                      self.locationService,
                                       self.settingsService,
-                                      self.editStateService)
+                                      self.editStateService,
+                                      self.persistencyService)
         
         if self.settingsService.installDate == nil
         {
@@ -82,7 +83,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                          mainViewController,
                                          notificationAuthorizationVariable.asObservable())
             
-            mainViewController.skipLoadingAnimation()
+            mainViewController.setIsFirstUse()
         }
         
         self.window!.rootViewController = initialViewController

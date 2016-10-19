@@ -9,18 +9,33 @@ class MainViewModel
     private let superyesterday = "Superyesterday"
     
     private let metricsService : MetricsService
+    private let settingsService : SettingsService
     private let editStateService : EditStateService
     private let persistencyService : PersistencyService
     
-    init(persistencyService: PersistencyService, editStateService: EditStateService, metricsService: MetricsService)
+    init(metricsService: MetricsService, settingsService: SettingsService, editStateService: EditStateService, persistencyService: PersistencyService)
     {
         self.metricsService = metricsService
+        self.settingsService = settingsService
         self.editStateService = editStateService
         self.persistencyService = persistencyService
     }
     
     // MARK: Properties
     var currentDate = Date()
+    
+    var shouldShowLocationPermissionOverlay : Bool
+    {
+        if self.settingsService.hasLocationPermission { return false }
+        
+        //If user doesn't have permissions and we never showed the overlay, do it
+        guard let lastRequestedDate = self.settingsService.lastAskedForLocationPermission else { return true }
+        
+        let minimumRequestDate = lastRequestedDate.add(days: 1)
+        
+        //If we previously showed the overlay, we must only do it again after 24 hours
+        return minimumRequestDate < Date()
+    }
     
     ///Current date for the calendar button
     var calendarDay : String

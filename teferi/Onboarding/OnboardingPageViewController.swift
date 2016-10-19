@@ -66,9 +66,9 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
             self.launchAnim.animate(onCompleted:
-                {
-                    self.launchAnim.removeFromSuperview()
-                    self.launchAnim = nil
+            {
+                self.launchAnim.removeFromSuperview()
+                self.launchAnim = nil
             })
         }
     }
