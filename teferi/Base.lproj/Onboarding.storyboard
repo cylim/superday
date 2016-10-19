@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -63,6 +63,9 @@
                             <constraint firstItem="AfO-6o-KLO" firstAttribute="top" secondItem="sMw-0C-ghl" secondAttribute="bottom" constant="49" id="hf5-nx-W20"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="AfO-6o-KLO" id="Ezk-kn-FSF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pMk-hV-jhr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -98,7 +101,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="wZX-Zs-Rvd" secondAttribute="trailing" id="CRa-sv-poU"/>
                                     <constraint firstItem="2eM-TH-cS4" firstAttribute="top" secondItem="dN8-BH-SeN" secondAttribute="top" id="cJY-Zs-VGg"/>
-                                    <constraint firstAttribute="bottom" secondItem="2eM-TH-cS4" secondAttribute="bottom" constant="64" id="k0B-GB-GMl"/>
+                                    <constraint firstAttribute="bottom" secondItem="2eM-TH-cS4" secondAttribute="bottom" id="k0B-GB-GMl"/>
                                     <constraint firstItem="2eM-TH-cS4" firstAttribute="leading" secondItem="dN8-BH-SeN" secondAttribute="leading" id="pgc-cK-7zU"/>
                                     <constraint firstItem="wZX-Zs-Rvd" firstAttribute="centerY" secondItem="2eM-TH-cS4" secondAttribute="centerY" id="uji-Tb-4tf"/>
                                     <constraint firstItem="wZX-Zs-Rvd" firstAttribute="leading" secondItem="2eM-TH-cS4" secondAttribute="trailing" constant="6" id="upf-b6-7Ha"/>
@@ -111,6 +114,9 @@
                             <constraint firstItem="dN8-BH-SeN" firstAttribute="top" secondItem="qeD-hJ-MhU" secondAttribute="bottom" constant="49" id="w7K-OI-L7a"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="dN8-BH-SeN" id="Njp-eI-5uZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gsM-Is-BPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -263,7 +269,6 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="6" id="Dfm-RL-05k"/>
-                                <constraint firstAttribute="width" constant="100" id="hTC-vq-LDV"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -272,8 +277,13 @@
                         <constraint firstItem="8FP-aY-FJv" firstAttribute="top" secondItem="zYT-h6-e2J" secondAttribute="top" id="1KT-cr-8SP"/>
                         <constraint firstItem="Fg4-D1-lKC" firstAttribute="leading" secondItem="zYT-h6-e2J" secondAttribute="leading" constant="24" id="67E-zF-dZY"/>
                         <constraint firstItem="Fg4-D1-lKC" firstAttribute="top" secondItem="zYT-h6-e2J" secondAttribute="top" constant="22" id="D6I-3L-m5b"/>
+                        <constraint firstItem="8FP-aY-FJv" firstAttribute="centerX" secondItem="zYT-h6-e2J" secondAttribute="centerX" id="fsQ-FP-3N8"/>
                         <constraint firstAttribute="trailing" secondItem="Fg4-D1-lKC" secondAttribute="trailing" constant="24" id="jNa-Pt-QQY"/>
                     </constraints>
+                    <connections>
+                        <outlet property="nextButton" destination="Fg4-D1-lKC" id="hbv-77-ie4"/>
+                        <outlet property="pageIndicatorContainer" destination="8FP-aY-FJv" id="46L-uO-hAd"/>
+                    </connections>
                 </view>
             </objects>
             <point key="canvasLocation" x="-148" y="84"/>

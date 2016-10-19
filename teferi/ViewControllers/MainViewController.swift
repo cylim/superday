@@ -11,6 +11,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private let animationDuration = 0.08
+    private var skipLoadingAnim = false
     
     private var disposeBag : DisposeBag? = DisposeBag()
     private var gestureRecognizer : UIGestureRecognizer!
@@ -61,8 +62,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.debugView.isHidden = true
         
         //Launch animation
-        self.launchAnim = LaunchAnimationView(frame: view.frame)
-        self.view.addSubview(launchAnim)
+        if !self.skipLoadingAnim
+        {
+            self.launchAnim = LaunchAnimationView(frame: view.frame)
+            self.view.addSubview(launchAnim)
+        }
         
         //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
@@ -114,22 +118,15 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
-        //Small delay to give launch screen time to fade away
-        Timer.schedule(withDelay: 0.1) { _ in
-            self.launchAnim?.animate(onCompleted:
-            {
-                self.launchAnim!.removeFromSuperview()
-                self.launchAnim = nil
-                
-                //Add button must be added like this due to .xib/.storyboard restrictions
-                self.view.insertSubview(self.addButton, belowSubview: self.editView)
-                self.addButton.snp.makeConstraints { make in
-                    make.height.equalTo(320)
-                    make.left.equalTo(self.view.snp.left)
-                    make.width.equalTo(self.view.snp.width)
-                    make.bottom.equalTo(self.view.snp.bottom)
-                }
-            })
+        self.startLaunchAnimation()
+        
+        //Add button must be added like this due to .xib/.storyboard restrictions
+        self.view.insertSubview(self.addButton, belowSubview: self.editView)
+        self.addButton.snp.makeConstraints { make in
+            make.height.equalTo(320)
+            make.left.equalTo(self.view.snp.left)
+            make.width.equalTo(self.view.snp.width)
+            make.bottom.equalTo(self.view.snp.bottom)
         }
     }
     
@@ -200,6 +197,25 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     }
     
     // MARK: Methods
+    func skipLoadingAnimation()
+    {
+        self.skipLoadingAnim = true
+    }
+    
+    private func startLaunchAnimation()
+    {
+        guard self.launchAnim != nil else { return }
+        
+        //Small delay to give launch screen time to fade away
+        Timer.schedule(withDelay: 0.1) { _ in
+            self.launchAnim?.animate(onCompleted:
+                {
+                    self.launchAnim!.removeFromSuperview()
+                    self.launchAnim = nil
+            })
+        }
+    }
+    
     private func onDateChanged(date: Date)
     {
         self.viewModel.currentDate = date

@@ -7,6 +7,10 @@ protocol SettingsService
     
     var lastLocationDate : Date? { get }
     
+    var hasLocationPermission : Bool { get }
+    
+    var hasNotificationPermission : Bool { get }
+    
     func setInstallDate(_ date: Date)
     
     func setLastLocationDate(_ date: Date)

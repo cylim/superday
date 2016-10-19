@@ -10,9 +10,6 @@ class DefaultNotificationService : NotificationService
     init(loggingService: LoggingService)
     {
         self.loggingService = loggingService
-        
-        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
     }
     
     //MARK: NotificationService implementation

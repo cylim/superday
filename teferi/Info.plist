@@ -45,9 +45,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need to access your location</string>
+	<string>We use your location to magically guess &amp; track your activities</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need to access your location</string>
+	<string>We use your location to magically guess &amp; track your activities</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

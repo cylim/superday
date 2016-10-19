@@ -8,6 +8,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //MARK: Fields
     private let disposeBag = DisposeBag()
     private let notificationService : NotificationService
+    private let notificationAuthorizationVariable = Variable(false)
     
     private let metricsService : MetricsService
     private let loggingService : LoggingService
@@ -27,13 +28,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.settingsService = DefaultSettingsService()
         self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
-        self.locationService = DefaultLocationService(loggingService: loggingService)
-        self.persistencyService = CoreDataPersistencyService(loggingService: loggingService)
-        self.notificationService = DefaultNotificationService(loggingService: loggingService)
-        self.timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: settingsService,
-                                                                      persistencyService: persistencyService,
-                                                                      loggingService: loggingService,
-                                                                      notificationService: notificationService)
+        self.locationService = DefaultLocationService(loggingService: self.loggingService)
+        self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
+        self.notificationService = DefaultNotificationService(loggingService: self.loggingService)
+        self.timeSlotCreationService = DefaultTimeSlotCreationService(settingsService: self.settingsService,
+                                                                      persistencyService: self.persistencyService,
+                                                                      loggingService: self.loggingService,
+                                                                      notificationService: self.notificationService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
@@ -71,15 +72,17 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         {
             //App is running for the first time
             let firstTimeSlot = TimeSlot()
-            if self.persistencyService.addNewTimeSlot(firstTimeSlot)
-            {
-                self.settingsService.setInstallDate(Date())
-            }
+            self.persistencyService.addNewTimeSlot(firstTimeSlot)
             
             let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             
-            initialViewController = onboardController.inject(mainViewController)
+            initialViewController =
+                onboardController.inject(settingsService,
+                                         mainViewController,
+                                         notificationAuthorizationVariable.asObservable())
+            
+            mainViewController.skipLoadingAnimation()
         }
         
         self.window!.rootViewController = initialViewController
@@ -112,6 +115,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func applicationDidBecomeActive(_ application: UIApplication)
     {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
+    
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings)
+    {
+        self.notificationAuthorizationVariable.value = true
     }
 
     func applicationWillTerminate(_ application: UIApplication)

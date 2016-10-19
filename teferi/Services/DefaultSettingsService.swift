@@ -1,4 +1,6 @@
 import CoreData
+import UIKit
+import CoreLocation
 
 class DefaultSettingsService : SettingsService
 {
@@ -15,6 +17,18 @@ class DefaultSettingsService : SettingsService
     var lastLocationDate : Date?
     {
         return UserDefaults.standard.object(forKey: lastLocationDateKey) as! Date?
+    }
+    
+    var hasLocationPermission : Bool
+    {
+        guard CLLocationManager.locationServicesEnabled() else { return false }
+        return CLLocationManager.authorizationStatus() == .authorizedAlways
+    }
+    
+    var hasNotificationPermission : Bool
+    {
+        let notificationSettings = UIApplication.shared.currentUserNotificationSettings
+        return notificationSettings?.types.contains([.alert, .badge]) ?? false
     }
     
     //MARK: Methods
