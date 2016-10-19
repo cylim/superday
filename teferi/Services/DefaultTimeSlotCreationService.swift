@@ -7,7 +7,7 @@ import Foundation
 class DefaultTimeSlotCreationService : TimeSlotCreationService
 {
     // MARK: Fields
-    private let notificationTimeout = TimeInterval(20)
+    private let notificationTimeout = TimeInterval(20 * 60)
     
     private let loggingService : LoggingService
     private var settingsService : SettingsService
@@ -66,7 +66,7 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             self.persistencyService.addNewTimeSlot(newTimeSlot)
             
             let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
-            self.notificationService.scheduleNotification(date: notificationDate, message: "Hey, what are you doing?")
+            self.notificationService.scheduleNotification(date: notificationDate, message: "I'm so excited to hear what you're doing right now. Would you please tell me?")
         }
     }
 }
