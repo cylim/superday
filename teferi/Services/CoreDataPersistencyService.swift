@@ -156,14 +156,23 @@ class CoreDataPersistencyService : PersistencyService
     {
         guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
         
-        let previousTimeSlotEndDate = managedTimeSlot.value(forKey: "startTime") as! Date
-        guard date > previousTimeSlotEndDate else
+        let startDate = managedTimeSlot.value(forKey: "startTime") as! Date
+        var endDate = date
+        
+        guard endDate > startDate else
         {
-            self.loggingService.log(withLogLevel: .error, message: "Trying to create a negative duration")
+            self.loggingService.log(withLogLevel: .error, message: "Trying to create a negative duration TimeSlot")
             return false
         }
         
-        managedTimeSlot.setValue(date, forKey: "endTime")
+        //TimeSlot is going for over one day, we should end it at midnight
+        if startDate.ignoreTimeComponents() != endDate.ignoreTimeComponents()
+        {
+            self.loggingService.log(withLogLevel: .debug, message: "Trying to create a negative duration TimeSlot")
+            endDate = startDate.tomorrow.ignoreTimeComponents()
+        }
+        
+        managedTimeSlot.setValue(endDate, forKey: "endTime")
         
         do
         {
