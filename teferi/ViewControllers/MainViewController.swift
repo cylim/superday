@@ -73,8 +73,8 @@ class MainViewController : UIViewController
         if self.isFirstUse
         {
             //Sets the first TimeSlot's category to leisure
-            guard let timeSlot = self.persistencyService.getTimeSlots(forDay: self.settingsService.installDate!).first else { return }
-            self.persistencyService.updateTimeSlot(timeSlot, withCategory: .leisure)
+            let timeSlot = TimeSlot(category: .leisure)
+            self.persistencyService.addNewTimeSlot(timeSlot)
         }
         else
         {
