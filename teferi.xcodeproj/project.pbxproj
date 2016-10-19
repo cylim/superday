@@ -20,7 +20,6 @@
 		2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8691DB6271000C0478C /* EditTimeSlotView.swift */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
-		2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C61D9BEA9A00AF8857 /* DebugView.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
 		24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */; };
@@ -119,7 +118,6 @@
 		2420A8691DB6271000C0478C /* EditTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditTimeSlotView.swift; path = Views/EditTimeSlotView.swift; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
-		2421F8C61D9BEA9A00AF8857 /* DebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugView.swift; path = Views/DebugView.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
 		24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomEvent.swift; path = Models/CustomEvent.swift; sourceTree = "<group>"; };
@@ -402,7 +400,6 @@
 			children = (
 				24B03B641DA3864500452D16 /* AddTimeSlotView.swift */,
 				24B03B661DA3866400452D16 /* AddTimeSlotView.xib */,
-				2421F8C61D9BEA9A00AF8857 /* DebugView.swift */,
 				2420A8691DB6271000C0478C /* EditTimeSlotView.swift */,
 				2420A8651DB56B5500C0478C /* EmptyStateView.swift */,
 				2420A8671DB56B6800C0478C /* EmptyStateView.xib */,
@@ -912,7 +909,6 @@
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */,
 				247F06041D88A75E00451BAD /* TimeSlotCreationService.swift in Sources */,
-				2421F8C71D9BEA9A00AF8857 /* DebugView.swift in Sources */,
 				2482CB031DB14DD400E892C1 /* DefaultEditStateService.swift in Sources */,
 				24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */,
 				2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */,
