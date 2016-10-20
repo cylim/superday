@@ -5,6 +5,9 @@ class OnboardingPage : UIViewController
 {
     private(set) var didAppear = false
     private(set) var nextButtonText : String?
+    private(set) var settingsService : SettingsService!
+    private(set) var notificationAuthorizationObservable : Observable<Bool>!
+    
     private var onboardingPageViewController : OnboardingPageViewController!
     
     init?(coder aDecoder: NSCoder, nextButtonText: String?)
@@ -19,9 +22,13 @@ class OnboardingPage : UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
-    func inject(_ onboardingPageViewController: OnboardingPageViewController)
+    func inject(_ settingsService: SettingsService,
+                _ onboardingPageViewController: OnboardingPageViewController,
+                _ notificationAuthorizationObservable: Observable<Bool>)
     {
+        self.settingsService = settingsService
         self.onboardingPageViewController = onboardingPageViewController
+        self.notificationAuthorizationObservable = notificationAuthorizationObservable
     }
     
     override func viewDidAppear(_ animated: Bool)

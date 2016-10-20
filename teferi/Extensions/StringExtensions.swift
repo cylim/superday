@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import Darwin
 
 extension String
 {
@@ -12,7 +13,7 @@ extension String
      */
     func translate() -> String
     {
-        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
+        return NSLocalizedString(self, comment: "")
     }
     
     /**

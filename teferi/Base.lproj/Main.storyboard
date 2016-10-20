@@ -84,7 +84,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="calendarLabel" destination="Cvs-ps-GL3" id="moA-oi-S7w"/>
+                        <outlet property="calendarButton" destination="Cvs-ps-GL3" id="uDk-bN-Yog"/>
                         <outlet property="icon" destination="4Kc-Yx-eCd" id="ocm-Tt-kFk"/>
                         <outlet property="titleLabel" destination="mpB-7h-JKy" id="TYT-Ml-lqN"/>
                     </connections>

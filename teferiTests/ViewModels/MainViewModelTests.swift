@@ -9,14 +9,19 @@ class MainViewModelTests : XCTestCase
     private var disposable : Disposable? = nil
     private var editStateService : EditStateService!
     private var mockMetricsService : MockMetricsService!
+    private var mockSettingsService : MockSettingsService!
     private var mockPersistencyService : MockPersistencyService!
     
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
+        self.mockSettingsService = MockSettingsService()
         self.editStateService = DefaultEditStateService()
         self.mockPersistencyService = MockPersistencyService()
-        self.viewModel = MainViewModel(persistencyService: self.mockPersistencyService, editStateService: self.editStateService, metricsService: self.mockMetricsService)
+        self.viewModel = MainViewModel(metricsService: self.mockMetricsService,
+                                       settingsService: self.mockSettingsService,
+                                       editStateService: self.editStateService,
+                                       persistencyService: self.mockPersistencyService)
     }
     
     override func tearDown()
@@ -89,7 +94,7 @@ class MainViewModelTests : XCTestCase
     func testTheUpdateTimeSlotMethodEndsTheEditingProcess()
     {
         var editingEnded = false
-        let observable = self.editStateService
+        _ = self.editStateService
             .isEditingObservable
             .subscribe(onNext: { editingEnded = !$0 })
         
@@ -98,5 +103,44 @@ class MainViewModelTests : XCTestCase
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
         expect(editingEnded).to(beTrue())
+    }
+    
+    func testThePermissionStateShouldNotBeShownIfTheUserHasAlreadyAuthorized()
+    {
+        self.mockSettingsService.hasLocationPermission = true
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beFalse())
+    }
+    
+    func testIfThePermissionOverlayWasNeverShownItNeedsToBeShown()
+    {
+        self.mockSettingsService.hasLocationPermission = false
+        self.mockSettingsService.lastAskedForLocationPermission = nil
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beTrue())
+    }
+    
+    func testThePermissionStateShouldBeShownIfItWasNotShownForOver24Hours()
+    {
+        self.mockSettingsService.hasLocationPermission = false
+        self.mockSettingsService.lastAskedForLocationPermission = Date().add(days: -2)
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beTrue())
+    }
+    
+    func testThePermissionStateShouldNotBeShownIfItWasLastShownInTheLast24Hours()
+    {
+        self.mockSettingsService.hasLocationPermission = false
+        self.mockSettingsService.lastAskedForLocationPermission = Date().ignoreTimeComponents()
+        
+        let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
+        
+        expect(shouldShow).to(beFalse())
     }
 }

@@ -53,7 +53,9 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     }
     
     //MARK: Methods
-    func inject(_ settingsService : SettingsService, _ mainViewController: MainViewController, _ notificationUpdateObservable: Observable<Bool>) -> OnboardingPageViewController
+    func inject(_ settingsService : SettingsService,
+                _ mainViewController: MainViewController,
+                _ notificationUpdateObservable: Observable<Bool>) -> OnboardingPageViewController
     {
         self.settingsService = settingsService
         self.mainViewController = mainViewController
@@ -66,9 +68,9 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
             self.launchAnim.animate(onCompleted:
-                {
-                    self.launchAnim.removeFromSuperview()
-                    self.launchAnim = nil
+            {
+                self.launchAnim.removeFromSuperview()
+                self.launchAnim = nil
             })
         }
     }
@@ -106,14 +108,8 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
             .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
             as! OnboardingPage
         
-        guard let page4 = page as? OnboardingPage4 else
-        {
-            page.inject(self)
-            return page
-        }
-        
-        page4.inject(self, self.notificationUpdateObservable)
-        return page4
+        page.inject(self.settingsService, self, self.notificationUpdateObservable)
+        return page
     }
     
     private func onNew(page: OnboardingPage)

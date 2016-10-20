@@ -1,0 +1,71 @@
+import UIKit
+import RxSwift
+
+class PermissionView : UIView
+{
+    //MARK: Fields
+    private let titleKey = "LocationDisabledTitle"
+    private let descriptionKey = "LocationDisabledDescription"
+    private let titleFirstUseKey = "LocationDisabledTitleFirstUse"
+    private let descriptionFirstUseKey = "LocationDisabledDescriptionFirstUse"
+    
+    private var isFirstTimeUser = false
+    private var settingsService : SettingsService!
+    
+    private var titleText : String
+    {
+        return (self.isFirstTimeUser ? titleFirstUseKey : titleKey).translate()
+    }
+    
+    private var descriptionText : String
+    {
+        return (self.isFirstTimeUser ? descriptionFirstUseKey : descriptionKey).translate()
+    }
+    
+    @IBOutlet private weak var blur : UIView!
+    @IBOutlet private weak var titleLabel : UILabel!
+    @IBOutlet private weak var descriptionLabel : UILabel!
+    @IBOutlet private weak var remindLaterButton : UIButton!
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+        
+        let layer = CAGradientLayer()
+        layer.frame = self.blur.frame
+        layer.colors = [ UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
+        layer.locations = [0.0, 1.0]
+        self.blur.layer.addSublayer(layer)
+    }
+    
+    //MARK: Methods
+    @IBAction func enableLocation()
+    {
+        let url = URL(string: UIApplicationOpenSettingsURLString)!
+        UIApplication.shared.openURL(url)
+    }
+    
+    @IBAction func remindMeLater()
+    {
+        self.settingsService.setLastAskedForLocationPermission(Date())
+        self.fadeView()
+    }
+    
+    func fadeView()
+    {
+        UIView.animate(withDuration: Constants.editAnimationDuration,
+                       animations: { self.alpha = 0 },
+                       completion: { _ in self.removeFromSuperview() })
+    }
+    
+    func inject(_ settingsService: SettingsService, isFirstTimeUser: Bool) -> PermissionView
+    {
+        self.isFirstTimeUser = isFirstTimeUser
+        self.settingsService = settingsService
+        
+        self.titleLabel.text = self.titleText
+        self.descriptionLabel.text = self.descriptionText
+        self.remindLaterButton.isHidden = self.isFirstTimeUser
+        return self
+    }
+}

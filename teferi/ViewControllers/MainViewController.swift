@@ -10,36 +10,47 @@ import SnapKit
 class MainViewController : UIViewController
 {
     // MARK: Fields
+    private var isFirstUse = false
     private let animationDuration = 0.08
-    private var skipLoadingAnim = false
     
     private var disposeBag : DisposeBag? = DisposeBag()
     private var gestureRecognizer : UIGestureRecognizer!
     private lazy var viewModel : MainViewModel =
     {
-        return MainViewModel(persistencyService: self.persistencyService, editStateService: self.editStateService, metricsService: self.metricsService)
+        return MainViewModel(metricsService: self.metricsService,
+                             settingsService: self.settingsService,
+                             editStateService: self.editStateService,
+                             persistencyService: self.persistencyService)
     }()
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
     //Dependencies
     private var metricsService : MetricsService!
-    private var settingsService : SettingsService!
+    private var appStateService : AppStateService!
     private var locationService : LocationService!
+    private var settingsService : SettingsService!
     private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
+    private var permissionView : PermissionView?
     private var launchAnim : LaunchAnimationView!
     
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var titleLabel : UILabel!
-    @IBOutlet private weak var calendarLabel : UIButton!
+    @IBOutlet private weak var calendarButton : UIButton!
     
-    func inject(_ locationService: LocationService, _ metricsService: MetricsService, _ persistencyService: PersistencyService, _ settingsService: SettingsService, _ editStateService: EditStateService) -> MainViewController
+    func inject(_ metricsService: MetricsService,
+                _ appStateService: AppStateService,
+                _ locationService: LocationService,
+                _ settingsService: SettingsService,
+                _ editStateService: EditStateService,
+                _ persistencyService: PersistencyService) -> MainViewController
     {
         self.metricsService = metricsService
+        self.appStateService = appStateService
         self.locationService = locationService
         self.settingsService = settingsService
         self.editStateService = editStateService
@@ -56,26 +67,33 @@ class MainViewController : UIViewController
         //Inject PagerViewController's dependencies
         self.pagerViewController.inject(metricsService, settingsService, persistencyService, editStateService)
         
-        //Launch animation
-        if !self.skipLoadingAnim
-        {
-            self.launchAnim = LaunchAnimationView(frame: view.frame)
-            self.view.addSubview(launchAnim)
-        }
-        
         //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         
         //Edit View
         self.editView = EditTimeSlotView(frame: self.view.frame, editEndedCallback: self.viewModel.updateTimeSlot)
         self.view.addSubview(self.editView)
+        
+        if self.isFirstUse
+        {
+            //Sets the first TimeSlot's category to leisure
+            let timeSlot = TimeSlot(category: .leisure)
+            self.persistencyService.addNewTimeSlot(timeSlot)
+        }
+        else
+        {
+            self.launchAnim = LaunchAnimationView(frame: view.frame)
+            self.view.addSubview(launchAnim)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        self.calendarLabel.setTitle(viewModel.calendarDay, for: .normal)
+        self.startLaunchAnimation()
+        
+        self.calendarButton.setTitle(viewModel.calendarDay, for: .normal)
         
         //Refresh Dispose bag, if needed
         self.disposeBag = self.disposeBag ?? DisposeBag()
@@ -107,7 +125,10 @@ class MainViewController : UIViewController
         
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
-        self.startLaunchAnimation()
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.onAppStateChanged)
+            .addDisposableTo(disposeBag!)
         
         //Add button must be added like this due to .xib/.storyboard restrictions
         self.view.insertSubview(self.addButton, belowSubview: self.editView)
@@ -131,13 +152,13 @@ class MainViewController : UIViewController
     {
         let today = Date().ignoreTimeComponents()
         
-        guard viewModel.currentDate.ignoreTimeComponents() != today else { return }
+        guard self.viewModel.currentDate.ignoreTimeComponents() != today else { return }
         
         self.pagerViewController.setViewControllers(
             [ TimelineViewController(date: today,
-                                     metricsService: metricsService,
-                                     editStateService: editStateService,
-                                     persistencyService: persistencyService) ],
+                                     metricsService: self.metricsService,
+                                     editStateService: self.editStateService,
+                                     persistencyService: self.persistencyService) ],
             direction: .forward,
             animated: true,
             completion: nil)
@@ -146,9 +167,9 @@ class MainViewController : UIViewController
     }
     
     // MARK: Methods
-    func skipLoadingAnimation()
+    func setIsFirstUse()
     {
-        self.skipLoadingAnim = true
+        self.isFirstUse = true
     }
     
     private func startLaunchAnimation()
@@ -158,10 +179,43 @@ class MainViewController : UIViewController
         //Small delay to give launch screen time to fade away
         Timer.schedule(withDelay: 0.1) { _ in
             self.launchAnim?.animate(onCompleted:
-                {
-                    self.launchAnim!.removeFromSuperview()
-                    self.launchAnim = nil
+            {
+                self.launchAnim!.removeFromSuperview()
+                self.launchAnim = nil
             })
+        }
+    }
+    
+    private func onAppStateChanged(appState: AppState)
+    {
+        if appState == .active
+        {
+            if self.viewModel.shouldShowLocationPermissionOverlay
+            {
+                guard permissionView == nil else { return }
+                
+                let isFirstTimeUser = !self.settingsService.canIgnoreLocationPermission
+                self.permissionView =
+                    (Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first
+                        as! PermissionView!).inject(self.settingsService, isFirstTimeUser: isFirstTimeUser)
+                
+                if self.launchAnim != nil
+                {
+                    self.view.insertSubview(self.permissionView!, belowSubview: self.launchAnim)
+                }
+                else
+                {
+                    self.view.addSubview(self.permissionView!)
+                }
+            }
+            else
+            {
+                guard let view = permissionView else { return }
+                
+                view.fadeView()
+                self.permissionView = nil
+                self.settingsService.setAllowedLocationPermission()
+            }
         }
     }
     
