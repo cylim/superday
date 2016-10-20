@@ -194,8 +194,19 @@ class MainViewController : UIViewController
             {
                 guard permissionView == nil else { return }
                 
-                self.permissionView = Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first as! PermissionView!
-                self.view.addSubview(self.permissionView!.inject(self.settingsService, isFirstTimeUser: !self.settingsService.canIgnoreLocationPermission))
+                let isFirstTimeUser = !self.settingsService.canIgnoreLocationPermission
+                self.permissionView =
+                    (Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first
+                        as! PermissionView!).inject(self.settingsService, isFirstTimeUser: isFirstTimeUser)
+                
+                if self.launchAnim != nil
+                {
+                    self.view.insertSubview(self.permissionView!, belowSubview: self.launchAnim)
+                }
+                else
+                {
+                    self.view.addSubview(self.permissionView!)
+                }
             }
             else
             {
