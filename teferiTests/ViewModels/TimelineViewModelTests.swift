@@ -30,6 +30,11 @@ class TimelineViewModelTests : XCTestCase
         expect(self.mockPersistencyService.didSubscribe).to(beTrue())
     }
     
+    func testIfThereAreNoTimeSlotsForTheCurrentDayTheViewModelCreatesOne()
+    {
+        expect(self.viewModel.timeSlots.count).to(equal(1))
+    }
+    
     func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
     {
         let newMockPersistencyService = MockPersistencyService()

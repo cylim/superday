@@ -70,11 +70,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.persistencyService)
         
         if self.settingsService.installDate == nil
-        {
-            //App is running for the first time
-            let firstTimeSlot = TimeSlot()
-            self.persistencyService.addNewTimeSlot(firstTimeSlot)
-            
+        {   
             let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             

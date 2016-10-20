@@ -48,6 +48,12 @@ class TimelineViewModel
         guard isCurrentDay else { return }
         
         self.persistencyService.subscribeToTimeSlotChanges(onNewTimeSlot)
+        
+        //Creates an empty TimeSlot if there are no TimeSlots for today
+        if self.timeSlots.count == 0
+        {
+            self.persistencyService.addNewTimeSlot(TimeSlot())
+        }
     }
     
     //MARK: Methods
