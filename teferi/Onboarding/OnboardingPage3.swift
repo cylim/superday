@@ -21,6 +21,11 @@ class OnboardingPage3 : OnboardingPage, CLLocationManagerDelegate
     {
         if status == .authorizedAlways || status == .denied
         {
+            if status == .authorizedAlways
+            {
+                self.settingsService.setAllowedLocationPermission()
+            }
+            
             self.finish()
         }
     }

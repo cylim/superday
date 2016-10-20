@@ -27,13 +27,15 @@ class MainViewController : UIViewController
     
     //Dependencies
     private var metricsService : MetricsService!
-    private var settingsService : SettingsService!
+    private var appStateService : AppStateService!
     private var locationService : LocationService!
+    private var settingsService : SettingsService!
     private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
+    private var permissionView : PermissionView?
     private var launchAnim : LaunchAnimationView!
     
     @IBOutlet private weak var icon : UIImageView!
@@ -41,12 +43,14 @@ class MainViewController : UIViewController
     @IBOutlet private weak var calendarButton : UIButton!
     
     func inject(_ metricsService: MetricsService,
+                _ appStateService: AppStateService,
                 _ locationService: LocationService,
                 _ settingsService: SettingsService,
                 _ editStateService: EditStateService,
                 _ persistencyService: PersistencyService) -> MainViewController
     {
         self.metricsService = metricsService
+        self.appStateService = appStateService
         self.locationService = locationService
         self.settingsService = settingsService
         self.editStateService = editStateService
@@ -87,6 +91,8 @@ class MainViewController : UIViewController
     {
         super.viewWillAppear(animated)
         
+        self.startLaunchAnimation()
+        
         self.calendarButton.setTitle(viewModel.calendarDay, for: .normal)
         
         //Refresh Dispose bag, if needed
@@ -119,7 +125,10 @@ class MainViewController : UIViewController
         
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
-        self.startLaunchAnimation()
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.onAppStateChanged)
+            .addDisposableTo(disposeBag!)
         
         //Add button must be added like this due to .xib/.storyboard restrictions
         self.view.insertSubview(self.addButton, belowSubview: self.editView)
@@ -128,13 +137,6 @@ class MainViewController : UIViewController
             make.left.equalTo(self.view.snp.left)
             make.width.equalTo(self.view.snp.width)
             make.bottom.equalTo(self.view.snp.bottom)
-        }
-        
-        if self.viewModel.shouldShowLocationPermissionOverlay
-        {
-            let permissionView = (Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first as! PermissionView!)!
-            
-            self.view.addSubview(permissionView.inject(self.settingsService, isFirstTimeUser: self.isFirstUse))
         }
     }
     
@@ -181,6 +183,28 @@ class MainViewController : UIViewController
                 self.launchAnim!.removeFromSuperview()
                 self.launchAnim = nil
             })
+        }
+    }
+    
+    private func onAppStateChanged(appState: AppState)
+    {
+        if appState == .active
+        {
+            if self.viewModel.shouldShowLocationPermissionOverlay
+            {
+                guard permissionView == nil else { return }
+                
+                self.permissionView = Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first as! PermissionView!
+                self.view.addSubview(self.permissionView!.inject(self.settingsService, isFirstTimeUser: !self.settingsService.canIgnoreLocationPermission))
+            }
+            else
+            {
+                guard let view = permissionView else { return }
+                
+                view.fadeView()
+                self.permissionView = nil
+                self.settingsService.setAllowedLocationPermission()
+            }
         }
     }
     

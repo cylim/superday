@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 
 class PermissionView : UIView
 {
@@ -42,14 +43,16 @@ class PermissionView : UIView
     {
         let url = URL(string: UIApplicationOpenSettingsURLString)!
         UIApplication.shared.openURL(url)
-        
-        self.remindMeLater()
     }
     
     @IBAction func remindMeLater()
     {
         self.settingsService.setLastAskedForLocationPermission(Date())
-        
+        self.fadeView()
+    }
+    
+    func fadeView()
+    {
         UIView.animate(withDuration: Constants.editAnimationDuration,
                        animations: { self.alpha = 0 },
                        completion: { _ in self.removeFromSuperview() })
@@ -63,7 +66,6 @@ class PermissionView : UIView
         self.titleLabel.text = self.titleText
         self.descriptionLabel.text = self.descriptionText
         self.remindLaterButton.isHidden = self.isFirstTimeUser
-        
         return self
     }
 }

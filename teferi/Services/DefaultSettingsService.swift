@@ -7,6 +7,7 @@ class DefaultSettingsService : SettingsService
     //MARK: Fields
     private let installDateKey = "installDate"
     private let lastLocationDateKey = "lastLocationDate"
+    private let canIgnoreLocationPermissionKey = " canIgnoreLocationPermission"
     private let lastAskedForLocationPermissionKey = "lastAskedForLocationPermission"
     
     //MARK: Properties
@@ -37,6 +38,11 @@ class DefaultSettingsService : SettingsService
         return UserDefaults.standard.object(forKey: lastAskedForLocationPermissionKey) as! Date?
     }
     
+    var canIgnoreLocationPermission : Bool
+    {
+        return UserDefaults.standard.bool(forKey: canIgnoreLocationPermissionKey)
+    }
+    
     //MARK: Methods
     func setInstallDate(_ date: Date)
     {
@@ -53,5 +59,10 @@ class DefaultSettingsService : SettingsService
     func setLastAskedForLocationPermission(_ date: Date)
     {
         UserDefaults.standard.set(date, forKey: lastAskedForLocationPermissionKey)
+    }
+    
+    func setAllowedLocationPermission()
+    {
+        UserDefaults.standard.set(true, forKey: canIgnoreLocationPermissionKey)
     }
 }

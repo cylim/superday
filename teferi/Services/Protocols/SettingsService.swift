@@ -11,6 +11,8 @@ protocol SettingsService
     
     var hasLocationPermission : Bool { get }
     
+    var canIgnoreLocationPermission : Bool { get }
+    
     var hasNotificationPermission : Bool { get }
     
     func setInstallDate(_ date: Date)
@@ -18,4 +20,6 @@ protocol SettingsService
     func setLastLocationDate(_ date: Date)
     
     func setLastAskedForLocationPermission(_ date: Date)
+    
+    func setAllowedLocationPermission()
 }
