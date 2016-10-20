@@ -10,6 +10,12 @@ class MockSettingsService : SettingsService
     
     var hasLocationPermission = true
     var hasNotificationPermission = true
+    var canIgnoreLocationPermission = false
+    
+    func setAllowedLocationPermission()
+    {
+        self.canIgnoreLocationPermission = true
+    }
     
     func setInstallDate(_ date: Date)
     {
