@@ -6,12 +6,16 @@ class FabricMetricsService : MetricsService
     ///Perform any framework specific initialization
     func initialize()
     {
-        Fabric.with([Answers.self, Crashlytics.self])
+        #if !DEBUG
+            Fabric.with([Answers.self, Crashlytics.self])
+        #endif
     }
     
     ///Used to send custom events to the framework
     func log(event: CustomEvent)
     {
-        Answers.logCustomEvent(withName: event.rawValue, customAttributes: [:])
+        #if !DEBUG
+            Answers.logCustomEvent(withName: event.rawValue, customAttributes: [:])
+        #endif
     }
 }
