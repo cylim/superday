@@ -65,7 +65,11 @@ class MainViewController : UIViewController
         super.viewDidLoad()
         
         //Inject PagerViewController's dependencies
-        self.pagerViewController.inject(metricsService, settingsService, persistencyService, editStateService)
+        self.pagerViewController.inject(self.metricsService,
+                                        self.appStateService,
+                                        self.settingsService,
+                                        self.editStateService,
+                                        self.persistencyService)
         
         //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView

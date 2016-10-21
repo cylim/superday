@@ -4,10 +4,18 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
+    private let lastInactiveDateKey = "lastInactiveDate"
+    private var lastInactiveDate : Date?
+    {
+        get { return UserDefaults.standard.object(forKey: lastInactiveDateKey) as? Date }
+        set(value) { UserDefaults.standard.set(value, forKey: lastInactiveDateKey) }
+    }
+    
     private let dateVariable = Variable(Date())
     private var disposeBag : DisposeBag? = DisposeBag()
     
     private var metricsService : MetricsService!
+    private var appStateService : AppStateService!
     private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
@@ -35,9 +43,14 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     // MARK: UIViewController lifecycle
     
-    func inject(_ metricsService: MetricsService, _ settingsService: SettingsService, _ persistencyService: PersistencyService, _ editStateService: EditStateService)
+    func inject(_ metricsService: MetricsService,
+                _ appStateService: AppStateService,
+                _ settingsService: SettingsService,
+                _ editStateService: EditStateService,
+                _ persistencyService: PersistencyService)
     {
         self.metricsService = metricsService
+        self.appStateService = appStateService
         self.editStateService = editStateService
         self.persistencyService = persistencyService
         
@@ -62,6 +75,22 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(disposeBag!)
         
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.onAppStateChanged)
+            .addDisposableTo(disposeBag!)
+        
+        self.initCurrentDateViewController()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        self.disposeBag = nil
+    }
+    
+    // MARK: Methods    
+    private func initCurrentDateViewController()
+    {
         self.currentDateViewController =
             TimelineViewController(date: Date(),
                                    metricsService: metricsService,
@@ -75,18 +104,29 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             completion: nil)
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        self.disposeBag = nil
-    }
-    
-    // MARK: Methods    
     private func onEditChanged(_ isEditing: Bool)
     {
         self.view
             .subviews
             .flatMap { v in v as? UIScrollView }
             .forEach { scrollView in scrollView.isScrollEnabled = !isEditing }
+    }
+    
+    private func onAppStateChanged(appState: AppState)
+    {
+        if appState == .active
+        {
+            let today = Date().ignoreTimeComponents()
+            
+            guard let inactiveDate = lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
+            
+            self.lastInactiveDate = nil
+            self.initCurrentDateViewController()
+        }
+        else
+        {
+            self.lastInactiveDate = Date()
+        }
     }
     
     // MARK: UIPageViewControllerDelegate implementation
