@@ -13,29 +13,10 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     ///The location manager itself
     private let locationManager = CLLocationManager()
     
-    /// Timer that allows the location service to pause and save battery
-    private var timer : Timer? = nil
-    
     private var locationVariable = Variable(CLLocation())
     
     // for logging date/time of received location updates
     private let dateTimeFormatter = DateFormatter()
-    
-    //MARK: Properties
-    var isInBackground : Bool = false
-    {
-        didSet
-        {
-            if isInBackground
-            {
-                loggingService.log(withLogLevel: .info, message: "App is now in Background")
-            }
-            else
-            {
-                loggingService.log(withLogLevel: .info, message: "App is now in Foreground")
-            }
-        }
-    }
     
     //MARK: Initializers
     init(loggingService: LoggingService)
@@ -44,70 +25,43 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         
         super.init()
         
-        locationManager.delegate = self
-        locationManager.distanceFilter = Constants.distanceFilter
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .other
+        self.locationManager.delegate = self
+        self.locationManager.distanceFilter = Constants.distanceFilter
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.activityType = .other
         
-        //TODO: We might need to disable this if we are getting poor location results...
-        locationManager.pausesLocationUpdatesAutomatically = true
+        self.dateTimeFormatter.dateFormat = "yyyy-mm-dd HH:mm:ss"
         
-        dateTimeFormatter.dateFormat = "yyyy-mm-dd HH:mm:ss"
-        
-        loggingService.log(withLogLevel: .verbose, message: "DefaultLocationService Initialized")
+        self.loggingService.log(withLogLevel: .verbose, message: "DefaultLocationService Initialized")
     }
     
     //MARK: LocationService implementation
     
-    var locationObservable : Observable<CLLocation> { return locationVariable.asObservable() }
+    lazy private(set) var locationObservable : Observable<CLLocation> =
+    {
+        return self.locationVariable
+                .asObservable()
+                .filter(self.filterLocations)
+    }()
     
     func startLocationTracking()
     {
-        loggingService.log(withLogLevel: .debug, message: "DefaultLocationService started")
-        
-        if !isInBackground
-        {
-            locationManager.startUpdatingLocation()
-        }
-        else
-        {
-            locationManager.startMonitoringSignificantLocationChanges()
-        }
+        self.loggingService.log(withLogLevel: .debug, message: "DefaultLocationService started")
+        self.locationManager.startMonitoringSignificantLocationChanges()
     }
     
     func stopLocationTracking()
     {
-        loggingService.log(withLogLevel: .debug, message: "DefaultLocationService stoped")
-        
-        if !isInBackground
-        {
-            locationManager.stopUpdatingLocation()
-        }
-        else
-        {
-            locationManager.stopMonitoringSignificantLocationChanges()
-        }
+        self.loggingService.log(withLogLevel: .debug, message: "DefaultLocationService stoped")
+        self.locationManager.stopMonitoringSignificantLocationChanges()
     }
     
     //MARK: CLLocationManagerDelegate Implementation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        let filteredLocations = locations.filter(filterLocations)
-        
         //Notifies new locations to listeners
-        filteredLocations.forEach { location in self.locationVariable.value = location }
-        
-        guard filteredLocations.count > 0 else { return }
-        
-        if timer != nil && timer!.isValid { return }
-        
-        //Schedules tracking to restart in 1 minute
-        timer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(startLocationTracking), userInfo: nil, repeats: false)
-        
-        //Stops tracker after 10 seconds
-        Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopLocationTracking), userInfo: nil, repeats: false);
+        locations.forEach { location in self.locationVariable.value = location }
     }
-    
     
     //MARK: Methods
     private func filterLocations(_ location: CLLocation) -> Bool
@@ -115,18 +69,18 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         //Location is valid
         guard location.coordinate.latitude != 0.0 && location.coordinate.latitude != 0.0 else
         {
-            logLocationUpdate(location, "Received an invalid location")
+            self.logLocationUpdate(location, "Received an invalid location")
             return false
         }
                 
         //Location is accurate enough
         guard 0 ... 2000 ~= location.horizontalAccuracy else
         {
-            logLocationUpdate(location, "Received an inaccurate location")
+            self.logLocationUpdate(location, "Received an inaccurate location")
             return false
         }
         
-        logLocationUpdate(location, "Received a valid location")
+        self.logLocationUpdate(location, "Received a valid location")
         return true
     }
     
@@ -137,6 +91,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
                  + " (speed: \(location.speed)m/s course: \(location.course))"
                  + " at \(dateTimeFormatter.string(from: location.timestamp))"
         
-        loggingService.log(withLogLevel: .debug, message: text)
+        self.loggingService.log(withLogLevel: .debug, message: text)
     }
 }

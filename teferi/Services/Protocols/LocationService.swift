@@ -4,11 +4,6 @@ import RxSwift
 /// Responsible for tracking the users location.
 protocol LocationService
 {
-    //MARK: Properties
-    
-    ///Indicates whether the app is running on background or not.
-    var isInBackground : Bool { get set }
-    
     //MARK: Methods
     
     ///Starts the tracking service.
