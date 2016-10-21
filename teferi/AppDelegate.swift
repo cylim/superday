@@ -13,7 +13,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let metricsService : MetricsService
     private let loggingService : LoggingService
     private var appStateService : AppStateService
-    private var locationService : LocationService
+    private let locationService : LocationService
     private let settingsService : SettingsService
     private let editStateService : EditStateService
     private let persistencyService : PersistencyService
@@ -118,6 +118,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         self.appStateService.currentAppState = .active
         self.locationService.stopLocationTracking()
+        self.notificationService.unscheduleAllNotifications()
     }
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings)
