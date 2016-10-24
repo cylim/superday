@@ -7,7 +7,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 {   
     //MARK: Fields
     private let disposeBag = DisposeBag()
-    private let notificationService : NotificationService
     private let notificationAuthorizationVariable = Variable(false)
     
     private let metricsService : MetricsService
@@ -17,6 +16,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let settingsService : SettingsService
     private let editStateService : EditStateService
     private let persistencyService : PersistencyService
+    private let notificationService : NotificationService
     private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
@@ -44,20 +44,17 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
         let isInBackground = launchOptions?[UIApplicationLaunchOptionsKey.location] != nil
-
+        
+        //Starts location tracking
+        self.locationService
+            .locationObservable
+            .subscribe(onNext: self.timeSlotCreationService.onNewLocation)
+            .addDisposableTo(disposeBag)
+        
+        self.locationService.startLocationTracking()
+        
         //Faster startup when the app wakes up for location updates
-        if isInBackground
-        {
-            //Starts location tracking
-            self.locationService
-                .locationObservable
-                .subscribe(onNext: self.timeSlotCreationService.onNewLocation)
-                .addDisposableTo(disposeBag)
-            
-            self.locationService.startLocationTracking()
-            
-            return true
-        }
+        if isInBackground { return true }
         
         self.initializeWindowIfNeeded()
         
@@ -124,7 +121,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         self.appStateService.currentAppState = .active
         self.initializeWindowIfNeeded()
-        self.locationService.stopLocationTracking()
         self.notificationService.unscheduleAllNotifications()
     }
     
