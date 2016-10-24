@@ -199,9 +199,9 @@ class MainViewController : UIViewController
                 guard permissionView == nil else { return }
                 
                 let isFirstTimeUser = !self.settingsService.canIgnoreLocationPermission
-                self.permissionView =
-                    (Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first
-                        as! PermissionView!).inject(self.settingsService, isFirstTimeUser: isFirstTimeUser)
+                let view = Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first as! PermissionView!
+                
+                self.permissionView = view!.inject(self.view.frame, self.settingsService, isFirstTimeUser: isFirstTimeUser)
                 
                 if self.launchAnim != nil
                 {

@@ -58,8 +58,9 @@ class PermissionView : UIView
                        completion: { _ in self.removeFromSuperview() })
     }
     
-    func inject(_ settingsService: SettingsService, isFirstTimeUser: Bool) -> PermissionView
+    func inject(_ frame: CGRect, _ settingsService: SettingsService, isFirstTimeUser: Bool) -> PermissionView
     {
+        self.frame = frame
         self.isFirstTimeUser = isFirstTimeUser
         self.settingsService = settingsService
         
