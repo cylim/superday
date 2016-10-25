@@ -44,6 +44,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         self.launchAnim = LaunchAnimationView(frame: self.view.bounds)
         self.view.addSubview(self.launchAnim)
         self.startLaunchAnimation()
+        self.onNew(page: self.pages[0])
     }
     
     //MARK: Actions
@@ -154,6 +155,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
+        guard (viewController as! OnboardingPage).allowPagingSwipe else { return nil }
         guard let currentPageIndex = self.index(of: viewController) else { return nil }
         
         return self.pageAt(index: currentPageIndex - 1)
@@ -162,6 +164,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
+        guard (viewController as! OnboardingPage).allowPagingSwipe else { return nil }
         guard let currentPageIndex = self.index(of: viewController) else { return nil }
         
         return self.pageAt(index: currentPageIndex + 1)

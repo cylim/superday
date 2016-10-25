@@ -8,6 +8,8 @@ class OnboardingPage : UIViewController
     private(set) var settingsService : SettingsService!
     private(set) var notificationAuthorizationObservable : Observable<Bool>!
     
+    var allowPagingSwipe : Bool { return self.nextButtonText != nil }
+    
     private var onboardingPageViewController : OnboardingPageViewController!
     
     init?(coder aDecoder: NSCoder, nextButtonText: String?)
