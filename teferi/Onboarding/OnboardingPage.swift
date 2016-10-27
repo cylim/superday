@@ -6,17 +6,20 @@ class OnboardingPage : UIViewController
     private(set) var didAppear = false
     private(set) var nextButtonText : String?
     private(set) var settingsService : SettingsService!
+    private(set) var appStateService : AppStateService!
     private(set) var notificationAuthorizationObservable : Observable<Bool>!
     
     var allowPagingSwipe : Bool { return self.nextButtonText != nil }
     
-    private var onboardingPageViewController : OnboardingPageViewController!
+    private(set) var onboardingPageViewController : OnboardingPageViewController!
     
     init?(coder aDecoder: NSCoder, nextButtonText: String?)
     {
         super.init(coder: aDecoder)
         
         self.nextButtonText = nextButtonText
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -24,10 +27,17 @@ class OnboardingPage : UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit
+    {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func inject(_ settingsService: SettingsService,
+                _ appStateService: AppStateService,
                 _ onboardingPageViewController: OnboardingPageViewController,
                 _ notificationAuthorizationObservable: Observable<Bool>)
     {
+        self.appStateService = appStateService
         self.settingsService = settingsService
         self.onboardingPageViewController = onboardingPageViewController
         self.notificationAuthorizationObservable = notificationAuthorizationObservable
@@ -51,7 +61,7 @@ class OnboardingPage : UIViewController
         // override in page
     }
     
-    func appBecameActive()
+    @objc func appBecameActive()
     {
         // override in page
     }

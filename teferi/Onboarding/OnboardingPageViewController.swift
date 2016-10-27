@@ -12,6 +12,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     @IBOutlet var pager: OnboardingPager!
     
     private var settingsService : SettingsService!
+    private var appStateService : AppStateService!
     private var mainViewController : MainViewController!
     private var notificationUpdateObservable : Observable<Bool>!
     
@@ -54,14 +55,21 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     }
     
     //MARK: Methods
-    func inject(_ settingsService : SettingsService,
+    func inject(_ settingsService: SettingsService,
+                _ appStateService: AppStateService,
                 _ mainViewController: MainViewController,
                 _ notificationUpdateObservable: Observable<Bool>) -> OnboardingPageViewController
     {
+        self.appStateService = appStateService
         self.settingsService = settingsService
         self.mainViewController = mainViewController
         self.notificationUpdateObservable = notificationUpdateObservable
         return self
+    }
+    
+    func isCurrent(page: OnboardingPage) -> Bool
+    {
+        return page == self.viewControllers?.first
     }
     
     private func startLaunchAnimation()
@@ -110,7 +118,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
             .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
             as! OnboardingPage
         
-        page.inject(self.settingsService, self, self.notificationUpdateObservable)
+        page.inject(self.settingsService, self.appStateService, self, self.notificationUpdateObservable)
         return page
     }
     
