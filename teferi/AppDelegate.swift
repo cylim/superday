@@ -34,9 +34,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
         self.notificationService = DefaultNotificationService(loggingService: self.loggingService)
         self.timeSlotCreationService =
-            DefaultTimeSlotCreationService(settingsService: self.settingsService,
+            DefaultTimeSlotCreationService(loggingService: self.loggingService,
+                                           settingsService: self.settingsService,
                                            persistencyService: self.persistencyService,
-                                           loggingService: self.loggingService,
                                            notificationService: self.notificationService)
     }
     
