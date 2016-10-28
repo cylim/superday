@@ -1,11 +1,3 @@
-//
-//  OnboardingPage3Test.swift
-//  teferi
-//
-//  Created by Olga Nesterenko on 10/27/16.
-//  Copyright © 2016 Toggl. All rights reserved.
-//
-
 import Nimble
 import RxSwift
 import XCTest
