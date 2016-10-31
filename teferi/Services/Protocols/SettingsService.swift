@@ -15,7 +15,11 @@ protocol SettingsService
     
     var hasNotificationPermission : Bool { get }
     
+    var lastInactiveDate : Date?  { get }
+    
     func setInstallDate(_ date: Date)
+    
+    func setLastInactiveDate(_ date: Date?)
     
     func setLastLocationDate(_ date: Date)
     
