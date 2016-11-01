@@ -73,7 +73,7 @@ class PagerViewControllerTests : XCTestCase
         expect(self.settingsService.lastInactiveDate).toNot(beNil())
     }
     
-    func testUiGetsRefreshedWhenTheAppGetsAwakeTheNextAfterItWentToSleep()
+    func testUiGetsRefreshedWhenTheAppGoesToForegroundTheDayAfterItWentToSleep()
     {
         self.pagerViewController.setViewControllers( [ UIViewController() ], direction: .forward, animated: false, completion: nil)
         
