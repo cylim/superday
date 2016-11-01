@@ -5,7 +5,7 @@ import SnapKit
 class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     //MARK: Fields
-    private lazy var pages : [OnboardingPage] = { return (1...4).map { i in self.page("\(i)") } } ()
+    internal lazy var pages : [OnboardingPage] = { return (1...4).map { i in self.page("\(i)") } } ()
     
     private var launchAnim : LaunchAnimationView!
     

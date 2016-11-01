@@ -6,6 +6,7 @@ class MockSettingsService : SettingsService
     ///Indicates the date the app was ran for the first time
     var installDate : Date? = Date()
     var lastLocationDate : Date? = nil
+    var lastInactiveDate : Date? = nil
     var lastAskedForLocationPermission : Date? = nil
     
     var hasLocationPermission = true
@@ -20,6 +21,11 @@ class MockSettingsService : SettingsService
     func setInstallDate(_ date: Date)
     {
         self.installDate = date
+    }
+    
+    func setLastInactiveDate(_ date: Date?)
+    {
+        self.lastInactiveDate = date
     }
     
     func setLastLocationDate(_ date: Date)
