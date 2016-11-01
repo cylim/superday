@@ -7,7 +7,7 @@ class OnboardingPage : UIViewController
     private(set) var nextButtonText : String?
     private(set) var settingsService : SettingsService!
     private(set) var appStateService : AppStateService!
-    private(set) var notificationAuthorizationObservable : Observable<Bool>!
+    private(set) var notificationService : NotificationService!
     
     var allowPagingSwipe : Bool { return self.nextButtonText != nil }
     
@@ -18,8 +18,6 @@ class OnboardingPage : UIViewController
         super.init(coder: aDecoder)
         
         self.nextButtonText = nextButtonText
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -34,13 +32,13 @@ class OnboardingPage : UIViewController
     
     func inject(_ settingsService: SettingsService,
                 _ appStateService: AppStateService,
-                _ onboardingPageViewController: OnboardingPageViewController,
-                _ notificationAuthorizationObservable: Observable<Bool>)
+                _ notificationService: NotificationService,
+                _ onboardingPageViewController: OnboardingPageViewController)
     {
         self.appStateService = appStateService
         self.settingsService = settingsService
+        self.notificationService = notificationService
         self.onboardingPageViewController = onboardingPageViewController
-        self.notificationAuthorizationObservable = notificationAuthorizationObservable
     }
     
     override func viewDidAppear(_ animated: Bool)

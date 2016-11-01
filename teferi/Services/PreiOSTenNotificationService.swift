@@ -1,18 +1,38 @@
 import Foundation
+import RxSwift
 import UIKit
 
-class DefaultNotificationService : NotificationService
+class PreiOSTenNotificationService : NotificationService
 {
     //MARK: Fields
     private let loggingService : LoggingService
+    private var notificationSubscription : Disposable?
+    private let notificationAuthorizationObservable : Observable<Bool>
     
     //MARK: Initializers
-    init(loggingService: LoggingService)
+    init(loggingService: LoggingService, _ notificationAuthorizationObservable: Observable<Bool>)
     {
         self.loggingService = loggingService
+        self.notificationAuthorizationObservable = notificationAuthorizationObservable
     }
     
     //MARK: NotificationService implementation
+    func requestNotificationPermission(completed: @escaping () -> ())
+    {
+        let notificationSettings = UIUserNotificationSettings(types: [ .alert, .badge ], categories: nil)
+        
+        self.notificationSubscription =
+            self.notificationAuthorizationObservable
+                .subscribe(onNext: { wasSet in
+                    
+                    guard wasSet else { return }
+                    
+                    completed()
+                })
+        
+        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
+    }
+    
     func scheduleNotification(date: Date, message: String)
     {
         loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
@@ -22,6 +42,7 @@ class DefaultNotificationService : NotificationService
         notification.alertBody = message
         notification.alertAction = "Superday"
         notification.soundName = UILocalNotificationDefaultSoundName
+        
         UIApplication.shared.scheduleLocalNotification(notification)
     }
     

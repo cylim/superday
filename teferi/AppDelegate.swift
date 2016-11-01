@@ -1,6 +1,7 @@
 import UIKit
 import RxSwift
 import CoreData
+import Foundation
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
@@ -32,7 +33,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.loggingService = SwiftyBeaverLoggingService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
         self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
-        self.notificationService = DefaultNotificationService(loggingService: self.loggingService)
+        
+        if #available(iOS 10.0, *) {
+            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService)
+        } else {
+            self.notificationService = PreiOSTenNotificationService(loggingService: self.loggingService,
+                                                                    notificationAuthorizationVariable.asObservable())
+        }
+        
         self.timeSlotCreationService =
             DefaultTimeSlotCreationService(loggingService: self.loggingService,
                                            settingsService: self.settingsService,
@@ -90,7 +98,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 onboardController.inject(settingsService,
                                          appStateService,
                                          mainViewController,
-                                         notificationAuthorizationVariable.asObservable())
+                                         notificationService)
             
             mainViewController.setIsFirstUse()
         }

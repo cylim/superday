@@ -14,7 +14,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     private var settingsService : SettingsService!
     private var appStateService : AppStateService!
     private var mainViewController : MainViewController!
-    private var notificationUpdateObservable : Observable<Bool>!
+    private var notificationService : NotificationService!
     
     //MARK: ViewController lifecycle
     override func viewDidLoad()
@@ -58,12 +58,12 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     func inject(_ settingsService: SettingsService,
                 _ appStateService: AppStateService,
                 _ mainViewController: MainViewController,
-                _ notificationUpdateObservable: Observable<Bool>) -> OnboardingPageViewController
+                _ notificationService: NotificationService) -> OnboardingPageViewController
     {
         self.appStateService = appStateService
         self.settingsService = settingsService
         self.mainViewController = mainViewController
-        self.notificationUpdateObservable = notificationUpdateObservable
+        self.notificationService = notificationService
         return self
     }
     
@@ -118,7 +118,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
             .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
             as! OnboardingPage
         
-        page.inject(self.settingsService, self.appStateService, self, self.notificationUpdateObservable)
+        page.inject(self.settingsService, self.appStateService, self.notificationService, self)
         return page
     }
     
