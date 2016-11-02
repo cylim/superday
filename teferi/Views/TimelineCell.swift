@@ -12,24 +12,33 @@ class TimelineCell : UITableViewCell
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
+        for constraint in self.lineView.constraints
+        {
+            guard constraint.firstAttribute == .height else { continue }
+            return constraint
+        }
+        
+        return NSLayoutConstraint(item: self.lineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
     }()
     
-    @IBOutlet private weak var lineView : UIView?
-    @IBOutlet private weak var elapsedTime : UILabel?
-    @IBOutlet private weak var indicatorDot : UIView?
-    @IBOutlet private weak var categoryButton : UIButton?
-    @IBOutlet private weak var slotDescription : UILabel?
-    @IBOutlet weak var categoryIcon : UIImageView?
+    @IBOutlet private weak var lineView : UIView!
+    @IBOutlet private weak var elapsedTime : UILabel!
+    @IBOutlet private weak var indicatorDot : UIView!
+    @IBOutlet private weak var categoryButton : UIButton!
+    @IBOutlet private weak var slotDescription : UILabel!
+    @IBOutlet weak var categoryIcon : UIImageView!
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
     lazy var editClickObservable : Observable<(CGPoint, Int)> =
     {
-        //[aView convertPoint:localPosition toView:nil];
         self.isSubscribedToClickObservable = true
-        return self.categoryButton!.rx.tap
-            .map { return (self.categoryIcon!.convert(self.categoryIcon!.center, to: nil), self.currentIndex) }
+        
+        return self.categoryButton.rx.tap
+            .map
+            {
+                return (self.categoryIcon.convert(self.categoryIcon!.center, to: nil), self.currentIndex)
+            }
             .asObservable()
     }()
     
@@ -37,7 +46,7 @@ class TimelineCell : UITableViewCell
     override func awakeFromNib()
     {
         super.awakeFromNib()
-        self.lineView?.addConstraint(lineHeightConstraint)
+        self.contentView.isUserInteractionEnabled = false
     }
     
     /**
