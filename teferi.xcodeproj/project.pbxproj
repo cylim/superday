@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240575B91DC7F39E002C0C06 /* MockAppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240575B81DC7F39E002C0C06 /* MockAppStateService.swift */; };
+		240575BB1DC7F3F4002C0C06 /* MockEditStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240575BA1DC7F3F4002C0C06 /* MockEditStateService.swift */; };
 		2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407A9871D9D512D00066889 /* LaunchAnimationView.swift */; };
 		2407A98C1D9D534B00066889 /* TimerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407A98A1D9D534B00066889 /* TimerExtensions.swift */; };
 		2407A98F1D9D54DB00066889 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2407A98D1D9D54DB00066889 /* LaunchScreen.storyboard */; };
@@ -52,6 +54,7 @@
 		246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2465316F1DA7B4150066DFE0 /* NotificationService.swift */; };
 		246531721DA7B4A10066DFE0 /* DefaultNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246531711DA7B4A10066DFE0 /* DefaultNotificationService.swift */; };
 		246531741DA7DDF10066DFE0 /* FabricMetricsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */; };
+		247E27591DC3B41400A38A2D /* PagerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */; };
 		247F05F81D87322600451BAD /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F71D87322600451BAD /* LocationService.swift */; };
 		247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F91D87325600451BAD /* PersistencyService.swift */; };
 		247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */; };
@@ -78,6 +81,7 @@
 		24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AA1DB8CA4600E429CA /* AppStateService.swift */; };
 		24D213AD1DB8CA9700E429CA /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AC1DB8CA9700E429CA /* AppState.swift */; };
 		24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */; };
+		24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */; };
 		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
 		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
 		51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */; };
@@ -112,6 +116,8 @@
 /* Begin PBXFileReference section */
 		00B20CBA66D17AE2580ADF08 /* Pods-teferi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.release.xcconfig"; sourceTree = "<group>"; };
 		03B30B73DD8EB78B4E96F162 /* Pods-teferiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		240575B81DC7F39E002C0C06 /* MockAppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockAppStateService.swift; path = Mocks/MockAppStateService.swift; sourceTree = "<group>"; };
+		240575BA1DC7F3F4002C0C06 /* MockEditStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockEditStateService.swift; path = Mocks/MockEditStateService.swift; sourceTree = "<group>"; };
 		2407A9871D9D512D00066889 /* LaunchAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchAnimationView.swift; path = Views/LaunchAnimationView.swift; sourceTree = "<group>"; };
 		2407A98A1D9D534B00066889 /* TimerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerExtensions.swift; path = Extensions/TimerExtensions.swift; sourceTree = "<group>"; };
 		2407A98E1D9D54DB00066889 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -159,6 +165,7 @@
 		2465316F1DA7B4150066DFE0 /* NotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationService.swift; path = Services/Protocols/NotificationService.swift; sourceTree = "<group>"; };
 		246531711DA7B4A10066DFE0 /* DefaultNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultNotificationService.swift; path = Services/DefaultNotificationService.swift; sourceTree = "<group>"; };
 		246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FabricMetricsServices.swift; path = Services/FabricMetricsServices.swift; sourceTree = "<group>"; };
+		247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewControllerTests.swift; path = ViewControllers/PagerViewControllerTests.swift; sourceTree = "<group>"; };
 		247F05F71D87322600451BAD /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/Protocols/LocationService.swift; sourceTree = "<group>"; };
 		247F05F91D87325600451BAD /* PersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistencyService.swift; path = Services/Protocols/PersistencyService.swift; sourceTree = "<group>"; };
 		247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataPersistencyService.swift; path = Services/CoreDataPersistencyService.swift; sourceTree = "<group>"; };
@@ -187,6 +194,7 @@
 		24D213AA1DB8CA4600E429CA /* AppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppStateService.swift; path = Services/Protocols/AppStateService.swift; sourceTree = "<group>"; };
 		24D213AC1DB8CA9700E429CA /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultAppStateService.swift; path = Services/DefaultAppStateService.swift; sourceTree = "<group>"; };
+		24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewControllerTests.swift; path = ViewControllers/Onboarding/OnboardingPageViewControllerTests.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
@@ -332,10 +340,12 @@
 		24874DE41D7C3FC40099DC1F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				24168E381DC21125004F90AD /* MockLoggingService.swift */,
-				24168E391DC21125004F90AD /* MockNotificationService.swift */,
-				24B03B621D9E946900452D16 /* MockMetricsService.swift */,
+				240575B81DC7F39E002C0C06 /* MockAppStateService.swift */,
+				240575BA1DC7F3F4002C0C06 /* MockEditStateService.swift */,
 				24564F6F1D83270000D9A8AE /* MockLocationService.swift */,
+				24168E381DC21125004F90AD /* MockLoggingService.swift */,
+				24B03B621D9E946900452D16 /* MockMetricsService.swift */,
+				24168E391DC21125004F90AD /* MockNotificationService.swift */,
 				247F05FD1D88153700451BAD /* MockPersistencyService.swift */,
 				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
 			);
@@ -347,6 +357,7 @@
 			children = (
 				24564F401D82FDBB00D9A8AE /* Extensions */,
 				24168E351DC21038004F90AD /* Services */,
+				24E7860A1DC399740048F577 /* ViewControllers */,
 				2414EB981D7DC8D1001EFB6D /* ViewModels */,
 				24564F7B1D83891100D9A8AE /* Views */,
 				24874DE41D7C3FC40099DC1F /* Mocks */,
@@ -443,6 +454,15 @@
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		24E7860A1DC399740048F577 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */,
+				247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		513535D41DA2752A00A365A9 /* Onboarding */ = {
@@ -966,6 +986,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
+				240575B91DC7F39E002C0C06 /* MockAppStateService.swift in Sources */,
+				240575BB1DC7F3F4002C0C06 /* MockEditStateService.swift in Sources */,
+				247E27591DC3B41400A38A2D /* PagerViewControllerTests.swift in Sources */,
 				24168E3A1DC21125004F90AD /* MockLoggingService.swift in Sources */,
 				24168E371DC21042004F90AD /* DefaultTimeSlotCreationServiceTests.swift in Sources */,
 				24B03B631D9E946900452D16 /* MockMetricsService.swift in Sources */,
@@ -973,6 +996,7 @@
 				24168E3B1DC21125004F90AD /* MockNotificationService.swift in Sources */,
 				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
+				24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */,
 				247F05FE1D88153700451BAD /* MockPersistencyService.swift in Sources */,
 				24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */,
 				24B03B611D9E5DEE00452D16 /* MockSettingsService.swift in Sources */,

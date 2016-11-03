@@ -4,18 +4,11 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private let lastInactiveDateKey = "lastInactiveDate"
-    private var lastInactiveDate : Date?
-    {
-        get { return UserDefaults.standard.object(forKey: lastInactiveDateKey) as? Date }
-        set(value) { UserDefaults.standard.set(value, forKey: lastInactiveDateKey) }
-    }
-    
-    private let dateVariable = Variable(Date())
     private var disposeBag : DisposeBag? = DisposeBag()
     
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
+    private var settingsService : SettingsService!
     private var editStateService : EditStateService!
     private var persistencyService : PersistencyService!
     
@@ -24,7 +17,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     private var viewModel : PagerViewModel!
     
     // MARK: Properties
-    var dateObservable : Observable<Date> { return dateVariable.asObservable() }
+    var dateObservable : Observable<Date> { return viewModel.dateObservable }
     
     // MARK: Initializers
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?)
@@ -34,9 +27,9 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
                    options: options)
     }
     
-    required init?(coder: NSCoder)
+    required convenience init?(coder: NSCoder)
     {
-        super.init(transitionStyle: .scroll,
+        self.init(transitionStyle: .scroll,
                    navigationOrientation: .horizontal,
                    options: nil)
     }
@@ -51,6 +44,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         self.metricsService = metricsService
         self.appStateService = appStateService
+        self.settingsService = settingsService
         self.editStateService = editStateService
         self.persistencyService = persistencyService
         
@@ -118,14 +112,14 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         {
             let today = Date().ignoreTimeComponents()
             
-            guard let inactiveDate = lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
+            guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
             
-            self.lastInactiveDate = nil
+            self.settingsService.setLastInactiveDate(nil)
             self.initCurrentDateViewController()
         }
         else
         {
-            self.lastInactiveDate = Date()
+            self.settingsService.setLastInactiveDate(Date())
         }
     }
     
@@ -141,7 +135,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             self.currentDateViewController = timelineController
         }
         
-        self.dateVariable.value = timelineController.date
+        self.viewModel.date = timelineController.date
     }
     
     // MARK: UIPageViewControllerDataSource implementation
@@ -163,7 +157,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         let timelineController = viewController as! TimelineViewController
         let nextDate = timelineController.date.tomorrow
         
-        guard viewModel.canScroll(toDate: nextDate) else { return nil }
+        guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
                                       metricsService: metricsService,

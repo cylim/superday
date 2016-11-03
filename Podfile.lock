@@ -13,8 +13,8 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - Nimble (~> 5.0.0)
-  - RxCocoa (~> 3.0.0-beta.1)
-  - RxSwift (~> 3.0.0-beta.1)
+  - RxCocoa (~> 3.0.0)
+  - RxSwift (~> 3.0.0)
   - SnapKit (~> 3.0)
   - SwiftyBeaver
 
@@ -27,6 +27,6 @@ SPEC CHECKSUMS:
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
   SwiftyBeaver: 2b68694df862381235e32bcfc4ec991e26bf131d
 
-PODFILE CHECKSUM: 0ecfcca889fd30df52027f3f71f40b295f011846
+PODFILE CHECKSUM: 722f7c614ab72a5c44b84d99dfe8b815d26ceece
 
 COCOAPODS: 1.1.1
