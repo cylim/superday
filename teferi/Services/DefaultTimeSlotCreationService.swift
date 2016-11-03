@@ -53,10 +53,10 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         let difference = currentLocationTime.timeIntervalSince(previousLocationTime)
         if (difference / 60) < 25.0
         {
-            guard currentTimeSlot.category == .unknown else { return }
-            
-            self.persistencyService.updateTimeSlot(currentTimeSlot, withCategory: .commute)
-            self.notificationService.unscheduleAllNotifications()
+            if currentTimeSlot.category == .unknown
+            {
+                self.persistencyService.updateTimeSlot(currentTimeSlot, withCategory: .commute)
+            }
         }
         else
         {
@@ -68,9 +68,11 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             
             let newTimeSlot = TimeSlot(withStartDate: currentLocationTime)
             self.persistencyService.addNewTimeSlot(newTimeSlot)
-            
-            let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
-            self.notificationService.scheduleNotification(date: notificationDate, message: notificationText)
         }
+        
+        self.notificationService.unscheduleAllNotifications()
+        
+        let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
+        self.notificationService.scheduleNotification(date: notificationDate, message: notificationText)
     }
 }
