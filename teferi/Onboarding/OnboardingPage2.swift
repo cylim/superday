@@ -72,7 +72,7 @@ class OnboardingPage2 : OnboardingPage
             let cell = self.timelineCells[self.editIndex]
             let slot = self.timeSlots[self.editIndex]
             self.editView.onEditBegan(
-                point: cell.categoryIcon!.convert(cell.categoryIcon!.center, to: self.timelineView),
+                point: cell.categoryIcon.convert(cell.categoryIcon.center, to: self.timelineView),
                 timeSlot: slot)
         }
     }
