@@ -44,5 +44,5 @@ protocol PersistencyService
      
      - Parameter callback: The function that gets invoked.
      */
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot, TimeSlotChangeType) -> ())
 }

@@ -86,6 +86,7 @@
 		512A9B3D1DD4450200B73F01 /* TimeSlotMiniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */; };
 		512A9B3F1DD4451F00B73F01 /* TimeSlotMiniView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */; };
 		512A9B411DD46E3B00B73F01 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* ColorExtensions.swift */; };
+		512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */; };
 		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
 		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
 		51BED8F71DD26FA800455EF6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BED8F61DD26FA800455EF6 /* UserNotifications.framework */; };
@@ -227,6 +228,7 @@
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSlotMiniView.swift; sourceTree = "<group>"; };
 		512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeSlotMiniView.xib; sourceTree = "<group>"; };
+		512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlotChangeType.swift; path = Models/TimeSlotChangeType.swift; sourceTree = "<group>"; };
 		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewController.swift; path = Onboarding/OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				24D213AC1DB8CA9700E429CA /* AppState.swift */,
+				512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */,
 				24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */,
 				24526A7B1D92D9BB00DA3FA0 /* Location.swift */,
 				24564F5B1D8325CC00D9A8AE /* Category.swift */,
@@ -1049,6 +1052,7 @@
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
+				512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
 				2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */,

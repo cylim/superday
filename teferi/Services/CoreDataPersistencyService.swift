@@ -7,7 +7,7 @@ class CoreDataPersistencyService : PersistencyService
     //MARK: Fields
     private let timeSlotEntityName = "TimeSlot"
     private let loggingService : LoggingService
-    private var callbacks = [(TimeSlot) -> ()]()
+    private var callbacks = [(TimeSlot, TimeSlotChangeType) -> ()]()
     
     //MARK: Initializers
     init(loggingService: LoggingService)
@@ -34,7 +34,7 @@ class CoreDataPersistencyService : PersistencyService
         do
         {
             try managedContext.save()
-            callbacks.forEach { callback in callback(timeSlot) }
+            callbacks.forEach { callback in callback(timeSlot, .create) }
             
             loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
             return true
@@ -103,7 +103,7 @@ class CoreDataPersistencyService : PersistencyService
             managedTimeSlot.setValue(category.rawValue, forKey: "category")
             
             try managedContext.save()
-            callbacks.forEach { callback in callback(timeSlot) }
+            callbacks.forEach { callback in callback(timeSlot, .update) }
             
             return true
         }
@@ -114,7 +114,7 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot, TimeSlotChangeType) -> ())
     {
         callbacks.append(callback)
     }

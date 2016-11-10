@@ -59,14 +59,21 @@ class TimelineViewModel
     //MARK: Methods
     
     ///Called when the persistency service indicates that a TimeSlot has been created/updated.
-    private func onChangedTimeSlot(timeSlot: TimeSlot)
+    private func onChangedTimeSlot(timeSlot: TimeSlot, changeType: TimeSlotChangeType)
     {
-        //Finishes last task, if needed
-        if let lastTimeSlot = timeSlots.last, timeSlot.startTime != lastTimeSlot.startTime
-        {
-            lastTimeSlot.endTime = Date()
+        switch changeType {
+        case .create:
+            if let lastTimeSlot = timeSlots.last
+            {
+                lastTimeSlot.endTime = Date()
+            }
             self.timeSlots.append(timeSlot)
-        } else {
-            self.timeSlots[self.timeSlots.endIndex - 1] = timeSlot
+        case .update:
+            if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
+            {
+                self.timeSlots[index] = timeSlot
+            }
+        default:
+            break
         }
     }}

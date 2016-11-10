@@ -71,7 +71,7 @@ class TimelineViewController : UITableViewController
     {
         self.tableView.reloadData()
         
-        let rowAnimation = self.hasInitialized ? UITableViewRowAnimation.top : .none
+        let rowAnimation = UITableViewRowAnimation.none//self.hasInitialized ? UITableViewRowAnimation.top : .none
         
         let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
         self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
