@@ -18,7 +18,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let settingsService : SettingsService
     private let editStateService : EditStateService
     private let persistencyService : PersistencyService
-    let notificationService : NotificationService
+    private let notificationService : NotificationService
     private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
