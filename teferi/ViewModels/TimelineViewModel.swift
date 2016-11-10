@@ -32,7 +32,7 @@ class TimelineViewModel
     init(date: Date, metricsService : MetricsService, persistencyService: PersistencyService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
-        let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date)
+        let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date, last: nil)
         
         //UI gets notified once every n seconds that the last item might need to be redrawn
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()

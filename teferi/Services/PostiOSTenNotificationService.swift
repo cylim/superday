@@ -38,7 +38,7 @@ class PostiOSTenNotificationService : NotificationService
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         
-        let lastThreeTimeSlotsDictionary = persistencyService.getTimeSlots(last: 3).reversed().map { (timeSlot) -> [String: String] in
+        let lastThreeTimeSlotsDictionary = persistencyService.getTimeSlots(forDay: Date(), last: 3).reversed().map { (timeSlot) -> [String: String] in
             var timeSlotDictionary = [String: String]()
             timeSlotDictionary["color"] = timeSlot.category.colorHex
             if timeSlot.category != .unknown {
