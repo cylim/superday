@@ -40,7 +40,7 @@ protocol PersistencyService
     @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
     
     /**
-     Adds a callback that gets called everytime a new TimeSlot is created.
+     Adds a callback that gets called everytime a new TimeSlot is created and modified.
      
      - Parameter callback: The function that gets invoked.
      */

@@ -103,6 +103,7 @@ class CoreDataPersistencyService : PersistencyService
             managedTimeSlot.setValue(category.rawValue, forKey: "category")
             
             try managedContext.save()
+            callbacks.forEach { callback in callback(timeSlot) }
             
             return true
         }
