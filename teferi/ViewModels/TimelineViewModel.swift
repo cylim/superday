@@ -9,12 +9,20 @@ class TimelineViewModel
     private let metricsService : MetricsService
     private let timeSlotsVariable : Variable<[TimeSlot]>
     private let isEditingVariable = Variable(false)
+    private let timeSlotChangeVariable : Variable<TimeSlotChangeType>
     
     //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
     let timeSlotsObservable : Observable<[TimeSlot]>
     let isEditingObservable : Observable<Bool>
+    let timeSlotChangeObservable : Observable<TimeSlotChangeType>
+    
+    var timeSlotChange : TimeSlotChangeType
+    {
+        get { return self.timeSlotChangeVariable.value }
+        set(value) { self.timeSlotChangeVariable.value = value }
+    }
     
     var isEditing : Bool
     {
@@ -41,8 +49,10 @@ class TimelineViewModel
         self.date = date.ignoreTimeComponents()
         self.persistencyService = persistencyService
         self.timeSlotsVariable = Variable(timeSlotsForDate)
+        self.timeSlotChangeVariable = Variable(TimeSlotChangeType.none)
         self.isEditingObservable = self.isEditingVariable.asObservable()
         self.timeSlotsObservable = self.timeSlotsVariable.asObservable()
+        self.timeSlotChangeObservable = self.timeSlotChangeVariable.asObservable()
         
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
@@ -53,6 +63,7 @@ class TimelineViewModel
         if self.timeSlots.count == 0
         {
             self.persistencyService.addNewTimeSlot(TimeSlot())
+            self.timeSlotChange = .create
         }
     }
     
@@ -63,16 +74,22 @@ class TimelineViewModel
     {
         switch changeType {
         case .create:
+            
             if let lastTimeSlot = timeSlots.last
             {
                 lastTimeSlot.endTime = Date()
             }
             self.timeSlots.append(timeSlot)
+            self.timeSlotChange = .create
+            
         case .update:
+            
             if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
             {
                 self.timeSlots[index] = timeSlot
             }
+            self.timeSlotChange = .update
+            
         default:
             break
         }
