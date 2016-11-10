@@ -27,17 +27,37 @@ enum Category : String
         switch(self)
         {
         case .friends:
-            return UIColor(hexString: "#28C980")
+            return UIColor(hexString: self.colorHex)
         case .work:
-            return UIColor(hexString: "#FFC31B")
+            return UIColor(hexString: self.colorHex)
         case .leisure:
-            return UIColor(hexString: "#BA5EFF")
+            return UIColor(hexString: self.colorHex)
         case .commute:
-            return UIColor(hexString: "#63D5EE")
+            return UIColor(hexString: self.colorHex)
         case .food:
-            return UIColor(hexString: "#FF6453")
+            return UIColor(hexString: self.colorHex)
         case .unknown:
-            return UIColor(hexString: "#CECDCD")
+            return UIColor(hexString: self.colorHex)
+        }
+    }
+    
+    /// Get the color associated with the category.
+    var colorHex : String
+    {
+        switch(self)
+        {
+        case .friends:
+            return "#28C980"
+        case .work:
+            return "#FFC31B"
+        case .leisure:
+            return "#BA5EFF"
+        case .commute:
+            return "#63D5EE"
+        case .food:
+            return "#FF6453"
+        case .unknown:
+            return "#CECDCD"
         }
     }
     

@@ -20,4 +20,11 @@ class Constants
     
     ///Duration of the fade in/out edit animation
     static let editAnimationDuration = 0.08
+    
+    static let notificationTimeSlotCategorySelectionIdentifier = "notificationTimeSlotCategorySelectionIdentifier"
+    static let notificationFoodActionIdentifier = "notificationFoodActionIdentifier"
+    static let notificationFriendsActionIdentifier = "notificationFriendsActionIdentifier"
+    static let notificationWorkActionIdentifier = "notificationWorkActionIdentifier"
+    static let notificationLeisureActionIdentifier = "notificationLeisureActionIdentifier"
+    static let notificationCommuteActionIdentifier = "notificationCommuteActionIdentifier"
 }

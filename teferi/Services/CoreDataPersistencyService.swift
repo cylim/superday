@@ -71,11 +71,20 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
+    func getTimeSlots(last numberOfTimeSlots: Int = 1, forDay day: Date = Date()) -> [TimeSlot] {
+        guard let managedTimeSlot = getLastNManagedTimeSlot(numberOfTimeSlots) else { return [TimeSlot()] }
+        
+        var timeSlotsToReturn = [TimeSlot]()
+        for mangedObject in managedTimeSlot {
+            timeSlotsToReturn.append(mapManagedObjectToTimeSlot(mangedObject as! NSManagedObject))
+        }
+        return timeSlotsToReturn
+    }
+    
     func getLastTimeSlot() -> TimeSlot
     {
-        guard let managedTimeSlot = getLastManagedTimeSlot() else { return TimeSlot() }
+        guard let timeSlot = getTimeSlots().first else { return TimeSlot() }
         
-        let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
         return timeSlot
     }
     
@@ -133,17 +142,22 @@ class CoreDataPersistencyService : PersistencyService
     
     private func getLastManagedTimeSlot() -> AnyObject?
     {
+        return getLastNManagedTimeSlot()?.first
+    }
+    
+    private func getLastNManagedTimeSlot(_ n:Int = 1) -> [AnyObject]?
+    {
         let managedContext = getManagedObjectContext()
         
         let request = NSFetchRequest<NSFetchRequestResult>()
         request.entity = NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)!
-        request.fetchLimit = 5
+        request.fetchLimit = n
         request.sortDescriptors = [NSSortDescriptor(key: "startTime", ascending: false)]
         
         do
         {
-            guard let managedTimeSlot = try managedContext.fetch(request).first else { return nil }
-            return managedTimeSlot as AnyObject?
+            let managedTimeSlot = try managedContext.fetch(request)
+            return managedTimeSlot as [AnyObject]?
         }
         catch
         {

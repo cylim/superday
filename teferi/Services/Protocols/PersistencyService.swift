@@ -18,6 +18,15 @@ protocol PersistencyService
     func getTimeSlots(forDay day: Date) -> [TimeSlot]
     
     /**
+     Get last N TimeSlots.
+     
+     - Parameter numberOfTimeSlots: The number TimeSlots.
+     
+     - Returns: The last N found TimeSlots or an empty array if there are none.
+     */
+    func getTimeSlots(last numberOfTimeSlots: Int) -> [TimeSlot]
+    
+    /**
      Persists a new TimeSlot and ends the previous one.
      
      - Parameter timeSlot: The TimeSlots to be added.

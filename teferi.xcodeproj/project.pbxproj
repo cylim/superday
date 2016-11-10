@@ -83,8 +83,16 @@
 		24D213AD1DB8CA9700E429CA /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AC1DB8CA9700E429CA /* AppState.swift */; };
 		24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */; };
 		24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */; };
+		512A9B3D1DD4450200B73F01 /* TimeSlotMiniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */; };
+		512A9B3F1DD4451F00B73F01 /* TimeSlotMiniView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */; };
+		512A9B411DD46E3B00B73F01 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* ColorExtensions.swift */; };
 		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
 		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
+		51BED8F71DD26FA800455EF6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BED8F61DD26FA800455EF6 /* UserNotifications.framework */; };
+		51BED8F91DD26FA800455EF6 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BED8F81DD26FA800455EF6 /* UserNotificationsUI.framework */; };
+		51BED8FC1DD26FA800455EF6 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BED8FB1DD26FA800455EF6 /* NotificationViewController.swift */; };
+		51BED8FF1DD26FA800455EF6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51BED8FD1DD26FA800455EF6 /* MainInterface.storyboard */; };
+		51BED9031DD26FA800455EF6 /* NotificationContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */; };
 		51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EAA2871DC0BA910025680D /* UIViewExtensions.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
@@ -99,6 +107,13 @@
 			remoteGlobalIDString = 240AC7131D748C8800F21F4F;
 			remoteInfo = teferi;
 		};
+		51BED9011DD26FA800455EF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 240AC70C1D748C8800F21F4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 51BED8F41DD26FA800455EF6;
+			remoteInfo = NotificationContentExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +125,17 @@
 			files = (
 			);
 			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51BED9071DD26FA800455EF6 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				51BED9031DD26FA800455EF6 /* NotificationContentExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -199,8 +225,16 @@
 		24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewControllerTests.swift; path = ViewControllers/Onboarding/OnboardingPageViewControllerTests.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSlotMiniView.swift; sourceTree = "<group>"; };
+		512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeSlotMiniView.xib; sourceTree = "<group>"; };
 		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewController.swift; path = Onboarding/OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BED8F61DD26FA800455EF6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		51BED8F81DD26FA800455EF6 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		51BED8FB1DD26FA800455EF6 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		51BED8FE1DD26FA800455EF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		51BED9001DD26FA800455EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage.swift; path = Onboarding/OnboardingPage.swift; sourceTree = "<group>"; };
 		51EAA2871DC0BA910025680D /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +258,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		51BED8F21DD26FA800455EF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51BED8F91DD26FA800455EF6 /* UserNotificationsUI.framework in Frameworks */,
+				51BED8F71DD26FA800455EF6 /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -243,6 +286,7 @@
 			children = (
 				240AC7161D748C8800F21F4F /* teferi */,
 				24A21B671D7C3E0800CEB4F3 /* teferiTests */,
+				51BED8FA1DD26FA800455EF6 /* NotificationContentExtension */,
 				240AC7151D748C8800F21F4F /* Products */,
 				0B990FDC87B227B22C0C95DC /* Pods */,
 				ED14C2EC617C158AAE12C910 /* Frameworks */,
@@ -254,6 +298,7 @@
 			children = (
 				240AC7141D748C8800F21F4F /* teferi.app */,
 				24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */,
+				51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -468,6 +513,15 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		512A9B401DD4452800B73F01 /* TimeSlotMiniView */ = {
+			isa = PBXGroup;
+			children = (
+				512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */,
+				512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */,
+			);
+			name = TimeSlotMiniView;
+			sourceTree = "<group>";
+		};
 		513535D41DA2752A00A365A9 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,11 +536,24 @@
 			name = Onboarding;
 			sourceTree = "<group>";
 		};
+		51BED8FA1DD26FA800455EF6 /* NotificationContentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				512A9B401DD4452800B73F01 /* TimeSlotMiniView */,
+				51BED8FB1DD26FA800455EF6 /* NotificationViewController.swift */,
+				51BED8FD1DD26FA800455EF6 /* MainInterface.storyboard */,
+				51BED9001DD26FA800455EF6 /* Info.plist */,
+			);
+			path = NotificationContentExtension;
+			sourceTree = "<group>";
+		};
 		ED14C2EC617C158AAE12C910 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */,
 				43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */,
+				51BED8F61DD26FA800455EF6 /* UserNotifications.framework */,
+				51BED8F81DD26FA800455EF6 /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -511,10 +578,12 @@
 				402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */,
 				9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */,
 				24E0949C1DA823E70035EC19 /* Run Script */,
+				51BED9071DD26FA800455EF6 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				51BED9021DD26FA800455EF6 /* PBXTargetDependency */,
 			);
 			name = teferi;
 			productName = teferi;
@@ -550,19 +619,36 @@
 			productReference = 24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		51BED8F41DD26FA800455EF6 /* NotificationContentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51BED9041DD26FA800455EF6 /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */;
+			buildPhases = (
+				51BED8F11DD26FA800455EF6 /* Sources */,
+				51BED8F21DD26FA800455EF6 /* Frameworks */,
+				51BED8F31DD26FA800455EF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationContentExtension;
+			productName = NotificationContentExtension;
+			productReference = 51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		240AC70C1D748C8800F21F4F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Toggl;
 				TargetAttributes = {
 					240AC7131D748C8800F21F4F = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = B227VTMZ94;
+						DevelopmentTeam = QK3BJ9S38G;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -575,6 +661,11 @@
 						DevelopmentTeam = W74MGFU2BJ;
 						LastSwiftMigration = 0800;
 						TestTargetID = 240AC7131D748C8800F21F4F;
+					};
+					51BED8F41DD26FA800455EF6 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = QK3BJ9S38G;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -593,6 +684,7 @@
 			targets = (
 				240AC7131D748C8800F21F4F /* teferi */,
 				24A21B651D7C3E0800CEB4F3 /* teferiTests */,
+				51BED8F41DD26FA800455EF6 /* NotificationContentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -618,6 +710,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51BED8F31DD26FA800455EF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				512A9B3F1DD4451F00B73F01 /* TimeSlotMiniView.xib in Resources */,
+				51BED8FF1DD26FA800455EF6 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1009,6 +1110,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		51BED8F11DD26FA800455EF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				512A9B3D1DD4450200B73F01 /* TimeSlotMiniView.swift in Sources */,
+				51BED8FC1DD26FA800455EF6 /* NotificationViewController.swift in Sources */,
+				512A9B411DD46E3B00B73F01 /* ColorExtensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1016,6 +1127,11 @@
 			isa = PBXTargetDependency;
 			target = 240AC7131D748C8800F21F4F /* teferi */;
 			targetProxy = 24A21B6B1D7C3E0800CEB4F3 /* PBXContainerItemProxy */;
+		};
+		51BED9021DD26FA800455EF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 51BED8F41DD26FA800455EF6 /* NotificationContentExtension */;
+			targetProxy = 51BED9011DD26FA800455EF6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1050,6 +1166,14 @@
 				513535D21DA26E3B00A365A9 /* Base */,
 			);
 			name = Onboarding.storyboard;
+			sourceTree = "<group>";
+		};
+		51BED8FD1DD26FA800455EF6 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51BED8FE1DD26FA800455EF6 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1153,12 +1277,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = B227VTMZ94;
+				DEVELOPMENT_TEAM = QK3BJ9S38G;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = teferi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday.sofo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1173,11 +1297,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = B227VTMZ94;
+				DEVELOPMENT_TEAM = QK3BJ9S38G;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = teferi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday.sofo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1216,6 +1340,41 @@
 			};
 			name = Release;
 		};
+		51BED9051DD26FA800455EF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = QK3BJ9S38G;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday.sofo.NotificationContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		51BED9061DD26FA800455EF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = QK3BJ9S38G;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday.sofo.NotificationContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1242,6 +1401,15 @@
 			buildConfigurations = (
 				24A21B6E1D7C3E0800CEB4F3 /* Debug */,
 				24A21B6F1D7C3E0800CEB4F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51BED9041DD26FA800455EF6 /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51BED9051DD26FA800455EF6 /* Debug */,
+				51BED9061DD26FA800455EF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
