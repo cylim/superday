@@ -1,11 +1,3 @@
-//
-//  NotificationViewController.swift
-//  NotificationContentExtension
-//
-//  Created by Juxhin Bakalli on 08/11/2016.
-//  Copyright © 2016 Toggl. All rights reserved.
-//
-
 import UIKit
 import UserNotifications
 import UserNotificationsUI
