@@ -11,8 +11,3 @@
 
 "NotificationBody" = "What are you doing right now?";
 "NotificationTitle" = "Howdy!";
-"NotificationFoodActionTitle" = "Food";
-"NotificationFriendsActionTitle" = "Friends";
-"NotificationWorkActionTitle" = "Work";
-"NotificationLeisureActionTitle" = "Leisure";
-"NotificationCommuteActionTitle" = "Commute";

@@ -65,24 +65,7 @@ class PostiOSTenNotificationService : NotificationService
     }
     
     func handleNotificationAction(withIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        if let identifier = identifier {
-            
-            var category = Category.commute
-            
-            switch identifier {
-            case Constants.notificationFoodActionIdentifier:
-                category = .food
-            case Constants.notificationFriendsActionIdentifier:
-                category = .friends
-            case Constants.notificationWorkActionIdentifier:
-                category = .work
-            case Constants.notificationLeisureActionIdentifier:
-                category = .leisure
-            case Constants.notificationCommuteActionIdentifier:
-                category = .commute
-            default:
-                break
-            }
+        if let identifier = identifier, let category = Category(rawValue: identifier) {
             
             let timeSlot = persistencyService.getLastTimeSlot()
             persistencyService.updateTimeSlot(timeSlot, withCategory: category)
@@ -95,20 +78,20 @@ class PostiOSTenNotificationService : NotificationService
     // MARK: - User Notification Action
     func setUserNotificationActions() {
         let food = UNNotificationAction(
-            identifier: Constants.notificationFoodActionIdentifier,
-            title: "NotificationFoodActionTitle".translate()
+            identifier: Category.food.rawValue,
+            title: Category.food.rawValue.capitalized.translate()
         )
         let friends = UNNotificationAction(
-            identifier: Constants.notificationFriendsActionIdentifier,
-            title: "NotificationFriendsActionTitle".translate()
+            identifier: Category.friends.rawValue,
+            title: Category.friends.rawValue.capitalized.translate()
         )
         let work = UNNotificationAction(
-            identifier: Constants.notificationWorkActionIdentifier,
-            title: "NotificationWorkActionTitle".translate()
+            identifier: Category.work.rawValue,
+            title: Category.work.rawValue.capitalized.translate()
         )
         let leisure = UNNotificationAction(
-            identifier: Constants.notificationLeisureActionIdentifier,
-            title: "NotificationLeisureActionTitle".translate()
+            identifier: Category.leisure.rawValue,
+            title: Category.leisure.rawValue.capitalized.translate()
         )
         let category = UNNotificationCategory(
             identifier: Constants.notificationTimeSlotCategorySelectionIdentifier,
