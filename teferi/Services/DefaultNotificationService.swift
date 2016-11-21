@@ -29,7 +29,7 @@ class DefaultNotificationService : NotificationService
     {
         guard let notifications = UIApplication.shared.scheduledLocalNotifications, notifications.count > 0 else
         {
-            self.loggingService.log(withLogLevel: .warning, message: "Tried to unschedule notifications, but none are currently scheduled")
+            self.loggingService.log(withLogLevel: .info, message: "Tried to unschedule notifications, but none are currently scheduled")
             return
         }
         
