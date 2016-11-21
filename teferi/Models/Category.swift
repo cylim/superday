@@ -24,20 +24,26 @@ enum Category : String
     /// Get the color associated with the category.
     var color : UIColor
     {
+        return UIColor(hexString: self.colorHex)
+    }
+    
+    /// Get the color associated with the category.
+    var colorHex : String
+    {
         switch(self)
         {
         case .friends:
-            return UIColor(hexString: "#28C980")
+            return "#28C980"
         case .work:
-            return UIColor(hexString: "#FFC31B")
+            return "#FFC31B"
         case .leisure:
-            return UIColor(hexString: "#BA5EFF")
+            return "#BA5EFF"
         case .commute:
-            return UIColor(hexString: "#63D5EE")
+            return "#63D5EE"
         case .food:
-            return UIColor(hexString: "#FF6453")
+            return "#FF6453"
         case .unknown:
-            return UIColor(hexString: "#CECDCD")
+            return "#CECDCD"
         }
     }
     

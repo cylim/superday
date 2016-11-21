@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import CoreData
 import Foundation
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
@@ -35,7 +36,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
         
         if #available(iOS 10.0, *) {
-            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService)
+            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService, persistencyService: persistencyService)
         } else {
             self.notificationService = PreiOSTenNotificationService(loggingService: self.loggingService,
                                                                     notificationAuthorizationVariable.asObservable())
@@ -64,6 +65,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         {
             self.locationService.startLocationTracking()
             return true
+        }
+        
+        if #available(iOS 10.0, *) {
+            (self.notificationService as? PostiOSTenNotificationService)?.setUserNotificationActions()
         }
         
         self.initializeWindowIfNeeded()
@@ -139,6 +144,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings)
     {
         self.notificationAuthorizationVariable.value = true
+    }
+    
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
+        notificationService.handleNotificationAction(withIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }
 
     func applicationWillTerminate(_ application: UIApplication)

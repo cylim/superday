@@ -8,3 +8,6 @@
 "LocationDisabledDescription" = "We use your location to magically guess & track your activities. 🤘";
 
 "NotificationText" = "I'm so excited to hear what you're doing right now. Would you please tell me?";
+
+"NotificationBody" = "What are you doing right now?";
+"NotificationTitle" = "Howdy!";

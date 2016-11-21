@@ -33,12 +33,13 @@ class PreiOSTenNotificationService : NotificationService
         UIApplication.shared.registerUserNotificationSettings(notificationSettings)
     }
     
-    func scheduleNotification(date: Date, message: String)
+    func scheduleNotification(date: Date, title: String, message: String)
     {
         loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
         
         let notification = UILocalNotification()
         notification.fireDate = date
+        notification.alertTitle = title
         notification.alertBody = message
         notification.alertAction = "Superday"
         notification.soundName = UILocalNotificationDefaultSoundName
@@ -55,5 +56,9 @@ class PreiOSTenNotificationService : NotificationService
         }
         
         notifications.forEach { n in UIApplication.shared.cancelLocalNotification(n)  }
+    }
+    
+    func handleNotificationAction(withIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
+        completionHandler()
     }
 }

@@ -13,9 +13,11 @@ protocol PersistencyService
      
      - Parameter day: The day used for filtering the TimeSlots.
      
+     - Parameter numberOfTimeSlots: The number of TimeSlots.
+     
      - Returns: The found TimeSlots for the day or an empty array if there are none.
      */
-    func getTimeSlots(forDay day: Date) -> [TimeSlot]
+    func getTimeSlots(forDay day: Date, last numberOfTimeSlots: Int?) -> [TimeSlot]
     
     /**
      Persists a new TimeSlot and ends the previous one.
@@ -38,9 +40,9 @@ protocol PersistencyService
     @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
     
     /**
-     Adds a callback that gets called everytime a new TimeSlot is created.
+     Adds a callback that gets called everytime a new TimeSlot is created and modified.
      
      - Parameter callback: The function that gets invoked.
      */
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot, TimeSlotChangeType) -> ())
 }

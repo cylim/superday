@@ -7,7 +7,7 @@ class CoreDataPersistencyService : PersistencyService
     //MARK: Fields
     private let timeSlotEntityName = "TimeSlot"
     private let loggingService : LoggingService
-    private var callbacks = [(TimeSlot) -> ()]()
+    private var callbacks = [(TimeSlot, TimeSlotChangeType) -> ()]()
     
     //MARK: Initializers
     init(loggingService: LoggingService)
@@ -34,7 +34,7 @@ class CoreDataPersistencyService : PersistencyService
         do
         {
             try managedContext.save()
-            callbacks.forEach { callback in callback(timeSlot) }
+            callbacks.forEach { callback in callback(timeSlot, .create) }
             
             loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
             return true
@@ -46,20 +46,24 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    func getTimeSlots(forDay date: Date) -> [TimeSlot]
+    func getTimeSlots(forDay day: Date, last numberOfTimeSlots: Int?) -> [TimeSlot]
     {
-        let startTime = date.ignoreTimeComponents()
-        let endTime = date.tomorrow.ignoreTimeComponents()
+        let startTime = day.ignoreTimeComponents()
+        let endTime = day.tomorrow.ignoreTimeComponents()
         
         //Filter in order to get only the TimeSlots for said date
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: timeSlotEntityName)
         fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime as NSDate, endTime as NSDate)
+        if let numberOfTimeSlots = numberOfTimeSlots {
+            fetchRequest.fetchLimit = numberOfTimeSlots
+        }
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "startTime", ascending: false)]
         
         do
         {
             let results = try getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
             
-            let timeSlots = results.map(mapManagedObjectToTimeSlot)
+            let timeSlots = results.reversed().map(mapManagedObjectToTimeSlot)
             loggingService.log(withLogLevel: .info, message: "\(timeSlots.count) TimeSlots found")
             return timeSlots
         }
@@ -99,6 +103,7 @@ class CoreDataPersistencyService : PersistencyService
             managedTimeSlot.setValue(category.rawValue, forKey: "category")
             
             try managedContext.save()
+            callbacks.forEach { callback in callback(timeSlot, .update) }
             
             return true
         }
@@ -109,7 +114,7 @@ class CoreDataPersistencyService : PersistencyService
         }
     }
     
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot, TimeSlotChangeType) -> ())
     {
         callbacks.append(callback)
     }

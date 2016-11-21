@@ -51,8 +51,8 @@ class TimelineViewController : UITableViewController
         self.tableView.register(UINib.init(nibName: "EmptyStateView", bundle: Bundle.main), forCellReuseIdentifier: emptyCellIdentifier)
     
         self.viewModel
-            .timeSlotsObservable
-            .subscribe(onNext: self.onNewTimeSlotAvailable)
+            .timeSlotChangeObservable
+            .subscribe(onNext: self.onTimeSlotChanges)
             .addDisposableTo(self.disposeBag)
         
         self.viewModel
@@ -67,19 +67,40 @@ class TimelineViewController : UITableViewController
     }
     
     // MARK: Methods
-    private func onNewTimeSlotAvailable(timeSlots: [TimeSlot])
+    private func onTimeSlotChanges(timeSlotChange: TimeSlotChangeType)
     {
-        self.tableView.reloadData()
-        
-        let rowAnimation = self.hasInitialized ? UITableViewRowAnimation.top : .none
-        
-        let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
-        self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
-        
-        let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
-        self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
-        
-        self.hasInitialized = true
+        switch timeSlotChange {
+        case .create:
+            
+            self.tableView.reloadData()
+            
+            let rowAnimation = self.hasInitialized ? UITableViewRowAnimation.top : .none
+            
+            let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+            self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
+            
+            let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
+            self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
+            
+            self.hasInitialized = true
+            
+        case .update:
+            
+            guard !tableView.isEditing else { return }
+            
+            let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+            
+        case .none:
+            
+            self.tableView.reloadData()
+            
+            let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
+            self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
+            
+        default:
+            break
+        }
     }
     
     private func onIsEditing(isEditing: Bool)
