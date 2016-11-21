@@ -29,8 +29,6 @@ class PagerViewModel
         let maxDate = Date().ignoreTimeComponents()
         let dateWithNoTime = date.ignoreTimeComponents()
         
-        guard dateWithNoTime >= minDate  && dateWithNoTime <= maxDate else { return false }
-        
-        return true
+        return dateWithNoTime >= minDate && dateWithNoTime <= maxDate
     }
 }
