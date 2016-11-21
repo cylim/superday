@@ -27,6 +27,7 @@
 		2420A86E1DB7DD0F00C0478C /* PermissionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A86D1DB7DD0F00C0478C /* PermissionView.xib */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
+		242AD5161DE37A72001C3B72 /* DelayedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AD5151DE37A72001C3B72 /* DelayedSequence.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
 		24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */; };
@@ -84,7 +85,7 @@
 		24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */; };
 		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
 		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
-		51B3295E1DE342BB00B3823E /* DelayedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B3295D1DE342BB00B3823E /* DelayedSequence.swift */; };
+		51BE3FBD1DD62FE20002DEBD /* TimelineViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BE3FBC1DD62FE20002DEBD /* TimelineViewControllerTests.swift */; };
 		51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */; };
 		51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EAA2871DC0BA910025680D /* UIViewExtensions.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
@@ -139,6 +140,7 @@
 		2420A86D1DB7DD0F00C0478C /* PermissionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PermissionView.xib; path = Views/PermissionView.xib; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
+		242AD5151DE37A72001C3B72 /* DelayedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DelayedSequence.swift; path = Helpers/DelayedSequence.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
 		24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomEvent.swift; path = Models/CustomEvent.swift; sourceTree = "<group>"; };
@@ -200,7 +202,7 @@
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewController.swift; path = Onboarding/OnboardingPageViewController.swift; sourceTree = "<group>"; };
-		51B3295D1DE342BB00B3823E /* DelayedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DelayedSequence.swift; path = Helpers/DelayedSequence.swift; sourceTree = "<group>"; };
+		51BE3FBC1DD62FE20002DEBD /* TimelineViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewControllerTests.swift; path = ViewControllers/TimelineViewControllerTests.swift; sourceTree = "<group>"; };
 		51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage.swift; path = Onboarding/OnboardingPage.swift; sourceTree = "<group>"; };
 		51EAA2871DC0BA910025680D /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -300,9 +302,9 @@
 		2421F8C11D9BAC4A00AF8857 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				242AD5151DE37A72001C3B72 /* DelayedSequence.swift */,
 				24116A031D9DACCD00762BD6 /* AnimationHelpers.swift */,
 				2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */,
-				51B3295D1DE342BB00B3823E /* DelayedSequence.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -464,6 +466,7 @@
 			children = (
 				24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */,
 				247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */,
+				51BE3FBC1DD62FE20002DEBD /* TimelineViewControllerTests.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -945,7 +948,7 @@
 				24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */,
 				24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */,
 				51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */,
-				51B3295E1DE342BB00B3823E /* DelayedSequence.swift in Sources */,
+				242AD5161DE37A72001C3B72 /* DelayedSequence.swift in Sources */,
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
@@ -994,6 +997,7 @@
 				240575BB1DC7F3F4002C0C06 /* MockEditStateService.swift in Sources */,
 				247E27591DC3B41400A38A2D /* PagerViewControllerTests.swift in Sources */,
 				24168E3A1DC21125004F90AD /* MockLoggingService.swift in Sources */,
+				51BE3FBD1DD62FE20002DEBD /* TimelineViewControllerTests.swift in Sources */,
 				24168E371DC21042004F90AD /* DefaultTimeSlotCreationServiceTests.swift in Sources */,
 				24B03B631D9E946900452D16 /* MockMetricsService.swift in Sources */,
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
