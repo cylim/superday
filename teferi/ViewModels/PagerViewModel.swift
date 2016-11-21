@@ -25,7 +25,7 @@ class PagerViewModel
     //Methods
     func canScroll(toDate date: Date) -> Bool
     {
-        let minDate = settingsService.installDate!.ignoreTimeComponents()
+        let minDate = self.settingsService.installDate!.ignoreTimeComponents()
         let maxDate = Date().ignoreTimeComponents()
         let dateWithNoTime = date.ignoreTimeComponents()
         

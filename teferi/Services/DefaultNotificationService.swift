@@ -15,7 +15,7 @@ class DefaultNotificationService : NotificationService
     //MARK: NotificationService implementation
     func scheduleNotification(date: Date, message: String)
     {
-        loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
+        self.loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
         
         let notification = UILocalNotification()
         notification.fireDate = date
@@ -29,7 +29,7 @@ class DefaultNotificationService : NotificationService
     {
         guard let notifications = UIApplication.shared.scheduledLocalNotifications, notifications.count > 0 else
         {
-            loggingService.log(withLogLevel: .warning, message: "Tried to unschedule notifications, but none are currently scheduled")
+            self.loggingService.log(withLogLevel: .warning, message: "Tried to unschedule notifications, but none are currently scheduled")
             return
         }
         

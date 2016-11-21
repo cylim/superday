@@ -14,16 +14,16 @@ class OnboardingPage3 : OnboardingPage, CLLocationManagerDelegate
     
     override func startAnimations()
     {
-        disposeBag = disposeBag ?? DisposeBag()
+        self.disposeBag = self.disposeBag ?? DisposeBag()
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        self.locationManager = CLLocationManager()
+        self.locationManager.delegate = self
+        self.locationManager.requestAlwaysAuthorization()
         
         self.appStateService
             .appStateObservable
             .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag!)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
@@ -47,7 +47,7 @@ class OnboardingPage3 : OnboardingPage, CLLocationManagerDelegate
     func onAppStateChanged(appState: AppState) {
         if appState == .active {
             if self.onboardingPageViewController.isCurrent(page: self) && !self.settingsService.hasLocationPermission {
-                locationManager.requestAlwaysAuthorization()
+                self.locationManager.requestAlwaysAuthorization()
             }
         }
     }
