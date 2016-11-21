@@ -19,11 +19,11 @@ class CoreDataPersistencyService : PersistencyService
     @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
     {
         //The previous TimeSlot needs to be finished before a new one can start
-        guard endPreviousTimeSlot(atDate: timeSlot.startTime) else { return false }
+        guard self.endPreviousTimeSlot(atDate: timeSlot.startTime) else { return false }
         
         //Gets the managed object from CoreData's context
-        let managedContext = getManagedObjectContext()
-        let entity =  NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)!
+        let managedContext = self.getManagedObjectContext()
+        let entity =  NSEntityDescription.entity(forEntityName: self.timeSlotEntityName, in: managedContext)!
         let managedTimeSlot = NSManagedObject(entity: entity, insertInto: managedContext)
         
         //Sets the properties
@@ -34,14 +34,14 @@ class CoreDataPersistencyService : PersistencyService
         do
         {
             try managedContext.save()
-            callbacks.forEach { callback in callback(timeSlot) }
+            self.callbacks.forEach { callback in callback(timeSlot) }
             
-            loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
+            self.loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
             return true
         }
         catch
         {
-            loggingService.log(withLogLevel: .error, message: "Failed to create new TimeSlot")
+            self.loggingService.log(withLogLevel: .error, message: "Failed to create new TimeSlot")
             return false
         }
     }
@@ -52,15 +52,15 @@ class CoreDataPersistencyService : PersistencyService
         let endTime = date.tomorrow.ignoreTimeComponents()
         
         //Filter in order to get only the TimeSlots for said date
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: timeSlotEntityName)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.timeSlotEntityName)
         fetchRequest.predicate = NSPredicate(format: "(startTime >= %@) AND (startTime <= %@)", startTime as NSDate, endTime as NSDate)
         
         do
         {
-            let results = try getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
+            let results = try self.getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
             
-            let timeSlots = results.map(mapManagedObjectToTimeSlot)
-            loggingService.log(withLogLevel: .info, message: "\(timeSlots.count) TimeSlots found")
+            let timeSlots = results.map(self.mapManagedObjectToTimeSlot)
+            self.loggingService.log(withLogLevel: .info, message: "\(timeSlots.count) TimeSlots found")
             return timeSlots
         }
         catch
@@ -73,9 +73,9 @@ class CoreDataPersistencyService : PersistencyService
     
     func getLastTimeSlot() -> TimeSlot
     {
-        guard let managedTimeSlot = getLastManagedTimeSlot() else { return TimeSlot() }
+        guard let managedTimeSlot = self.getLastManagedTimeSlot() else { return TimeSlot() }
         
-        let timeSlot = mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
+        let timeSlot = self.mapManagedObjectToTimeSlot(managedTimeSlot as! NSManagedObject)
         return timeSlot
     }
     
@@ -85,8 +85,8 @@ class CoreDataPersistencyService : PersistencyService
         guard timeSlot.category != category else { return true }
         
         
-        let managedContext = getManagedObjectContext()
-        let entity = NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)
+        let managedContext = self.getManagedObjectContext()
+        let entity = NSEntityDescription.entity(forEntityName: self.timeSlotEntityName, in: managedContext)
         let request = NSFetchRequest<NSFetchRequestResult>()
         let predicate = NSPredicate(format: "startTime == %@", timeSlot.startTime as CVarArg)
         
@@ -104,14 +104,14 @@ class CoreDataPersistencyService : PersistencyService
         }
         catch
         {
-            loggingService.log(withLogLevel: .warning, message: "No TimeSlot found when trying to update")
+            self.loggingService.log(withLogLevel: .warning, message: "No TimeSlot found when trying to update")
             return false
         }
     }
     
     func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
     {
-        callbacks.append(callback)
+        self.callbacks.append(callback)
     }
     
     //MARK: Methods
@@ -133,7 +133,7 @@ class CoreDataPersistencyService : PersistencyService
     
     private func getLastManagedTimeSlot() -> AnyObject?
     {
-        let managedContext = getManagedObjectContext()
+        let managedContext = self.getManagedObjectContext()
         
         let request = NSFetchRequest<NSFetchRequestResult>()
         request.entity = NSEntityDescription.entity(forEntityName: timeSlotEntityName, in: managedContext)!
@@ -147,14 +147,14 @@ class CoreDataPersistencyService : PersistencyService
         }
         catch
         {
-            loggingService.log(withLogLevel: .error, message: "No TimeSlots found")
+            self.loggingService.log(withLogLevel: .error, message: "No TimeSlots found")
             return nil
         }
     }
     
     private func endPreviousTimeSlot(atDate date: Date) -> Bool
     {
-        guard let managedTimeSlot = getLastManagedTimeSlot() else { return true }
+        guard let managedTimeSlot = self.getLastManagedTimeSlot() else { return true }
         
         let startDate = managedTimeSlot.value(forKey: "startTime") as! Date
         var endDate = date
@@ -176,7 +176,7 @@ class CoreDataPersistencyService : PersistencyService
         
         do
         {
-            try getManagedObjectContext().save()
+            try self.getManagedObjectContext().save()
 //            loggingService.log(withLogLevel: .error, message: "TimeSlot created at \(timeSlot.startTime) ended at \(timeSlot.endTime)")
             return true
         }

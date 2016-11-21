@@ -41,7 +41,7 @@ class TimeSlot
     private func getEndDate() -> Date
     {
         let date = Date()
-        let timeEntryLimit = startTime.tomorrow.ignoreTimeComponents()
+        let timeEntryLimit = self.startTime.tomorrow.ignoreTimeComponents()
         let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == ComparisonResult.orderedDescending
     
         //The `endTime` property can never exceed midnight of the TimeSlot day, so this property considers it before returning the proper TimeInterval

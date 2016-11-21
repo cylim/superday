@@ -14,17 +14,17 @@ class DefaultSettingsService : SettingsService
     //MARK: Properties
     var installDate : Date?
     {
-        return UserDefaults.standard.object(forKey: installDateKey) as! Date?
+        return UserDefaults.standard.object(forKey: self.installDateKey) as! Date?
     }
     
      var lastInactiveDate : Date?
     {
-        return UserDefaults.standard.object(forKey: lastInactiveDateKey) as? Date
+        return UserDefaults.standard.object(forKey: self.lastInactiveDateKey) as? Date
     }
     
     var lastLocationDate : Date?
     {
-        return UserDefaults.standard.object(forKey: lastLocationDateKey) as! Date?
+        return UserDefaults.standard.object(forKey: self.lastLocationDateKey) as! Date?
     }
     
     var hasLocationPermission : Bool
@@ -41,39 +41,39 @@ class DefaultSettingsService : SettingsService
     
     var lastAskedForLocationPermission : Date?
     {
-        return UserDefaults.standard.object(forKey: lastAskedForLocationPermissionKey) as! Date?
+        return UserDefaults.standard.object(forKey: self.lastAskedForLocationPermissionKey) as! Date?
     }
     
     var canIgnoreLocationPermission : Bool
     {
-        return UserDefaults.standard.bool(forKey: canIgnoreLocationPermissionKey)
+        return UserDefaults.standard.bool(forKey: self.canIgnoreLocationPermissionKey)
     }
     
     //MARK: Methods
     func setInstallDate(_ date: Date)
     {
-        guard installDate == nil else { return }
+        guard self.installDate == nil else { return }
         
-        UserDefaults.standard.set(date, forKey: installDateKey)
+        UserDefaults.standard.set(date, forKey: self.installDateKey)
     }
     
     func setLastInactiveDate(_ date: Date?)
     {
-        UserDefaults.standard.set(date, forKey: lastInactiveDateKey)
+        UserDefaults.standard.set(date, forKey: self.lastInactiveDateKey)
     }
     
     func setLastLocationDate(_ date: Date)
     {
-        UserDefaults.standard.set(date, forKey: lastLocationDateKey)
+        UserDefaults.standard.set(date, forKey: self.lastLocationDateKey)
     }
     
     func setLastAskedForLocationPermission(_ date: Date)
     {
-        UserDefaults.standard.set(date, forKey: lastAskedForLocationPermissionKey)
+        UserDefaults.standard.set(date, forKey: self.lastAskedForLocationPermissionKey)
     }
     
     func setAllowedLocationPermission()
     {
-        UserDefaults.standard.set(true, forKey: canIgnoreLocationPermissionKey)
+        UserDefaults.standard.set(true, forKey: self.canIgnoreLocationPermissionKey)
     }
 }

@@ -65,9 +65,9 @@ class TimelineCell : UITableViewCell
     /// Updates the icon that indicates the slot's category
     private func layoutCategoryIcon(withImageName name: String, color: UIColor)
     {
-        categoryIcon?.backgroundColor = color
-        categoryIcon?.layer.cornerRadius = 16
-        categoryIcon?.image = UIImage(named: name)
+        self.categoryIcon.backgroundColor = color
+        self.categoryIcon.layer.cornerRadius = 16
+        self.categoryIcon.image = UIImage(named: name)
     }
     
     /// Updates the label that displays the description and starting time of the slot
@@ -88,21 +88,21 @@ class TimelineCell : UITableViewCell
     /// Updates the label that shows how long the slot lasted
     private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int)
     {
-        elapsedTime?.textColor = color
-        elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
+        self.elapsedTime.textColor = color
+        self.elapsedTime.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
     }
     
     /// Updates the line that displays shows how long the TimeSlot lasted
     private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool)
     {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
-        lineHeightConstraint.constant = newHeight
+        self.lineHeightConstraint.constant = newHeight
         
-        lineView?.backgroundColor = color
-        lineView?.layoutIfNeeded()
+        self.lineView.backgroundColor = color
+        self.lineView.layoutIfNeeded()
         
-        indicatorDot?.backgroundColor = color
-        indicatorDot?.isHidden = !isRunning
-        indicatorDot?.layoutIfNeeded()
+        self.indicatorDot.backgroundColor = color
+        self.indicatorDot.isHidden = !isRunning
+        self.indicatorDot.layoutIfNeeded()
     }
 }

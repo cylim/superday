@@ -87,10 +87,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             
             initialViewController =
-                onboardController.inject(settingsService,
-                                         appStateService,
+                onboardController.inject(self.settingsService,
+                                         self.appStateService,
                                          mainViewController,
-                                         notificationAuthorizationVariable.asObservable())
+                                         self.notificationAuthorizationVariable.asObservable())
             
             mainViewController.setIsFirstUse()
         }

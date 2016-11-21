@@ -47,7 +47,7 @@ class TimelineViewModel
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
         
-        self.persistencyService.subscribeToTimeSlotChanges(onNewTimeSlot)
+        self.persistencyService.subscribeToTimeSlotChanges(self.onNewTimeSlot)
         
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0
@@ -62,7 +62,7 @@ class TimelineViewModel
     private func onNewTimeSlot(timeSlot: TimeSlot)
     {
         //Finishes last task, if needed
-        if let lastTimeSlot = timeSlots.last
+        if let lastTimeSlot = self.timeSlots.last
         {
             lastTimeSlot.endTime = Date()
         }
