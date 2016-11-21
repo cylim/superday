@@ -39,16 +39,19 @@ class OnboardingPage3 : OnboardingPage, CLLocationManagerDelegate
         }
     }
     
-    override func finish() {
+    override func finish()
+    {
         super.finish()
         disposeBag = nil
     }
     
-    func onAppStateChanged(appState: AppState) {
-        if appState == .active {
-            if self.onboardingPageViewController.isCurrent(page: self) && !self.settingsService.hasLocationPermission {
-                self.locationManager.requestAlwaysAuthorization()
-            }
+    func onAppStateChanged(appState: AppState)
+    {
+        if appState == .active
+            && self.onboardingPageViewController.isCurrent(page: self)
+            && !self.settingsService.hasLocationPermission
+        {
+            self.locationManager.requestAlwaysAuthorization()
         }
     }
 }
