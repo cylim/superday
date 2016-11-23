@@ -20,12 +20,15 @@ class TimelineViewController : UITableViewController
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
     //MARK: Initializers
-    init(date: Date, metricsService: MetricsService, editStateService: EditStateService, persistencyService: PersistencyService)
+    init(date: Date,
+         metricsService: MetricsService,
+         timeSlotService: TimeSlotService,
+         editStateService: EditStateService)
     {
         self.editStateService = editStateService
         self.viewModel = TimelineViewModel(date: date,
                                            metricsService: metricsService,
-                                           persistencyService: persistencyService)
+                                           timeSlotService: timeSlotService)
         
         super.init(style: .plain)
     }
@@ -49,10 +52,15 @@ class TimelineViewController : UITableViewController
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
         self.tableView.register(UINib.init(nibName: "EmptyStateView", bundle: Bundle.main), forCellReuseIdentifier: emptyCellIdentifier)
-    
+        
         self.viewModel
-            .timeSlotChangeObservable
-            .subscribe(onNext: self.onTimeSlotChanges)
+            .timeSlotCreationObservable
+            .subscribe(onNext: self.onTimeSlotCreated)
+            .addDisposableTo(self.disposeBag)
+        
+        self.viewModel
+            .timeSlotUpdatingObservable
+            .subscribe(onNext: self.onTimeSlotUpdated)
             .addDisposableTo(self.disposeBag)
         
         self.viewModel
@@ -66,41 +74,28 @@ class TimelineViewController : UITableViewController
             .addDisposableTo(self.disposeBag)
     }
     
-    // MARK: Methods
-    private func onTimeSlotChanges(timeSlotChange: TimeSlotChangeType)
+    private func onTimeSlotCreated(atIndex index: Int)
     {
-        switch timeSlotChange {
-        case .create:
-            
-            self.tableView.reloadData()
-            
-            let rowAnimation = self.hasInitialized ? UITableViewRowAnimation.top : .none
-            
-            let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
-            self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
-            
-            let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
-            self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
-            
-            self.hasInitialized = true
-            
-        case .update:
-            
-            guard !tableView.isEditing else { return }
-            
-            let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
-            self.tableView.reloadRows(at: [indexPath], with: .none)
-            
-        case .none:
-            
-            self.tableView.reloadData()
-            
-            let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
-            self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
-            
-        default:
-            break
-        }
+        self.tableView.reloadData()
+        
+        let rowAnimation = index >= 0 ? UITableViewRowAnimation.top : .none
+        
+        let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+        self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
+        
+        let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
+        self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
+        
+        self.hasInitialized = true
+    }
+    
+    // MARK: Methods
+    private func onTimeSlotUpdated(atIndex index: Int)
+    {
+        guard !tableView.isEditing else { return }
+        
+        let indexPath = IndexPath(row: index, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     private func onIsEditing(isEditing: Bool)

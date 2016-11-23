@@ -16,10 +16,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private var appStateService : AppStateService
     private let locationService : LocationService
     private let settingsService : SettingsService
+    private let timeSlotService : TimeSlotService
+    private let trackingService : TrackingService
     private let editStateService : EditStateService
-    private let persistencyService : PersistencyService
     private let notificationService : NotificationService
-    private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
     var window: UIWindow?
@@ -33,20 +33,30 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
-        self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
         
-        if #available(iOS 10.0, *) {
-            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService, persistencyService: persistencyService)
-        } else {
+        let persistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
+                                                                      modelAdapter: TimeSlotModelAdapter())
+        
+        
+        self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
+                                                      persistencyService: persistencyService)
+        
+        if #available(iOS 10.0, *)
+        {
+            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService,
+                                                                     timeSlotService: self.timeSlotService)
+        }
+        else
+        {
             self.notificationService = PreiOSTenNotificationService(loggingService: self.loggingService,
-                                                                    notificationAuthorizationVariable.asObservable())
+                                                                    self.notificationAuthorizationVariable.asObservable())
         }
         
-        self.timeSlotCreationService =
-            DefaultTimeSlotCreationService(loggingService: self.loggingService,
-                                           settingsService: self.settingsService,
-                                           persistencyService: self.persistencyService,
-                                           notificationService: self.notificationService)
+        self.trackingService =
+            DefaultTrackingService(loggingService: self.loggingService,
+                                   settingsService: self.settingsService,
+                                   timeSlotService: self.timeSlotService,
+                                   notificationService: self.notificationService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
@@ -57,7 +67,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         //Starts location tracking
         self.locationService
             .locationObservable
-            .subscribe(onNext: self.timeSlotCreationService.onNewLocation)
+            .subscribe(onNext: self.trackingService.onNewLocation)
             .addDisposableTo(disposeBag)
         
         //Faster startup when the app wakes up for location updates
@@ -91,8 +101,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.appStateService,
                                       self.locationService,
                                       self.settingsService,
-                                      self.editStateService,
-                                      self.persistencyService)
+                                      self.timeSlotService,
+                                      self.editStateService)
         
         if self.settingsService.installDate == nil
         {
@@ -100,8 +110,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             
             initialViewController =
-                onboardController.inject(settingsService,
-                                         appStateService,
+                onboardController.inject(self.settingsService,
+                                         self.appStateService,
                                          mainViewController,
                                          notificationService)
             
@@ -146,8 +156,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.notificationAuthorizationVariable.value = true
     }
     
-    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        notificationService.handleNotificationAction(withIdentifier: identifier, for: notification, completionHandler: completionHandler)
+    func application(_ application: UIApplication,
+                     handleActionWithIdentifier identifier: String?,
+                     for notification: UILocalNotification, completionHandler: @escaping () -> Void)
+    {
+        self.notificationService.handleNotificationAction(withIdentifier: identifier)
+        
+        completionHandler()
     }
 
     func applicationWillTerminate(_ application: UIApplication)
@@ -179,9 +194,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
-        do {
+        do
+        {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
-        } catch {
+        }
+        catch
+        {
             // Report any error we got.
             var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
@@ -210,10 +228,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     // MARK: - Core Data Saving support
     func saveContext ()
     {
-        if managedObjectContext.hasChanges {
-            do {
+        if managedObjectContext.hasChanges
+        {
+            do
+            {
                 try managedObjectContext.save()
-            } catch {
+            }
+            catch
+            {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError

@@ -58,7 +58,7 @@ class PreiOSTenNotificationService : NotificationService
         notifications.forEach { n in UIApplication.shared.cancelLocalNotification(n)  }
     }
     
-    func handleNotificationAction(withIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        completionHandler()
+    func handleNotificationAction(withIdentifier identifier: String?)
+    {
     }
 }

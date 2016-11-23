@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>NotificationContentExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>teferi.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>24A21B651D7C3E0800CEB4F3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>51BED8F41DD26FA800455EF6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

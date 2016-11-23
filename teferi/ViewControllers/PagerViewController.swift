@@ -9,8 +9,8 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
     private var settingsService : SettingsService!
+    private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
-    private var persistencyService : PersistencyService!
     
     private var currentDateViewController : TimelineViewController!
     
@@ -39,14 +39,14 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     func inject(_ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ settingsService: SettingsService,
-                _ editStateService: EditStateService,
-                _ persistencyService: PersistencyService)
+                _ timeSlotService: TimeSlotService,
+                _ editStateService: EditStateService)
     {
         self.metricsService = metricsService
         self.appStateService = appStateService
         self.settingsService = settingsService
+        self.timeSlotService = timeSlotService
         self.editStateService = editStateService
-        self.persistencyService = persistencyService
         
         self.viewModel = PagerViewModel(settingsService: settingsService)
     }
@@ -87,9 +87,9 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         self.currentDateViewController =
             TimelineViewController(date: Date(),
-                                   metricsService: metricsService,
-                                   editStateService: editStateService,
-                                   persistencyService: persistencyService)
+                                   metricsService: self.metricsService,
+                                   timeSlotService: self.timeSlotService,
+                                   editStateService: self.editStateService)
         
         self.setViewControllers(
             [ currentDateViewController ],
@@ -147,9 +147,9 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
-                                      metricsService: metricsService,
-                                      editStateService: editStateService,
-                                      persistencyService: persistencyService)
+                                      metricsService: self.metricsService,
+                                      timeSlotService: self.timeSlotService,
+                                      editStateService: self.editStateService)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
@@ -160,8 +160,8 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
-                                      metricsService: metricsService,
-                                      editStateService: editStateService,
-                                      persistencyService: persistencyService)
+                                      metricsService: self.metricsService,
+                                      timeSlotService: self.timeSlotService,
+                                      editStateService: self.editStateService)
     }
 }

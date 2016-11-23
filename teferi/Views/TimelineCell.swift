@@ -12,24 +12,24 @@ class TimelineCell : UITableViewCell
     private let minuteMask = "%02d min"
     private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
-        return NSLayoutConstraint(item: self.lineView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(Constants.minLineSize))
+        return self.lineView.constraints.filter{ $0.firstAttribute == .height }.first!
     }()
     
-    @IBOutlet private weak var lineView : UIView?
-    @IBOutlet private weak var elapsedTime : UILabel?
-    @IBOutlet private weak var indicatorDot : UIView?
-    @IBOutlet private weak var categoryButton : UIButton?
-    @IBOutlet private weak var slotDescription : UILabel?
-    @IBOutlet weak var categoryIcon : UIImageView?
+    @IBOutlet private weak var lineView : UIView!
+    @IBOutlet private weak var elapsedTime : UILabel!
+    @IBOutlet private weak var indicatorDot : UIView!
+    @IBOutlet private weak var categoryButton : UIButton!
+    @IBOutlet private weak var slotDescription : UILabel!
+    @IBOutlet weak var categoryIcon : UIImageView!
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
     lazy var editClickObservable : Observable<(CGPoint, Int)> =
     {
-        //[aView convertPoint:localPosition toView:nil];
         self.isSubscribedToClickObservable = true
-        return self.categoryButton!.rx.tap
-            .map { return (self.categoryIcon!.convert(self.categoryIcon!.center, to: nil), self.currentIndex) }
+        
+        return self.categoryButton.rx.tap
+            .map { return (self.categoryIcon.convert(self.categoryIcon.center, to: nil), self.currentIndex) }
             .asObservable()
     }()
     
@@ -37,7 +37,7 @@ class TimelineCell : UITableViewCell
     override func awakeFromNib()
     {
         super.awakeFromNib()
-        self.lineView?.addConstraint(lineHeightConstraint)
+        self.contentView.isUserInteractionEnabled = false
     }
     
     /**
@@ -65,9 +65,9 @@ class TimelineCell : UITableViewCell
     /// Updates the icon that indicates the slot's category
     private func layoutCategoryIcon(withImageName name: String, color: UIColor)
     {
-        categoryIcon?.backgroundColor = color
-        categoryIcon?.layer.cornerRadius = 16
-        categoryIcon?.image = UIImage(named: name)
+        self.categoryIcon.backgroundColor = color
+        self.categoryIcon.layer.cornerRadius = 16
+        self.categoryIcon.image = UIImage(named: name)
     }
     
     /// Updates the label that displays the description and starting time of the slot
@@ -88,21 +88,21 @@ class TimelineCell : UITableViewCell
     /// Updates the label that shows how long the slot lasted
     private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int)
     {
-        elapsedTime?.textColor = color
-        elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
+        self.elapsedTime.textColor = color
+        self.elapsedTime.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
     }
     
     /// Updates the line that displays shows how long the TimeSlot lasted
     private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool)
     {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
-        lineHeightConstraint.constant = newHeight
+        self.lineHeightConstraint.constant = newHeight
         
-        lineView?.backgroundColor = color
-        lineView?.layoutIfNeeded()
+        self.lineView.backgroundColor = color
+        self.lineView.layoutIfNeeded()
         
-        indicatorDot?.backgroundColor = color
-        indicatorDot?.isHidden = !isRunning
-        indicatorDot?.layoutIfNeeded()
+        self.indicatorDot.backgroundColor = color
+        self.indicatorDot.isHidden = !isRunning
+        self.indicatorDot.layoutIfNeeded()
     }
 }

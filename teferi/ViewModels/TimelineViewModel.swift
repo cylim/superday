@@ -5,24 +5,20 @@ import RxSwift
 class TimelineViewModel
 {
     //MARK: Fields
-    private let persistencyService : PersistencyService
     private let metricsService : MetricsService
-    private let timeSlotsVariable : Variable<[TimeSlot]>
+    private let timeSlotService : TimeSlotService
     private let isEditingVariable = Variable(false)
-    private let timeSlotChangeVariable : Variable<TimeSlotChangeType>
+    private let timeSlotUpdatingVariable = Variable(-1)
+    private let timeSlotCreationVariable = Variable(-1)
     
     //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
-    let timeSlotsObservable : Observable<[TimeSlot]>
     let isEditingObservable : Observable<Bool>
-    let timeSlotChangeObservable : Observable<TimeSlotChangeType>
+    let timeSlotUpdatingObservable : Observable<Int>
+    let timeSlotCreationObservable : Observable<Int>
     
-    var timeSlotChange : TimeSlotChangeType
-    {
-        get { return self.timeSlotChangeVariable.value }
-        set(value) { self.timeSlotChangeVariable.value = value }
-    }
+    private(set) var timeSlots : [TimeSlot]
     
     var isEditing : Bool
     {
@@ -30,67 +26,56 @@ class TimelineViewModel
         set(value) { self.isEditingVariable.value = value }
     }
     
-    private(set) var timeSlots : [TimeSlot]
-    {
-        get { return self.timeSlotsVariable.value }
-        set(value) { self.timeSlotsVariable.value = value }
-    }
-    
     //MARK: Initializers
-    init(date: Date, metricsService : MetricsService, persistencyService: PersistencyService)
+    init(date: Date, metricsService : MetricsService, timeSlotService: TimeSlotService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
-        let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date, last: nil)
+        self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
         
         //UI gets notified once every n seconds that the last item might need to be redrawn
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
         
         self.metricsService = metricsService
+        self.timeSlotService = timeSlotService
         self.date = date.ignoreTimeComponents()
-        self.persistencyService = persistencyService
-        self.timeSlotsVariable = Variable(timeSlotsForDate)
-        self.timeSlotChangeVariable = Variable(TimeSlotChangeType.none)
         self.isEditingObservable = self.isEditingVariable.asObservable()
-        self.timeSlotsObservable = self.timeSlotsVariable.asObservable()
-        self.timeSlotChangeObservable = self.timeSlotChangeVariable.asObservable()
+        self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
+        self.timeSlotUpdatingObservable = self.timeSlotUpdatingVariable.asObservable().filter { $0 >= 0 }
         
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
         
-        self.persistencyService.subscribeToTimeSlotChanges(onChangedTimeSlot)
+        self.timeSlotService.subscribeToTimeSlotChanges(on: .create, self.onTimeSlotCreated)
+        self.timeSlotService.subscribeToTimeSlotChanges(on: .update, self.onTimeSlotUpdated)
         
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0
         {
-            self.persistencyService.addNewTimeSlot(TimeSlot())
-            self.timeSlotChange = .create
+            self.timeSlotService.add(timeSlot: TimeSlot())
         }
     }
     
     //MARK: Methods
     
     ///Called when the persistency service indicates that a TimeSlot has been created/updated.
-    private func onChangedTimeSlot(timeSlot: TimeSlot, changeType: TimeSlotChangeType)
+    private func onTimeSlotCreated(timeSlot: TimeSlot)
     {
-        switch changeType {
-        case .create:
-            
-            if let lastTimeSlot = timeSlots.last
-            {
-                lastTimeSlot.endTime = Date()
-            }
-            self.timeSlots.append(timeSlot)
-            self.timeSlotChange = .create
-            
-        case .update:
-            
-            if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
-            {
-                self.timeSlots[index] = timeSlot
-            }
-            self.timeSlotChange = .update
-            
-        default:
-            break
+        //Finishes last task, if needed
+        if let lastTimeSlot = self.timeSlots.last
+        {
+            lastTimeSlot.endTime = Date()
         }
-    }}
+        
+        self.timeSlots.append(timeSlot)
+        self.timeSlotCreationVariable.value = self.timeSlots.count - 1
+    }
+    
+    private func onTimeSlotUpdated(timeSlot: TimeSlot)
+    {
+        if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
+        {
+            self.timeSlots[index] = timeSlot
+            self.timeSlotUpdatingVariable.value = index
+        }
+    }
+}

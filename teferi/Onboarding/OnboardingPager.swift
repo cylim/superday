@@ -46,7 +46,7 @@ class OnboardingPager: UIView
     
     func switchPage(to newPage: Int)
     {
-        guard newPage != currentPage else { return }
+        guard newPage != self.currentPage else { return }
         
         UIView.animate(withDuration: 0.3)
         {
@@ -54,7 +54,7 @@ class OnboardingPager: UIView
             self.pageDots[newPage].alpha = 1
         }
         
-        currentPage = newPage;
+        self.currentPage = newPage;
     }
     
     func clearButtonText()

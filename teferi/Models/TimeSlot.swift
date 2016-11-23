@@ -1,7 +1,8 @@
 import Foundation
+import CoreData
 
 /// Represents each individual activity performed by the app user.
-class TimeSlot
+class TimeSlot : BaseModel
 {
     // MARK: Properties
     var startTime = Date()
@@ -16,7 +17,7 @@ class TimeSlot
     }
     
     // MARK: Initializers
-    init() { }
+    required init() { }
     
     init(category: Category, startTime: Date, endTime: Date)
     {
@@ -41,7 +42,7 @@ class TimeSlot
     private func getEndDate() -> Date
     {
         let date = Date()
-        let timeEntryLimit = startTime.tomorrow.ignoreTimeComponents()
+        let timeEntryLimit = self.startTime.tomorrow.ignoreTimeComponents()
         let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == ComparisonResult.orderedDescending
     
         //The `endTime` property can never exceed midnight of the TimeSlot day, so this property considers it before returning the proper TimeInterval

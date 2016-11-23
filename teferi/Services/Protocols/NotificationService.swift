@@ -9,5 +9,5 @@ protocol NotificationService
     
     func unscheduleAllNotifications()
     
-    func handleNotificationAction(withIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void)
+    func handleNotificationAction(withIdentifier identifier: String?)
 }

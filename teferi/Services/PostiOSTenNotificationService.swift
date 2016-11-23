@@ -7,13 +7,13 @@ class PostiOSTenNotificationService : NotificationService
 {
     //MARK: Fields
     private let loggingService : LoggingService
-    private let persistencyService: PersistencyService
+    private let timeSlotService: TimeSlotService
     
     //MARK: Initializers
-    init(loggingService: LoggingService, persistencyService: PersistencyService)
+    init(loggingService: LoggingService, timeSlotService: TimeSlotService)
     {
         self.loggingService = loggingService
-        self.persistencyService = persistencyService
+        self.timeSlotService = timeSlotService
     }
     
     //MARK: NotificationService implementation
@@ -38,15 +38,23 @@ class PostiOSTenNotificationService : NotificationService
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         
-        let lastThreeTimeSlotsDictionary = persistencyService.getTimeSlots(forDay: Date(), last: 3).map { (timeSlot) -> [String: String] in
-            var timeSlotDictionary = [String: String]()
-            timeSlotDictionary["color"] = timeSlot.category.colorHex
-            if timeSlot.category != .unknown {
-                timeSlotDictionary["category"] = timeSlot.category.rawValue.capitalized
-            }
-            timeSlotDictionary["date"] = formatter.string(from: timeSlot.startTime)
-            return timeSlotDictionary
-        }
+        let lastThreeTimeSlotsDictionary =
+            self.timeSlotService
+                .getTimeSlots(forDay: Date())
+                .suffix(3)
+                .map { (timeSlot) -> [String: String] in
+                    
+                    var timeSlotDictionary = [String: String]()
+                    
+                    timeSlotDictionary["color"] = timeSlot.category.colorHex
+                    
+                    if timeSlot.category != .unknown {
+                        timeSlotDictionary["category"] = timeSlot.category.rawValue.capitalized
+                    }
+                    
+                    timeSlotDictionary["date"] = formatter.string(from: timeSlot.startTime)
+                    return timeSlotDictionary
+                }
         
         notification.userInfo = ["timeSlots": lastThreeTimeSlotsDictionary]
         
@@ -64,40 +72,40 @@ class PostiOSTenNotificationService : NotificationService
         notifications.forEach { n in UIApplication.shared.cancelLocalNotification(n)  }
     }
     
-    func handleNotificationAction(withIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        if let identifier = identifier, let category = Category(rawValue: identifier) {
-            
-            let timeSlot = persistencyService.getLastTimeSlot()
-            persistencyService.updateTimeSlot(timeSlot, withCategory: category)
-            timeSlot.category = category
+    func handleNotificationAction(withIdentifier identifier: String?) {
+        
+        if let identifier = identifier, let category = Category(rawValue: identifier)
+        {
+            let timeSlot = self.timeSlotService.getLast()
+            self.timeSlotService.update(timeSlot: timeSlot, withCategory: category)
         }
-        completionHandler()
     }
     
     
     // MARK: - User Notification Action
-    func setUserNotificationActions() {
+    func setUserNotificationActions()
+    {
         let food = UNNotificationAction(
             identifier: Category.food.rawValue,
-            title: Category.food.rawValue.capitalized.translate()
-        )
+            title: Category.food.rawValue.capitalized.translate())
+        
         let friends = UNNotificationAction(
             identifier: Category.friends.rawValue,
-            title: Category.friends.rawValue.capitalized.translate()
-        )
+            title: Category.friends.rawValue.capitalized.translate())
+        
         let work = UNNotificationAction(
             identifier: Category.work.rawValue,
-            title: Category.work.rawValue.capitalized.translate()
-        )
+            title: Category.work.rawValue.capitalized.translate())
+        
         let leisure = UNNotificationAction(
             identifier: Category.leisure.rawValue,
-            title: Category.leisure.rawValue.capitalized.translate()
-        )
+            title: Category.leisure.rawValue.capitalized.translate())
+        
         let category = UNNotificationCategory(
             identifier: Constants.notificationTimeSlotCategorySelectionIdentifier,
             actions: [food, friends, work, leisure],
-            intentIdentifiers: []
-        )
+            intentIdentifiers: [])
+        
         UNUserNotificationCenter.current().setNotificationCategories([category])
     }
 }
