@@ -5,8 +5,8 @@ import RxSwift
 class TimelineViewModel
 {
     //MARK: Fields
-    private let persistencyService : PersistencyService
     private let metricsService : MetricsService
+    private let timeSlotService : TimeSlotService
     private let timeSlotsVariable : Variable<[TimeSlot]>
     private let isEditingVariable = Variable(false)
     
@@ -29,17 +29,17 @@ class TimelineViewModel
     }
     
     //MARK: Initializers
-    init(date: Date, metricsService : MetricsService, persistencyService: PersistencyService)
+    init(date: Date, metricsService : MetricsService, timeSlotService: TimeSlotService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
-        let timeSlotsForDate = persistencyService.getTimeSlots(forDay: date)
+        let timeSlotsForDate = timeSlotService.getTimeSlots(forDay: date)
         
         //UI gets notified once every n seconds that the last item might need to be redrawn
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
         
         self.metricsService = metricsService
+        self.timeSlotService = timeSlotService
         self.date = date.ignoreTimeComponents()
-        self.persistencyService = persistencyService
         self.timeSlotsVariable = Variable(timeSlotsForDate)
         self.isEditingObservable = self.isEditingVariable.asObservable()
         self.timeSlotsObservable = self.timeSlotsVariable.asObservable()
@@ -47,12 +47,12 @@ class TimelineViewModel
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
         
-        self.persistencyService.subscribeToTimeSlotChanges(self.onNewTimeSlot)
+        self.timeSlotService.subscribeToTimeSlotChanges(self.onNewTimeSlot)
         
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0
         {
-            self.persistencyService.addNewTimeSlot(TimeSlot())
+            self.timeSlotService.add(timeSlot: TimeSlot())
         }
     }
     

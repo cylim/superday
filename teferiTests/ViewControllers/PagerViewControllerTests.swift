@@ -7,8 +7,8 @@ class PagerViewControllerTests : XCTestCase
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
     private var settingsService : SettingsService!
+    private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
-    private var persistencyService : PersistencyService!
     private var pagerViewController : PagerViewController!
     
     override func setUp()
@@ -18,15 +18,15 @@ class PagerViewControllerTests : XCTestCase
         self.metricsService = MockMetricsService()
         self.settingsService = MockSettingsService()
         self.appStateService = MockAppStateService()
+        self.timeSlotService = MockTimeSlotService()
         self.editStateService = MockEditStateService()
-        self.persistencyService = MockPersistencyService()
         
         self.pagerViewController = PagerViewController(coder: NSCoder())!
         self.pagerViewController.inject(self.metricsService,
                                         self.appStateService,
                                         self.settingsService,
-                                        self.editStateService,
-                                        self.persistencyService)
+                                        self.timeSlotService,
+                                        self.editStateService)
         
         self.pagerViewController.loadViewIfNeeded()
         UIApplication.shared.keyWindow!.rootViewController = self.pagerViewController

@@ -7,8 +7,8 @@ class TimelineViewControllerTests : XCTestCase
 {
     private var viewModel : TimelineViewModel!
     private var mockMetricsService : MockMetricsService!
+    private var mockTimeSlotService : MockTimeSlotService!
     private var mockEditStateService : MockEditStateService!
-    private var mockPersistencyService : MockPersistencyService!
     private var timelineViewController : TimelineViewController!
     
     override func setUp()
@@ -16,17 +16,17 @@ class TimelineViewControllerTests : XCTestCase
         super.setUp()
         
         self.mockMetricsService = MockMetricsService()
+        self.mockTimeSlotService = MockTimeSlotService()
         self.mockEditStateService = MockEditStateService()
-        self.mockPersistencyService = MockPersistencyService()
         
         self.viewModel = TimelineViewModel(date: Date(),
                                            metricsService: self.mockMetricsService,
-                                           persistencyService: self.mockPersistencyService)
+                                           timeSlotService: self.mockTimeSlotService)
         
         self.timelineViewController = TimelineViewController(date: Date(),
                                                              metricsService: self.mockMetricsService,
-                                                             editStateService: self.mockEditStateService,
-                                                             persistencyService: self.mockPersistencyService)
+                                                             timeSlotService: self.mockTimeSlotService,
+                                                             editStateService: self.mockEditStateService)
     }
     
     override func tearDown()

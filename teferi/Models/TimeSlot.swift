@@ -1,7 +1,8 @@
 import Foundation
+import CoreData
 
 /// Represents each individual activity performed by the app user.
-class TimeSlot
+class TimeSlot : BaseModel
 {
     // MARK: Properties
     var startTime = Date()
@@ -16,7 +17,7 @@ class TimeSlot
     }
     
     // MARK: Initializers
-    init() { }
+    required init() { }
     
     init(category: Category, startTime: Date, endTime: Date)
     {

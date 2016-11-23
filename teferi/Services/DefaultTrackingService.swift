@@ -3,8 +3,8 @@ import CoreMotion
 import UIKit
 import Foundation
 
-/// Default implementation of the TimeSlotCreationService.
-class DefaultTimeSlotCreationService : TimeSlotCreationService
+/// Default implementation of the TrackingService.
+class DefaultTrackingService : TrackingService
 {
     // MARK: Fields
     private let notificationText = "NotificationText".translate()
@@ -12,28 +12,22 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
     
     private let loggingService : LoggingService
     private var settingsService : SettingsService
-    private let persistencyService : PersistencyService
+    private let timeSlotService : TimeSlotService
     private let notificationService : NotificationService
     
     //MARK: Init
     init(loggingService: LoggingService,
          settingsService: SettingsService,
-         persistencyService: PersistencyService,
+         timeSlotService: TimeSlotService,
          notificationService: NotificationService)
     {
         self.loggingService = loggingService
         self.settingsService = settingsService
-        self.persistencyService = persistencyService
+        self.timeSlotService = timeSlotService
         self.notificationService = notificationService
     }
     
-    //MARK:  TimeSlotCreationService implementation
-    func onNewMotion(_ activity: CMMotionActivity)
-    {
-        //TODO: Consider motion events when creating new TimeSlots
-        self.loggingService.log(withLogLevel: .debug, message: "Received new motion")
-    }
-    
+    //MARK:  TrackingService implementation
     func onNewLocation(_ location: CLLocation)
     {
         let currentLocationTime = location.timestamp
@@ -48,14 +42,14 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
         
         self.settingsService.setLastLocationDate(currentLocationTime)
         
-        let currentTimeSlot = self.persistencyService.getLastTimeSlot()
+        let currentTimeSlot = self.timeSlotService.getLast()
         
         let difference = currentLocationTime.timeIntervalSince(previousLocationTime)
         if (difference / 60) < 25.0
         {
             if currentTimeSlot.category == .unknown
             {
-                self.persistencyService.updateTimeSlot(currentTimeSlot, withCategory: .commute)
+                self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute)
             }
         }
         else
@@ -63,11 +57,11 @@ class DefaultTimeSlotCreationService : TimeSlotCreationService
             if currentTimeSlot.startTime < previousLocationTime
             {
                 let intervalTimeSlot = TimeSlot(withStartDate: previousLocationTime)
-                self.persistencyService.addNewTimeSlot(intervalTimeSlot)
+                self.timeSlotService.add(timeSlot: intervalTimeSlot)
             }
             
             let newTimeSlot = TimeSlot(withStartDate: currentLocationTime)
-            self.persistencyService.addNewTimeSlot(newTimeSlot)
+            self.timeSlotService.add(timeSlot: newTimeSlot)
         }
         
         self.notificationService.unscheduleAllNotifications()

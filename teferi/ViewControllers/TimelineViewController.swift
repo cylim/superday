@@ -20,12 +20,15 @@ class TimelineViewController : UITableViewController
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
     //MARK: Initializers
-    init(date: Date, metricsService: MetricsService, editStateService: EditStateService, persistencyService: PersistencyService)
+    init(date: Date,
+         metricsService: MetricsService,
+         timeSlotService: TimeSlotService,
+         editStateService: EditStateService)
     {
         self.editStateService = editStateService
         self.viewModel = TimelineViewModel(date: date,
                                            metricsService: metricsService,
-                                           persistencyService: persistencyService)
+                                           timeSlotService: timeSlotService)
         
         super.init(style: .plain)
     }

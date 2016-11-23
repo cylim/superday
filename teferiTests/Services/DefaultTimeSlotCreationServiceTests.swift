@@ -3,33 +3,33 @@ import CoreLocation
 import Nimble
 @testable import teferi
 
-class DefaultTimeSlotCreationServiceTests : XCTestCase
+class TrackingServiceTests : XCTestCase
 {
     private var location : CLLocation!
-    private var loggingService: LoggingService!
-    private var settingsService: SettingsService!
-    private var notificationService: NotificationService!
-    private var persistencyService: MockPersistencyService!
-    private var timeSlotCreationService : TimeSlotCreationService!
+    private var loggingService : LoggingService!
+    private var settingsService : SettingsService!
+    private var trackingService : TrackingService!
+    private var timeSlotService : MockTimeSlotService!
+    private var notificationService : NotificationService!
     
     override func setUp()
     {
         self.location = CLLocation()
         self.loggingService = MockLoggingService()
         self.settingsService = MockSettingsService()
-        self.persistencyService = MockPersistencyService()
+        self.timeSlotService = MockTimeSlotService()
         self.notificationService = MockNotificationService()
-        self.timeSlotCreationService = DefaultTimeSlotCreationService(loggingService: self.loggingService,
-                                                                      settingsService: self.settingsService,
-                                                                      persistencyService: self.persistencyService,
-                                                                      notificationService: self.notificationService)
+        self.trackingService = DefaultTrackingService(loggingService: self.loggingService,
+                                               settingsService: self.settingsService,
+                                               timeSlotService: self.timeSlotService,
+                                               notificationService: self.notificationService)
     }
     
     func testTheAlgorithmWillNotRunForTheFirstLocationEverReceived()
     {
-        self.timeSlotCreationService.onNewLocation(location)
+        self.trackingService.onNewLocation(location)
         
-        expect(self.persistencyService.getLastTimeSlotWasCalled).to(beFalse())
+        expect(self.timeSlotService.getLastTimeSlotWasCalled).to(beFalse())
     }
     
     func testTheAlgorithmWillNotRunIfTheNewLocationIsOlderThanTheLastLocationReceived()
@@ -37,9 +37,9 @@ class DefaultTimeSlotCreationServiceTests : XCTestCase
         self.settingsService.setLastLocationDate(Date())
         let oldLocation = self.getLocation(withTimestamp: self.settingsService.lastLocationDate!.addingTimeInterval(-90))
         
-        self.timeSlotCreationService.onNewLocation(oldLocation)
+        self.trackingService.onNewLocation(oldLocation)
         
-        expect(self.persistencyService.getLastTimeSlotWasCalled).to(beFalse())
+        expect(self.timeSlotService.getLastTimeSlotWasCalled).to(beFalse())
     }
     
     func testTheAlgorithmDetectsACommuteIfMultipleEntriesHappenInAShortPeriodOfTime()
@@ -47,11 +47,11 @@ class DefaultTimeSlotCreationServiceTests : XCTestCase
         let date = getDate(minutesInThePast: 15)
         
         let timeSlot = TimeSlot(withStartDate: date)
-        self.persistencyService.addNewTimeSlot(timeSlot)
+        self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
         
-        self.timeSlotCreationService.onNewLocation(location)
+        self.trackingService.onNewLocation(location)
         
         expect(timeSlot.category).to(equal(Category.commute))
     }
@@ -62,11 +62,11 @@ class DefaultTimeSlotCreationServiceTests : XCTestCase
         
         let timeSlot = TimeSlot(withStartDate: date)
         timeSlot.category = .work
-        self.persistencyService.addNewTimeSlot(timeSlot)
+        self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
         
-        self.timeSlotCreationService.onNewLocation(location)
+        self.trackingService.onNewLocation(location)
         
         expect(timeSlot.category).to(equal(Category.work))
     }
@@ -76,13 +76,13 @@ class DefaultTimeSlotCreationServiceTests : XCTestCase
         let date = getDate(minutesInThePast: 30)
         
         let timeSlot = TimeSlot(withStartDate: date)
-        self.persistencyService.addNewTimeSlot(timeSlot)
+        self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
         
-        self.timeSlotCreationService.onNewLocation(location)
+        self.trackingService.onNewLocation(location)
         
-        let allTimeSlots = self.persistencyService.getTimeSlots(forDay: date)
+        let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: date)
         let newlyCreatedTimeSlot = allTimeSlots.last!
         
         expect(allTimeSlots.count).to(equal(2))
@@ -92,14 +92,14 @@ class DefaultTimeSlotCreationServiceTests : XCTestCase
     func testTheAlgorithmDoesNotCreateNewTimeSlotsUntilItDetectsTheUserBeingIdleForAWhile()
     {
         let initialDate = self.getDate(minutesInThePast: 130)
-        self.persistencyService.addNewTimeSlot(TimeSlot(withStartDate: initialDate))
+        self.timeSlotService.add(timeSlot: TimeSlot(withStartDate: initialDate))
         
         let dates = [ 120, 110, 90, 50, 40, 45, 0 ].map(self.getDate)
             
         dates.map(self.getLocation)
-            .forEach(self.timeSlotCreationService.onNewLocation)
+            .forEach(self.trackingService.onNewLocation)
         
-        let allTimeSlots = self.persistencyService.getTimeSlots(forDay: Date())
+        let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: Date())
         let commutesDetected = allTimeSlots.filter { t in t.category == .commute }
         
         expect(allTimeSlots.count).to(equal(5))

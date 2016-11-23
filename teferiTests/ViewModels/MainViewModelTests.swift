@@ -10,18 +10,18 @@ class MainViewModelTests : XCTestCase
     private var editStateService : EditStateService!
     private var mockMetricsService : MockMetricsService!
     private var mockSettingsService : MockSettingsService!
-    private var mockPersistencyService : MockPersistencyService!
+    private var mockTimeSlotService : MockTimeSlotService!
     
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
         self.mockSettingsService = MockSettingsService()
         self.editStateService = DefaultEditStateService()
-        self.mockPersistencyService = MockPersistencyService()
+        self.mockTimeSlotService = MockTimeSlotService()
         self.viewModel = MainViewModel(metricsService: self.mockMetricsService,
+                                       timeSlotService: self.mockTimeSlotService,
                                        settingsService: self.mockSettingsService,
-                                       editStateService: self.editStateService,
-                                       persistencyService: self.mockPersistencyService)
+                                       editStateService: self.editStateService)
     }
     
     override func tearDown()
@@ -61,7 +61,7 @@ class MainViewModelTests : XCTestCase
     {
         var didAdd = false
         
-        self.mockPersistencyService.subscribeToTimeSlotChanges { _ in didAdd = true }
+        self.mockTimeSlotService.subscribeToTimeSlotChanges { _ in didAdd = true }
         self.viewModel.addNewSlot(withCategory: .commute)
         
         expect(didAdd).to(beTrue())
@@ -76,7 +76,7 @@ class MainViewModelTests : XCTestCase
     func testTheUpdateMethodCallsTheMetricsService()
     {
         let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
         expect(self.mockMetricsService.didLog(event: .timeSlotEditing)).to(beTrue())
@@ -85,7 +85,7 @@ class MainViewModelTests : XCTestCase
     func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
     {
         let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
         expect(timeSlot.category).to(equal(Category.commute))
@@ -99,7 +99,7 @@ class MainViewModelTests : XCTestCase
             .subscribe(onNext: { editingEnded = !$0 })
         
         let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
         expect(editingEnded).to(beTrue())

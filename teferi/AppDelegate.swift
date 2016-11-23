@@ -14,10 +14,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private var appStateService : AppStateService
     private let locationService : LocationService
     private let settingsService : SettingsService
+    private let timeSlotService : TimeSlotService
+    private let trackingService : TrackingService
     private let editStateService : EditStateService
-    private let persistencyService : PersistencyService
     private let notificationService : NotificationService
-    private let timeSlotCreationService : TimeSlotCreationService
     
     //MARK: Properties
     var window: UIWindow?
@@ -31,13 +31,20 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
-        self.persistencyService = CoreDataPersistencyService(loggingService: self.loggingService)
         self.notificationService = DefaultNotificationService(loggingService: self.loggingService)
-        self.timeSlotCreationService =
-            DefaultTimeSlotCreationService(loggingService: self.loggingService,
-                                           settingsService: self.settingsService,
-                                           persistencyService: self.persistencyService,
-                                           notificationService: self.notificationService)
+        
+        let persistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
+                                                                      modelAdapter: TimeSlotModelAdapter())
+        
+        
+        self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
+                                                      persistencyService: persistencyService)
+        
+        self.trackingService =
+            DefaultTrackingService(loggingService: self.loggingService,
+                                   settingsService: self.settingsService,
+                                   timeSlotService: self.timeSlotService,
+                                   notificationService: self.notificationService)
     }
     
     //MARK: UIApplicationDelegate lifecycle
@@ -48,7 +55,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         //Starts location tracking
         self.locationService
             .locationObservable
-            .subscribe(onNext: self.timeSlotCreationService.onNewLocation)
+            .subscribe(onNext: self.trackingService.onNewLocation)
             .addDisposableTo(disposeBag)
         
         //Faster startup when the app wakes up for location updates
@@ -78,8 +85,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.appStateService,
                                       self.locationService,
                                       self.settingsService,
-                                      self.editStateService,
-                                      self.persistencyService)
+                                      self.timeSlotService,
+                                      self.editStateService)
         
         if self.settingsService.installDate == nil
         {

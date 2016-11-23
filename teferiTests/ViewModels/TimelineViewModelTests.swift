@@ -9,15 +9,15 @@ class TimelineViewModelTests : XCTestCase
     private var disposable : Disposable? = nil
     private var viewModel : TimelineViewModel!
     private var mockMetricsService : MockMetricsService!
-    private var mockPersistencyService : MockPersistencyService!
+    private var mockTimeSlotService : MockTimeSlotService!
 
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
-        self.mockPersistencyService = MockPersistencyService()
+        self.mockTimeSlotService = MockTimeSlotService()
         self.viewModel = TimelineViewModel(date: Date(),
                                            metricsService: self.mockMetricsService,
-                                           persistencyService: self.mockPersistencyService)
+                                           timeSlotService: self.mockTimeSlotService)
     }
     
     override func tearDown()
@@ -27,7 +27,7 @@ class TimelineViewModelTests : XCTestCase
     
     func testOnlyViewModelsForTheCurrentDaySubscribeForTimeSlotUpdates()
     {
-        expect(self.mockPersistencyService.didSubscribe).to(beTrue())
+        expect(self.mockTimeSlotService.didSubscribe).to(beTrue())
     }
     
     func testIfThereAreNoTimeSlotsForTheCurrentDayTheViewModelCreatesOne()
@@ -37,18 +37,18 @@ class TimelineViewModelTests : XCTestCase
     
     func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
     {
-        let newMockPersistencyService = MockPersistencyService()
+        let newMockTimeSlotService = MockTimeSlotService()
         _ = TimelineViewModel(date: Date().yesterday,
                               metricsService: self.mockMetricsService,
-                              persistencyService: newMockPersistencyService)
+                              timeSlotService: newMockTimeSlotService)
         
-        expect(newMockPersistencyService.didSubscribe).to(beFalse())
+        expect(newMockTimeSlotService.didSubscribe).to(beFalse())
     }
     
     func testTheNewlyAddedSlotHasNoEndTime()
     {
         let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.mockTimeSlotService.add(timeSlot: timeSlot)
         let lastSlot = viewModel.timeSlots.last!
         
         expect(lastSlot.endTime).to(beNil())
@@ -57,11 +57,11 @@ class TimelineViewModelTests : XCTestCase
     func testTheAddNewSlotsMethodEndsThePreviousTimeSlot()
     {
         let timeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(timeSlot)
+        self.mockTimeSlotService.add(timeSlot: timeSlot)
         let firstSlot = viewModel.timeSlots.first!
         
         let otherTimeSlot = TimeSlot(category: .work)
-        self.mockPersistencyService.addNewTimeSlot(otherTimeSlot)
+        self.mockTimeSlotService.add(timeSlot: otherTimeSlot)
         
         expect(firstSlot.endTime).toNot(beNil())
     }
