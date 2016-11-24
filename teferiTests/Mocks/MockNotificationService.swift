@@ -5,7 +5,12 @@ class MockNotificationService : NotificationService
 {
     var scheduledNotifications = 0
     
-    func scheduleNotification(date: Date, message: String)
+    func requestNotificationPermission(completed: @escaping () -> ())
+    {
+        completed()
+    }
+    
+    func scheduleNotification(date: Date, title: String, message: String)
     {
         scheduledNotifications += 1
     }
@@ -13,5 +18,10 @@ class MockNotificationService : NotificationService
     func unscheduleAllNotifications()
     {
         scheduledNotifications = 0
+    }
+    
+    func handleNotificationAction(withIdentifier identifier: String?)
+    {
+        
     }
 }

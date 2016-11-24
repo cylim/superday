@@ -18,7 +18,7 @@ class MockTimeSlotService : TimeSlotService
     //PersistencyService implementation
     func getLast() -> TimeSlot
     {
-        getLastTimeSlotWasCalled = true
+        self.getLastTimeSlotWasCalled = true
         return timeSlots.last!
     }
     
@@ -27,7 +27,7 @@ class MockTimeSlotService : TimeSlotService
         let startDate = day.ignoreTimeComponents()
         let endDate = day.tomorrow.ignoreTimeComponents()
         
-        return timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
+        return self.timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
     }
     
     @discardableResult func add(timeSlot: TimeSlot)
@@ -37,8 +37,8 @@ class MockTimeSlotService : TimeSlotService
             lastTimeSlot.endTime = timeSlot.startTime
         }
         
-        timeSlots.append(timeSlot)
-        newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
+        self.timeSlots.append(timeSlot)
+        self.newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
     }
     
     @discardableResult func update(timeSlot: TimeSlot, withCategory category: teferi.Category)
@@ -46,8 +46,8 @@ class MockTimeSlotService : TimeSlotService
         timeSlot.category = category
     }
     
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
     {
-        newTimeSlotCallbacks.append(callback)
+        self.newTimeSlotCallbacks.append(callback)
     }
 }

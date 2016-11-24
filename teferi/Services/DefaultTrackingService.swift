@@ -7,7 +7,8 @@ import Foundation
 class DefaultTrackingService : TrackingService
 {
     // MARK: Fields
-    private let notificationText = "NotificationText".translate()
+    private let notificationBody = "NotificationBody".translate()
+    private let notificationTitle = "NotificationTitle".translate()
     private let notificationTimeout = TimeInterval(20 * 60)
     
     private let loggingService : LoggingService
@@ -67,6 +68,8 @@ class DefaultTrackingService : TrackingService
         self.notificationService.unscheduleAllNotifications()
         
         let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
-        self.notificationService.scheduleNotification(date: notificationDate, message: notificationText)
+        self.notificationService.scheduleNotification(date: notificationDate,
+                                                      title: self.notificationTitle,
+                                                      message: self.notificationBody)
     }
 }

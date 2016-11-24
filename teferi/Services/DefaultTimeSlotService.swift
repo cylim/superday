@@ -7,7 +7,8 @@ class DefaultTimeSlotService : TimeSlotService
     private let loggingService : LoggingService
     private let persistencyService : BasePersistencyService<TimeSlot>
     
-    private var callbacks = [(TimeSlot) -> ()]()
+    private var createCallbacks = [(TimeSlot) -> ()]()
+    private var updateCallbacks = [(TimeSlot) -> ()]()
     
     init(loggingService: LoggingService, persistencyService: BasePersistencyService<TimeSlot>)
     {
@@ -26,7 +27,7 @@ class DefaultTimeSlotService : TimeSlotService
         
         self.loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
         
-        self.callbacks.forEach { callback in callback(timeSlot) }
+        self.createCallbacks.forEach { callback in callback(timeSlot) }
     }
     
     func getTimeSlots(forDay day: Date) -> [TimeSlot]
@@ -51,7 +52,11 @@ class DefaultTimeSlotService : TimeSlotService
             return timeSlot
         }
         
-        if !self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
+        if self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
+        {
+            self.updateCallbacks.forEach { callback in callback(timeSlot) }
+        }
+        else
         {
             self.loggingService.log(withLogLevel: .error, message: "Error updating category of TimeSlot created on \(timeSlot.startTime) from \(timeSlot.category) to \(category)")
         }
@@ -62,9 +67,15 @@ class DefaultTimeSlotService : TimeSlotService
         return self.persistencyService.getLast() ?? TimeSlot()
     }
     
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
     {
-        self.callbacks.append(callback)
+        switch event
+        {
+            case .create:
+                self.createCallbacks.append(callback)
+            case .update:
+                self.updateCallbacks.append(callback)
+        }
     }
     
     private func endPreviousTimeSlot(atDate date: Date) -> Bool

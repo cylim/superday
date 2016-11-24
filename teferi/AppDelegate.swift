@@ -1,11 +1,14 @@
 import UIKit
 import RxSwift
 import CoreData
+import Foundation
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
 {   
     //MARK: Fields
+    private var invalidateOnWakeup = false
     private let disposeBag = DisposeBag()
     private let notificationAuthorizationVariable = Variable(false)
     
@@ -31,7 +34,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
-        self.notificationService = DefaultNotificationService(loggingService: self.loggingService)
         
         let persistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
                                                                       modelAdapter: TimeSlotModelAdapter())
@@ -39,6 +41,17 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
                                                       persistencyService: persistencyService)
+        
+        if #available(iOS 10.0, *)
+        {
+            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService,
+                                                                     timeSlotService: self.timeSlotService)
+        }
+        else
+        {
+            self.notificationService = PreiOSTenNotificationService(loggingService: self.loggingService,
+                                                                    self.notificationAuthorizationVariable.asObservable())
+        }
         
         self.trackingService =
             DefaultTrackingService(loggingService: self.loggingService,
@@ -63,6 +76,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         {
             self.locationService.startLocationTracking()
             return true
+        }
+        
+        if #available(iOS 10.0, *) {
+            (self.notificationService as? PostiOSTenNotificationService)?.setUserNotificationActions()
         }
         
         self.initializeWindowIfNeeded()
@@ -97,7 +114,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 onboardController.inject(self.settingsService,
                                          self.appStateService,
                                          mainViewController,
-                                         self.notificationAuthorizationVariable.asObservable())
+                                         notificationService)
             
             mainViewController.setIsFirstUse()
         }
@@ -133,11 +150,27 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.initializeWindowIfNeeded()
         self.locationService.stopLocationTracking()
         self.notificationService.unscheduleAllNotifications()
+        
+        if invalidateOnWakeup
+        {
+            self.invalidateOnWakeup = false
+            self.appStateService.currentAppState = .needsRefreshing
+        }
     }
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings)
     {
         self.notificationAuthorizationVariable.value = true
+    }
+    
+    func application(_ application: UIApplication,
+                     handleActionWithIdentifier identifier: String?,
+                     for notification: UILocalNotification, completionHandler: @escaping () -> Void)
+    {
+        self.notificationService.handleNotificationAction(withIdentifier: identifier)
+        self.invalidateOnWakeup = true
+        
+        completionHandler()
     }
 
     func applicationWillTerminate(_ application: UIApplication)
@@ -169,9 +202,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
-        do {
+        do
+        {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
-        } catch {
+        }
+        catch
+        {
             // Report any error we got.
             var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
@@ -200,10 +236,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     // MARK: - Core Data Saving support
     func saveContext ()
     {
-        if managedObjectContext.hasChanges {
-            do {
+        if managedObjectContext.hasChanges
+        {
+            do
+            {
                 try managedObjectContext.save()
-            } catch {
+            }
+            catch
+            {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError

@@ -30,8 +30,8 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     required convenience init?(coder: NSCoder)
     {
         self.init(transitionStyle: .scroll,
-                   navigationOrientation: .horizontal,
-                   options: nil)
+                  navigationOrientation: .horizontal,
+                  options: nil)
     }
     
     // MARK: UIViewController lifecycle
@@ -82,7 +82,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.disposeBag = nil
     }
     
-    // MARK: Methods    
+    // MARK: Methods
     private func initCurrentDateViewController()
     {
         self.currentDateViewController =
@@ -108,18 +108,25 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     private func onAppStateChanged(appState: AppState)
     {
-        if appState == .active
+        switch appState
         {
-            let today = Date().ignoreTimeComponents()
+            case .active:
+                let today = Date().ignoreTimeComponents()
+                
+                guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
+                
+                self.settingsService.setLastInactiveDate(nil)
+                self.initCurrentDateViewController()
+                break
             
-            guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
+            case .inactive:
+                self.settingsService.setLastInactiveDate(Date())
+                break
             
-            self.settingsService.setLastInactiveDate(nil)
-            self.initCurrentDateViewController()
-        }
-        else
-        {
-            self.settingsService.setLastInactiveDate(Date())
+            case .needsRefreshing:
+                self.settingsService.setLastInactiveDate(nil)
+                self.initCurrentDateViewController()
+                break
         }
     }
     

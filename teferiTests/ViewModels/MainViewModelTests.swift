@@ -61,7 +61,7 @@ class MainViewModelTests : XCTestCase
     {
         var didAdd = false
         
-        self.mockTimeSlotService.subscribeToTimeSlotChanges { _ in didAdd = true }
+        self.mockTimeSlotService.subscribeToTimeSlotChanges(on: .create, { _ in didAdd = true })
         self.viewModel.addNewSlot(withCategory: .commute)
         
         expect(didAdd).to(beTrue())

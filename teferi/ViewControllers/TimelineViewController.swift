@@ -7,7 +7,6 @@ class TimelineViewController : UITableViewController
 {
     // MARK: Fields
     private var editingIndex = -1
-    private var hasInitialized = false
     
     private static let baseCellHeight = 40
     private let disposeBag = DisposeBag()
@@ -52,10 +51,15 @@ class TimelineViewController : UITableViewController
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.register(UINib.init(nibName: "TimelineCell", bundle: Bundle.main), forCellReuseIdentifier: cellIdentifier)
         self.tableView.register(UINib.init(nibName: "EmptyStateView", bundle: Bundle.main), forCellReuseIdentifier: emptyCellIdentifier)
-    
+        
         self.viewModel
-            .timeSlotsObservable
-            .subscribe(onNext: self.onNewTimeSlotAvailable)
+            .timeSlotCreationObservable
+            .subscribe(onNext: self.onTimeSlotCreated)
+            .addDisposableTo(self.disposeBag)
+        
+        self.viewModel
+            .timeSlotUpdatingObservable
+            .subscribe(onNext: self.onTimeSlotUpdated)
             .addDisposableTo(self.disposeBag)
         
         self.viewModel
@@ -69,20 +73,26 @@ class TimelineViewController : UITableViewController
             .addDisposableTo(self.disposeBag)
     }
     
-    // MARK: Methods
-    private func onNewTimeSlotAvailable(timeSlots: [TimeSlot])
+    private func onTimeSlotCreated(atIndex index: Int)
     {
         self.tableView.reloadData()
         
-        let rowAnimation = self.hasInitialized ? UITableViewRowAnimation.top : .none
+        let rowAnimation = index >= 0 ? UITableViewRowAnimation.top : .none
         
         let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
         self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
         
         let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
         self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
+    }
+    
+    // MARK: Methods
+    private func onTimeSlotUpdated(atIndex index: Int)
+    {
+        guard !tableView.isEditing else { return }
         
-        self.hasInitialized = true
+        let indexPath = IndexPath(row: index, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     private func onIsEditing(isEditing: Bool)

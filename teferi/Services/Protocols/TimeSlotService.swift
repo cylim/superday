@@ -9,7 +9,7 @@ protocol TimeSlotService
      
      - Parameter callback: The function that gets invoked.
      */
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
     
     /**
      Adds a new TimeSlot and ensures its validity.

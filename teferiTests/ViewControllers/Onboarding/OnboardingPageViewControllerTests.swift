@@ -6,6 +6,7 @@ import XCTest
 class OnboardingPageViewControllerTests : XCTestCase
 {
     private var onBoardingPageViewController : OnboardingPageViewController!
+    private var notificationService : MockNotificationService!
     
     override func setUp()
     {
@@ -13,11 +14,12 @@ class OnboardingPageViewControllerTests : XCTestCase
         
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
-            
+        
+        self.notificationService = MockNotificationService()
         self.onBoardingPageViewController = controller.inject(MockSettingsService(),
                                                               DefaultAppStateService(),
                                                               MainViewController(),
-                                                              Variable(false).asObservable())
+                                                              self.notificationService)
         
         self.onBoardingPageViewController.loadViewIfNeeded()
         UIApplication.shared.keyWindow!.rootViewController = onBoardingPageViewController

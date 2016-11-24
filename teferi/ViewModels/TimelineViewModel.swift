@@ -7,14 +7,18 @@ class TimelineViewModel
     //MARK: Fields
     private let metricsService : MetricsService
     private let timeSlotService : TimeSlotService
-    private let timeSlotsVariable : Variable<[TimeSlot]>
     private let isEditingVariable = Variable(false)
+    private let timeSlotUpdatingVariable = Variable(-1)
+    private let timeSlotCreationVariable = Variable(-1)
     
     //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
-    let timeSlotsObservable : Observable<[TimeSlot]>
     let isEditingObservable : Observable<Bool>
+    let timeSlotUpdatingObservable : Observable<Int>
+    let timeSlotCreationObservable : Observable<Int>
+    
+    private(set) var timeSlots : [TimeSlot]
     
     var isEditing : Bool
     {
@@ -22,17 +26,11 @@ class TimelineViewModel
         set(value) { self.isEditingVariable.value = value }
     }
     
-    private(set) var timeSlots : [TimeSlot]
-    {
-        get { return self.timeSlotsVariable.value }
-        set(value) { self.timeSlotsVariable.value = value }
-    }
-    
     //MARK: Initializers
     init(date: Date, metricsService : MetricsService, timeSlotService: TimeSlotService)
     {
         let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
-        let timeSlotsForDate = timeSlotService.getTimeSlots(forDay: date)
+        self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
         
         //UI gets notified once every n seconds that the last item might need to be redrawn
         self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
@@ -40,14 +38,15 @@ class TimelineViewModel
         self.metricsService = metricsService
         self.timeSlotService = timeSlotService
         self.date = date.ignoreTimeComponents()
-        self.timeSlotsVariable = Variable(timeSlotsForDate)
         self.isEditingObservable = self.isEditingVariable.asObservable()
-        self.timeSlotsObservable = self.timeSlotsVariable.asObservable()
+        self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
+        self.timeSlotUpdatingObservable = self.timeSlotUpdatingVariable.asObservable().filter { $0 >= 0 }
         
         //Only the current day subscribes for new TimeSlots
         guard isCurrentDay else { return }
         
-        self.timeSlotService.subscribeToTimeSlotChanges(self.onNewTimeSlot)
+        self.timeSlotService.subscribeToTimeSlotChanges(on: .create, self.onTimeSlotCreated)
+        self.timeSlotService.subscribeToTimeSlotChanges(on: .update, self.onTimeSlotUpdated)
         
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0
@@ -58,8 +57,8 @@ class TimelineViewModel
     
     //MARK: Methods
     
-    ///Called when the persistency service indicates that a new TimeSlot has been created.
-    private func onNewTimeSlot(timeSlot: TimeSlot)
+    ///Called when the persistency service indicates that a TimeSlot has been created/updated.
+    private func onTimeSlotCreated(timeSlot: TimeSlot)
     {
         //Finishes last task, if needed
         if let lastTimeSlot = self.timeSlots.last
@@ -68,4 +67,15 @@ class TimelineViewModel
         }
         
         self.timeSlots.append(timeSlot)
-    }}
+        self.timeSlotCreationVariable.value = self.timeSlots.count - 1
+    }
+    
+    private func onTimeSlotUpdated(timeSlot: TimeSlot)
+    {
+        if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
+        {
+            self.timeSlots[index] = timeSlot
+            self.timeSlotUpdatingVariable.value = index
+        }
+    }
+}
