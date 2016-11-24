@@ -74,6 +74,13 @@ class MainViewController : UIViewController
         //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         
+        //Setup fade overlay at bottom of timeline
+        let fadeFrame = CGRect(x: 0.0, y: view.frame.height - 100, width: view.frame.width, height: 100)
+        let bottomFadeStartColor = UIColor.white.withAlphaComponent(1.0)
+        let bottomFadeEndColor = UIColor.white.withAlphaComponent(0.0)
+        let bottomFadeOverlay = self.fadeOverlay(frame: fadeFrame, startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        view.layer.addSublayer(bottomFadeOverlay)
+        
         //Edit View
         self.editView = EditTimeSlotView(frame: self.view.frame, editEndedCallback: self.viewModel.updateTimeSlot)
         self.view.addSubview(self.editView)
@@ -248,5 +255,16 @@ class MainViewController : UIViewController
         
         //Grey out views
         self.editView.isEditing = isEditing
+    }
+    //Configure overlay
+    private func fadeOverlay(frame: CGRect, startColor: UIColor, endColor: UIColor) -> CAGradientLayer
+    {
+        let fadeOverlay = CAGradientLayer()
+        fadeOverlay.frame = frame
+        fadeOverlay.colors = [startColor.cgColor, endColor.cgColor]
+        fadeOverlay.locations = [0.1]
+        fadeOverlay.startPoint = CGPoint(x: 0.0, y: 1.0)
+        fadeOverlay.endPoint = CGPoint(x: 0.0, y: 0.0)
+        return fadeOverlay
     }
 }
