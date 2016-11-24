@@ -18,7 +18,7 @@ class MockTimeSlotService : TimeSlotService
     //PersistencyService implementation
     func getLast() -> TimeSlot
     {
-        getLastTimeSlotWasCalled = true
+        self.getLastTimeSlotWasCalled = true
         return timeSlots.last!
     }
     

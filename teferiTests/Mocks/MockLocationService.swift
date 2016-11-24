@@ -16,12 +16,12 @@ class MockLocationService : LocationService
     
     func startLocationTracking()
     {
-        locationStarted = true
+        self.locationStarted = true
     }
     
     func stopLocationTracking()
     {
-        locationStarted = false
+        self.locationStarted = false
     }
     
     var locationObservable : Observable<CLLocation> { return locationVariable.asObservable() }
@@ -29,6 +29,6 @@ class MockLocationService : LocationService
     //MARK: Methods
     func setMockLocation(_ location: CLLocation)
     {
-        locationVariable.value = location
+        self.locationVariable.value = location
     }
 }

@@ -60,7 +60,6 @@ class DefaultTimeSlotService : TimeSlotService
         {
             self.loggingService.log(withLogLevel: .error, message: "Error updating category of TimeSlot created on \(timeSlot.startTime) from \(timeSlot.category) to \(category)")
         }
-        
     }
     
     func getLast() -> TimeSlot

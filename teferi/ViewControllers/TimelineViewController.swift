@@ -7,7 +7,6 @@ class TimelineViewController : UITableViewController
 {
     // MARK: Fields
     private var editingIndex = -1
-    private var hasInitialized = false
     
     private static let baseCellHeight = 40
     private let disposeBag = DisposeBag()
@@ -85,8 +84,6 @@ class TimelineViewController : UITableViewController
         
         let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
         self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
-        
-        self.hasInitialized = true
     }
     
     // MARK: Methods

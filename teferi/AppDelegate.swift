@@ -8,6 +8,7 @@ import UserNotifications
 class AppDelegate : UIResponder, UIApplicationDelegate
 {   
     //MARK: Fields
+    private var invalidateOnWakeup = false
     private let disposeBag = DisposeBag()
     private let notificationAuthorizationVariable = Variable(false)
     
@@ -19,7 +20,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let timeSlotService : TimeSlotService
     private let trackingService : TrackingService
     private let editStateService : EditStateService
-    private let notificationService : NotificationService
+    let notificationService : NotificationService
     
     //MARK: Properties
     var window: UIWindow?
@@ -149,6 +150,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.initializeWindowIfNeeded()
         self.locationService.stopLocationTracking()
         self.notificationService.unscheduleAllNotifications()
+        
+        if invalidateOnWakeup
+        {
+            self.invalidateOnWakeup = false
+            self.appStateService.currentAppState = .needsRefreshing
+        }
     }
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings)
@@ -161,6 +168,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                      for notification: UILocalNotification, completionHandler: @escaping () -> Void)
     {
         self.notificationService.handleNotificationAction(withIdentifier: identifier)
+        self.invalidateOnWakeup = true
         
         completionHandler()
     }

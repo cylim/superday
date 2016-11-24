@@ -68,6 +68,10 @@ class TimelineViewModel
         
         self.timeSlots.append(timeSlot)
         self.timeSlotCreationVariable.value = self.timeSlots.count - 1
+        
+        let notificationDate = Date().addingTimeInterval(5)
+        let notificationService = ((UIApplication.shared.delegate as? AppDelegate)?.notificationService)!
+        notificationService.scheduleNotification(date: notificationDate, title: "Howdy!", message: "What you’re doing right now?")
     }
     
     private func onTimeSlotUpdated(timeSlot: TimeSlot)
