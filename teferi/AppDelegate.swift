@@ -20,7 +20,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let timeSlotService : TimeSlotService
     private let trackingService : TrackingService
     private let editStateService : EditStateService
-    let notificationService : NotificationService
+    private let notificationService : NotificationService
     
     //MARK: Properties
     var window: UIWindow?
