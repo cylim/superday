@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/toggl/superday/master/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png)  Superday
+# ![](https://raw.githubusercontent.com/toggl/superday/master/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday
 More time, more life.
 Superday tracks your activities, you give the context.
 
@@ -9,6 +9,7 @@ This is meant to help new contributors submiting changes to the project.
 ## Getting started
 
 Requirements:
+
 - [XCode](https://developer.apple.com/download/)
 - [CocoaPods](https://guides.cocoapods.org/using/getting-started.html#installation)
 
@@ -23,11 +24,19 @@ Downloading and starting development for superday is supersimple®:
 
 ## Pull Request Etiquette
 
-Make pull requests for specific concerns and use clear titles and descriptions. It is your responsibility to make sure the branch is up to date with master or merges trivially. Feel free to make pull requests for work in progress features to ask for feedback.
+Make pull requests for specific concerns and use clear titles and descriptions. Don't sneak other features into your branch to avoid creating needless dependencies. It is your responsibility to make sure the branch is up to date with master or merges trivially. Feel free to make pull requests for work in progress features to ask for feedback.
 
-### Commit Messages
+### Swift style guide
 
-Keep it short. Keep it clear. Separate concerns.
+Please refer to [this document](https://github.com/toggl/superday/blob/develop/SwiftStyleGuide.md).
+
+### Commits
+
+- Keep commits small, clear and specific
+- Use the present tense ("Add feature" not "Added feature")
+- Use the imperative mood ("Move file to..." not "Moves file to...")
+- Limit the first line to 72 characters or less
+- Do not reference issues/pull requests in commit messages
 
 ### Emoji Styleguide
 
