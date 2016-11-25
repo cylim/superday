@@ -71,15 +71,22 @@ class MainViewController : UIViewController
                                         self.timeSlotService,
                                         self.editStateService)
         
-        //Add button
-        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         
-        //Setup fade overlay at bottom of timeline
-        let fadeFrame = CGRect(x: 0.0, y: view.frame.height - 100, width: view.frame.width, height: 100)
+        //Add fade overlay at bottom of timeline
         let bottomFadeStartColor = UIColor.white.withAlphaComponent(1.0)
         let bottomFadeEndColor = UIColor.white.withAlphaComponent(0.0)
-        let bottomFadeOverlay = self.fadeOverlay(frame: fadeFrame, startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
-        view.layer.addSublayer(bottomFadeOverlay)
+        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
+        self.view.addSubview(fadeView)
+        fadeView.snp.makeConstraints { make in
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.height.equalTo(100)
+        }
+        
+        //Add button
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         
         //Edit View
         self.editView = EditTimeSlotView(frame: self.view.frame, editEndedCallback: self.viewModel.updateTimeSlot)
@@ -257,10 +264,9 @@ class MainViewController : UIViewController
         self.editView.isEditing = isEditing
     }
     //Configure overlay
-    private func fadeOverlay(frame: CGRect, startColor: UIColor, endColor: UIColor) -> CAGradientLayer
+    private func fadeOverlay(startColor: UIColor, endColor: UIColor) -> CAGradientLayer
     {
         let fadeOverlay = CAGradientLayer()
-        fadeOverlay.frame = frame
         fadeOverlay.colors = [startColor.cgColor, endColor.cgColor]
         fadeOverlay.locations = [0.1]
         fadeOverlay.startPoint = CGPoint(x: 0.0, y: 1.0)

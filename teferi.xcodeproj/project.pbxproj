@@ -27,6 +27,7 @@
 		2420A86E1DB7DD0F00C0478C /* PermissionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A86D1DB7DD0F00C0478C /* PermissionView.xib */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
+		242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */; };
 		243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
@@ -175,6 +176,7 @@
 		2420A86D1DB7DD0F00C0478C /* PermissionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PermissionView.xib; path = Views/PermissionView.xib; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
+		242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoResizingLayerView.swift; path = Views/AutoResizingLayerView.swift; sourceTree = "<group>"; };
 		243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationService.swift; path = Services/PostiOSTenNotificationService.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 		24D99F691D74B93C00E68163 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */,
 				24B03B641DA3864500452D16 /* AddTimeSlotView.swift */,
 				24B03B661DA3866400452D16 /* AddTimeSlotView.xib */,
 				2420A8691DB6271000C0478C /* EditTimeSlotView.swift */,
@@ -1213,6 +1216,7 @@
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */,
 				24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */,
+				242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */,
 				24EB96771DE7080F0040C211 /* MotionService.swift in Sources */,
 				2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */,
 				24EB967D1DE708570040C211 /* AppState.swift in Sources */,
