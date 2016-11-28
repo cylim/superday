@@ -146,7 +146,16 @@ class TimelineViewController : UITableViewController
         let timeSlot = self.viewModel.timeSlots[index]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
         
-        cell.bind(toTimeSlot: timeSlot, index: index)
+        //Check if need to display the endTime
+        var lastInPastDay = false
+        let isPastDay = Date().ignoreTimeComponents() != date.ignoreTimeComponents()
+        let isLastEntry = self.viewModel.timeSlots.count - 1 == indexPath.row
+        if isPastDay && isLastEntry
+        {
+            lastInPastDay = true
+        }
+        
+        cell.bind(toTimeSlot: timeSlot, index: index, lastInPastDay: lastInPastDay)
         
         if !cell.isSubscribedToClickObservable
         {

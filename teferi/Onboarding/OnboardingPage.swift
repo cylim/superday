@@ -76,7 +76,7 @@ class OnboardingPage : UIViewController
         let cell = Bundle.main
             .loadNibNamed("TimelineCell", owner: self, options: nil)?
             .first as! TimelineCell
-        cell.bind(toTimeSlot: timeSlot, index: 0)
+        cell.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: false)
         return cell
     }
     

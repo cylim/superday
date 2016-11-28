@@ -35,7 +35,7 @@ class TimelineCellTests : XCTestCase
     override func setUp()
     {
         self.view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
-        self.view.bind(toTimeSlot: timeSlot, index: 0)
+        self.view.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: false)
     }
     
     override func tearDown()
@@ -45,7 +45,7 @@ class TimelineCellTests : XCTestCase
     
     private func editCellSetUp(_ shouldFade: Bool = true, isEditingCategory: Bool = true)
     {
-        self.view.bind(toTimeSlot: timeSlot, index: 0)
+        self.view.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: false)
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
@@ -64,15 +64,50 @@ class TimelineCellTests : XCTestCase
         expect(self.slotDescription.text).to(equal(expectedText))
     }
     
+    func testTheDescriptionShowsEndDateIfIsLastPastTimeSlot()
+    {
+        let newTimeSlot = TimeSlot()
+        let date = Date().yesterday.ignoreTimeComponents()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        newTimeSlot.startTime = date
+        newTimeSlot.endTime = date.addingTimeInterval(5000)
+        
+        self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: true)
+        
+        let startText = formatter.string(from: newTimeSlot.startTime)
+        let endText = formatter.string(from: newTimeSlot.endTime!)
+        
+        let expectedText = " \(startText) - \(endText)"
+        
+        expect(self.slotDescription.text).to(equal(expectedText))
+    }
+    
     func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknown()
     {
         let unknownTimeSlot = TimeSlot()
-        view.bind(toTimeSlot: unknownTimeSlot, index: 0)
+        view.bind(toTimeSlot: unknownTimeSlot, index: 0, lastInPastDay: false)
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         let dateString = formatter.string(from: unknownTimeSlot.startTime)
         
         let expectedText = " \(dateString)"
+        
+        expect(self.slotDescription.text).to(equal(expectedText))
+    }
+    
+    func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknownAndEndDateIsLastPastTimeSlot()
+    {
+        let unknownTimeSlot = TimeSlot()
+        unknownTimeSlot.endTime = unknownTimeSlot.startTime.addingTimeInterval(5000)
+        
+        view.bind(toTimeSlot: unknownTimeSlot, index: 0, lastInPastDay: true)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        
+        let startTime = formatter.string(from: unknownTimeSlot.startTime)
+        let endTime = formatter.string(from: unknownTimeSlot.endTime!)
+        let expectedText = " \(startTime) - \(endTime)"
         
         expect(self.slotDescription.text).to(equal(expectedText))
     }
@@ -94,7 +129,7 @@ class TimelineCellTests : XCTestCase
         let date = Date().yesterday.ignoreTimeComponents()
         newTimeSlot.startTime = date
         newTimeSlot.endTime = date.addingTimeInterval(5000)
-        self.view.bind(toTimeSlot: newTimeSlot, index: 0)
+        self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: false)
         
         let hourMask = "%02d h %02d min"
         let interval = Int(newTimeSlot.duration)
@@ -120,7 +155,7 @@ class TimelineCellTests : XCTestCase
         let newTimeSlot = TimeSlot()
         newTimeSlot.startTime = Date().add(days: -1)
         newTimeSlot.endTime = Date()
-        self.view.bind(toTimeSlot: newTimeSlot, index: 0)
+        self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: false)
         self.view.layoutIfNeeded()
         let newLineHeight = line.frame.height
         
