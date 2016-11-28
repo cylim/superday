@@ -63,9 +63,27 @@
                                     <action selector="onCalendarTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mms-1C-bOm"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFeedback" translatesAutoresizingMaskIntoConstraints="NO" id="ad2-tC-MIk">
+                                <rect key="frame" x="295" y="32" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="BOh-1f-8lY"/>
+                                    <constraint firstAttribute="height" constant="24" id="VH1-nW-eS5"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0h2-FH-NRL">
+                                <rect key="frame" x="292" y="27" width="30" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="9jh-Ju-RHG"/>
+                                    <constraint firstAttribute="width" constant="30" id="zL9-vc-VPH"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="onContactTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="SJU-HT-pd9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ad2-tC-MIk" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="8Vi-dn-BLp"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="24" id="A3N-lY-965"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="leading" secondItem="4Kc-Yx-eCd" secondAttribute="trailing" constant="14" id="Amn-5j-mEJ"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="12" id="COh-mY-Shc"/>
@@ -74,10 +92,13 @@
                             <constraint firstItem="Cvs-ps-GL3" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" constant="3" id="HbQ-hM-BsI"/>
                             <constraint firstItem="mpB-7h-JKy" firstAttribute="centerY" secondItem="4Kc-Yx-eCd" secondAttribute="centerY" id="K64-gf-Qso"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="NCU-n0-Cem"/>
+                            <constraint firstItem="Cvs-ps-GL3" firstAttribute="leading" secondItem="0h2-FH-NRL" secondAttribute="trailing" id="NZ2-Df-SjN"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="NaU-fU-1yf"/>
                             <constraint firstAttribute="trailing" secondItem="OG6-wl-hm1" secondAttribute="trailing" id="VX2-IW-m1O"/>
                             <constraint firstItem="4Kc-Yx-eCd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:25" id="VxF-hB-2dp"/>
                             <constraint firstAttribute="leadingMargin" secondItem="4Kc-Yx-eCd" secondAttribute="leading" constant="-4.2300000000000004" id="cqR-yZ-pr8"/>
+                            <constraint firstItem="ad2-tC-MIk" firstAttribute="centerX" secondItem="0h2-FH-NRL" secondAttribute="centerX" id="hfi-5p-xiu"/>
+                            <constraint firstItem="Cvs-ps-GL3" firstAttribute="centerY" secondItem="0h2-FH-NRL" secondAttribute="centerY" id="iPh-sx-LWL"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="48" id="lht-ho-e0D"/>
                             <constraint firstItem="OG6-wl-hm1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pya-Vf-OrV"/>
                             <constraint firstItem="RET-NJ-inr" firstAttribute="centerY" secondItem="mpB-7h-JKy" secondAttribute="centerY" id="v4W-01-sYM"/>
@@ -93,6 +114,7 @@
                     </view>
                     <connections>
                         <outlet property="calendarButton" destination="Cvs-ps-GL3" id="uDk-bN-Yog"/>
+                        <outlet property="contactButton" destination="0h2-FH-NRL" id="WIi-kr-lds"/>
                         <outlet property="icon" destination="4Kc-Yx-eCd" id="ocm-Tt-kFk"/>
                         <outlet property="titleLabel" destination="mpB-7h-JKy" id="TYT-Ml-lqN"/>
                     </connections>
@@ -122,6 +144,7 @@
     </scenes>
     <resources>
         <image name="icCalendar" width="24" height="24"/>
+        <image name="icFeedback" width="24" height="24"/>
         <image name="icSuperday" width="24" height="24"/>
     </resources>
 </document>

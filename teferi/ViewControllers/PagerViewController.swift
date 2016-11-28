@@ -18,6 +18,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     // MARK: Properties
     var dateObservable : Observable<Date> { return viewModel.dateObservable }
+    var feedbackUIClosing : Bool = false
     
     // MARK: Initializers
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?)
@@ -74,7 +75,12 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             .subscribe(onNext: self.onAppStateChanged)
             .addDisposableTo(disposeBag!)
         
-        self.initCurrentDateViewController()
+        if !self.feedbackUIClosing
+        {
+            self.initCurrentDateViewController()
+        }
+        
+        self.feedbackUIClosing = false
     }
     
     override func viewWillDisappear(_ animated: Bool)

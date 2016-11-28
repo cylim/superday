@@ -21,6 +21,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let trackingService : TrackingService
     private let editStateService : EditStateService
     private let notificationService : NotificationService
+    private let feedbackService: FeedbackService
     
     //MARK: Properties
     var window: UIWindow?
@@ -34,6 +35,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
+        self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Superday feedback", body: "")
         
         let persistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
                                                                       modelAdapter: TimeSlotModelAdapter())
@@ -103,7 +105,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.locationService,
                                       self.settingsService,
                                       self.timeSlotService,
-                                      self.editStateService)
+                                      self.editStateService,
+                                      self.feedbackService)
         
         if self.settingsService.installDate == nil
         {

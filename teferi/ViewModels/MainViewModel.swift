@@ -12,16 +12,19 @@ class MainViewModel
     private let timeSlotService : TimeSlotService
     private let settingsService : SettingsService
     private let editStateService : EditStateService
+    private let feedbackService: FeedbackService
     
     init(metricsService: MetricsService,
          timeSlotService: TimeSlotService,
          settingsService: SettingsService,
-         editStateService: EditStateService)
+         editStateService: EditStateService,
+         feedbackService: FeedbackService)
     {
         self.metricsService = metricsService
         self.timeSlotService = timeSlotService
         self.settingsService = settingsService
         self.editStateService = editStateService
+        self.feedbackService = feedbackService
     }
     
     // MARK: Properties

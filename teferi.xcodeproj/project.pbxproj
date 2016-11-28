@@ -93,6 +93,9 @@
 		24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96841DE709830040C211 /* PredicateExtensions.swift */; };
 		24EB96871DE7163E0040C211 /* MockTimeSlotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96861DE7163E0040C211 /* MockTimeSlotService.swift */; };
 		24EB96891DE716620040C211 /* TimelineViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96881DE716620040C211 /* TimelineViewControllerTests.swift */; };
+		2FB611401DE777B7007C5646 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB6113F1DE777B7007C5646 /* FeedbackService.swift */; };
+		2FB611421DE77846007C5646 /* MailFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB611411DE77846007C5646 /* MailFeedbackService.swift */; };
+		2FB611441DE785AB007C5646 /* MockFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB611431DE785AB007C5646 /* MockFeedbackService.swift */; };
 		512A9B3D1DD4450200B73F01 /* TimeSlotMiniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */; };
 		512A9B3F1DD4451F00B73F01 /* TimeSlotMiniView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */; };
 		512A9B411DD46E3B00B73F01 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* ColorExtensions.swift */; };
@@ -244,6 +247,9 @@
 		24EB96841DE709830040C211 /* PredicateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PredicateExtensions.swift; path = Extensions/PredicateExtensions.swift; sourceTree = "<group>"; };
 		24EB96861DE7163E0040C211 /* MockTimeSlotService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTimeSlotService.swift; path = Mocks/MockTimeSlotService.swift; sourceTree = "<group>"; };
 		24EB96881DE716620040C211 /* TimelineViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewControllerTests.swift; path = ViewControllers/TimelineViewControllerTests.swift; sourceTree = "<group>"; };
+		2FB6113F1DE777B7007C5646 /* FeedbackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedbackService.swift; path = Services/Protocols/FeedbackService.swift; sourceTree = "<group>"; };
+		2FB611411DE77846007C5646 /* MailFeedbackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MailFeedbackService.swift; path = Services/Protocols/MailFeedbackService.swift; sourceTree = "<group>"; };
+		2FB611431DE785AB007C5646 /* MockFeedbackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockFeedbackService.swift; path = Mocks/MockFeedbackService.swift; sourceTree = "<group>"; };
 		326FBECEEBCDD54BD7B16CF8 /* Pods-teferi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teferi/Pods-teferi.debug.xcconfig"; sourceTree = "<group>"; };
 		43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSlotMiniView.swift; sourceTree = "<group>"; };
@@ -414,6 +420,7 @@
 				24B03B621D9E946900452D16 /* MockMetricsService.swift */,
 				24168E391DC21125004F90AD /* MockNotificationService.swift */,
 				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
+				2FB611431DE785AB007C5646 /* MockFeedbackService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -546,6 +553,7 @@
 			children = (
 				243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */,
 				246531711DA7B4A10066DFE0 /* PreiOSTenNotificationService.swift */,
+				2FB611411DE77846007C5646 /* MailFeedbackService.swift */,
 			);
 			name = Interaction;
 			sourceTree = "<group>";
@@ -554,6 +562,7 @@
 			isa = PBXGroup;
 			children = (
 				2465316F1DA7B4150066DFE0 /* NotificationService.swift */,
+				2FB6113F1DE777B7007C5646 /* FeedbackService.swift */,
 			);
 			name = Interaction;
 			sourceTree = "<group>";
@@ -1203,7 +1212,9 @@
 				24116A041D9DACCD00762BD6 /* AnimationHelpers.swift in Sources */,
 				2482CAFC1DB12F9F00E892C1 /* OnboardingPage2.swift in Sources */,
 				24564F521D8320FC00D9A8AE /* TimelineViewController.swift in Sources */,
+				2FB611421DE77846007C5646 /* MailFeedbackService.swift in Sources */,
 				24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */,
+				2FB611401DE777B7007C5646 /* FeedbackService.swift in Sources */,
 				2482CAFB1DB12F9F00E892C1 /* OnboardingPage1.swift in Sources */,
 				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
 				24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */,
@@ -1242,6 +1253,7 @@
 				24EB96871DE7163E0040C211 /* MockTimeSlotService.swift in Sources */,
 				240575BB1DC7F3F4002C0C06 /* MockEditStateService.swift in Sources */,
 				247E27591DC3B41400A38A2D /* PagerViewControllerTests.swift in Sources */,
+				2FB611441DE785AB007C5646 /* MockFeedbackService.swift in Sources */,
 				24168E3A1DC21125004F90AD /* MockLoggingService.swift in Sources */,
 				24EB96891DE716620040C211 /* TimelineViewControllerTests.swift in Sources */,
 				24168E371DC21042004F90AD /* DefaultTimeSlotCreationServiceTests.swift in Sources */,

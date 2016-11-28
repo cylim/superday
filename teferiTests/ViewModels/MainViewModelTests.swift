@@ -11,17 +11,19 @@ class MainViewModelTests : XCTestCase
     private var mockMetricsService : MockMetricsService!
     private var mockSettingsService : MockSettingsService!
     private var mockTimeSlotService : MockTimeSlotService!
-    
+    private var mockFeedbackService: MockFeedbackService!
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
         self.mockSettingsService = MockSettingsService()
         self.editStateService = DefaultEditStateService()
         self.mockTimeSlotService = MockTimeSlotService()
+        self.mockFeedbackService = MockFeedbackService()
         self.viewModel = MainViewModel(metricsService: self.mockMetricsService,
                                        timeSlotService: self.mockTimeSlotService,
                                        settingsService: self.mockSettingsService,
-                                       editStateService: self.editStateService)
+                                       editStateService: self.editStateService,
+                                       feedbackService: self.mockFeedbackService)
     }
     
     override func tearDown()

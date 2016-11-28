@@ -7,7 +7,7 @@ import QuartzCore
 import CoreLocation
 import SnapKit
 
-class MainViewController : UIViewController
+class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private var isFirstUse = false
@@ -20,7 +20,8 @@ class MainViewController : UIViewController
         return MainViewModel(metricsService: self.metricsService,
                              timeSlotService: self.timeSlotService,
                              settingsService: self.settingsService,
-                             editStateService: self.editStateService)
+                             editStateService: self.editStateService,
+                             feedbackService: self.feedbackService)
     }()
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
@@ -32,6 +33,7 @@ class MainViewController : UIViewController
     private var settingsService : SettingsService!
     private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
+    private var feedbackService: FeedbackService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
@@ -41,13 +43,15 @@ class MainViewController : UIViewController
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var titleLabel : UILabel!
     @IBOutlet private weak var calendarButton : UIButton!
+    @IBOutlet private weak var contactButton: UIButton!
     
     func inject(_ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ locationService: LocationService,
                 _ settingsService: SettingsService,
                 _ timeSlotService: TimeSlotService,
-                _ editStateService: EditStateService) -> MainViewController
+                _ editStateService: EditStateService,
+                _ feedbackService: FeedbackService) -> MainViewController
     {
         self.metricsService = metricsService
         self.appStateService = appStateService
@@ -55,6 +59,7 @@ class MainViewController : UIViewController
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
         self.editStateService = editStateService
+        self.feedbackService = feedbackService
         
         return self
     }
@@ -69,8 +74,7 @@ class MainViewController : UIViewController
                                         self.appStateService,
                                         self.settingsService,
                                         self.timeSlotService,
-                                        self.editStateService)
-        
+                                        self.editStateService)        
         
         //Add fade overlay at bottom of timeline
         let bottomFadeStartColor = UIColor.white.withAlphaComponent(1.0)
@@ -184,6 +188,13 @@ class MainViewController : UIViewController
         self.onDateChanged(date: today)
     }
     
+    @IBAction func onContactTouchUpInside()
+    {
+        self.feedbackService.composeFeedback(parentViewController: self) {
+            self.pagerViewController.feedbackUIClosing = true
+        }
+    }
+    
     // MARK: Methods
     func setIsFirstUse()
     {
@@ -263,6 +274,7 @@ class MainViewController : UIViewController
         //Grey out views
         self.editView.isEditing = isEditing
     }
+    
     //Configure overlay
     private func fadeOverlay(startColor: UIColor, endColor: UIColor) -> CAGradientLayer
     {
