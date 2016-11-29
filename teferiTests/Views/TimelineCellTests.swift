@@ -21,9 +21,17 @@ class TimelineCellTests : XCTestCase
         return view as! UILabel
     }
     
-    private var timeLabel : UILabel
+    private var slotTime : UILabel
     {
         let view = self.view.subviews.filter { v in v is UILabel  }.last!
+        return view as! UILabel
+    }
+    
+    private var timeLabel : UILabel
+    {
+        let labels = self.view.subviews.filter { v in v is UILabel  }
+        
+        let view = labels[labels.count - 2]
         return view as! UILabel
     }
     
@@ -55,16 +63,19 @@ class TimelineCellTests : XCTestCase
     
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
     {
+        expect(self.slotDescription.text).to(equal(timeSlot.category.rawValue.capitalized))
+    }
+    
+    func testTheTimeChangesAccordingToTheBoundTimeSlot()
+    {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         let dateString = formatter.string(from: timeSlot.startTime)
         
-        let expectedText = "\(timeSlot.category.rawValue.capitalized) \(dateString)"
-        
-        expect(self.slotDescription.text).to(equal(expectedText))
+        expect(self.slotTime.text).to(equal(dateString))
     }
     
-    func testTheDescriptionShowsEndDateIfIsLastPastTimeSlot()
+    func testTheTimeDescriptionShowsEndDateIfIsLastPastTimeSlot()
     {
         let newTimeSlot = TimeSlot()
         let date = Date().yesterday.ignoreTimeComponents()
@@ -78,38 +89,17 @@ class TimelineCellTests : XCTestCase
         let startText = formatter.string(from: newTimeSlot.startTime)
         let endText = formatter.string(from: newTimeSlot.endTime!)
         
-        let expectedText = " \(startText) - \(endText)"
+        let expectedText = "\(startText) - \(endText)"
         
-        expect(self.slotDescription.text).to(equal(expectedText))
+        expect(self.slotTime.text).to(equal(expectedText))
     }
     
-    func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknown()
+    func testTheDescriptionHasNoTextWhenTheCategoryIsUnknown()
     {
         let unknownTimeSlot = TimeSlot()
         view.bind(toTimeSlot: unknownTimeSlot, index: 0, lastInPastDay: false)
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        let dateString = formatter.string(from: unknownTimeSlot.startTime)
         
-        let expectedText = " \(dateString)"
-        
-        expect(self.slotDescription.text).to(equal(expectedText))
-    }
-    
-    func testTheDescriptionHasNoCategoryWhenTheCategoryIsUnknownAndEndDateIsLastPastTimeSlot()
-    {
-        let unknownTimeSlot = TimeSlot()
-        unknownTimeSlot.endTime = unknownTimeSlot.startTime.addingTimeInterval(5000)
-        
-        view.bind(toTimeSlot: unknownTimeSlot, index: 0, lastInPastDay: true)
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        
-        let startTime = formatter.string(from: unknownTimeSlot.startTime)
-        let endTime = formatter.string(from: unknownTimeSlot.endTime!)
-        let expectedText = " \(startTime) - \(endTime)"
-        
-        expect(self.slotDescription.text).to(equal(expectedText))
+        expect(self.slotDescription.text).to(equal(""))
     }
     
     func testTheElapsedTimeLabelShowsOnlyMinutesWhenLessThanAnHourHasPassed()

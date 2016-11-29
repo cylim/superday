@@ -10,17 +10,20 @@ class TimelineCell : UITableViewCell
     private var currentIndex = 0
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
+    
     private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
         return self.lineView.constraints.filter{ $0.firstAttribute == .height }.first!
     }()
-    
+
     @IBOutlet private weak var lineView : UIView!
+    @IBOutlet private weak var slotTime : UILabel!
+    @IBOutlet weak var categoryIcon : UIImageView!
     @IBOutlet private weak var elapsedTime : UILabel!
     @IBOutlet private weak var indicatorDot : UIView!
     @IBOutlet private weak var categoryButton : UIButton!
     @IBOutlet private weak var slotDescription : UILabel!
-    @IBOutlet weak var categoryIcon : UIImageView!
+    @IBOutlet private weak var timeSlotDistanceConstraint : NSLayoutConstraint!
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
@@ -57,8 +60,9 @@ class TimelineCell : UITableViewCell
         
         //Updates each one of the cell's components
         self.layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, isRunning: isRunning, lastInPastDay: lastInPastDay)
+        self.layoutSlotTime(withTimeSlot: timeSlot, lastInPastDay: lastInPastDay)
         self.layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes)
-        self.layoutDescriptionLabel(withTimeSlot: timeSlot, category: timeSlot.category, lastInPastDay: lastInPastDay)
+        self.layoutDescriptionLabel(withTimeSlot: timeSlot)
         self.layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor)
     }
     
@@ -71,19 +75,23 @@ class TimelineCell : UITableViewCell
     }
     
     /// Updates the label that displays the description and starting time of the slot
-    private func layoutDescriptionLabel(withTimeSlot timeSlot: TimeSlot, category: Category, lastInPastDay: Bool)
+    private func layoutDescriptionLabel(withTimeSlot timeSlot: TimeSlot)
+    {
+        let isCategoryUnknown = timeSlot.category == .unknown
+        let categoryText = isCategoryUnknown ? "" : timeSlot.category.rawValue.capitalized
+        self.slotDescription.text = categoryText
+        self.timeSlotDistanceConstraint.constant = isCategoryUnknown ? 0 : 6
+    }
+    
+    /// Updates the label that shows the time the TimeSlot was created
+    private func layoutSlotTime(withTimeSlot timeSlot: TimeSlot, lastInPastDay: Bool)
     {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         let dateString = formatter.string(from: timeSlot.startTime)
         let endString = lastInPastDay ? " - " + formatter.string(from: timeSlot.endTime!) : ""
-        let categoryText = category == .unknown ? "" : category.rawValue.capitalized
         
-        let description = "\(categoryText) \(dateString)" + endString
-        let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count + endString.characters.count + 1)
-        let attributedText = description.getBoldStringWithNonBoldText(nonBoldRange)
-        
-        slotDescription?.attributedText = attributedText
+        self.slotTime.text = "\(dateString)\(endString)"
     }
     
     /// Updates the label that shows how long the slot lasted
