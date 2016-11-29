@@ -110,6 +110,10 @@
 		51BED9031DD26FA800455EF6 /* NotificationContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */; };
 		51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EAA2871DC0BA910025680D /* UIViewExtensions.swift */; };
+		831B58371DEC3043006B3D46 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B58361DEC3043006B3D46 /* CalendarViewController.swift */; };
+		831B58391DEC366C006B3D46 /* CalendarCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831B58381DEC366C006B3D46 /* CalendarCellView.xib */; };
+		831B583B1DEC3D0B006B3D46 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */; };
+		836616BE1DEDBC730068195A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836616BD1DEDBC730068195A /* CalendarViewModel.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -267,6 +271,10 @@
 		51BED9001DD26FA800455EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage.swift; path = Onboarding/OnboardingPage.swift; sourceTree = "<group>"; };
 		51EAA2871DC0BA910025680D /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
+		831B58361DEC3043006B3D46 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewController.swift; path = ViewControllers/CalendarViewController.swift; sourceTree = "<group>"; };
+		831B58381DEC366C006B3D46 /* CalendarCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CalendarCellView.xib; path = Views/CalendarCellView.xib; sourceTree = "<group>"; };
+		831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellView.swift; path = Views/CalendarCellView.swift; sourceTree = "<group>"; };
+		836616BD1DEDBC730068195A /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModel.swift; path = ViewModels/CalendarViewModel.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -486,6 +494,7 @@
 				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
 				24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */,
 				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
+				836616BD1DEDBC730068195A /* CalendarViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -497,6 +506,7 @@
 				24564F4F1D8320FC00D9A8AE /* MainViewController.swift */,
 				24564F711D832A4F00D9A8AE /* PagerViewController.swift */,
 				24564F501D8320FC00D9A8AE /* TimelineViewController.swift */,
+				831B58361DEC3043006B3D46 /* CalendarViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -525,6 +535,8 @@
 				2420A86D1DB7DD0F00C0478C /* PermissionView.xib */,
 				24564F531D83254E00D9A8AE /* TimelineCell.swift */,
 				24564F541D83254E00D9A8AE /* TimelineCell.xib */,
+				831B58381DEC366C006B3D46 /* CalendarCellView.xib */,
+				831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -855,6 +867,7 @@
 				24564F771D837FBE00D9A8AE /* Localizable.strings in Resources */,
 				240AC7221D748C8800F21F4F /* Assets.xcassets in Resources */,
 				2420A86E1DB7DD0F00C0478C /* PermissionView.xib in Resources */,
+				831B58391DEC366C006B3D46 /* CalendarCellView.xib in Resources */,
 				24B03B671DA3866400452D16 /* AddTimeSlotView.xib in Resources */,
 				2407A98F1D9D54DB00066889 /* LaunchScreen.storyboard in Resources */,
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
@@ -1192,6 +1205,7 @@
 				2407A98C1D9D534B00066889 /* TimerExtensions.swift in Sources */,
 				246531741DA7DDF10066DFE0 /* FabricMetricsServices.swift in Sources */,
 				24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */,
+				831B583B1DEC3D0B006B3D46 /* CalendarCellView.swift in Sources */,
 				24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */,
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				24EB96751DE7080F0040C211 /* EditStateService.swift in Sources */,
@@ -1249,6 +1263,8 @@
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24EB967F1DE708570040C211 /* Predicate.swift in Sources */,
 				24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */,
+				836616BE1DEDBC730068195A /* CalendarViewModel.swift in Sources */,
+				831B58371DEC3043006B3D46 /* CalendarViewController.swift in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
 				24564F641D83265900D9A8AE /* UIColorExtensions.swift in Sources */,
@@ -1456,7 +1472,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -1475,7 +1491,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.superday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;

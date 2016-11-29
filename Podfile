@@ -11,7 +11,7 @@ target 'teferi' do
     pod 'SnapKit', '~> 3.0'
     pod 'Fabric'
     pod 'Crashlytics'
-
+    pod 'JTAppleCalendar', '~>6.0'
   target 'teferiTests' do
     inherit! :search_paths
     pod 'Nimble', '~> 5.0.0'

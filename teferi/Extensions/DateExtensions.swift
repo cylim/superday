@@ -3,13 +3,13 @@ import Foundation
 extension Date
 {
     //MARK: Properties
-    
+
     ///Returns the day before the current date
     var yesterday : Date
     {
         return self.add(days: -1)
     }
-    
+
     ///Returns the day after the current date
     var tomorrow : Date
     {
@@ -45,5 +45,43 @@ extension Date
         let units : NSCalendar.Unit = [ .year, .month, .day];
         let calendar = Calendar.current;
         return calendar.date(from: (calendar as NSCalendar).components(units, from: self))!
+    }
+    
+    //period -> .WeekOfYear, .Day
+    func rangeOfPeriod(period: Calendar.Component) -> (Date, Date)
+    {
+        var startDate = Date()
+        var interval: TimeInterval = 0
+        let _ = Calendar.current.dateInterval(of: period,
+                                              start: &startDate, interval: &interval, for: self)
+        let endDate = startDate.addingTimeInterval(interval - 1)
+        return (startDate, endDate)
+    }
+
+    func calcStartAndEndOfDay() -> (Date, Date)
+    {
+        return self.rangeOfPeriod(period: .day)
+    }
+
+    func calcStartAndEndOfWeek() -> (Date, Date)
+    {
+        return self.rangeOfPeriod(period: .weekday)
+    }
+
+    func calcStartAndEndOfMonth() -> (Date, Date)
+    {
+        return self.rangeOfPeriod(period: .month)
+    }
+
+    func getStart() -> Date
+    {
+        let (start, _) = self.calcStartAndEndOfDay()
+        return start
+    }
+
+    func getEnd() -> Date
+    {
+        let (_, end) = self.calcStartAndEndOfDay()
+        return end
     }
 }
