@@ -117,8 +117,8 @@ class TimelineCell : UITableViewCell
         //Fade the line if it is the last TimeSlot of a past day
         if lastInPastDay
         {
-            let bottomFadeStartColor = UIColor.white.withAlphaComponent(1.0) //1.0
-            let bottomFadeEndColor = UIColor.white.withAlphaComponent(0.0) //0.0
+            let bottomFadeStartColor = Color.white.withAlphaComponent(1.0) //1.0
+            let bottomFadeEndColor = Color.white.withAlphaComponent(0.0) //0.0
             let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
             let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
             self.lineView.addSubview(fadeView)

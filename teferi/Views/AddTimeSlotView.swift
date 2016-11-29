@@ -66,7 +66,7 @@ class AddTimeSlotView : UIView
         self.blur.frame = bounds;
         let layer = CAGradientLayer()
         layer.frame = self.blur.bounds
-        layer.colors = [ UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
+        layer.colors = [ Color.white.withAlphaComponent(0).cgColor, Color.white.cgColor]
         layer.locations = [0.0, 1.0]
         self.blur.layer.addSublayer(layer)
         self.blur.alpha = 0

@@ -13,7 +13,7 @@ class EditTimeSlotView : UIView
         self.onEditEnded = editEndedCallback
         super.init(frame: frame)
         self.alpha = 0
-        self.backgroundColor = UIColor.white.withAlphaComponent(0)
+        self.backgroundColor = Color.white.withAlphaComponent(0)
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -35,7 +35,7 @@ class EditTimeSlotView : UIView
                            delay: animationDelay - Constants.editAnimationDuration * 3,
                            options: .curveLinear,
                            animations:  {
-                                self.backgroundColor = UIColor.white.withAlphaComponent(0)
+                                self.backgroundColor = Color.white.withAlphaComponent(0)
                                 self.firstImageView!.alpha = 0
                             },
                            completion: { (_) in
@@ -90,7 +90,7 @@ class EditTimeSlotView : UIView
         
         UIView.animate(withDuration: Constants.editAnimationDuration * 3)
         {
-            self.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+            self.backgroundColor = Color.white.withAlphaComponent(0.6)
             firstImageView.alpha = 1
         }
         

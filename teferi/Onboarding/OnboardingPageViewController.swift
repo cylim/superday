@@ -23,15 +23,15 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
 
         self.dataSource = self
         self.delegate = self
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Color.white
         self.setViewControllers([pages.first!],
                            direction: .forward,
                            animated: true,
                            completion: nil)
         
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [type(of: self)])
-        pageControl.pageIndicatorTintColor = UIColor.green.withAlphaComponent(0.4)
-        pageControl.currentPageIndicatorTintColor = UIColor.green
+        pageControl.pageIndicatorTintColor = Color.green.withAlphaComponent(0.4)
+        pageControl.currentPageIndicatorTintColor = Color.green
         pageControl.backgroundColor = UIColor.clear
         
         self.view.addSubview(self.pager)

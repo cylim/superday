@@ -42,7 +42,7 @@
 		24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F591D83259100D9A8AE /* DefaultLocationService.swift */; };
 		24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5B1D8325CC00D9A8AE /* Category.swift */; };
 		24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */; };
-		24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* ColorExtensions.swift */; };
+		24564F641D83265900D9A8AE /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* UIColorExtensions.swift */; };
 		24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F621D83265900D9A8AE /* DateExtensions.swift */; };
 		24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F631D83265900D9A8AE /* StringExtensions.swift */; };
 		24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F671D8326E700D9A8AE /* ColorExtensionsTests.swift */; };
@@ -98,10 +98,11 @@
 		2FB611441DE785AB007C5646 /* MockFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB611431DE785AB007C5646 /* MockFeedbackService.swift */; };
 		512A9B3D1DD4450200B73F01 /* TimeSlotMiniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A9B3C1DD4450200B73F01 /* TimeSlotMiniView.swift */; };
 		512A9B3F1DD4451F00B73F01 /* TimeSlotMiniView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512A9B3E1DD4451F00B73F01 /* TimeSlotMiniView.xib */; };
-		512A9B411DD46E3B00B73F01 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* ColorExtensions.swift */; };
+		512A9B411DD46E3B00B73F01 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* UIColorExtensions.swift */; };
 		512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */; };
 		513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513535D11DA26E3B00A365A9 /* Onboarding.storyboard */; };
 		513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */; };
+		51899C3B1DED954A00633D82 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51899C3A1DED954A00633D82 /* Color.swift */; };
 		51BED8F71DD26FA800455EF6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BED8F61DD26FA800455EF6 /* UserNotifications.framework */; };
 		51BED8F91DD26FA800455EF6 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BED8F81DD26FA800455EF6 /* UserNotificationsUI.framework */; };
 		51BED8FC1DD26FA800455EF6 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BED8FB1DD26FA800455EF6 /* NotificationViewController.swift */; };
@@ -194,7 +195,7 @@
 		24564F591D83259100D9A8AE /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultLocationService.swift; path = Services/DefaultLocationService.swift; sourceTree = "<group>"; };
 		24564F5B1D8325CC00D9A8AE /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
 		24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlot.swift; path = Models/TimeSlot.swift; sourceTree = "<group>"; };
-		24564F611D83265900D9A8AE /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorExtensions.swift; path = Extensions/ColorExtensions.swift; sourceTree = "<group>"; };
+		24564F611D83265900D9A8AE /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = Extensions/UIColorExtensions.swift; sourceTree = "<group>"; };
 		24564F621D83265900D9A8AE /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = Extensions/DateExtensions.swift; sourceTree = "<group>"; };
 		24564F631D83265900D9A8AE /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = Extensions/StringExtensions.swift; sourceTree = "<group>"; };
 		24564F671D8326E700D9A8AE /* ColorExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorExtensionsTests.swift; path = Extensions/ColorExtensionsTests.swift; sourceTree = "<group>"; };
@@ -257,6 +258,7 @@
 		512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlotChangeType.swift; path = Models/TimeSlotChangeType.swift; sourceTree = "<group>"; };
 		513535D21DA26E3B00A365A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewController.swift; path = Onboarding/OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		51899C3A1DED954A00633D82 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = Styles/Color.swift; sourceTree = "<group>"; };
 		51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		51BED8F61DD26FA800455EF6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		51BED8F81DD26FA800455EF6 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -334,6 +336,7 @@
 		240AC7161D748C8800F21F4F /* teferi */ = {
 			isa = PBXGroup;
 			children = (
+				51899C391DED953000633D82 /* Styles */,
 				24CD8A461D7A13560017C53E /* Extensions */,
 				2421F8C11D9BAC4A00AF8857 /* Helpers */,
 				24BA51A91D74D79C00042CDF /* Models */,
@@ -469,7 +472,7 @@
 			children = (
 				24EB96841DE709830040C211 /* PredicateExtensions.swift */,
 				2407A98A1D9D534B00066889 /* TimerExtensions.swift */,
-				24564F611D83265900D9A8AE /* ColorExtensions.swift */,
+				24564F611D83265900D9A8AE /* UIColorExtensions.swift */,
 				24564F621D83265900D9A8AE /* DateExtensions.swift */,
 				24564F631D83265900D9A8AE /* StringExtensions.swift */,
 				51EAA2871DC0BA910025680D /* UIViewExtensions.swift */,
@@ -680,6 +683,14 @@
 				513535D51DA2756C00A365A9 /* OnboardingPageViewController.swift */,
 			);
 			name = Onboarding;
+			sourceTree = "<group>";
+		};
+		51899C391DED953000633D82 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				51899C3A1DED954A00633D82 /* Color.swift */,
+			);
+			name = Styles;
 			sourceTree = "<group>";
 		};
 		51BED8FA1DD26FA800455EF6 /* teferiNotifications */ = {
@@ -1185,6 +1196,7 @@
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				24EB96751DE7080F0040C211 /* EditStateService.swift in Sources */,
 				2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */,
+				51899C3B1DED954A00633D82 /* Color.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
 				246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */,
 				24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */,
@@ -1239,7 +1251,7 @@
 				24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */,
 				24564F4D1D83207900D9A8AE /* MainViewModel.swift in Sources */,
 				247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */,
-				24564F641D83265900D9A8AE /* ColorExtensions.swift in Sources */,
+				24564F641D83265900D9A8AE /* UIColorExtensions.swift in Sources */,
 				2420A8661DB56B5500C0478C /* EmptyStateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1276,7 +1288,7 @@
 			files = (
 				512A9B3D1DD4450200B73F01 /* TimeSlotMiniView.swift in Sources */,
 				51BED8FC1DD26FA800455EF6 /* NotificationViewController.swift in Sources */,
-				512A9B411DD46E3B00B73F01 /* ColorExtensions.swift in Sources */,
+				512A9B411DD46E3B00B73F01 /* UIColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

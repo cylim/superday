@@ -17,12 +17,12 @@ class LaunchAnimationView : UIView
         super.init(frame: frame)
         
         self.background.frame = frame
-        self.background.backgroundColor = UIColor.white.cgColor
+        self.background.backgroundColor = Color.white.cgColor
         self.layer.addSublayer(background)
         
-        let colors = [UIColor.green, UIColor.purple, UIColor.transparentPurple,
-                      UIColor.transparentGreen, UIColor.yellow, UIColor.purple,
-                      UIColor.green, UIColor.transparentYellow, UIColor.yellow]
+        let colors = [Color.green, Color.purple, Color.transparentPurple,
+                      Color.transparentGreen, Color.yellow, Color.purple,
+                      Color.green, Color.transparentYellow, Color.yellow]
         
         let dotSize = CGFloat(20)
         let dotMargin = CGFloat(8.0)

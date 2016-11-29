@@ -46,7 +46,7 @@ class PostiOSTenNotificationService : NotificationService
                     
                     var timeSlotDictionary = [String: String]()
                     
-                    timeSlotDictionary["color"] = timeSlot.category.colorHex
+                    timeSlotDictionary["color"] = timeSlot.category.color.hexString
                     
                     if timeSlot.category != .unknown {
                         timeSlotDictionary["category"] = timeSlot.category.rawValue.capitalized

@@ -77,8 +77,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                                         self.editStateService)        
         
         //Add fade overlay at bottom of timeline
-        let bottomFadeStartColor = UIColor.white.withAlphaComponent(1.0)
-        let bottomFadeEndColor = UIColor.white.withAlphaComponent(0.0)
+        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
+        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
         let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
         let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
         self.view.addSubview(fadeView)

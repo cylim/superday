@@ -33,7 +33,7 @@ class PermissionView : UIView
         
         let layer = CAGradientLayer()
         layer.frame = self.blur.frame
-        layer.colors = [ UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
+        layer.colors = [ Color.white.withAlphaComponent(0).cgColor, Color.white.cgColor]
         layer.locations = [0.0, 1.0]
         self.blur.layer.addSublayer(layer)
     }
