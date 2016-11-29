@@ -33,9 +33,10 @@ class OnboardingPage2 : OnboardingPage
         self.initAnimatedTitleText(self.textView)
         self.timelineCells = self.initAnimatingTimeline(with: self.timeSlots, in: self.timelineView)
         
-        self.editView = EditTimeSlotView(frame: self.timelineView.bounds, editEndedCallback: { _,_ in })
+        self.editView = EditTimeSlotView(editEndedCallback: { _,_ in })
         self.editView.isUserInteractionEnabled = false
         self.timelineView.addSubview(self.editView)
+        self.editView.constrainEdges(to: self.timelineView)
         
         self.editedCell = self.createTimelineCell(for: self.editedTimeSlot)
         self.editedCell.alpha = 0

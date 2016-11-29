@@ -4,15 +4,16 @@ class EditTimeSlotView : UIView
 {
     //MARK: Fields
     private var editButtons : [UIImageView]? = nil
-    private let onEditEnded : (TimeSlot, Category) -> Void
+    private var onEditEnded : ((TimeSlot, Category) -> Void)!
     private var firstImageView : UIImageView? = nil
     
     //MARK: Initializers
-    init(frame: CGRect, editEndedCallback: @escaping (TimeSlot, Category) -> Void)
+    init(editEndedCallback: @escaping (TimeSlot, Category) -> Void)
     {
-        self.onEditEnded = editEndedCallback
-        super.init(frame: frame)
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        
         self.alpha = 0
+        self.onEditEnded = editEndedCallback
         self.backgroundColor = Color.white.withAlphaComponent(0)
     }
     
@@ -82,8 +83,7 @@ class EditTimeSlotView : UIView
         
         self.addSubview(firstImageView)
         firstImageView.snp.makeConstraints { make in
-            make.width.equalTo(32)
-            make.height.equalTo(32)
+            make.width.height.equalTo(32)
             make.top.equalTo(point.y - 24)
             make.left.equalTo(point.x - 32)
         }

@@ -83,9 +83,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
         self.view.addSubview(fadeView)
         fadeView.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.snp.bottom)
-            make.left.equalTo(self.view.snp.left)
-            make.right.equalTo(self.view.snp.right)
+            make.bottom.left.right.equalTo(self.view)
             make.height.equalTo(100)
         }
         
@@ -93,8 +91,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         
         //Edit View
-        self.editView = EditTimeSlotView(frame: self.view.frame, editEndedCallback: self.viewModel.updateTimeSlot)
+        self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
         self.view.addSubview(self.editView)
+        self.editView.constrainEdges(to: self.view)
         
         if self.isFirstUse
         {
@@ -156,9 +155,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.view.insertSubview(self.addButton, belowSubview: self.editView)
         self.addButton.snp.makeConstraints { make in
             make.height.equalTo(320)
-            make.left.equalTo(self.view.snp.left)
-            make.width.equalTo(self.view.snp.width)
-            make.bottom.equalTo(self.view.snp.bottom)
+            make.left.right.bottom.equalTo(self.view)
         }
     }
     
