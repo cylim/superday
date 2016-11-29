@@ -5,7 +5,9 @@ import Nimble
 
 class TrackingServiceTests : XCTestCase
 {
-    private var location : CLLocation!
+    private var midnight : Date!
+    private var noon : Date!
+    private var locationDummy : CLLocation!
     private var loggingService : LoggingService!
     private var settingsService : SettingsService!
     private var trackingService : TrackingService!
@@ -14,7 +16,9 @@ class TrackingServiceTests : XCTestCase
     
     override func setUp()
     {
-        self.location = CLLocation()
+        self.midnight = Date().ignoreTimeComponents()
+        self.noon = self.midnight.addingTimeInterval(12 * 60 * 60)
+        self.locationDummy = CLLocation()
         self.loggingService = MockLoggingService()
         self.settingsService = MockSettingsService()
         self.timeSlotService = MockTimeSlotService()
@@ -27,6 +31,7 @@ class TrackingServiceTests : XCTestCase
     
     func testTheAlgorithmWillNotRunForTheFirstLocationEverReceived()
     {
+        let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onNewLocation(location)
         
         expect(self.timeSlotService.getLastTimeSlotWasCalled).to(beFalse())
@@ -34,8 +39,8 @@ class TrackingServiceTests : XCTestCase
     
     func testTheAlgorithmWillNotRunIfTheNewLocationIsOlderThanTheLastLocationReceived()
     {
-        self.settingsService.setLastLocationDate(Date())
-        let oldLocation = self.getLocation(withTimestamp: self.settingsService.lastLocationDate!.addingTimeInterval(-90))
+        self.settingsService.setLastLocationDate(self.noon)
+        let oldLocation = self.getLocation(withTimestamp: self.getDate(minutesBeforeNoon: 1))
         
         self.trackingService.onNewLocation(oldLocation)
         
@@ -44,21 +49,23 @@ class TrackingServiceTests : XCTestCase
     
     func testTheAlgorithmDetectsACommuteIfMultipleEntriesHappenInAShortPeriodOfTime()
     {
-        let date = getDate(minutesInThePast: 15)
+        let date = self.getDate(minutesBeforeNoon: 15)
         
         let timeSlot = TimeSlot(withStartDate: date)
         self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
         
+        let location = self.getLocation(withTimestamp: self.noon)
+        
         self.trackingService.onNewLocation(location)
         
         expect(timeSlot.category).to(equal(Category.commute))
     }
     
-    func testTheAlgorithmDoesntChangeTheTimeSlotToCommuteIfTheUserHasAlreadySpecifiedTheTimeSlotCategory()
+    func testTheAlgorithmDoesNotChangeTheTimeSlotToCommuteIfTheCurrentTimeSlotCategoryIsAlreadySet()
     {
-        let date = getDate(minutesInThePast: 15)
+        let date = getDate(minutesBeforeNoon: 15)
         
         let timeSlot = TimeSlot(withStartDate: date)
         timeSlot.category = .work
@@ -66,32 +73,34 @@ class TrackingServiceTests : XCTestCase
         
         self.settingsService.setLastLocationDate(date)
         
+        let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onNewLocation(location)
         
         expect(timeSlot.category).to(equal(Category.work))
     }
     
-    func testTheAlgorithmDetectsNewTimeEntryWhenANewUpdateComesAfterAWhile()
+    func testTheAlgorithmCreatesNewTimeSlotWhenANewUpdateComesAfterAWhile()
     {
-        let date = getDate(minutesInThePast: 30)
+        let date = self.getDate(minutesBeforeNoon: 30)
         
         let timeSlot = TimeSlot(withStartDate: date)
         self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
         
+        let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onNewLocation(location)
         
         let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: date)
         let newlyCreatedTimeSlot = allTimeSlots.last!
         
         expect(allTimeSlots.count).to(equal(2))
-        expect(newlyCreatedTimeSlot.startTime).to(equal(self.location.timestamp))
+        expect(newlyCreatedTimeSlot.startTime).to(equal(location.timestamp))
     }
     
     func testTheAlgorithmDoesNotCreateNewTimeSlotsUntilItDetectsTheUserBeingIdleForAWhile()
     {
-        let initialDate = self.getDate(minutesInThePast: 130)
+        let initialDate = self.getDate(minutesBeforeNoon: 130)
         self.timeSlotService.add(timeSlot: TimeSlot(withStartDate: initialDate))
         
         let dates = [ 120, 110, 90, 50, 40, 45, 0 ].map(self.getDate)
@@ -99,7 +108,7 @@ class TrackingServiceTests : XCTestCase
         dates.map(self.getLocation)
             .forEach(self.trackingService.onNewLocation)
         
-        let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: Date())
+        let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: self.noon)
         let commutesDetected = allTimeSlots.filter { t in t.category == .commute }
         
         expect(allTimeSlots.count).to(equal(5))
@@ -107,17 +116,19 @@ class TrackingServiceTests : XCTestCase
         expect(allTimeSlots[3].startTime).to(equal(dates[4]))
     }
     
-    func getDate(minutesInThePast: Int) -> Date
+    func getDate(minutesBeforeNoon: Int) -> Date
     {
-        return Date().addingTimeInterval(Double(-minutesInThePast * 60))
+        return self.noon
+            .addingTimeInterval(Double(-minutesBeforeNoon * 60))
     }
     
     func getLocation(withTimestamp date: Date) -> CLLocation
     {
-        return CLLocation(coordinate: self.location.coordinate,
-                          altitude: self.location.altitude,
-                          horizontalAccuracy: self.location.horizontalAccuracy,
-                          verticalAccuracy: self.location.verticalAccuracy,
+        let location = self.locationDummy!
+        return CLLocation(coordinate: location.coordinate,
+                          altitude: location.altitude,
+                          horizontalAccuracy: location.horizontalAccuracy,
+                          verticalAccuracy: location.verticalAccuracy,
                           timestamp: date)
     }
 }
