@@ -27,12 +27,26 @@ class TrackingServiceTests : XCTestCase
                                                settingsService: self.settingsService,
                                                timeSlotService: self.timeSlotService,
                                                notificationService: self.notificationService)
+        
+        self.trackingService.onAppState(.inactive)
+    }
+    
+    func testTheAlgorithmWillIgnoreLocationsWhileOnForeground()
+    {
+        self.trackingService.onAppState(.active)
+        
+        [ 40, 30, 20, 10]
+            .map(self.getDate)
+            .map(self.getLocation)
+            .forEach(self.trackingService.onLocation)
+        
+        expect(self.timeSlotService.getLastTimeSlotWasCalled).to(beFalse())
     }
     
     func testTheAlgorithmWillNotRunForTheFirstLocationEverReceived()
     {
         let location = self.getLocation(withTimestamp: self.noon)
-        self.trackingService.onNewLocation(location)
+        self.trackingService.onLocation(location)
         
         expect(self.timeSlotService.getLastTimeSlotWasCalled).to(beFalse())
     }
@@ -42,7 +56,7 @@ class TrackingServiceTests : XCTestCase
         self.settingsService.setLastLocationDate(self.noon)
         let oldLocation = self.getLocation(withTimestamp: self.getDate(minutesBeforeNoon: 1))
         
-        self.trackingService.onNewLocation(oldLocation)
+        self.trackingService.onLocation(oldLocation)
         
         expect(self.timeSlotService.getLastTimeSlotWasCalled).to(beFalse())
     }
@@ -58,7 +72,7 @@ class TrackingServiceTests : XCTestCase
         
         let location = self.getLocation(withTimestamp: self.noon)
         
-        self.trackingService.onNewLocation(location)
+        self.trackingService.onLocation(location)
         
         expect(timeSlot.category).to(equal(Category.commute))
     }
@@ -74,7 +88,7 @@ class TrackingServiceTests : XCTestCase
         self.settingsService.setLastLocationDate(date)
         
         let location = self.getLocation(withTimestamp: self.noon)
-        self.trackingService.onNewLocation(location)
+        self.trackingService.onLocation(location)
         
         expect(timeSlot.category).to(equal(Category.work))
     }
@@ -89,7 +103,7 @@ class TrackingServiceTests : XCTestCase
         self.settingsService.setLastLocationDate(date)
         
         let location = self.getLocation(withTimestamp: self.noon)
-        self.trackingService.onNewLocation(location)
+        self.trackingService.onLocation(location)
         
         let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: date)
         let newlyCreatedTimeSlot = allTimeSlots.last!
@@ -106,7 +120,7 @@ class TrackingServiceTests : XCTestCase
         let dates = [ 120, 110, 90, 50, 40, 45, 0 ].map(self.getDate)
             
         dates.map(self.getLocation)
-            .forEach(self.trackingService.onNewLocation)
+            .forEach(self.trackingService.onLocation)
         
         let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: self.noon)
         let commutesDetected = allTimeSlots.filter { t in t.category == .commute }

@@ -16,6 +16,8 @@ class DefaultTrackingService : TrackingService
     private let timeSlotService : TimeSlotService
     private let notificationService : NotificationService
     
+    private var isOnBackground = false
+    
     //MARK: Init
     init(loggingService: LoggingService,
          settingsService: SettingsService,
@@ -29,8 +31,10 @@ class DefaultTrackingService : TrackingService
     }
     
     //MARK:  TrackingService implementation
-    func onNewLocation(_ location: CLLocation)
+    func onLocation(_ location: CLLocation)
     {
+        guard self.isOnBackground else { return }
+        
         let currentLocationTime = location.timestamp
         
         guard let previousLocationTime = self.settingsService.lastLocationDate else
@@ -71,5 +75,10 @@ class DefaultTrackingService : TrackingService
         self.notificationService.scheduleNotification(date: notificationDate,
                                                       title: self.notificationTitle,
                                                       message: self.notificationBody)
+    }
+    
+    func onAppState(_ appState: AppState)
+    {
+        self.isOnBackground = appState == .inactive
     }
 }

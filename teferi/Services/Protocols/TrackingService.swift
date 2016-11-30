@@ -7,5 +7,12 @@ protocol TrackingService
      
      - Parameter location: contains the user's current location.
      */
-    func onNewLocation(_ location: CLLocation)
+    func onLocation(_ location: CLLocation)
+    
+    /**
+     Called when the app's state changes.
+     
+     - Parameter appState: the current app state.
+     */
+    func onAppState(_ appState: AppState)
 }

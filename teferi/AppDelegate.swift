@@ -70,7 +70,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         //Starts location tracking
         self.locationService
             .locationObservable
-            .subscribe(onNext: self.trackingService.onNewLocation)
+            .subscribe(onNext: self.trackingService.onLocation)
+            .addDisposableTo(disposeBag)
+        
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.trackingService.onAppState)
             .addDisposableTo(disposeBag)
         
         //Faster startup when the app wakes up for location updates
@@ -80,8 +85,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             return true
         }
         
-        if #available(iOS 10.0, *) {
-            (self.notificationService as? PostiOSTenNotificationService)?.setUserNotificationActions()
+        if #available(iOS 10.0, *)
+        {
+            let notificationService = self.notificationService as? PostiOSTenNotificationService
+            notificationService?.setUserNotificationActions()
         }
         
         self.initializeWindowIfNeeded()
