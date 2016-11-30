@@ -1,11 +1,3 @@
-//
-//  CalendarViewController.swift
-//  teferi
-//
-//  Created by Krzysztof Kryniecki on 11/28/16.
-//  Copyright © 2016 Toggl. All rights reserved.
-//
-
 import UIKit
 import JTAppleCalendar
 import RxSwift
@@ -16,10 +8,13 @@ class CalendarViewController: UIViewController
     // MARK: Fields
     @IBOutlet weak fileprivate var calendarView: JTAppleCalendarView!
     @IBOutlet weak private var monthLabel: UILabel!
+    @IBOutlet weak fileprivate var leftButton: UIButton!
+    @IBOutlet weak fileprivate var rightButton: UIButton!
     fileprivate let endDate = Date().getStart()
     fileprivate var testCalendar = Calendar(identifier: .gregorian)
-    var startDate: Date = Date().getStart()
+    fileprivate var startDate: Date = Date().getStart()
     fileprivate var viewModel: CalendardViewModel!
+    // MARK: Properties
     var dateObservable: Observable<Date> { return self.viewModel.dateObservable }
     var shouldHideObservable: Observable<Bool> { return self.viewModel.shouldHideObservable }
 
@@ -43,6 +38,13 @@ class CalendarViewController: UIViewController
         self.setCalendar()
     }
 
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.setDate()
+        self.calendarView.reloadData()
+    }
+
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
@@ -50,10 +52,7 @@ class CalendarViewController: UIViewController
 
     private func setDate()
     {
-        let month = testCalendar.dateComponents([.month], from: self.viewModel.selectedDate).month!
-        let monthName = DateFormatter().monthSymbols[(month-1) % 12] //GetHumanDate(month: month)//
-        let year = testCalendar.component(.year, from: self.startDate)
-        self.monthLabel.text = "\(monthName) \(year)"
+        self.setupMonthLabel(startDate: self.viewModel.selectedDate)
     }
 
     private func setCalendar()
@@ -62,25 +61,42 @@ class CalendarViewController: UIViewController
         self.calendarView.delegate = self
         self.calendarView.registerCellViewXib(file: "CalendarCellView")
         self.calendarView.cellInset = CGPoint(x: 0, y: 0)
-        self.calendarView.itemSize = 41.0
     }
-
-    override func didReceiveMemoryWarning()
+    
+    func setupMonthLabel(startDate: Date)
     {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let month = testCalendar.dateComponents([.month], from: startDate).month!
+        let monthName = DateFormatter().monthSymbols[(month-1) % 12] //GetHumanDate(month: month)
+        let year = testCalendar.component(.year, from: startDate)
+        let myAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
+        let myString = NSMutableAttributedString(string: "\(monthName) ", attributes: myAttribute )
+        let attrString = NSAttributedString(string: String(year), attributes: [NSForegroundColorAttributeName: Color.offBlackTransparent])
+        myString.append(attrString)
+        self.monthLabel.attributedText = myString
+    
+        if month == testCalendar.dateComponents([.month], from: self.startDate).month!
+        {
+            self.leftButton.alpha = 0.2
+        } else
+        {
+            self.leftButton.alpha = 1
+        }
+        if month == testCalendar.dateComponents([.month], from: self.endDate).month!
+        {
+            self.rightButton.alpha = 0.2
+        } else {
+            self.rightButton.alpha = 1
+        }
     }
-
+    
     fileprivate func setupViewsOfCalendar(from visibleDates: DateSegmentInfo)
     {
         guard let startDate = visibleDates.monthDates.first else
         {
             return
         }
-        let month = testCalendar.dateComponents([.month], from: startDate).month!
-        let monthName = DateFormatter().monthSymbols[(month-1) % 12] //GetHumanDate(month: month)
-        let year = testCalendar.component(.year, from: startDate)
-        self.monthLabel.text = "\(monthName) \(year)"
+        
+        self.setupMonthLabel(startDate: startDate)
     }
 
     @IBAction func onPrevMonthPressed(_ sender: Any)
@@ -93,10 +109,14 @@ class CalendarViewController: UIViewController
         self.calendarView.scrollToNextSegment(true, animateScroll: true, completionHandler: nil)
     }
 }
-extension CalendarViewController: UIGestureRecognizerDelegate {
+extension CalendarViewController: UIGestureRecognizerDelegate
+{
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
     {
-        if let view = touch.view, view.isDescendant(of: self.calendarView)
+        if let view = touch.view,
+            view.isDescendant(of: self.calendarView) ||
+            view.isDescendant(of: self.leftButton) ||
+            view.isDescendant(of: self.rightButton)
         {
                 return false
         }

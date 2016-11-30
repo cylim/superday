@@ -1,11 +1,3 @@
-//
-//  CalendarCellView.swift
-//  teferi
-//
-//  Created by Krzysztof Kryniecki on 11/28/16.
-//  Copyright © 2016 Toggl. All rights reserved.
-//
-
 import UIKit
 import JTAppleCalendar
 
@@ -14,10 +6,6 @@ class CalendarCellView: JTAppleDayCellView
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var activityView: UIView!
-    let lightGreyColor = UIColor(colorLiteralRed: 206.0/255.0,
-                                 green: 205.0/255.0,
-                                 blue: 205.0/255.0,
-                                 alpha: 0.23)
     
     func updateCell(cellState: CellState, startDate: Date, date: Date, selectedDate: Date, timeSlots: [TimeSlot])
     {
@@ -29,10 +17,10 @@ class CalendarCellView: JTAppleDayCellView
                                            to: startDate,
                                            toGranularity: .day) == .orderedAscending
             {// is smaller
-                self.activityView.backgroundColor = lightGreyColor
+                self.activityView.backgroundColor = Color.lightGreyColor
             } else
             {
-                self.activityView.backgroundColor = lightGreyColor
+                self.activityView.backgroundColor = Color.lightGreyColor
                 self.updateActivity(timeSlots: timeSlots)
                 self.dateLabel.textColor = UIColor.black
             }
@@ -101,7 +89,7 @@ class CalendarCellView: JTAppleDayCellView
     
     func updateForCurrentDay()
     {
-        self.backgroundColor = self.lightGreyColor
+        self.backgroundColor = Color.lightGreyColor
         self.layer.cornerRadius = 14
         self.clipsToBounds = true
         self.dateLabel.font = UIFont.boldSystemFont(ofSize: 14)

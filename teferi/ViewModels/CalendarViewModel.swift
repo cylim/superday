@@ -1,11 +1,3 @@
-//
-//  CalendarViewModel.swift
-//  teferi
-//
-//  Created by Krzysztof Kryniecki on 11/29/16.
-//  Copyright © 2016 Toggl. All rights reserved.
-//
-
 import Foundation
 import RxSwift
 
@@ -14,7 +6,6 @@ class CalendardViewModel
 {
     //MARK: Fields
     private let timeSlotService : TimeSlotService
-    //MARK: Properties
     private let shouldHideVariable = Variable(false)
     private let selectedDateVariable = Variable(Date())
     

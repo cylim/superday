@@ -39,24 +39,15 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var addButton : AddTimeSlotView!
     private var permissionView : PermissionView?
     private var launchAnim : LaunchAnimationView!
-    private var _calendarViewController: CalendarViewController?
-    fileprivate var calendarViewController: CalendarViewController?
+    private lazy var calendarViewController: CalendarViewController? =
     {
-        get {
-            if _calendarViewController != nil
-            {
-                return _calendarViewController
-            } else
-            {
-                _calendarViewController = self.storyboard?.instantiateViewController(
-                    withIdentifier: kCalendarViewController
-                    ) as? CalendarViewController
-                _calendarViewController?.view.alpha = 0
-                self.initCalendar(calendarViewController: _calendarViewController)
-                return _calendarViewController
-            }
-        }
-    }
+        let calendarController = self.storyboard?.instantiateViewController(
+            withIdentifier: kCalendarViewController
+            ) as? CalendarViewController
+        calendarController?.view.alpha = 0
+        self.initCalendar(calendarController: calendarController)
+        return calendarController
+    }()
     
     
     @IBOutlet private weak var icon : UIImageView!
@@ -195,34 +186,31 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 self.showCalendar(calendarViewController: calendarViewController)
             } else
             { //hide
-                self.hideCalendar(calendarViewController: calendarViewController, completion:nil)
+                self.hideCalendar(completion:nil)
             }
         }
     }
     
     // MARK: Calendar Actions
     
-    func initCalendar(calendarViewController: CalendarViewController?)
+    private func initCalendar(calendarController: CalendarViewController?)
     {
-        calendarViewController?.inject(startDate: self.settingsService.installDate ?? Date(),
+        calendarController?.inject(startDate: self.settingsService.installDate ?? Date(),
                                       currentDate: self.viewModel.currentDate,
                                       timeSlotService: self.timeSlotService)
-        calendarViewController?
+        calendarController?
             .dateObservable
             .subscribe(onNext: self.onDateSelected)
             .addDisposableTo(disposeBag!)
- 
-        calendarViewController?
+        calendarController?
             .shouldHideObservable
             .subscribe(
             {[unowned self] (event) in
                 switch event {
                 case .next(let flag):
-                    if flag,
-                       let calendarController = self.calendarViewController
+                    if flag
                     {
-                        self.hideCalendar(calendarViewController: calendarController,
-                                          completion: nil)
+                        self.hideCalendar(completion: nil)
                     }
                 default:
                     break
@@ -232,37 +220,38 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
     }
     
-    func hideCalendar(calendarViewController: CalendarViewController,
-                      completion:(() -> Void)? )
+    private func hideCalendar(completion:(() -> Void)? )
     {
-        calendarViewController.didMove(toParentViewController: self)
-        self.view.isUserInteractionEnabled = false
-        calendarViewController.view.snp.removeConstraints()
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations:
-            {
-                calendarViewController.view.alpha = 0.0
-                calendarViewController.view.snp.makeConstraints(
-                {   (make) in
-                    make.top.equalTo(64)
-                    make.left.equalTo(self.view.snp.left)
-                    make.width.equalTo(self.view.snp.width)
-                    make.height.equalTo(0)
-                })
-                self.view.layoutIfNeeded()
-        }, completion:
-        {   (finished) in
+        if let calendarViewController = self.calendarViewController
+        {
+            calendarViewController.didMove(toParentViewController: self)
+            self.view.isUserInteractionEnabled = false
             calendarViewController.view.snp.removeConstraints()
-            calendarViewController.willMove(toParentViewController: nil)
-            calendarViewController.view.removeFromSuperview()
-            calendarViewController.removeFromParentViewController()
-            self.view.isUserInteractionEnabled = true
-            completion?()
-        })
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations:
+                {
+                    calendarViewController.view.alpha = 0.0
+                    calendarViewController.view.snp.makeConstraints(
+                    {   (make) in
+                        make.top.equalTo(64)
+                        make.left.equalTo(self.view.snp.left)
+                        make.width.equalTo(self.view.snp.width)
+                        make.height.equalTo(0)
+                    })
+                    self.view.layoutIfNeeded()
+            }, completion:
+            {   (finished) in
+                calendarViewController.view.snp.removeConstraints()
+                calendarViewController.willMove(toParentViewController: nil)
+                calendarViewController.view.removeFromSuperview()
+                calendarViewController.removeFromParentViewController()
+                self.view.isUserInteractionEnabled = true
+                completion?()
+            })
+        }
     }
     
-    func showCalendar(calendarViewController: CalendarViewController)
+    private func showCalendar(calendarViewController: CalendarViewController)
     {
-        //calendarViewController.view.alpha = 0
         calendarViewController.update(startDate: self.settingsService.installDate ?? Date(),
                                       currentDate: self.viewModel.currentDate)
         self.view.insertSubview(calendarViewController.view, aboveSubview: self.pagerViewController.view)
@@ -358,7 +347,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         }
     }
     
-    fileprivate func onDateChanged(date: Date)
+    private func onDateChanged(date: Date)
     {
         self.viewModel.currentDate = date
         self.titleLabel.text = viewModel.title
@@ -396,11 +385,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         return fadeOverlay
     }
     
-    func updateSelectedDate(date: Date, calendarController: CalendarViewController)
+    func updateSelectedDate(date: Date)
     {
         let selectedDate = date.ignoreTimeComponents()
         guard self.viewModel.currentDate.ignoreTimeComponents() != selectedDate else { return }
-        self.hideCalendar(calendarViewController: calendarController) {
+        self.hideCalendar() {
         self.pagerViewController.setViewControllers(
             [ TimelineViewController(date: selectedDate,
                                      metricsService: self.metricsService,
@@ -415,17 +404,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     }
     private func onCalendarClose(date: Date)
     {
-        if let calendarViewController = self.calendarViewController
-        {
-            self.hideCalendar(calendarViewController: calendarViewController, completion: nil)
-        }
+        self.hideCalendar(completion: nil)
     }
 
     private func onDateSelected(date: Date)
     {
-        if let calendarViewController = self.calendarViewController
-        {
-            self.updateSelectedDate(date: date, calendarController: calendarViewController)
-        }
+        self.updateSelectedDate(date: date)
     }
 }
