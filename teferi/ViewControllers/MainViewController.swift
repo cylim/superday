@@ -217,7 +217,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 }
             })
             .addDisposableTo(disposeBag!)
-        
     }
     
     private func hideCalendar(completion:(() -> Void)? )

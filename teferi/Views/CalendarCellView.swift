@@ -7,7 +7,11 @@ class CalendarCellView: JTAppleDayCellView
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var activityView: UIView!
     
-    func updateCell(cellState: CellState, startDate: Date, date: Date, selectedDate: Date, timeSlots: [TimeSlot])
+    func updateCell(cellState: CellState,
+                    startDate: Date,
+                    date: Date,
+                    selectedDate: Date,
+                    categorySlots: [CategorySlot])
     {
         self.resetCell()
         if cellState.dateBelongsTo == .thisMonth
@@ -21,7 +25,7 @@ class CalendarCellView: JTAppleDayCellView
             } else
             {
                 self.activityView.backgroundColor = Color.lightGreyColor
-                self.updateActivity(timeSlots: timeSlots)
+                self.updateActivity(categorySlots: categorySlots)
                 self.dateLabel.textColor = UIColor.black
             }
         }
@@ -34,40 +38,41 @@ class CalendarCellView: JTAppleDayCellView
         }
     }
 
-    //updates Activity based on sorted time slots for the day
-    func updateActivity(timeSlots: [TimeSlot])
+    // updates Activity based on sorted time slots for the day
+    func updateActivity(categorySlots: [CategorySlot])
     {
         self.activityView.layoutIfNeeded()
-        let activeTimeSlots = timeSlots.filter {
-            $0.category != .unknown
-        }
-        let timeSpent:TimeInterval = activeTimeSlots.reduce(0.0) {
+        let timeSpent:TimeInterval = categorySlots.reduce(0.0)
+        {
             return $0 + $1.duration
         }
-        let fullWidth = self.activityView.bounds.size.width
+        let fullWidth = self.activityView.bounds.size.width - CGFloat(categorySlots.count) + 1.0
         var prev:UIView?
-        if activeTimeSlots.count > 0 {
+        if categorySlots.count > 0
+        {
             self.isUserInteractionEnabled = true
         }
-        for timeSlot in activeTimeSlots
+        for categorySlot in categorySlots
         {
-        
             let timeSlotView = UIView()
-            timeSlotView.backgroundColor = timeSlot.category.color
-            let timeSlotWidth = Double(fullWidth) * (timeSlot.duration / timeSpent)
+            timeSlotView.clipsToBounds = true
+            timeSlotView.layer.cornerRadius = 1
+            timeSlotView.backgroundColor = categorySlot.category.color
+            let timeSlotWidth = Double(fullWidth) * (categorySlot.duration / timeSpent)
             self.activityView.addSubview(timeSlotView)
             timeSlotView.snp.makeConstraints({ (make) in
                 make.top.equalTo(self.activityView.snp.top)
                 make.bottom.equalTo(self.activityView.snp.bottom)
                 if let previous = prev
                 {
-                    make.left.equalTo(previous.snp.right)
+                    make.left.equalTo(previous.snp.right).offset(1)
                 } else
                 {
                     make.left.equalTo(self.activityView.snp.left)
                 }
                 
-                if timeSlot != activeTimeSlots.last
+                // category can occur only once
+                if categorySlot.category != categorySlots.last?.category
                 {
                     make.width.equalTo(timeSlotWidth)
                 }
@@ -82,6 +87,7 @@ class CalendarCellView: JTAppleDayCellView
             {(make) in
                 make.right.equalTo(self.activityView.snp.right)
             })
+            self.activityView.backgroundColor = UIColor.clear
         }
         self.activityView.layoutIfNeeded()
         self.layoutIfNeeded()
@@ -105,6 +111,8 @@ class CalendarCellView: JTAppleDayCellView
         self.dateLabel.textColor = UIColor.black
         self.backgroundColor = UIColor.white
         self.activityView.backgroundColor = UIColor.white
+        self.activityView.clipsToBounds = true
+        self.activityView.layer.cornerRadius = 1.0
         self.layer.cornerRadius = 0
         self.clipsToBounds = true
         self.dateLabel.font = UIFont.systemFont(ofSize: 14)

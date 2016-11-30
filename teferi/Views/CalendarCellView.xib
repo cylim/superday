@@ -17,11 +17,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wrd-hp-oST">
-                    <rect key="frame" x="8" y="23" width="164" height="8"/>
+                    <rect key="frame" x="9.5" y="23" width="161" height="8"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myT-8t-in7">
-                    <rect key="frame" x="0.0" y="2" width="180" height="17"/>
+                    <rect key="frame" x="0.0" y="6" width="180" height="13"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -31,12 +31,12 @@
             <constraints>
                 <constraint firstItem="wrd-hp-oST" firstAttribute="height" secondItem="qlZ-aM-Tp1" secondAttribute="height" multiplier="0.2" id="4Mf-sT-X2P"/>
                 <constraint firstItem="wrd-hp-oST" firstAttribute="top" secondItem="myT-8t-in7" secondAttribute="bottom" constant="4" id="6dT-ms-SrC"/>
-                <constraint firstItem="myT-8t-in7" firstAttribute="top" secondItem="qlZ-aM-Tp1" secondAttribute="top" constant="2" id="8Ch-9e-nvq"/>
+                <constraint firstItem="myT-8t-in7" firstAttribute="top" secondItem="qlZ-aM-Tp1" secondAttribute="top" constant="6" id="8Ch-9e-nvq"/>
                 <constraint firstAttribute="trailing" secondItem="myT-8t-in7" secondAttribute="trailing" id="9N8-NO-SCS"/>
                 <constraint firstAttribute="bottom" secondItem="wrd-hp-oST" secondAttribute="bottom" constant="10" id="Dfz-mC-hxl"/>
-                <constraint firstAttribute="trailing" secondItem="wrd-hp-oST" secondAttribute="trailing" constant="8" id="P49-JQ-L3X"/>
+                <constraint firstAttribute="trailing" secondItem="wrd-hp-oST" secondAttribute="trailing" constant="9.5" id="P49-JQ-L3X"/>
                 <constraint firstItem="myT-8t-in7" firstAttribute="leading" secondItem="qlZ-aM-Tp1" secondAttribute="leading" id="ZKJ-nc-Tbm"/>
-                <constraint firstItem="wrd-hp-oST" firstAttribute="leading" secondItem="qlZ-aM-Tp1" secondAttribute="leading" constant="8" id="icd-Ik-YsW"/>
+                <constraint firstItem="wrd-hp-oST" firstAttribute="leading" secondItem="qlZ-aM-Tp1" secondAttribute="leading" constant="9.5" id="icd-Ik-YsW"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

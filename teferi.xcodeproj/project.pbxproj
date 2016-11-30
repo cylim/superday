@@ -114,6 +114,7 @@
 		831B58391DEC366C006B3D46 /* CalendarCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831B58381DEC366C006B3D46 /* CalendarCellView.xib */; };
 		831B583B1DEC3D0B006B3D46 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */; };
 		836616BE1DEDBC730068195A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836616BD1DEDBC730068195A /* CalendarViewModel.swift */; };
+		83A267C81DEF004500875C43 /* CalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A267C71DEF004500875C43 /* CalendarViewModelTests.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -275,6 +276,7 @@
 		831B58381DEC366C006B3D46 /* CalendarCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CalendarCellView.xib; path = Views/CalendarCellView.xib; sourceTree = "<group>"; };
 		831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellView.swift; path = Views/CalendarCellView.swift; sourceTree = "<group>"; };
 		836616BD1DEDBC730068195A /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModel.swift; path = ViewModels/CalendarViewModel.swift; sourceTree = "<group>"; };
+		83A267C71DEF004500875C43 /* CalendarViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModelTests.swift; path = ViewModels/CalendarViewModelTests.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -369,6 +371,7 @@
 				24564F6B1D8326F100D9A8AE /* MainViewModelTests.swift */,
 				24B03B5E1D9E5BB900452D16 /* PagerViewModelTests.swift */,
 				24564F6C1D8326F100D9A8AE /* TimelineViewModelTests.swift */,
+				83A267C71DEF004500875C43 /* CalendarViewModelTests.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -1276,6 +1279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83A267C81DEF004500875C43 /* CalendarViewModelTests.swift in Sources */,
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
 				240575B91DC7F39E002C0C06 /* MockAppStateService.swift in Sources */,
 				24EB96871DE7163E0040C211 /* MockTimeSlotService.swift in Sources */,
@@ -1507,7 +1511,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
 			};
 			name = Debug;
@@ -1523,7 +1527,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toggl.teferiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/teferi.app/teferi";
 			};
 			name = Release;
