@@ -84,4 +84,20 @@ extension Date
         let (_, end) = self.calcStartAndEndOfDay()
         return end
     }
+
+    var month: Int
+    {
+        get
+        {
+            return Calendar.current.dateComponents([.month], from: self).month ?? 0
+        }
+    }
+    var year: Int
+    {
+        get
+        {
+            return Calendar.current.component(.year, from: self)
+        }
+    }
+    
 }

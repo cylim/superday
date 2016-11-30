@@ -6,6 +6,7 @@ class CalendarCellView: JTAppleDayCellView
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var activityView: UIView!
+    let fontSize = CGFloat(14.0)
     
     func updateCell(cellState: CellState,
                     startDate: Date,
@@ -76,11 +77,10 @@ class CalendarCellView: JTAppleDayCellView
                 {
                     make.width.equalTo(timeSlotWidth)
                 }
-                
             })
             prev = timeSlotView
         }
-        // last time slot is rounded
+        // last time slot is rounded to fit the end
         if let lastTimeSlot = prev
         {
             lastTimeSlot.snp.makeConstraints(
@@ -98,7 +98,7 @@ class CalendarCellView: JTAppleDayCellView
         self.backgroundColor = Color.lightGreyColor
         self.layer.cornerRadius = 14
         self.clipsToBounds = true
-        self.dateLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        self.dateLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
     }
     
     func resetCell()
@@ -115,7 +115,7 @@ class CalendarCellView: JTAppleDayCellView
         self.activityView.layer.cornerRadius = 1.0
         self.layer.cornerRadius = 0
         self.clipsToBounds = true
-        self.dateLabel.font = UIFont.systemFont(ofSize: 14)
+        self.dateLabel.font = UIFont.systemFont(ofSize: fontSize)
         self.isUserInteractionEnabled = false
     }
 }

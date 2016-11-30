@@ -115,6 +115,7 @@
 		831B583B1DEC3D0B006B3D46 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */; };
 		836616BE1DEDBC730068195A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836616BD1DEDBC730068195A /* CalendarViewModel.swift */; };
 		83A267C81DEF004500875C43 /* CalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A267C71DEF004500875C43 /* CalendarViewModelTests.swift */; };
+		83A267CC1DEF21DE00875C43 /* CalendarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A267CB1DEF21DE00875C43 /* CalendarPresenter.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 /* End PBXBuildFile section */
@@ -277,6 +278,7 @@
 		831B583A1DEC3D0B006B3D46 /* CalendarCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellView.swift; path = Views/CalendarCellView.swift; sourceTree = "<group>"; };
 		836616BD1DEDBC730068195A /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModel.swift; path = ViewModels/CalendarViewModel.swift; sourceTree = "<group>"; };
 		83A267C71DEF004500875C43 /* CalendarViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModelTests.swift; path = ViewModels/CalendarViewModelTests.swift; sourceTree = "<group>"; };
+		83A267CB1DEF21DE00875C43 /* CalendarPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarPresenter.swift; path = Presentation/CalendarPresenter.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -346,6 +348,7 @@
 		240AC7161D748C8800F21F4F /* teferi */ = {
 			isa = PBXGroup;
 			children = (
+				83A267C91DEF216400875C43 /* Presentations */,
 				51899C391DED953000633D82 /* Styles */,
 				24CD8A461D7A13560017C53E /* Extensions */,
 				2421F8C11D9BAC4A00AF8857 /* Helpers */,
@@ -718,6 +721,14 @@
 			);
 			name = teferiNotifications;
 			path = NotificationContentExtension;
+			sourceTree = "<group>";
+		};
+		83A267C91DEF216400875C43 /* Presentations */ = {
+			isa = PBXGroup;
+			children = (
+				83A267CB1DEF21DE00875C43 /* CalendarPresenter.swift */,
+			);
+			name = Presentations;
 			sourceTree = "<group>";
 		};
 		ED14C2EC617C158AAE12C910 /* Frameworks */ = {
@@ -1246,6 +1257,7 @@
 				2FB611401DE777B7007C5646 /* FeedbackService.swift in Sources */,
 				2482CAFB1DB12F9F00E892C1 /* OnboardingPage1.swift in Sources */,
 				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
+				83A267CC1DEF21DE00875C43 /* CalendarPresenter.swift in Sources */,
 				24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */,
 				51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */,
 				246531721DA7B4A10066DFE0 /* PreiOSTenNotificationService.swift in Sources */,

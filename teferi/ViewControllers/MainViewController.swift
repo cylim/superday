@@ -44,7 +44,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let calendarController = self.storyboard?.instantiateViewController(
             withIdentifier: kCalendarViewController
             ) as? CalendarViewController
-        calendarController?.view.alpha = 0
         self.initCalendar(calendarController: calendarController)
         return calendarController
     }()
@@ -181,12 +180,14 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         if let calendarViewController = self.calendarViewController
         {
-            if calendarViewController.view.alpha == 0
+            if calendarViewController.isVisble == false
             { //show
-                self.showCalendar(calendarViewController: calendarViewController)
+                calendarViewController.update(startDate: self.settingsService.installDate ?? Date(),
+                                              currentDate: self.viewModel.currentDate)
+                CalendarPresenter.showCalendar(mainViewController: self, calendarViewController: self.calendarViewController, aboveView: self.pagerViewController.view)
             } else
             { //hide
-                self.hideCalendar(completion:nil)
+                CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController, completion: nil)
             }
         }
     }
@@ -210,80 +211,13 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 case .next(let flag):
                     if flag
                     {
-                        self.hideCalendar(completion: nil)
+                        CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController, completion: nil)
                     }
                 default:
                     break
                 }
             })
             .addDisposableTo(disposeBag!)
-    }
-    
-    private func hideCalendar(completion:(() -> Void)? )
-    {
-        if let calendarViewController = self.calendarViewController
-        {
-            calendarViewController.didMove(toParentViewController: self)
-            self.view.isUserInteractionEnabled = false
-            calendarViewController.view.snp.removeConstraints()
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations:
-                {
-                    calendarViewController.view.alpha = 0.0
-                    calendarViewController.view.snp.makeConstraints(
-                    {   (make) in
-                        make.top.equalTo(64)
-                        make.left.equalTo(self.view.snp.left)
-                        make.width.equalTo(self.view.snp.width)
-                        make.height.equalTo(0)
-                    })
-                    self.view.layoutIfNeeded()
-            }, completion:
-            {   (finished) in
-                calendarViewController.view.snp.removeConstraints()
-                calendarViewController.willMove(toParentViewController: nil)
-                calendarViewController.view.removeFromSuperview()
-                calendarViewController.removeFromParentViewController()
-                self.view.isUserInteractionEnabled = true
-                completion?()
-            })
-        }
-    }
-    
-    private func showCalendar(calendarViewController: CalendarViewController)
-    {
-        calendarViewController.update(startDate: self.settingsService.installDate ?? Date(),
-                                      currentDate: self.viewModel.currentDate)
-        self.view.insertSubview(calendarViewController.view, aboveSubview: self.pagerViewController.view)
-        self.addChildViewController(calendarViewController)
-        calendarViewController.didMove(toParentViewController: self)
-        self.view.isUserInteractionEnabled = false
-        calendarViewController.view.snp.makeConstraints
-        {   make in
-            make.top.equalTo(64)
-            make.left.equalTo(self.view.snp.left)
-            make.width.equalTo(self.view.snp.width)
-            make.height.equalTo(0)
-        }
-        self.view.layoutIfNeeded()
-        calendarViewController.view.snp.removeConstraints()
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 1,
-                       options: .curveEaseInOut,
-                       animations:
-        {
-            calendarViewController.view.snp.makeConstraints(
-            { (make) in
-                make.top.equalTo(64)
-                make.left.equalTo(self.view.snp.left)
-                make.width.equalTo(self.view.snp.width)
-                make.bottom.equalTo(self.view.snp.bottom)
-            })
-            calendarViewController.view.alpha = 1.0
-            self.view.layoutIfNeeded()
-        }, completion:
-        { (finished) in
-           self.view.isUserInteractionEnabled = true
-        })
     }
     
     @IBAction func onContactTouchUpInside()
@@ -388,22 +322,36 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         let selectedDate = date.ignoreTimeComponents()
         guard self.viewModel.currentDate.ignoreTimeComponents() != selectedDate else { return }
-        self.hideCalendar() {
-        self.pagerViewController.setViewControllers(
-            [ TimelineViewController(date: selectedDate,
-                                     metricsService: self.metricsService,
-                                     timeSlotService: self.timeSlotService,
-                                     editStateService: self.editStateService) ],
-            direction: .forward,
-            animated: true,
-            completion: nil)
-        
-        self.onDateChanged(date: selectedDate)
+        if let calendarController = self.calendarViewController
+        {
+            var direction:UIPageViewControllerNavigationDirection = .forward
+            if selectedDate.compare(self.viewModel.currentDate) == .orderedAscending
+            {
+                direction = .reverse
+            }
+            CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController: calendarController)
+            {
+                self.pagerViewController.setViewControllers(
+                    [ TimelineViewController(date: selectedDate,
+                                             metricsService: self.metricsService,
+                                             timeSlotService: self.timeSlotService,
+                                             editStateService: self.editStateService) ],
+                    direction: direction,
+                    animated: true,
+                    completion: nil)
+                
+                self.onDateChanged(date: selectedDate)
+            }
         }
     }
     private func onCalendarClose(date: Date)
     {
-        self.hideCalendar(completion: nil)
+        if let calendarController = self.calendarViewController
+        {
+            CalendarPresenter.hideCalendar(mainViewController: self,
+                                           calendarViewController: calendarController,
+                                           completion: nil)
+        }
     }
 
     private func onDateSelected(date: Date)

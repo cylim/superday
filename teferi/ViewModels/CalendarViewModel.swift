@@ -64,4 +64,14 @@ class CalendarViewModel
         }
         return categoriesSlots
     }
+    
+    func getAttributedHeaderName(date: Date) -> NSMutableAttributedString
+    {
+        let monthName = DateFormatter().monthSymbols[(date.month-1) % 12] //GetHumanDate(month: month)
+        let myAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
+        let myString = NSMutableAttributedString(string: "\(monthName) ", attributes: myAttribute )
+        let attrString = NSAttributedString(string: String(date.year), attributes: [NSForegroundColorAttributeName: Color.offBlackTransparent])
+        myString.append(attrString)
+        return myString
+    }
 }

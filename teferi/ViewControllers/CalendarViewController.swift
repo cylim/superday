@@ -13,8 +13,9 @@ class CalendarViewController: UIViewController
     fileprivate let endDate = Date().getStart()
     fileprivate var startDate: Date = Date().getStart()
     fileprivate var viewModel: CalendarViewModel!
-    let testCalendar = Calendar(identifier: .gregorian)
+    
     // MARK: Properties
+    var isVisble: Bool = false
     var dateObservable: Observable<Date> { return self.viewModel.dateObservable }
     var shouldHideObservable: Observable<Bool> { return self.viewModel.shouldHideObservable }
 
@@ -52,7 +53,7 @@ class CalendarViewController: UIViewController
 
     private func setDate()
     {
-        self.setupHeader(startDate: self.viewModel.selectedDate)
+        self.setupHeader(date: self.viewModel.selectedDate)
     }
 
     private func setCalendar()
@@ -63,28 +64,21 @@ class CalendarViewController: UIViewController
         self.calendarView.cellInset = CGPoint(x: 1.5, y: 2)
     }
     
-    func setupHeader(startDate: Date)
+    func setupHeader(date: Date)
     {
-        let month = self.testCalendar.dateComponents([.month], from: startDate).month!
-        let monthName = DateFormatter().monthSymbols[(month-1) % 12] //GetHumanDate(month: month)
-        let year = self.testCalendar.component(.year, from: startDate)
-        let myAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
-        let myString = NSMutableAttributedString(string: "\(monthName) ", attributes: myAttribute )
-        let attrString = NSAttributedString(string: String(year), attributes: [NSForegroundColorAttributeName: Color.offBlackTransparent])
-        myString.append(attrString)
-        self.monthLabel.attributedText = myString
-    
-        if month == self.testCalendar.dateComponents([.month], from: self.startDate).month!
+        self.monthLabel.attributedText = self.viewModel.getAttributedHeaderName(date: date)
+        if date.month == self.startDate.month
         {
             self.leftButton.alpha = 0.2
         } else
         {
             self.leftButton.alpha = 1
         }
-        if month == self.testCalendar.dateComponents([.month], from: self.endDate).month!
+        if date.month == self.endDate.month
         {
             self.rightButton.alpha = 0.2
-        } else {
+        } else
+        {
             self.rightButton.alpha = 1
         }
     }
@@ -95,7 +89,7 @@ class CalendarViewController: UIViewController
         {
             return
         }
-        self.setupHeader(startDate: startDate)
+        self.setupHeader(date: startDate)
     }
 
     @IBAction func onPrevMonthPressed(_ sender: Any)
@@ -131,7 +125,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
         let parameters = ConfigurationParameters(startDate: self.startDate,
                                                  endDate: self.endDate,
                                                  numberOfRows: 6,
-                                                 calendar: self.testCalendar,
+                                                 calendar: nil,
                                                  generateInDates: .forAllMonths,
                                                  generateOutDates: .tillEndOfGrid,
                                                  firstDayOfWeek: .monday)
@@ -150,7 +144,6 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
             categorySlots: self.viewModel.getCategoriesSlots(date: date))
     }
     
-
     func calendar(_ calendar: JTAppleCalendarView,
                   didSelectDate date: Date,
                   cell: JTAppleDayCellView?,
