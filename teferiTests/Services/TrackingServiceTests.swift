@@ -65,7 +65,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = self.getDate(minutesBeforeNoon: 15)
         
-        let timeSlot = TimeSlot(withStartDate: date)
+        let timeSlot = TimeSlot(withStartTime: date)
         self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
@@ -81,7 +81,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = getDate(minutesBeforeNoon: 15)
         
-        let timeSlot = TimeSlot(withStartDate: date)
+        let timeSlot = TimeSlot(withStartTime: date)
         timeSlot.category = .work
         self.timeSlotService.add(timeSlot: timeSlot)
         
@@ -97,7 +97,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = self.getDate(minutesBeforeNoon: 30)
         
-        let timeSlot = TimeSlot(withStartDate: date)
+        let timeSlot = TimeSlot(withStartTime: date)
         self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocationDate(date)
@@ -115,7 +115,7 @@ class TrackingServiceTests : XCTestCase
     func testTheAlgorithmDoesNotCreateNewTimeSlotsUntilItDetectsTheUserBeingIdleForAWhile()
     {
         let initialDate = self.getDate(minutesBeforeNoon: 130)
-        self.timeSlotService.add(timeSlot: TimeSlot(withStartDate: initialDate))
+        self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: initialDate))
         
         let dates = [ 120, 110, 90, 50, 40, 45, 0 ].map(self.getDate)
             

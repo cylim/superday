@@ -81,7 +81,7 @@ class MainViewModel
      */
     func addNewSlot(withCategory category: Category)
     {
-        let newSlot = TimeSlot(category: category)
+        let newSlot = TimeSlot(withCategory: category)
         
         self.timeSlotService.add(timeSlot: newSlot)
         self.metricsService.log(event: .timeSlotManualCreation)

@@ -20,12 +20,12 @@ class OnboardingPage2 : OnboardingPage
         super.init(coder: aDecoder, nextButtonText: "Ok, got it")
         
         self.timeSlots = [
-            TimeSlot(category: .friends, startTime: t(10, 30), endTime: t(11, 0)),
-            TimeSlot(category: .work, startTime: t(11, 0), endTime: t(11, 55))
+            TimeSlot(withStartTime: t(10, 30), endTime: t(11, 0), category: .friends),
+            TimeSlot(withStartTime: t(11, 0), endTime: t(11, 55), category: .work)
         ]
         
         let slot = self.timeSlots[self.editIndex]
-        self.editedTimeSlot = TimeSlot(category: self.editTo, startTime: slot.startTime, endTime: slot.endTime!)
+        self.editedTimeSlot = TimeSlot(withStartTime: slot.startTime, endTime: slot.endTime, category: self.editTo)
     }
     
     override func viewDidLoad()

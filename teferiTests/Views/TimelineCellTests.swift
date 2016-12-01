@@ -6,7 +6,7 @@ import Nimble
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
-    private let timeSlot = TimeSlot(category: .work)
+    private let timeSlot = TimeSlot(withCategory: .work)
     private var view : TimelineCell!
     
     private var imageIcon : UIImageView
@@ -77,11 +77,10 @@ class TimelineCellTests : XCTestCase
     
     func testTheTimeDescriptionShowsEndDateIfIsLastPastTimeSlot()
     {
-        let newTimeSlot = TimeSlot()
         let date = Date().yesterday.ignoreTimeComponents()
+        let newTimeSlot = TimeSlot(withStartTime: date)
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        newTimeSlot.startTime = date
         newTimeSlot.endTime = date.addingTimeInterval(5000)
         
         self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: true)
@@ -115,9 +114,8 @@ class TimelineCellTests : XCTestCase
     
     func testTheElapsedTimeLabelShowsHoursAndMinutesWhenOverAnHourHasPassed()
     {
-        let newTimeSlot = TimeSlot()
         let date = Date().yesterday.ignoreTimeComponents()
-        newTimeSlot.startTime = date
+        let newTimeSlot = TimeSlot(withStartTime: date)
         newTimeSlot.endTime = date.addingTimeInterval(5000)
         self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: false)
         
@@ -142,8 +140,8 @@ class TimelineCellTests : XCTestCase
     func testTheTimelineCellLineHeightChangesAccordingToTheBoundTimeSlot()
     {
         let oldLineHeight = self.line.frame.height
-        let newTimeSlot = TimeSlot()
-        newTimeSlot.startTime = Date().add(days: -1)
+        let date = Date().add(days: -1)
+        let newTimeSlot = TimeSlot(withStartTime: date)
         newTimeSlot.endTime = Date()
         self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: false)
         self.view.layoutIfNeeded()

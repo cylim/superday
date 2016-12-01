@@ -2,7 +2,7 @@ import CoreData
 import UIKit
 
 ///Implementation that uses CoreData to persist information on disk.
-class CoreDataPersistencyService<T : BaseModel> : BasePersistencyService<T>
+class CoreDataPersistencyService<T> : BasePersistencyService<T>
 {
     //MARK: Fields
     let loggingService : LoggingService
@@ -24,12 +24,14 @@ class CoreDataPersistencyService<T : BaseModel> : BasePersistencyService<T>
         return element
     }
     
-    override func get(withPredicate predicate: Predicate) -> [ T ]
+    override func get(withPredicate predicate: Predicate? = nil) -> [ T ]
     {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
-        let nsPredicate = predicate.convertToNSPredicate()
         
-        fetchRequest.predicate = nsPredicate
+        if let nsPredicate = predicate?.convertToNSPredicate()
+        {
+            fetchRequest.predicate = nsPredicate
+        }
         
         do
         {

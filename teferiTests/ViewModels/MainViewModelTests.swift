@@ -77,7 +77,7 @@ class MainViewModelTests : XCTestCase
     
     func testTheUpdateMethodCallsTheMetricsService()
     {
-        let timeSlot = TimeSlot(category: .work)
+        let timeSlot = TimeSlot(withCategory: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -86,7 +86,7 @@ class MainViewModelTests : XCTestCase
     
     func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
     {
-        let timeSlot = TimeSlot(category: .work)
+        let timeSlot = TimeSlot(withCategory: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -100,7 +100,7 @@ class MainViewModelTests : XCTestCase
             .isEditingObservable
             .subscribe(onNext: { editingEnded = !$0 })
         
-        let timeSlot = TimeSlot(category: .work)
+        let timeSlot = TimeSlot(withCategory: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         

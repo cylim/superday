@@ -17,7 +17,7 @@ protocol PersistencyService
      
      - Returns: The found entities that comply to the provided predicate.
      */
-    func get(withPredicate predicate: Predicate) -> [ T ]
+    func get(withPredicate predicate: Predicate?) -> [ T ]
     
     /**
      Persists the provided element.
@@ -40,7 +40,7 @@ protocol PersistencyService
     @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
 }
 
-class BasePersistencyService<T : BaseModel> : PersistencyService
+class BasePersistencyService<T> : PersistencyService
 {
     
     ///Returns the last saved instance of type T created.
@@ -56,7 +56,7 @@ class BasePersistencyService<T : BaseModel> : PersistencyService
      
      - Returns: The found entities that comply to the provided predicate.
      */
-    func get(withPredicate predicate: Predicate) -> [ T ]
+    func get(withPredicate predicate: Predicate? = nil) -> [ T ]
     {
         fatalError("Not implemented")
     }

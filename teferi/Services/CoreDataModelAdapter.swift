@@ -27,11 +27,32 @@ class TimeSlotModelAdapter : CoreDataModelAdapter<TimeSlot>
     
     override func getModel(fromManagedObject managedObject: NSManagedObject) -> TimeSlot
     {
-        let timeSlot = TimeSlot()
-        timeSlot.startTime = managedObject.value(forKey: "startTime") as! Date
-        timeSlot.endTime = managedObject.value(forKey: "endTime") as? Date
-        timeSlot.category = Category(rawValue: managedObject.value(forKey: "category") as! String)!
+        let startTime = managedObject.value(forKey: "startTime") as! Date
+        let endTime = managedObject.value(forKey: "endTime") as? Date
+        let category = Category(rawValue: managedObject.value(forKey: "category") as! String)!
         
+        let possibleTime = managedObject.value(forKey: "locationTime") as? Date
+        let possibleLatitude = managedObject.value(forKey: "locationLatitude") as? Double
+        let possibleLongitude = managedObject.value(forKey: "locationLongitude") as? Double
+        
+        //Entries created on versions <= 0.5.3 don't have any location information attached
+        guard let time = possibleTime, let latitude = possibleLatitude, let longitude = possibleLongitude else
+        {
+            let timeSlot = TimeSlot(withStartTime: startTime, endTime: endTime, category: category)
+            return timeSlot
+        }
+        
+        let wasSmartGuessed = managedObject.value(forKey: "wasSmartGuessed") as? Bool ?? false
+        
+        let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        //TODO: Should we store altitude and accuracy?
+        let location = CLLocation(coordinate: coord, altitude: 0, horizontalAccuracy: 0, verticalAccuracy: 0, timestamp: time)
+        
+        let timeSlot = TimeSlot(withStartTime: startTime,
+                                endTime: endTime,
+                                category: category,
+                                location: location,
+                                wasSmartGuessed: wasSmartGuessed)
         return timeSlot
     }
     

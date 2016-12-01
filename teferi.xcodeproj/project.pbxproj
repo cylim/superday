@@ -87,7 +87,6 @@
 		24EB96781DE7080F0040C211 /* TrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96701DE7080F0040C211 /* TrackingService.swift */; };
 		24EB96791DE7080F0040C211 /* CoreDataModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96711DE7080F0040C211 /* CoreDataModelAdapter.swift */; };
 		24EB967D1DE708570040C211 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB967A1DE708570040C211 /* AppState.swift */; };
-		24EB967E1DE708570040C211 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB967B1DE708570040C211 /* BaseModel.swift */; };
 		24EB967F1DE708570040C211 /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB967C1DE708570040C211 /* Predicate.swift */; };
 		24EB96831DE709790040C211 /* DelayedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96821DE709790040C211 /* DelayedSequence.swift */; };
 		24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB96841DE709830040C211 /* PredicateExtensions.swift */; };
@@ -242,7 +241,6 @@
 		24EB96701DE7080F0040C211 /* TrackingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingService.swift; path = Services/Protocols/TrackingService.swift; sourceTree = "<group>"; };
 		24EB96711DE7080F0040C211 /* CoreDataModelAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataModelAdapter.swift; path = Services/CoreDataModelAdapter.swift; sourceTree = "<group>"; };
 		24EB967A1DE708570040C211 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = Models/AppState.swift; sourceTree = "<group>"; };
-		24EB967B1DE708570040C211 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseModel.swift; path = Models/BaseModel.swift; sourceTree = "<group>"; };
 		24EB967C1DE708570040C211 /* Predicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Predicate.swift; path = Models/Predicate.swift; sourceTree = "<group>"; };
 		24EB96821DE709790040C211 /* DelayedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DelayedSequence.swift; path = Helpers/DelayedSequence.swift; sourceTree = "<group>"; };
 		24EB96841DE709830040C211 /* PredicateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PredicateExtensions.swift; path = Extensions/PredicateExtensions.swift; sourceTree = "<group>"; };
@@ -455,7 +453,6 @@
 			isa = PBXGroup;
 			children = (
 				24EB967A1DE708570040C211 /* AppState.swift */,
-				24EB967B1DE708570040C211 /* BaseModel.swift */,
 				24EB967C1DE708570040C211 /* Predicate.swift */,
 				512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */,
 				24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */,
@@ -1213,7 +1210,6 @@
 				24EB96831DE709790040C211 /* DelayedSequence.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */,
-				24EB967E1DE708570040C211 /* BaseModel.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
 				24EB96761DE7080F0040C211 /* TimeSlotService.swift in Sources */,
