@@ -7,11 +7,11 @@ class TimeSlot
 {
     // MARK: Properties
     let startTime : Date
-    let wasSmartGuessed : Bool
     let location : CLLocation?
     
     var endTime : Date? = nil
     var category = Category.unknown
+    var categoryWasSetByUser : Bool
     
     ///Calculates and returns the total duration for the TimeSlot.
     var duration : TimeInterval
@@ -21,47 +21,40 @@ class TimeSlot
     }
     
     // MARK: Initializers
-    init()
-    {
-        self.location = nil
-        self.startTime = Date()
-        self.wasSmartGuessed = false
-    }
-    
-    init(withStartTime time: Date)
+    init(withStartTime time: Date, categoryWasSetByUser: Bool)
     {
         self.location = nil
         self.startTime = time
-        self.wasSmartGuessed = false
+        self.categoryWasSetByUser = categoryWasSetByUser
     }
     
-    init(withLocation location: CLLocation, smartGuessedCategory: Category)
+    init(withLocation location: CLLocation, category: Category)
     {
         self.location = location
-        self.wasSmartGuessed = true
+        self.category = category
+        self.categoryWasSetByUser = false
         self.startTime = location.timestamp
-        self.category = smartGuessedCategory
     }
     
-    init(withStartTime startTime: Date, endTime: Date?, category: Category, location: CLLocation, wasSmartGuessed: Bool)
+    init(withStartTime startTime: Date, endTime: Date?, category: Category, location: CLLocation?, categoryWasSetByUser: Bool)
     {
         self.endTime = endTime
         self.category = category
         self.location = location
         self.startTime = startTime
-        self.wasSmartGuessed = wasSmartGuessed
+        self.categoryWasSetByUser = categoryWasSetByUser
     }
     
     convenience init(withStartTime startTime: Date, endTime: Date?, category: Category)
     {
-        self.init(withStartTime: startTime)
+        self.init(withStartTime: startTime, categoryWasSetByUser: false)
         self.endTime = endTime
         self.category = category
     }
     
     convenience init(withCategory category: Category)
     {
-        self.init()
+        self.init(withStartTime: Date(), categoryWasSetByUser: false)
         self.category = category
     }
     

@@ -79,6 +79,8 @@
 		24D18E241DEF6B300046B202 /* DefaultSmartGuessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E231DEF6B300046B202 /* DefaultSmartGuessService.swift */; };
 		24D18E261DEF6D640046B202 /* SmartGuess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E251DEF6D640046B202 /* SmartGuess.swift */; };
 		24D18E281DF0251A0046B202 /* MockSmartGuessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E271DF0251A0046B202 /* MockSmartGuessService.swift */; };
+		24D18E2E1DF06B450046B202 /* TimeSlotModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E2D1DF06B450046B202 /* TimeSlotModelAdapter.swift */; };
+		24D18E301DF06B9E0046B202 /* SmartGuessModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */; };
 		24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AA1DB8CA4600E429CA /* AppStateService.swift */; };
 		24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */; };
 		24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */; };
@@ -237,6 +239,8 @@
 		24D18E231DEF6B300046B202 /* DefaultSmartGuessService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultSmartGuessService.swift; path = Services/DefaultSmartGuessService.swift; sourceTree = "<group>"; };
 		24D18E251DEF6D640046B202 /* SmartGuess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartGuess.swift; path = Models/SmartGuess.swift; sourceTree = "<group>"; };
 		24D18E271DF0251A0046B202 /* MockSmartGuessService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockSmartGuessService.swift; path = Mocks/MockSmartGuessService.swift; sourceTree = "<group>"; };
+		24D18E2D1DF06B450046B202 /* TimeSlotModelAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlotModelAdapter.swift; path = Services/TimeSlotModelAdapter.swift; sourceTree = "<group>"; };
+		24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartGuessModelAdapter.swift; sourceTree = "<group>"; };
 		24D213AA1DB8CA4600E429CA /* AppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppStateService.swift; path = Services/Protocols/AppStateService.swift; sourceTree = "<group>"; };
 		24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultAppStateService.swift; path = Services/DefaultAppStateService.swift; sourceTree = "<group>"; };
 		24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewControllerTests.swift; path = ViewControllers/Onboarding/OnboardingPageViewControllerTests.swift; sourceTree = "<group>"; };
@@ -487,6 +491,16 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		24D18E2C1DF06AB20046B202 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				24EB96711DE7080F0040C211 /* CoreDataModelAdapter.swift */,
+				24D18E2D1DF06B450046B202 /* TimeSlotModelAdapter.swift */,
+				24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */,
+			);
+			name = Adapters;
+			sourceTree = "<group>";
+		};
 		24D99F661D74B8D700E68163 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -580,9 +594,9 @@
 		24EB96621DE705AA0040C211 /* Persistency */ = {
 			isa = PBXGroup;
 			children = (
+				24D18E2C1DF06AB20046B202 /* Adapters */,
 				24EB966B1DE7080F0040C211 /* DefaultTimeSlotService.swift */,
 				247F05FB1D87337300451BAD /* CoreDataPersistencyService.swift */,
-				24EB96711DE7080F0040C211 /* CoreDataModelAdapter.swift */,
 				24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */,
 				24D18E231DEF6B300046B202 /* DefaultSmartGuessService.swift */,
 			);
@@ -1223,6 +1237,7 @@
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
+				24D18E301DF06B9E0046B202 /* SmartGuessModelAdapter.swift in Sources */,
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
 				24EB96761DE7080F0040C211 /* TimeSlotService.swift in Sources */,
 				24D18E261DEF6D640046B202 /* SmartGuess.swift in Sources */,
@@ -1253,6 +1268,7 @@
 				24EB96771DE7080F0040C211 /* MotionService.swift in Sources */,
 				2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */,
 				24EB967D1DE708570040C211 /* AppState.swift in Sources */,
+				24D18E2E1DF06B450046B202 /* TimeSlotModelAdapter.swift in Sources */,
 				24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */,
 				2420A86C1DB7BE6900C0478C /* PermissionView.swift in Sources */,
 				243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */,

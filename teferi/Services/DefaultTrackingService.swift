@@ -54,9 +54,7 @@ class DefaultTrackingService : TrackingService
         if (difference / 60) < 25.0
         {
             //If it was smart guessed and we detect movement, we got it wrong and override it with a commute
-            guard currentTimeSlot.category == .unknown || currentTimeSlot.wasSmartGuessed else { return }
-            
-            if currentTimeSlot.category == .unknown || currentTimeSlot.wasSmartGuessed
+            if !currentTimeSlot.categoryWasSetByUser
             {
                 self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute)
             }
@@ -65,19 +63,14 @@ class DefaultTrackingService : TrackingService
         {
             if currentTimeSlot.startTime < previousLocation.timestamp
             {
-                let guessedCategory = self.smartGuessService.getCategory(forLocation: previousLocation)
-                
-                let intervalTimeSlot = TimeSlot(withLocation: previousLocation, smartGuessedCategory: guessedCategory)
-                self.timeSlotService.add(timeSlot: intervalTimeSlot)
+                self.persistTimeSlot(withLocation: previousLocation)
             }
             
             //We should keep the coordinates at the startDate.
-            let category = self.smartGuessService.getCategory(forLocation: location)
-            let newTimeSlot = TimeSlot(withLocation: location, smartGuessedCategory: category)
-            self.timeSlotService.add(timeSlot: newTimeSlot)
+            let guessedCategory = self.persistTimeSlot(withLocation: location)
             
             //We only schedule notifications if we couldn't guess any category
-            guard category == .unknown else { return }
+            guard guessedCategory == .unknown else { return }
         }
         
         self.notificationService.unscheduleAllNotifications()
@@ -91,5 +84,15 @@ class DefaultTrackingService : TrackingService
     func onAppState(_ appState: AppState)
     {
         self.isOnBackground = appState == .inactive
+    }
+    
+    @discardableResult private func persistTimeSlot(withLocation location: CLLocation) -> Category
+    {
+        let guessedCategory = self.smartGuessService.getCategory(forLocation: location)
+        
+        let timeSlot = TimeSlot(withLocation: location, category: guessedCategory)
+        self.timeSlotService.add(timeSlot: timeSlot)
+        
+        return guessedCategory
     }
 }
