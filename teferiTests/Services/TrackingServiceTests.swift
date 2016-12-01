@@ -12,6 +12,7 @@ class TrackingServiceTests : XCTestCase
     private var settingsService : SettingsService!
     private var trackingService : TrackingService!
     private var timeSlotService : MockTimeSlotService!
+    private var smartGuessService : SmartGuessService!
     private var notificationService : NotificationService!
     
     override func setUp()
@@ -22,11 +23,14 @@ class TrackingServiceTests : XCTestCase
         self.loggingService = MockLoggingService()
         self.settingsService = MockSettingsService()
         self.timeSlotService = MockTimeSlotService()
+        self.smartGuessService = MockSmartGuessService()
         self.notificationService = MockNotificationService()
+        
         self.trackingService = DefaultTrackingService(loggingService: self.loggingService,
-                                               settingsService: self.settingsService,
-                                               timeSlotService: self.timeSlotService,
-                                               notificationService: self.notificationService)
+                                                      settingsService: self.settingsService,
+                                                      timeSlotService: self.timeSlotService,
+                                                      smartGuessService: self.smartGuessService,
+                                                      notificationService: self.notificationService)
         
         self.trackingService.onAppState(.inactive)
     }
@@ -53,7 +57,7 @@ class TrackingServiceTests : XCTestCase
     
     func testTheAlgorithmWillNotRunIfTheNewLocationIsOlderThanTheLastLocationReceived()
     {
-        self.settingsService.setLastLocationDate(self.noon)
+        self.settingsService.setLastLocation(self.getLocation(withTimestamp: self.noon))
         let oldLocation = self.getLocation(withTimestamp: self.getDate(minutesBeforeNoon: 1))
         
         self.trackingService.onLocation(oldLocation)
@@ -68,7 +72,7 @@ class TrackingServiceTests : XCTestCase
         let timeSlot = TimeSlot(withStartTime: date)
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        self.settingsService.setLastLocationDate(date)
+        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
         
         let location = self.getLocation(withTimestamp: self.noon)
         
@@ -85,7 +89,7 @@ class TrackingServiceTests : XCTestCase
         timeSlot.category = .work
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        self.settingsService.setLastLocationDate(date)
+        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
         
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)
@@ -100,7 +104,7 @@ class TrackingServiceTests : XCTestCase
         let timeSlot = TimeSlot(withStartTime: date)
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        self.settingsService.setLastLocationDate(date)
+        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
         
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)

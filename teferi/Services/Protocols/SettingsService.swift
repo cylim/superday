@@ -1,11 +1,12 @@
 import Foundation
+import CoreLocation
 
 protocol SettingsService
 {
     ///Indicates the date the app was ran for the first time
     var installDate : Date? { get }
     
-    var lastLocationDate : Date? { get }
+    var lastLocation : CLLocation? { get }
     
     var lastAskedForLocationPermission : Date? { get }
     
@@ -21,7 +22,7 @@ protocol SettingsService
     
     func setLastInactiveDate(_ date: Date?)
     
-    func setLastLocationDate(_ date: Date)
+    func setLastLocation(_ location: CLLocation)
     
     func setLastAskedForLocationPermission(_ date: Date)
     

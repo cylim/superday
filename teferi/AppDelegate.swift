@@ -20,6 +20,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let timeSlotService : TimeSlotService
     private let trackingService : TrackingService
     private let editStateService : EditStateService
+    private let smartGuessService : SmartGuessService
     private let notificationService : NotificationService
     private let feedbackService: FeedbackService
     
@@ -37,12 +38,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
         self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Superday feedback", body: "")
         
-        let persistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
-                                                                      modelAdapter: TimeSlotModelAdapter())
+        let timeSlotPersistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
+                                                                              modelAdapter: TimeSlotModelAdapter())
         
+        let smartGuessPersistencyService = CoreDataPersistencyService<SmartGuess>(loggingService: self.loggingService,
+                                                                                  modelAdapter: SmartGuessModelAdapter())
         
+        self.smartGuessService = DefaultSmartGuessService(persistencyService: smartGuessPersistencyService)
         self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
-                                                      persistencyService: persistencyService)
+                                                      persistencyService: timeSlotPersistencyService)
         
         if #available(iOS 10.0, *)
         {
@@ -59,6 +63,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             DefaultTrackingService(loggingService: self.loggingService,
                                    settingsService: self.settingsService,
                                    timeSlotService: self.timeSlotService,
+                                   smartGuessService: self.smartGuessService,
                                    notificationService: self.notificationService)
     }
     

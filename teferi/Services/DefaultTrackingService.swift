@@ -12,8 +12,9 @@ class DefaultTrackingService : TrackingService
     private let notificationTimeout = TimeInterval(20 * 60)
     
     private let loggingService : LoggingService
-    private var settingsService : SettingsService
+    private let settingsService : SettingsService
     private let timeSlotService : TimeSlotService
+    private let smartGuessService : SmartGuessService
     private let notificationService : NotificationService
     
     private var isOnBackground = false
@@ -22,11 +23,13 @@ class DefaultTrackingService : TrackingService
     init(loggingService: LoggingService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
+         smartGuessService: SmartGuessService,
          notificationService: NotificationService)
     {
         self.loggingService = loggingService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
+        self.smartGuessService = smartGuessService
         self.notificationService = notificationService
     }
     
@@ -35,38 +38,46 @@ class DefaultTrackingService : TrackingService
     {
         guard self.isOnBackground else { return }
         
-        let currentLocationTime = location.timestamp
-        
-        guard let previousLocationTime = self.settingsService.lastLocationDate else
+        guard let previousLocation = self.settingsService.lastLocation else
         {
-            self.settingsService.setLastLocationDate(currentLocationTime)
+            self.settingsService.setLastLocation(location)
             return
         }
         
-        guard currentLocationTime > previousLocationTime else { return }
+        guard location.timestamp > previousLocation.timestamp else { return }
         
-        self.settingsService.setLastLocationDate(currentLocationTime)
+        self.settingsService.setLastLocation(location)
         
         let currentTimeSlot = self.timeSlotService.getLast()
         
-        let difference = currentLocationTime.timeIntervalSince(previousLocationTime)
+        let difference = location.timestamp.timeIntervalSince(previousLocation.timestamp)
         if (difference / 60) < 25.0
         {
-            if currentTimeSlot.category == .unknown
+            //If it was smart guessed and we detect movement, we got it wrong and override it with a commute
+            guard currentTimeSlot.category == .unknown || currentTimeSlot.wasSmartGuessed else { return }
+            
+            if currentTimeSlot.category == .unknown || currentTimeSlot.wasSmartGuessed
             {
                 self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute)
             }
         }
         else
         {
-            if currentTimeSlot.startTime < previousLocationTime
+            if currentTimeSlot.startTime < previousLocation.timestamp
             {
-                let intervalTimeSlot = TimeSlot(withStartDate: previousLocationTime)
+                let guessedCategory = self.smartGuessService.getCategory(forLocation: previousLocation)
+                
+                let intervalTimeSlot = TimeSlot(withLocation: previousLocation, smartGuessedCategory: guessedCategory)
                 self.timeSlotService.add(timeSlot: intervalTimeSlot)
             }
             
-            let newTimeSlot = TimeSlot(withStartDate: currentLocationTime)
+            //We should keep the coordinates at the startDate.
+            let category = self.smartGuessService.getCategory(forLocation: location)
+            let newTimeSlot = TimeSlot(withLocation: location, smartGuessedCategory: category)
             self.timeSlotService.add(timeSlot: newTimeSlot)
+            
+            //We only schedule notifications if we couldn't guess any category
+            guard category == .unknown else { return }
         }
         
         self.notificationService.unscheduleAllNotifications()

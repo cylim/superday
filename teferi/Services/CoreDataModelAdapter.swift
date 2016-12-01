@@ -1,7 +1,8 @@
 import Foundation
 import CoreData
+import CoreLocation
 
-class CoreDataModelAdapter<T : BaseModel>
+class CoreDataModelAdapter<T>
 {
     func getModel(fromManagedObject managedObject: NSManagedObject) -> T
     {
@@ -61,5 +62,51 @@ class TimeSlotModelAdapter : CoreDataModelAdapter<TimeSlot>
         managedObject.setValue(model.startTime, forKey: "startTime")
         managedObject.setValue(model.endTime, forKey: "endTime")
         managedObject.setValue(model.category.rawValue, forKey: "category")
+        
+        managedObject.setValue(model.wasSmartGuessed, forKey: "wasSmartGuessed")
+        managedObject.setValue(model.location?.timestamp, forKey: "locationTime")
+        managedObject.setValue(model.location?.coordinate.latitude, forKey: "locationLatitude")
+        managedObject.setValue(model.location?.coordinate.longitude, forKey: "locationLongitude")
+    }
+}
+
+class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
+{
+    override init()
+    {
+        super.init()
+        
+        self.sortDescriptors = [ NSSortDescriptor(key: "locationTime", ascending: false) ]
+    }
+    
+    override func getModel(fromManagedObject managedObject: NSManagedObject) -> SmartGuess
+    {
+        let lastUsed = managedObject.value(forKey: "lastUsed") as? Date
+        let errorCount = managedObject.value(forKey: "errorCount") as! Int
+        let category = Category(rawValue: managedObject.value(forKey: "category") as! String)!
+        
+        let time = managedObject.value(forKey: "locationTime") as! Date
+        let latitude = managedObject.value(forKey: "locationLatitude") as! Double
+        let longitude = managedObject.value(forKey: "locationLongitude") as! Double
+        
+        let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        //TODO: Should we store altitude and accuracy?
+        let location = CLLocation(coordinate: coord, altitude: 0, horizontalAccuracy: 0, verticalAccuracy: 0, timestamp: time)
+        
+        let smartGuess = SmartGuess(withCategory: category, location: location, errorCount: errorCount)
+        smartGuess.lastUsed = lastUsed
+        
+        return smartGuess
+    }
+    
+    override func setManagedElementProperties(fromModel model: SmartGuess, managedObject: NSManagedObject)
+    {
+        managedObject.setValue(model.category, forKey: "category")
+        managedObject.setValue(model.lastUsed, forKey: "lastUsed")
+        managedObject.setValue(model.errorCount, forKey: "errorCount")
+        
+        managedObject.setValue(model.location.timestamp, forKey: "locationTime")
+        managedObject.setValue(model.location.coordinate.latitude, forKey: "locationLatitude")
+        managedObject.setValue(model.location.coordinate.longitude, forKey: "locationLongitude")
     }
 }
