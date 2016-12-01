@@ -15,7 +15,7 @@ class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
     {
         super.init()
         
-        self.sortDescriptors = [ NSSortDescriptor(key: , ascending: false) ]
+        self.sortDescriptors = [ NSSortDescriptor(key: self.locationTimeKey, ascending: false) ]
     }
     
     override func getModel(fromManagedObject managedObject: NSManagedObject) -> SmartGuess

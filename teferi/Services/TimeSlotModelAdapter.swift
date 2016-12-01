@@ -16,7 +16,7 @@ class TimeSlotModelAdapter : CoreDataModelAdapter<TimeSlot>
     {
         super.init()
         
-        self.sortDescriptors = [ NSSortDescriptor(key: "startTime", ascending: false) ]
+        self.sortDescriptors = [ NSSortDescriptor(key: self.startTimeKey, ascending: false) ]
     }
     
     override func getModel(fromManagedObject managedObject: NSManagedObject) -> TimeSlot
