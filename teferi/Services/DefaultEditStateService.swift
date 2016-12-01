@@ -4,7 +4,7 @@ class DefaultEditStateService : EditStateService
 {
     //MARK: Fields
     private let isEditingVariable = Variable(false)
-    private let beganEditingVariable = Variable((CGPoint(), TimeSlot()))
+    private let beganEditingVariable = Variable((CGPoint(), TimeSlot(withStartTime: Date())))
     
     //MARK: Initializers
     init()

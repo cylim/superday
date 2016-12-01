@@ -81,9 +81,26 @@ class TrackingServiceTests : XCTestCase
         expect(timeSlot.category).to(equal(Category.commute))
     }
     
-    func testTheAlgorithmDoesNotChangeTheTimeSlotToCommuteIfTheCurrentTimeSlotCategoryIsAlreadySet()
+    func testTheAlgorithmDoesNotChangeTheTimeSlotToCommuteIfTheCurrentTimeSlotCategoryWasSetByTheUser()
     {
-        let date = getDate(minutesBeforeNoon: 15)
+        let date = self.getDate(minutesBeforeNoon: 15)
+        
+        let timeSlot = TimeSlot(withStartTime: date)
+        timeSlot.category = .work
+        timeSlot.categoryWasSetByUser = true
+        self.timeSlotService.add(timeSlot: timeSlot)
+        
+        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(timeSlot.category).to(equal(Category.work))
+    }
+    
+    func testTheAlgorithmDoesChangeTheTimeSlotToCommuteIfTheCurrentTimeSlotCategoryWasNotSetByTheUser()
+    {
+        let date = self.getDate(minutesBeforeNoon: 15)
         
         let timeSlot = TimeSlot(withStartTime: date)
         timeSlot.category = .work
@@ -94,7 +111,7 @@ class TrackingServiceTests : XCTestCase
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)
         
-        expect(timeSlot.category).to(equal(Category.work))
+        expect(timeSlot.category).to(equal(Category.commute))
     }
     
     func testTheAlgorithmCreatesNewTimeSlotWhenANewUpdateComesAfterAWhile()

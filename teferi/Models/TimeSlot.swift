@@ -45,6 +45,11 @@ class TimeSlot
         self.categoryWasSetByUser = categoryWasSetByUser
     }
     
+    convenience init(withStartTime time: Date)
+    {
+        self.init(withStartTime: time, categoryWasSetByUser: false)
+    }
+    
     convenience init(withStartTime startTime: Date, endTime: Date?, category: Category)
     {
         self.init(withStartTime: startTime, categoryWasSetByUser: false)

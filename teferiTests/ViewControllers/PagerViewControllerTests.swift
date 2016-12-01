@@ -40,7 +40,7 @@ class PagerViewControllerTests : XCTestCase
     
     func testScrollingIsDisabledWhenEnteringEditMode()
     {
-        self.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot());
+        self.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date()));
         
         let scrollViews =
             self.pagerViewController
@@ -53,7 +53,7 @@ class PagerViewControllerTests : XCTestCase
     
     func testScrollingIsEnabledWhenExitingEditMode()
     {
-        self.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot());
+        self.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date()));
         self.editStateService.notifyEditingEnded();
         
         let scrollViews =

@@ -39,7 +39,7 @@ class TimelineViewControllerTests : XCTestCase
     
     func testScrollingIsDisabledWhenEnteringEditMode()
     {
-        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot());
+        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date()));
         
         let scrollView = self.timelineViewController.tableView!
         
@@ -48,7 +48,7 @@ class TimelineViewControllerTests : XCTestCase
     
     func testScrollingIsEnabledWhenExitingEditMode()
     {
-        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot());
+        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date()));
         self.mockEditStateService.notifyEditingEnded();
         
         let scrollView = self.timelineViewController.tableView!

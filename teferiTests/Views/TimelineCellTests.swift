@@ -95,7 +95,7 @@ class TimelineCellTests : XCTestCase
     
     func testTheDescriptionHasNoTextWhenTheCategoryIsUnknown()
     {
-        let unknownTimeSlot = TimeSlot()
+        let unknownTimeSlot = TimeSlot(withStartTime: Date())
         view.bind(toTimeSlot: unknownTimeSlot, index: 0, lastInPastDay: false)
         
         expect(self.slotDescription.text).to(equal(""))
