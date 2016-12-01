@@ -28,6 +28,14 @@ class TimeSlot
         self.categoryWasSetByUser = categoryWasSetByUser
     }
     
+    init(withStartTime time: Date, category: Category, location: CLLocation?, categoryWasSetByUser: Bool)
+    {
+        self.startTime = time
+        self.location = location
+        self.category = category
+        self.categoryWasSetByUser = categoryWasSetByUser
+    }
+    
     init(withLocation location: CLLocation, category: Category)
     {
         self.location = location

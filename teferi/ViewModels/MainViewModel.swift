@@ -9,22 +9,25 @@ class MainViewModel
     private let superyesterday = "Superyesterday"
     
     private let metricsService : MetricsService
+    private let feedbackService: FeedbackService
     private let timeSlotService : TimeSlotService
     private let settingsService : SettingsService
+    private let locationService : LocationService
     private let editStateService : EditStateService
-    private let feedbackService: FeedbackService
     
     init(metricsService: MetricsService,
-         timeSlotService: TimeSlotService,
+         feedbackService: FeedbackService,
          settingsService: SettingsService,
-         editStateService: EditStateService,
-         feedbackService: FeedbackService)
+         timeSlotService: TimeSlotService,
+         locationService : LocationService,
+         editStateService: EditStateService)
     {
         self.metricsService = metricsService
-        self.timeSlotService = timeSlotService
-        self.settingsService = settingsService
-        self.editStateService = editStateService
         self.feedbackService = feedbackService
+        self.settingsService = settingsService
+        self.timeSlotService = timeSlotService
+        self.locationService = locationService
+        self.editStateService = editStateService
     }
     
     // MARK: Properties
@@ -81,10 +84,17 @@ class MainViewModel
      */
     func addNewSlot(withCategory category: Category)
     {
-        let newSlot = TimeSlot(withCategory: category)
+        let currentLocation = self.locationService.getLastKnownLocation()
+        
+        let newSlot = TimeSlot(withStartTime: Date(),
+                               category: category,
+                               location: currentLocation,
+                               categoryWasSetByUser: true)
         
         self.timeSlotService.add(timeSlot: newSlot)
         self.metricsService.log(event: .timeSlotManualCreation)
+        
+        //TODO: Create a smart guess if the location is valid
     }
     
     /**
@@ -101,5 +111,8 @@ class MainViewModel
         timeSlot.category = category
         
         self.editStateService.notifyEditingEnded()
+        
+        //TODO: Create a smart guess if the timeSlot has a location and was unknown
+        //TODO: Strike a smart guess if the user changed it
     }
 }

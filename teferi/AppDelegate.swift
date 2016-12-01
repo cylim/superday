@@ -163,10 +163,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         self.appStateService.currentAppState = .active
         self.initializeWindowIfNeeded()
-        self.locationService.stopLocationTracking()
         self.notificationService.unscheduleAllNotifications()
         
-        if invalidateOnWakeup
+        if self.invalidateOnWakeup
         {
             self.invalidateOnWakeup = false
             self.appStateService.currentAppState = .needsRefreshing
