@@ -61,4 +61,8 @@ class PreiOSTenNotificationService : NotificationService
     func handleNotificationAction(withIdentifier identifier: String?)
     {
     }
+    
+    func subscribeToCategoryAction(_ action : @escaping (Category) -> ())
+    {
+    }
 }

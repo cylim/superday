@@ -28,6 +28,8 @@ class DefaultTrackingService : TrackingService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
         self.notificationService = notificationService
+        
+        notificationService.subscribeToCategoryAction(self.onNotificationAction)
     }
     
     //MARK:  TrackingService implementation
@@ -49,8 +51,7 @@ class DefaultTrackingService : TrackingService
         
         let currentTimeSlot = self.timeSlotService.getLast()
         
-        let difference = currentLocationTime.timeIntervalSince(previousLocationTime)
-        if (difference / 60) < 25.0
+        if self.isCommute(now: currentLocationTime, then: previousLocationTime)
         {
             if currentTimeSlot.category == .unknown
             {
@@ -61,12 +62,9 @@ class DefaultTrackingService : TrackingService
         {
             if currentTimeSlot.startTime < previousLocationTime
             {
-                let intervalTimeSlot = TimeSlot(withStartDate: previousLocationTime)
-                self.timeSlotService.add(timeSlot: intervalTimeSlot)
+                self.startTimeSlot(withStartTime: previousLocationTime)
             }
-            
-            let newTimeSlot = TimeSlot(withStartDate: currentLocationTime)
-            self.timeSlotService.add(timeSlot: newTimeSlot)
+            self.startTimeSlot(withStartTime: currentLocationTime)
         }
         
         self.notificationService.unscheduleAllNotifications()
@@ -77,8 +75,52 @@ class DefaultTrackingService : TrackingService
                                                       message: self.notificationBody)
     }
     
+    private func onNotificationAction(withCategory category : Category)
+    {
+        self.tryStoppingCommuteRetroactively(at: Date())
+        
+        let currentTimeSlot = self.timeSlotService.getLast()
+        self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: category)
+    }
+    
+    private func onAppActivates(at time : Date)
+    {
+        self.tryStoppingCommuteRetroactively(at: time)
+    }
+    
+    private func tryStoppingCommuteRetroactively(at time : Date)
+    {
+        guard let lastLocationTime = self.settingsService.lastLocationDate else { return }
+        
+        let currentTimeSlot = self.timeSlotService.getLast()
+        
+        guard
+            currentTimeSlot.category == .commute,
+            currentTimeSlot.startTime <= lastLocationTime,
+            !self.isCommute(now: time, then: lastLocationTime)
+        else { return }
+        
+        self.startTimeSlot(withStartTime: lastLocationTime)
+    }
+    
+    private func isCommute(now : Date, then : Date) -> Bool
+    {
+        return now.timeIntervalSince(then) / 60 < 25.0
+    }
+    
+    private func startTimeSlot(withStartTime startTime : Date)
+    {
+        let newTimeSlot = TimeSlot(withStartDate: startTime)
+        self.timeSlotService.add(timeSlot: newTimeSlot)
+    }
+    
     func onAppState(_ appState: AppState)
     {
+        if appState == .active
+        {
+            self.onAppActivates(at: Date())
+        }
+        
         self.isOnBackground = appState == .inactive
     }
 }

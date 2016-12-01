@@ -10,4 +10,6 @@ protocol NotificationService
     func unscheduleAllNotifications()
     
     func handleNotificationAction(withIdentifier identifier: String?)
+    
+    func subscribeToCategoryAction(_ action : @escaping (Category) -> ())
 }
