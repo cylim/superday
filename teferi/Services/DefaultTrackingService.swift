@@ -31,6 +31,8 @@ class DefaultTrackingService : TrackingService
         self.timeSlotService = timeSlotService
         self.smartGuessService = smartGuessService
         self.notificationService = notificationService
+        
+        notificationService.subscribeToCategoryAction(self.onNotificationAction)
     }
     
     //MARK:  TrackingService implementation
@@ -50,8 +52,7 @@ class DefaultTrackingService : TrackingService
         
         let currentTimeSlot = self.timeSlotService.getLast()
         
-        let difference = location.timestamp.timeIntervalSince(previousLocation.timestamp)
-        if (difference / 60) < 25.0
+        if self.isCommute(now: location.timestamp, then: previousLocation.timestamp)
         {
             //If it was smart guessed and we detect movement, we got it wrong and override it with a commute
             if !currentTimeSlot.categoryWasSetByUser
@@ -81,8 +82,46 @@ class DefaultTrackingService : TrackingService
                                                       message: self.notificationBody)
     }
     
+    private func onNotificationAction(withCategory category : Category)
+    {
+        self.tryStoppingCommuteRetroactively(at: Date())
+        
+        let currentTimeSlot = self.timeSlotService.getLast()
+        self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: category, setByUser: true)
+    }
+    
+    private func onAppActivates(at time : Date)
+    {
+        self.tryStoppingCommuteRetroactively(at: time)
+    }
+    
+    private func tryStoppingCommuteRetroactively(at time : Date)
+    {
+        guard let lastLocation = self.settingsService.lastLocation else { return }
+        
+        let currentTimeSlot = self.timeSlotService.getLast()
+        
+        guard
+            currentTimeSlot.category == .commute,
+            currentTimeSlot.startTime <= lastLocation.timestamp,
+            !self.isCommute(now: time, then: lastLocation.timestamp)
+        else { return }
+        
+        self.persistTimeSlot(withLocation: lastLocation)
+    }
+    
+    private func isCommute(now : Date, then : Date) -> Bool
+    {
+        return now.timeIntervalSince(then) / 60 < 25.0
+    }
+    
     func onAppState(_ appState: AppState)
     {
+        if appState == .active
+        {
+            self.onAppActivates(at: Date())
+        }
+        
         self.isOnBackground = appState == .inactive
     }
     

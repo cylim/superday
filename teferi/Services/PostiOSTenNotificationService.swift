@@ -7,10 +7,12 @@ class PostiOSTenNotificationService : NotificationService
 {
     //MARK: Fields
     private let loggingService : LoggingService
-    private let timeSlotService: TimeSlotService
+    private let timeSlotService : TimeSlotService
+    
+    private var actionSubsribers = [(Category) -> ()]()
     
     //MARK: Initializers
-    init(loggingService: LoggingService, timeSlotService: TimeSlotService)
+    init(loggingService: LoggingService, timeSlotService : TimeSlotService)
     {
         self.loggingService = loggingService
         self.timeSlotService = timeSlotService
@@ -72,15 +74,17 @@ class PostiOSTenNotificationService : NotificationService
         notifications.forEach { n in UIApplication.shared.cancelLocalNotification(n)  }
     }
     
-    func handleNotificationAction(withIdentifier identifier: String?) {
+    func handleNotificationAction(withIdentifier identifier: String?)
+    {
+        guard let identifier = identifier, let category = Category(rawValue: identifier) else { return }
         
-        if let identifier = identifier, let category = Category(rawValue: identifier)
-        {
-            let timeSlot = self.timeSlotService.getLast()
-            self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
-        }
+        self.actionSubsribers.forEach { action in action(category) }
     }
     
+    func subscribeToCategoryAction(_ action : @escaping (Category) -> ())
+    {
+        self.actionSubsribers.append(action)
+    }
     
     // MARK: - User Notification Action
     func setUserNotificationActions()
