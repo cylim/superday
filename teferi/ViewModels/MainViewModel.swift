@@ -14,13 +14,15 @@ class MainViewModel
     private let settingsService : SettingsService
     private let locationService : LocationService
     private let editStateService : EditStateService
+    private let smartGuessService : SmartGuessService
     
     init(metricsService: MetricsService,
          feedbackService: FeedbackService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          locationService : LocationService,
-         editStateService: EditStateService)
+         editStateService: EditStateService,
+         smartGuessService : SmartGuessService)
     {
         self.metricsService = metricsService
         self.feedbackService = feedbackService
@@ -28,6 +30,7 @@ class MainViewModel
         self.timeSlotService = timeSlotService
         self.locationService = locationService
         self.editStateService = editStateService
+        self.smartGuessService = smartGuessService
     }
     
     // MARK: Properties
@@ -91,10 +94,19 @@ class MainViewModel
                                location: currentLocation,
                                categoryWasSetByUser: true)
         
+        if let location = currentLocation
+        {
+            let id = self.settingsService.getNextSmartGuessId()
+            let smartGuess = SmartGuess(withId: id, category: category, location: location)
+            
+            if self.smartGuessService.add(smartGuess: smartGuess)
+            {
+                newSlot.smartGuessId = id
+            }
+        }
+        
         self.timeSlotService.add(timeSlot: newSlot)
         self.metricsService.log(event: .timeSlotManualCreation)
-        
-        //TODO: Create a smart guess if the location is valid
     }
     
     /**
@@ -105,14 +117,32 @@ class MainViewModel
      */
     func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category)
     {
-        self.timeSlotService.update(timeSlot: timeSlot, withCategory: category)
+        let oldCategory = timeSlot.category
+        
+        self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
         self.metricsService.log(event: .timeSlotEditing)
         
         timeSlot.category = category
         
         self.editStateService.notifyEditingEnded()
         
-        //TODO: Create a smart guess if the timeSlot has a location and was unknown
-        //TODO: Strike a smart guess if the user changed it
+        if let smartGuessId = timeSlot.smartGuessId
+        {
+            //Strike the smart guess if it was wrong
+            guard category != oldCategory else { return }
+            
+            self.timeSlotService.update(timeSlot: timeSlot, withSmartGuessId: nil)
+            self.smartGuessService.strike(withId: smartGuessId)
+        }
+        else if let location = timeSlot.location
+        {
+            let id = self.settingsService.getNextSmartGuessId()
+            
+            let smartGuess = SmartGuess(withId: id, category: category, location: location)
+            if self.smartGuessService.add(smartGuess: smartGuess)
+            {
+                self.timeSlotService.update(timeSlot: timeSlot, withSmartGuessId: id)
+            }
+        }
     }
 }

@@ -9,9 +9,11 @@ class TimeSlot
     let startTime : Date
     let location : CLLocation?
     
+    var smartGuessId : Int?
     var endTime : Date? = nil
     var category = Category.unknown
     var categoryWasSetByUser : Bool
+    
     
     ///Calculates and returns the total duration for the TimeSlot.
     var duration : TimeInterval
@@ -36,12 +38,13 @@ class TimeSlot
         self.categoryWasSetByUser = categoryWasSetByUser
     }
     
-    init(withLocation location: CLLocation, category: Category)
+    init(withStartTime time: Date, smartGuess: SmartGuess)
     {
-        self.location = location
-        self.category = category
+        self.startTime = time
         self.categoryWasSetByUser = false
-        self.startTime = location.timestamp
+        self.smartGuessId = smartGuess.id
+        self.location = smartGuess.location
+        self.category = smartGuess.category
     }
     
     init(withStartTime startTime: Date, endTime: Date?, category: Category, location: CLLocation?, categoryWasSetByUser: Bool)
@@ -65,9 +68,9 @@ class TimeSlot
         self.category = category
     }
     
-    convenience init(withCategory category: Category)
+    convenience init(withStartTime time: Date, category: Category)
     {
-        self.init(withStartTime: Date(), categoryWasSetByUser: false)
+        self.init(withStartTime: time, categoryWasSetByUser: false)
         self.category = category
     }
     

@@ -77,7 +77,7 @@ class PostiOSTenNotificationService : NotificationService
         if let identifier = identifier, let category = Category(rawValue: identifier)
         {
             let timeSlot = self.timeSlotService.getLast()
-            self.timeSlotService.update(timeSlot: timeSlot, withCategory: category)
+            self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
         }
     }
     

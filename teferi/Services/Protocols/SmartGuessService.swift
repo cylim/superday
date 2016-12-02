@@ -3,5 +3,9 @@ import CoreLocation
 
 protocol SmartGuessService
 {
-    func getCategory(forLocation: CLLocation) -> Category
+    func get(forLocation: CLLocation) -> SmartGuess
+    
+    func add(smartGuess: SmartGuess) -> Bool
+    
+    func strike(withId id: Int)
 }

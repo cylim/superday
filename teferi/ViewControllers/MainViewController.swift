@@ -18,22 +18,25 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private lazy var viewModel : MainViewModel =
     {
         return MainViewModel(metricsService: self.metricsService,
-                             timeSlotService: self.timeSlotService,
+                             feedbackService: self.feedbackService,
                              settingsService: self.settingsService,
+                             timeSlotService: self.timeSlotService,
+                             locationService: self.locationService,
                              editStateService: self.editStateService,
-                             feedbackService: self.feedbackService)
+                             smartGuessService: self.smartGuessService)
     }()
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
     //Dependencies
     private var metricsService : MetricsService!
+    private var feedbackService: FeedbackService!
     private var appStateService : AppStateService!
     private var locationService : LocationService!
     private var settingsService : SettingsService!
     private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
-    private var feedbackService: FeedbackService!
+    private var smartGuessService: SmartGuessService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
@@ -51,15 +54,17 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 _ settingsService: SettingsService,
                 _ timeSlotService: TimeSlotService,
                 _ editStateService: EditStateService,
-                _ feedbackService: FeedbackService) -> MainViewController
+                _ feedbackService: FeedbackService,
+                _ smartGuessService: SmartGuessService) -> MainViewController
     {
         self.metricsService = metricsService
+        self.feedbackService = feedbackService
         self.appStateService = appStateService
         self.locationService = locationService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
         self.editStateService = editStateService
-        self.feedbackService = feedbackService
+        self.smartGuessService = smartGuessService
         
         return self
     }
@@ -98,7 +103,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         if self.isFirstUse
         {
             //Sets the first TimeSlot's category to leisure
-            let timeSlot = TimeSlot(withCategory: .leisure)
+            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure)
             self.timeSlotService.add(timeSlot: timeSlot)
         }
         else

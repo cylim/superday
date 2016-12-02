@@ -4,6 +4,7 @@ import CoreLocation
 class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
 {
     //MARK: Fields
+    private let idKey = "id"
     private let lastUsedKey = "lastUsed"
     private let categoryKey = "category"
     private let errorCountKey = "errorCount"
@@ -20,6 +21,7 @@ class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
     
     override func getModel(fromManagedObject managedObject: NSManagedObject) -> SmartGuess
     {
+        let id = managedObject.value(forKey: self.idKey) as! Int
         let lastUsed = managedObject.value(forKey: self.lastUsedKey) as? Date
         let errorCount = managedObject.value(forKey: self.errorCountKey) as! Int
         let category = Category(rawValue: managedObject.value(forKey: self.categoryKey) as! String)!
@@ -29,7 +31,11 @@ class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
                                          latKey: self.locationLatitudeKey,
                                          lngKey: self.locationLongitudeKey)!
         
-        let smartGuess = SmartGuess(withCategory: category, location: location, errorCount: errorCount)
+        let smartGuess = SmartGuess(withId: id,
+                                    category: category,
+                                    location: location,
+                                    errorCount: errorCount)
+        
         smartGuess.lastUsed = lastUsed
         
         return smartGuess
@@ -37,6 +43,7 @@ class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
     
     override func setManagedElementProperties(fromModel model: SmartGuess, managedObject: NSManagedObject)
     {
+        managedObject.setValue(model.id, forKey: self.idKey)
         managedObject.setValue(model.category, forKey: self.categoryKey)
         managedObject.setValue(model.lastUsed, forKey: self.lastUsedKey)
         managedObject.setValue(model.errorCount, forKey: self.errorCountKey)

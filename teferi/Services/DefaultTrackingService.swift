@@ -56,7 +56,7 @@ class DefaultTrackingService : TrackingService
             //If it was smart guessed and we detect movement, we got it wrong and override it with a commute
             if !currentTimeSlot.categoryWasSetByUser
             {
-                self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute)
+                self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute, setByUser: false)
             }
         }
         else
@@ -88,11 +88,14 @@ class DefaultTrackingService : TrackingService
     
     @discardableResult private func persistTimeSlot(withLocation location: CLLocation) -> Category
     {
-        let guessedCategory = self.smartGuessService.getCategory(forLocation: location)
+        let smartGuess = self.smartGuessService.get(forLocation: location)
         
-        let timeSlot = TimeSlot(withLocation: location, category: guessedCategory)
+        let timeSlot = smartGuess === SmartGuess.empty ?
+            TimeSlot(withStartTime: Date(), category: .unknown) :
+            TimeSlot(withStartTime: Date(), smartGuess: smartGuess)
+        
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        return guessedCategory
+        return smartGuess.category
     }
 }

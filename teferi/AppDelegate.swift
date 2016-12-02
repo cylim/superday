@@ -44,7 +44,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         let smartGuessPersistencyService = CoreDataPersistencyService<SmartGuess>(loggingService: self.loggingService,
                                                                                   modelAdapter: SmartGuessModelAdapter())
         
-        self.smartGuessService = DefaultSmartGuessService(persistencyService: smartGuessPersistencyService)
+        self.smartGuessService = DefaultSmartGuessService(loggingService: self.loggingService,
+                                                          settingsService: self.settingsService,
+                                                          persistencyService: smartGuessPersistencyService)
+        
         self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
                                                       persistencyService: timeSlotPersistencyService)
         
@@ -118,7 +121,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.settingsService,
                                       self.timeSlotService,
                                       self.editStateService,
-                                      self.feedbackService)
+                                      self.feedbackService,
+                                      self.smartGuessService)
         
         if self.settingsService.installDate == nil
         {

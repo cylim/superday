@@ -40,14 +40,15 @@ class DefaultTimeSlotService : TimeSlotService
         return timeSlots
     }
     
-    func update(timeSlot: TimeSlot, withCategory category: Category)
+    func update(timeSlot: TimeSlot, withCategory category: Category, setByUser: Bool)
     {
-        //No need to persist anything if the categories are the 
+        //No need to persist anything if the categories are the
         guard timeSlot.category != category else { return }
         
         let predicate = Predicate(format: "startTime == %@", parameters: [ timeSlot.startTime as AnyObject ])
         let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
-        
+            
+            timeSlot.categoryWasSetByUser = setByUser
             timeSlot.category = category
             return timeSlot
         }
@@ -59,6 +60,24 @@ class DefaultTimeSlotService : TimeSlotService
         else
         {
             self.loggingService.log(withLogLevel: .error, message: "Error updating category of TimeSlot created on \(timeSlot.startTime) from \(timeSlot.category) to \(category)")
+        }
+    }
+    
+    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
+    {
+        //No need to persist anything if the categories are the
+        guard timeSlot.smartGuessId != smartGuessId else { return }
+        
+        let predicate = Predicate(format: "startTime == %@", parameters: [ timeSlot.startTime as AnyObject ])
+        let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
+            
+            timeSlot.smartGuessId = smartGuessId
+            return timeSlot
+        }
+        
+        if !self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
+        {
+            self.loggingService.log(withLogLevel: .error, message: "Error updating smartGuessId of TimeSlot created on \(timeSlot.startTime) from \(timeSlot.smartGuessId) to \(smartGuessId)")
         }
     }
     

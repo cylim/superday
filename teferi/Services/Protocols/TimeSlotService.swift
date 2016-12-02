@@ -33,8 +33,19 @@ protocol TimeSlotService
      - Parameter timeSlot: The TimeSlots to be updated.
      
      - Parameter category: The new category of the TimeSlot.
+     
+     - Parameter setByUser: Indicates if the user initiated the action that changed the TimeSlot.
      */
-    func update(timeSlot: TimeSlot, withCategory category: Category)
+    func update(timeSlot: TimeSlot, withCategory category: Category, setByUser: Bool)
+    
+    /**
+     Changes the smartGuessId of an existing TimeSlot.
+     
+     - Parameter timeSlot: The TimeSlots to be updated.
+     
+     - Parameter smartGuessId: The new smart guess id of the TimeSlot.
+     */
+    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
     
     /**
      Gets last registered TimeSlot.

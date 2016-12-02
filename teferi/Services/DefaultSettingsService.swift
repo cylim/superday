@@ -6,6 +6,7 @@ class DefaultSettingsService : SettingsService
 {
     //MARK: Fields
     private let installDateKey = "installDate"
+    private let smartGuessIdKey = "smartGuessId"
     private let lastLocationKey = "lastLocation"
     private let lastInactiveDateKey = "lastInactiveDate"
     private let canIgnoreLocationPermissionKey = " canIgnoreLocationPermission"
@@ -75,5 +76,17 @@ class DefaultSettingsService : SettingsService
     func setAllowedLocationPermission()
     {
         UserDefaults.standard.set(true, forKey: self.canIgnoreLocationPermissionKey)
+    }
+    
+    func getNextSmartGuessId() -> Int
+    {
+        return UserDefaults.standard.integer(forKey: self.smartGuessIdKey)
+    }
+    
+    func incrementSmartGuessId()
+    {
+        var id = self.getNextSmartGuessId()
+        id += 1
+        UserDefaults.standard.set(id, forKey: self.smartGuessIdKey)
     }
 }
