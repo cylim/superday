@@ -4,7 +4,8 @@ import CoreLocation
 
 class MockSettingsService : SettingsService
 {
-    ///Indicates the date the app was ran for the first time
+    //MARK: Properties
+    var nextSmartGuessId = 0
     var installDate : Date? = Date()
     var lastInactiveDate : Date? = nil
     var lastLocation : CLLocation? = nil
@@ -14,6 +15,7 @@ class MockSettingsService : SettingsService
     var hasNotificationPermission = true
     var canIgnoreLocationPermission = false
     
+    //MARK: Methods
     func setAllowedLocationPermission()
     {
         self.canIgnoreLocationPermission = true
@@ -37,5 +39,15 @@ class MockSettingsService : SettingsService
     func setLastAskedForLocationPermission(_ date: Date)
     {
         self.lastAskedForLocationPermission = date
+    }
+    
+    func getNextSmartGuessId() -> Int
+    {
+        return self.nextSmartGuessId
+    }
+    
+    func incrementSmartGuessId()
+    {
+        self.nextSmartGuessId += 1
     }
 }

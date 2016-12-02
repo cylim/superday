@@ -47,7 +47,7 @@ class TimelineViewModelTests : XCTestCase
     
     func testTheNewlyAddedSlotHasNoEndTime()
     {
-        let timeSlot = TimeSlot(withCategory: .work)
+        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         let lastSlot = viewModel.timeSlots.last!
         
@@ -56,11 +56,11 @@ class TimelineViewModelTests : XCTestCase
     
     func testTheAddNewSlotsMethodEndsThePreviousTimeSlot()
     {
-        let timeSlot = TimeSlot(withCategory: .work)
+        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         let firstSlot = viewModel.timeSlots.first!
         
-        let otherTimeSlot = TimeSlot(withCategory: .work)
+        let otherTimeSlot = TimeSlot(withStartTime: Date(), category: .work)
         self.mockTimeSlotService.add(timeSlot: otherTimeSlot)
         
         expect(firstSlot.endTime).toNot(beNil())

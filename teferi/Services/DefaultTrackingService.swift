@@ -91,8 +91,8 @@ class DefaultTrackingService : TrackingService
         let smartGuess = self.smartGuessService.get(forLocation: location)
         
         let timeSlot = smartGuess === SmartGuess.empty ?
-            TimeSlot(withStartTime: Date(), category: .unknown) :
-            TimeSlot(withStartTime: Date(), smartGuess: smartGuess)
+            TimeSlot(withStartTime: location.timestamp, category: .unknown) :
+            TimeSlot(withStartTime: location.timestamp, smartGuess: smartGuess)
         
         self.timeSlotService.add(timeSlot: timeSlot)
         

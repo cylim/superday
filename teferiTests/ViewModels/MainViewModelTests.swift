@@ -9,21 +9,28 @@ class MainViewModelTests : XCTestCase
     private var disposable : Disposable? = nil
     private var editStateService : EditStateService!
     private var mockMetricsService : MockMetricsService!
+    private var mockFeedbackService: MockFeedbackService!
+    private var mockLocationService : MockLocationService!
     private var mockSettingsService : MockSettingsService!
     private var mockTimeSlotService : MockTimeSlotService!
-    private var mockFeedbackService: MockFeedbackService!
+    private var mockSmartGuessService : MockSmartGuessService!
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
+        self.mockLocationService = MockLocationService()
         self.mockSettingsService = MockSettingsService()
         self.editStateService = DefaultEditStateService()
         self.mockTimeSlotService = MockTimeSlotService()
         self.mockFeedbackService = MockFeedbackService()
+        self.mockSmartGuessService = MockSmartGuessService()
+        
         self.viewModel = MainViewModel(metricsService: self.mockMetricsService,
-                                       timeSlotService: self.mockTimeSlotService,
+                                       feedbackService: self.mockFeedbackService,
                                        settingsService: self.mockSettingsService,
+                                       timeSlotService: self.mockTimeSlotService,
+                                       locationService: self.mockLocationService,
                                        editStateService: self.editStateService,
-                                       feedbackService: self.mockFeedbackService)
+                                       smartGuessService: self.mockSmartGuessService)
     }
     
     override func tearDown()
@@ -77,7 +84,7 @@ class MainViewModelTests : XCTestCase
     
     func testTheUpdateMethodCallsTheMetricsService()
     {
-        let timeSlot = TimeSlot(withCategory: .work)
+        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -86,7 +93,7 @@ class MainViewModelTests : XCTestCase
     
     func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
     {
-        let timeSlot = TimeSlot(withCategory: .work)
+        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -100,7 +107,7 @@ class MainViewModelTests : XCTestCase
             .isEditingObservable
             .subscribe(onNext: { editingEnded = !$0 })
         
-        let timeSlot = TimeSlot(withCategory: .work)
+        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         

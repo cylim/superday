@@ -6,7 +6,7 @@ import Nimble
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
-    private let timeSlot = TimeSlot(withCategory: .work)
+    private let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
     private var view : TimelineCell!
     
     private var imageIcon : UIImageView
