@@ -13,7 +13,7 @@ PODS:
 DEPENDENCIES:
   - Crashlytics
   - Fabric
-  - JTAppleCalendar (~> 6.0)
+  - JTAppleCalendar (= 6.0.2)
   - Nimble (~> 5.0.0)
   - RxCocoa (~> 3.0.0)
   - RxSwift (~> 3.0.0)
@@ -30,6 +30,6 @@ SPEC CHECKSUMS:
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
   SwiftyBeaver: 2b68694df862381235e32bcfc4ec991e26bf131d
 
-PODFILE CHECKSUM: e01f796ecc420ded784cea6e0edba68050588878
+PODFILE CHECKSUM: 39881ce26a9f897d08bf7674bd86d2b1dc94f121
 
 COCOAPODS: 1.1.1
