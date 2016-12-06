@@ -81,6 +81,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
         let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
         let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
+        fadeView.isUserInteractionEnabled = false
         self.view.addSubview(fadeView)
         fadeView.snp.makeConstraints { make in
             make.bottom.left.right.equalTo(self.view)
