@@ -34,7 +34,7 @@ class DefaultTimeSlotService : TimeSlotService
     {
         let startTime = day.ignoreTimeComponents() as NSDate
         let endTime = day.tomorrow.ignoreTimeComponents() as NSDate
-        let predicate = Predicate(format: "(startTime >= %@) AND (startTime <= %@)", parameters: [ startTime, endTime ])
+        let predicate = Predicate(parameter: "startTime", rangesFromDate: startTime, toDate: endTime)
         
         let timeSlots = self.persistencyService.get(withPredicate: predicate)
         return timeSlots
@@ -42,10 +42,10 @@ class DefaultTimeSlotService : TimeSlotService
     
     func update(timeSlot: TimeSlot, withCategory category: Category, setByUser: Bool)
     {
-        //No need to persist anything if the categories are the
+        //No need to persist anything if the categories are the same
         guard timeSlot.category != category else { return }
         
-        let predicate = Predicate(format: "startTime == %@", parameters: [ timeSlot.startTime as AnyObject ])
+        let predicate = Predicate(parameter: "startTime", equals: timeSlot.startTime as AnyObject)
         let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
             
             timeSlot.categoryWasSetByUser = setByUser
@@ -65,10 +65,10 @@ class DefaultTimeSlotService : TimeSlotService
     
     func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
     {
-        //No need to persist anything if the categories are the
+        //No need to persist anything if the smart guess id hasn't changed
         guard timeSlot.smartGuessId != smartGuessId else { return }
         
-        let predicate = Predicate(format: "startTime == %@", parameters: [ timeSlot.startTime as AnyObject ])
+        let predicate = Predicate(parameter: "startTime", equals: timeSlot.startTime as AnyObject)
         let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
             
             timeSlot.smartGuessId = smartGuessId
@@ -117,7 +117,7 @@ class DefaultTimeSlotService : TimeSlotService
             endDate = startDate.tomorrow.ignoreTimeComponents()
         }
         
-        let predicate = Predicate(format: "startTime == %@", parameters: [ timeSlot.startTime as AnyObject ])
+        let predicate = Predicate(parameter: "startTime", equals: timeSlot.startTime as AnyObject)
         let editFunction = { (timeSlot: TimeSlot) -> TimeSlot in
             
             timeSlot.endTime = endDate

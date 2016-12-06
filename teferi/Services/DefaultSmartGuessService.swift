@@ -33,7 +33,7 @@ class DefaultSmartGuessService : SmartGuessService
     
     func strike(withId id: Int)
     {
-        let predicate = Predicate(format: "id == %@", parameters: [ id as AnyObject ])
+        let predicate = Predicate(parameter: "id", equals: id as AnyObject)
         let editFunction = { (smartGuess: SmartGuess) -> (SmartGuess) in
             
             smartGuess.errorCount += 1
@@ -60,6 +60,19 @@ class DefaultSmartGuessService : SmartGuessService
         bestMatch.lastUsed = Date()
         
         return bestMatch
+    }
+    
+    func purgeEntries(olderThan days: Int)
+    {
+        guard let initialDate = self.settingsService.installDate,
+            initialDate.differenceInDays(toDate: Date()) > days else { return }
+        
+        
+        let predicate = Predicate(parameter: "lastUsed",
+                                  rangesFromDate: initialDate as NSDate,
+                                  toDate: Date().add(days: -days) as NSDate)
+        
+        self.persistencyService.delete(withPredicate: predicate)
     }
     
     private func isWithinHundredMeters(_ location: CLLocation) -> (SmartGuess) -> Bool

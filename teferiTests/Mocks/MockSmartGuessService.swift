@@ -20,4 +20,9 @@ class MockSmartGuessService : SmartGuessService
     func strike(withId id: Int)
     {
     }
+    
+    func purgeEntries(olderThan: Int)
+    {
+        
+    }
 }

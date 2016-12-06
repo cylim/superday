@@ -100,6 +100,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         }
         
         self.initializeWindowIfNeeded()
+        self.smartGuessService.purgeEntries(olderThan: 30)
         
         return true
     }

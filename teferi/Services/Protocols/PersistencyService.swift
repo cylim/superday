@@ -29,15 +29,24 @@ protocol PersistencyService
     @discardableResult func create(_ element: T) -> Bool
     
     /**
-     Updates the provided element.
+     Updates the element.
      
-     - Parameter timeSlot: The TimeSlots to be updated.
+     - Parameter predicate: Predicate used for filtering.
      
-     - Parameter changes: Function that will apply the changes to the element.
+     - Parameter updateFunction: Function that will apply the changes to the element.
      
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
     @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
+    
+    /**
+     Updates the element.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func delete(withPredicate predicate: Predicate) -> Bool
 }
 
 class BasePersistencyService<T> : PersistencyService
@@ -83,6 +92,19 @@ class BasePersistencyService<T> : PersistencyService
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
     @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
+    {
+        fatalError("Not implemented")
+    }
+    
+    
+    /**
+     Updates the element.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func delete(withPredicate predicate: Predicate) -> Bool
     {
         fatalError("Not implemented")
     }

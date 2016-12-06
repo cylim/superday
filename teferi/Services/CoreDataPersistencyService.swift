@@ -103,6 +103,27 @@ class CoreDataPersistencyService<T> : BasePersistencyService<T>
         }
     }
     
+    @discardableResult override func delete(withPredicate predicate: Predicate) -> Bool
+    {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
+        fetchRequest.predicate = predicate.convertToNSPredicate()
+        
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do
+        {
+            try self.getManagedObjectContext().execute(batchDeleteRequest)
+            return true
+        }
+        catch
+        {
+            //Returns an empty array if anything goes wrong
+            self.loggingService.log(withLogLevel: .warning, message: "Failed to delete instances of \(self.entityName)")
+            return false
+        }
+        
+    }
+    
     //MARK: Methods
     private func getManagedObjectContext() -> NSManagedObjectContext
     {
