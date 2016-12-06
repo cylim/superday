@@ -69,7 +69,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = self.getDate(minutesBeforeNoon: 15)
         
-        let timeSlot = TimeSlot(withStartTime: date)
+        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
         self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
@@ -85,7 +85,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = self.getDate(minutesBeforeNoon: 15)
         
-        let timeSlot = TimeSlot(withStartTime: date)
+        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
         timeSlot.category = .work
         timeSlot.categoryWasSetByUser = true
         self.timeSlotService.add(timeSlot: timeSlot)
@@ -102,7 +102,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = self.getDate(minutesBeforeNoon: 15)
         
-        let timeSlot = TimeSlot(withStartTime: date)
+        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
         timeSlot.category = .work
         self.timeSlotService.add(timeSlot: timeSlot)
         
@@ -118,7 +118,7 @@ class TrackingServiceTests : XCTestCase
     {
         let date = self.getDate(minutesBeforeNoon: 30)
         
-        let timeSlot = TimeSlot(withStartTime: date)
+        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
         self.timeSlotService.add(timeSlot: timeSlot)
         
         self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
@@ -136,7 +136,7 @@ class TrackingServiceTests : XCTestCase
     func testTheAlgorithmDoesNotCreateNewTimeSlotsUntilItDetectsTheUserBeingIdleForAWhile()
     {
         let initialDate = self.getDate(minutesBeforeNoon: 130)
-        self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: initialDate))
+        self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: initialDate, categoryWasSetByUser: false))
         
         let dates = [ 120, 110, 90, 50, 40, 45, 0 ].map(self.getDate)
             

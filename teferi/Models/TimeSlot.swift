@@ -30,6 +30,14 @@ class TimeSlot
         self.categoryWasSetByUser = categoryWasSetByUser
     }
     
+    init(withStartTime time: Date, category: Category, categoryWasSetByUser: Bool)
+    {
+        self.location = nil
+        self.startTime = time
+        self.category = category
+        self.categoryWasSetByUser = categoryWasSetByUser
+    }
+    
     init(withStartTime time: Date, category: Category, location: CLLocation?, categoryWasSetByUser: Bool)
     {
         self.startTime = time
@@ -38,12 +46,21 @@ class TimeSlot
         self.categoryWasSetByUser = categoryWasSetByUser
     }
     
-    init(withStartTime time: Date, smartGuess: SmartGuess)
+    init(withStartTime time: Date, endTime: Date?, category: Category, categoryWasSetByUser: Bool)
+    {
+        self.location = nil
+        self.startTime = time
+        self.endTime = endTime
+        self.category = category
+        self.categoryWasSetByUser = categoryWasSetByUser
+    }
+    
+    init(withStartTime time: Date, smartGuess: SmartGuess, location: CLLocation?)
     {
         self.startTime = time
+        self.location = location
         self.categoryWasSetByUser = false
         self.smartGuessId = smartGuess.id
-        self.location = smartGuess.location
         self.category = smartGuess.category
     }
     
@@ -54,24 +71,6 @@ class TimeSlot
         self.location = location
         self.startTime = startTime
         self.categoryWasSetByUser = categoryWasSetByUser
-    }
-    
-    convenience init(withStartTime time: Date)
-    {
-        self.init(withStartTime: time, categoryWasSetByUser: false)
-    }
-    
-    convenience init(withStartTime startTime: Date, endTime: Date?, category: Category)
-    {
-        self.init(withStartTime: startTime, categoryWasSetByUser: false)
-        self.endTime = endTime
-        self.category = category
-    }
-    
-    convenience init(withStartTime time: Date, category: Category)
-    {
-        self.init(withStartTime: time, categoryWasSetByUser: false)
-        self.category = category
     }
     
     // MARK: Methods

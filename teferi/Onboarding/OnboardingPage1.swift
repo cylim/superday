@@ -13,8 +13,8 @@ class OnboardingPage1 : OnboardingPage
         super.init(coder: aDecoder, nextButtonText: "Next")
         
         self.timeSlots = [
-            TimeSlot(withStartTime: t(9, 30), endTime: t(10, 0), category: .leisure),
-            TimeSlot(withStartTime: t(10, 0), endTime: t(10, 55), category: .work)
+            TimeSlot(withStartTime: t(9, 30), endTime: t(10, 0), category: .leisure, categoryWasSetByUser: false),
+            TimeSlot(withStartTime: t(10, 0), endTime: t(10, 55), category: .work, categoryWasSetByUser: false)
         ]
     }
     

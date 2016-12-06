@@ -84,7 +84,7 @@ class MainViewModelTests : XCTestCase
     
     func testTheUpdateMethodCallsTheMetricsService()
     {
-        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
+        let timeSlot = self.createTimeSlot(withCategory: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -93,7 +93,7 @@ class MainViewModelTests : XCTestCase
     
     func testTheUpdateTimeSlotMethodChangesATimeSlotsCategory()
     {
-        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
+        let timeSlot = self.createTimeSlot(withCategory: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -107,7 +107,7 @@ class MainViewModelTests : XCTestCase
             .isEditingObservable
             .subscribe(onNext: { editingEnded = !$0 })
         
-        let timeSlot = TimeSlot(withStartTime: Date(), category: .work)
+        let timeSlot = self.createTimeSlot(withCategory: .work)
         self.mockTimeSlotService.add(timeSlot: timeSlot)
         self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
         
@@ -151,5 +151,10 @@ class MainViewModelTests : XCTestCase
         let shouldShow = self.viewModel.shouldShowLocationPermissionOverlay
         
         expect(shouldShow).to(beFalse())
+    }
+    
+    private func createTimeSlot(withCategory category: teferi.Category) -> TimeSlot
+    {
+        return  TimeSlot(withStartTime: Date(), category: category, categoryWasSetByUser: false)
     }
 }

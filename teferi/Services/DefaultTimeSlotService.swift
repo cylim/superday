@@ -63,27 +63,9 @@ class DefaultTimeSlotService : TimeSlotService
         }
     }
     
-    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
-    {
-        //No need to persist anything if the smart guess id hasn't changed
-        guard timeSlot.smartGuessId != smartGuessId else { return }
-        
-        let predicate = Predicate(parameter: "startTime", equals: timeSlot.startTime as AnyObject)
-        let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
-            
-            timeSlot.smartGuessId = smartGuessId
-            return timeSlot
-        }
-        
-        if !self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
-        {
-            self.loggingService.log(withLogLevel: .error, message: "Error updating smartGuessId of TimeSlot created on \(timeSlot.startTime) from \(timeSlot.smartGuessId) to \(smartGuessId)")
-        }
-    }
-    
     func getLast() -> TimeSlot
     {
-        return self.persistencyService.getLast() ?? TimeSlot(withStartTime: Date())
+        return self.persistencyService.getLast() ?? TimeSlot(withStartTime: Date(), categoryWasSetByUser: false)
     }
     
     func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())

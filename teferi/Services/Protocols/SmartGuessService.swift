@@ -3,13 +3,11 @@ import CoreLocation
 
 protocol SmartGuessService
 {
-    typealias Days = Int
+    func get(forLocation: CLLocation) -> SmartGuess?
     
-    func get(forLocation: CLLocation) -> SmartGuess
-    
-    func add(smartGuess: SmartGuess) -> Bool
+    @discardableResult func add(withCategory category: Category, location: CLLocation) -> SmartGuess?
     
     func strike(withId id: Int)
     
-    func purgeEntries(olderThan: Days)
+    func purgeEntries(olderThan maxAge: Date)
 }

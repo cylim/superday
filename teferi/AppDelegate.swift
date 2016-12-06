@@ -100,7 +100,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         }
         
         self.initializeWindowIfNeeded()
-        self.smartGuessService.purgeEntries(olderThan: 30)
+        self.smartGuessService.purgeEntries(olderThan: Date().add(days: -30))
         
         return true
     }

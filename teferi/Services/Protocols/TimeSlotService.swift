@@ -39,15 +39,6 @@ protocol TimeSlotService
     func update(timeSlot: TimeSlot, withCategory category: Category, setByUser: Bool)
     
     /**
-     Changes the smartGuessId of an existing TimeSlot.
-     
-     - Parameter timeSlot: The TimeSlots to be updated.
-     
-     - Parameter smartGuessId: The new smart guess id of the TimeSlot.
-     */
-    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
-    
-    /**
      Gets last registered TimeSlot.
      
      - Returns: The last saved TimeSlot.

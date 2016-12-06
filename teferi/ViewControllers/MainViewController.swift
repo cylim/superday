@@ -104,7 +104,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         if self.isFirstUse
         {
             //Sets the first TimeSlot's category to leisure
-            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure)
+            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure, categoryWasSetByUser: false)
             self.timeSlotService.add(timeSlot: timeSlot)
         }
         else

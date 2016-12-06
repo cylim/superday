@@ -29,8 +29,4 @@ protocol SettingsService
     func setLastAskedForLocationPermission(_ date: Date)
     
     func setAllowedLocationPermission()
-    
-    func getNextSmartGuessId() -> Int
-    
-    func incrementSmartGuessId()
 }

@@ -129,12 +129,12 @@ class DefaultTrackingService : TrackingService
     {
         let smartGuess = self.smartGuessService.get(forLocation: location)
         
-        let timeSlot = smartGuess === SmartGuess.empty ?
-            TimeSlot(withStartTime: location.timestamp, category: .unknown) :
-            TimeSlot(withStartTime: location.timestamp, smartGuess: smartGuess)
+        let timeSlot = smartGuess == nil ?
+            TimeSlot(withStartTime: location.timestamp, category: .unknown, location: location, categoryWasSetByUser: false) :
+            TimeSlot(withStartTime: location.timestamp, smartGuess: smartGuess!, location: location)
         
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        return smartGuess.category
+        return smartGuess?.category ?? .unknown
     }
 }

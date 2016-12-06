@@ -96,13 +96,7 @@ class MainViewModel
         
         if let location = currentLocation
         {
-            let id = self.settingsService.getNextSmartGuessId()
-            let smartGuess = SmartGuess(withId: id, category: category, location: location)
-            
-            if self.smartGuessService.add(smartGuess: smartGuess)
-            {
-                newSlot.smartGuessId = id
-            }
+            self.smartGuessService.add(withCategory: category, location: location)
         }
         
         self.timeSlotService.add(timeSlot: newSlot)
@@ -117,8 +111,6 @@ class MainViewModel
      */
     func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category)
     {
-        let oldCategory = timeSlot.category
-        
         self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
         self.metricsService.log(event: .timeSlotEditing)
         
@@ -126,23 +118,15 @@ class MainViewModel
         
         self.editStateService.notifyEditingEnded()
         
-        if let smartGuessId = timeSlot.smartGuessId
+        let smartGuessId = timeSlot.smartGuessId
+        if timeSlot.categoryWasSetByUser && smartGuessId != nil
         {
             //Strike the smart guess if it was wrong
-            guard category != oldCategory else { return }
-            
-            self.timeSlotService.update(timeSlot: timeSlot, withSmartGuessId: nil)
-            self.smartGuessService.strike(withId: smartGuessId)
+            self.smartGuessService.strike(withId: smartGuessId!)
         }
-        else if let location = timeSlot.location
+        else if smartGuessId == nil, let location = timeSlot.location
         {
-            let id = self.settingsService.getNextSmartGuessId()
-            
-            let smartGuess = SmartGuess(withId: id, category: category, location: location)
-            if self.smartGuessService.add(smartGuess: smartGuess)
-            {
-                self.timeSlotService.update(timeSlot: timeSlot, withSmartGuessId: id)
-            }
+            self.smartGuessService.add(withCategory: category, location: location)
         }
     }
 }
