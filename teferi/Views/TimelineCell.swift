@@ -88,10 +88,17 @@ class TimelineCell : UITableViewCell
     {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        let dateString = formatter.string(from: timeSlot.startTime)
-        let endString = lastInPastDay ? " - " + formatter.string(from: timeSlot.endTime!) : ""
+        let startString = formatter.string(from: timeSlot.startTime)
         
-        self.slotTime.text = "\(dateString)\(endString)"
+        if lastInPastDay, let endTime = timeSlot.endTime
+        {
+            let endString = formatter.string(from: endTime)
+            self.slotTime.text = startString + " - " + endString
+        }
+        else
+        {
+            self.slotTime.text = startString
+        }
     }
     
     /// Updates the label that shows how long the slot lasted
