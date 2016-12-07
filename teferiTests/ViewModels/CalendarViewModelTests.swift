@@ -17,7 +17,7 @@ class CalendarViewModelTests : XCTestCase
         self.mockTimeSlotService = MockTimeSlotService()
         self.viewModel = CalendarViewModel(timeSlotService: self.mockTimeSlotService)
     }
-
+    
     override func tearDown()
     {
         super.tearDown()
@@ -25,21 +25,14 @@ class CalendarViewModelTests : XCTestCase
     
     func testGettingCategoriesSlotsSorted()
     {
-        let categoriesOrder = [Category.commute, Category.food,
-                                           Category.friends, Category.work, Category.leisure]
-        var timeSlot = TimeSlot(category: .unknown)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .commute)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .food)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .food)
-        timeSlot = TimeSlot(category: .friends)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .work)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .leisure)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
+        let categoriesOrder = [Category.commute, Category.food, Category.friends, Category.work, Category.leisure]
+        
+        self.addTimeSlot(withCategory: .unknown)
+        self.addTimeSlot(withCategory: .commute)
+        self.addTimeSlot(withCategory: .food)
+        self.addTimeSlot(withCategory: .friends)
+        self.addTimeSlot(withCategory: .work)
+        self.addTimeSlot(withCategory: .leisure)
         let slots = self.viewModel.getCategoriesSlots(date: Date())
         
         expect(slots.count).to(equal(5))
@@ -48,30 +41,30 @@ class CalendarViewModelTests : XCTestCase
             var numberOfOccurences = 0
             for slot in slots
             {
-               if slot.category == category
-               {
+                if slot.category == category
+                {
                     numberOfOccurences += 1
-               } else
-               {
-                
-               }
+                }
             }
+            
             expect(numberOfOccurences).to(equal(1))
         }
     }
     
     func testGettingCategoriesSlotsUnsorted()
     {
-        var timeSlot = TimeSlot(category: .work)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .friends)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .work)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
-        timeSlot = TimeSlot(category: .commute)
-        self.mockTimeSlotService.add(timeSlot: timeSlot)
+        self.addTimeSlot(withCategory: .work)
+        self.addTimeSlot(withCategory: .friends)
+        self.addTimeSlot(withCategory: .work)
+        self.addTimeSlot(withCategory: .commute)
+        
         let slots = self.viewModel.getCategoriesSlots(date: Date())
         expect(slots.count).to(equal(3))
     }
-
+    
+    private func addTimeSlot(withCategory category: teferi.Category)
+    {
+        let timeSlot = TimeSlot(withStartTime: Date(), category: category, categoryWasSetByUser: false)
+        self.mockTimeSlotService.add(timeSlot: timeSlot)
+    }
 }
