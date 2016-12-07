@@ -41,9 +41,15 @@ class MockTimeSlotService : TimeSlotService
         self.newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
     }
     
-    @discardableResult func update(timeSlot: TimeSlot, withCategory category: teferi.Category)
+    @discardableResult func update(timeSlot: TimeSlot, withCategory category: teferi.Category, setByUser: Bool)
     {
         timeSlot.category = category
+        timeSlot.categoryWasSetByUser = setByUser
+    }
+    
+    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
+    {
+        timeSlot.smartGuessId = smartGuessId
     }
     
     func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())

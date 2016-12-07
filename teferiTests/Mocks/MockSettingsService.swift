@@ -1,18 +1,21 @@
 import Foundation
+import CoreLocation
 @testable import teferi
 
 class MockSettingsService : SettingsService
 {
-    ///Indicates the date the app was ran for the first time
+    //MARK: Properties
+    var nextSmartGuessId = 0
     var installDate : Date? = Date()
-    var lastLocationDate : Date? = nil
     var lastInactiveDate : Date? = nil
+    var lastLocation : CLLocation? = nil
     var lastAskedForLocationPermission : Date? = nil
     
     var hasLocationPermission = true
     var hasNotificationPermission = true
     var canIgnoreLocationPermission = false
     
+    //MARK: Methods
     func setAllowedLocationPermission()
     {
         self.canIgnoreLocationPermission = true
@@ -28,13 +31,23 @@ class MockSettingsService : SettingsService
         self.lastInactiveDate = date
     }
     
-    func setLastLocationDate(_ date: Date)
+    func setLastLocation(_ location: CLLocation)
     {
-        self.lastLocationDate = date
+        self.lastLocation = location
     }
     
     func setLastAskedForLocationPermission(_ date: Date)
     {
         self.lastAskedForLocationPermission = date
+    }
+    
+    func getNextSmartGuessId() -> Int
+    {
+        return self.nextSmartGuessId
+    }
+    
+    func incrementSmartGuessId()
+    {
+        self.nextSmartGuessId += 1
     }
 }

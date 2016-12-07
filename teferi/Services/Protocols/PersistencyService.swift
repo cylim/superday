@@ -17,7 +17,7 @@ protocol PersistencyService
      
      - Returns: The found entities that comply to the provided predicate.
      */
-    func get(withPredicate predicate: Predicate) -> [ T ]
+    func get(withPredicate predicate: Predicate?) -> [ T ]
     
     /**
      Persists the provided element.
@@ -29,18 +29,27 @@ protocol PersistencyService
     @discardableResult func create(_ element: T) -> Bool
     
     /**
-     Updates the provided element.
+     Updates the element.
      
-     - Parameter timeSlot: The TimeSlots to be updated.
+     - Parameter predicate: Predicate used for filtering.
      
-     - Parameter changes: Function that will apply the changes to the element.
+     - Parameter updateFunction: Function that will apply the changes to the element.
      
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
     @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
+    
+    /**
+     Updates the element.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func delete(withPredicate predicate: Predicate) -> Bool
 }
 
-class BasePersistencyService<T : BaseModel> : PersistencyService
+class BasePersistencyService<T> : PersistencyService
 {
     
     ///Returns the last saved instance of type T created.
@@ -56,7 +65,7 @@ class BasePersistencyService<T : BaseModel> : PersistencyService
      
      - Returns: The found entities that comply to the provided predicate.
      */
-    func get(withPredicate predicate: Predicate) -> [ T ]
+    func get(withPredicate predicate: Predicate? = nil) -> [ T ]
     {
         fatalError("Not implemented")
     }
@@ -83,6 +92,19 @@ class BasePersistencyService<T : BaseModel> : PersistencyService
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
     @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
+    {
+        fatalError("Not implemented")
+    }
+    
+    
+    /**
+     Updates the element.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func delete(withPredicate predicate: Predicate) -> Bool
     {
         fatalError("Not implemented")
     }

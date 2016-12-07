@@ -6,6 +6,8 @@ class DefaultSettingsService : SettingsService
 {
     //MARK: Fields
     private let installDateKey = "installDate"
+    private let lastLocationLatKey = "lastLocationLat"
+    private let lastLocationLngKey = "lastLocationLng"
     private let lastLocationDateKey = "lastLocationDate"
     private let lastInactiveDateKey = "lastInactiveDate"
     private let canIgnoreLocationPermissionKey = " canIgnoreLocationPermission"
@@ -22,9 +24,22 @@ class DefaultSettingsService : SettingsService
         return UserDefaults.standard.object(forKey: self.lastInactiveDateKey) as? Date
     }
     
-    var lastLocationDate : Date?
+    var lastLocation : CLLocation?
     {
-        return UserDefaults.standard.object(forKey: self.lastLocationDateKey) as! Date?
+        var location : CLLocation? = nil
+        
+        let possibleTime = UserDefaults.standard.object(forKey: self.lastLocationDateKey) as? Date
+        
+        if let time = possibleTime
+        {
+            let latitude = UserDefaults.standard.double(forKey: self.lastLocationLatKey)
+            let longitude = UserDefaults.standard.double(forKey: self.lastLocationLngKey)
+            
+            let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            location = CLLocation(coordinate: coord, altitude: 0, horizontalAccuracy: 0, verticalAccuracy: 0, timestamp: time)
+        }
+        
+        return location
     }
     
     var hasLocationPermission : Bool
@@ -62,9 +77,11 @@ class DefaultSettingsService : SettingsService
         UserDefaults.standard.set(date, forKey: self.lastInactiveDateKey)
     }
     
-    func setLastLocationDate(_ date: Date)
+    func setLastLocation(_ location: CLLocation)
     {
-        UserDefaults.standard.set(date, forKey: self.lastLocationDateKey)
+        UserDefaults.standard.set(location.timestamp, forKey: self.lastLocationDateKey)
+        UserDefaults.standard.set(location.coordinate.latitude, forKey: self.lastLocationLatKey)
+        UserDefaults.standard.set(location.coordinate.longitude, forKey: self.lastLocationLngKey)
     }
     
     func setLastAskedForLocationPermission(_ date: Date)

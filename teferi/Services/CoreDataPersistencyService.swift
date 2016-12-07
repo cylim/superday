@@ -2,7 +2,7 @@ import CoreData
 import UIKit
 
 ///Implementation that uses CoreData to persist information on disk.
-class CoreDataPersistencyService<T : BaseModel> : BasePersistencyService<T>
+class CoreDataPersistencyService<T> : BasePersistencyService<T>
 {
     //MARK: Fields
     let loggingService : LoggingService
@@ -24,12 +24,14 @@ class CoreDataPersistencyService<T : BaseModel> : BasePersistencyService<T>
         return element
     }
     
-    override func get(withPredicate predicate: Predicate) -> [ T ]
+    override func get(withPredicate predicate: Predicate? = nil) -> [ T ]
     {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
-        let nsPredicate = predicate.convertToNSPredicate()
         
-        fetchRequest.predicate = nsPredicate
+        if let nsPredicate = predicate?.convertToNSPredicate()
+        {
+            fetchRequest.predicate = nsPredicate
+        }
         
         do
         {
@@ -99,6 +101,27 @@ class CoreDataPersistencyService<T : BaseModel> : BasePersistencyService<T>
             self.loggingService.log(withLogLevel: .warning, message: "No \(T.self) found when trying to update")
             return false
         }
+    }
+    
+    @discardableResult override func delete(withPredicate predicate: Predicate) -> Bool
+    {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
+        fetchRequest.predicate = predicate.convertToNSPredicate()
+        
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do
+        {
+            try self.getManagedObjectContext().execute(batchDeleteRequest)
+            return true
+        }
+        catch
+        {
+            //Returns an empty array if anything goes wrong
+            self.loggingService.log(withLogLevel: .warning, message: "Failed to delete instances of \(self.entityName)")
+            return false
+        }
+        
     }
     
     //MARK: Methods
