@@ -24,6 +24,7 @@ class TimelineCell : UITableViewCell
     @IBOutlet private weak var categoryButton : UIButton!
     @IBOutlet private weak var slotDescription : UILabel!
     @IBOutlet private weak var timeSlotDistanceConstraint : NSLayoutConstraint!
+    private var lineFadeView : AutoResizingLayerView?
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
@@ -88,10 +89,17 @@ class TimelineCell : UITableViewCell
     {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        let dateString = formatter.string(from: timeSlot.startTime)
-        let endString = lastInPastDay ? " - " + formatter.string(from: timeSlot.endTime!) : ""
+        let startString = formatter.string(from: timeSlot.startTime)
         
-        self.slotTime.text = "\(dateString)\(endString)"
+        if lastInPastDay, let endTime = timeSlot.endTime
+        {
+            let endString = formatter.string(from: endTime)
+            self.slotTime.text = startString + " - " + endString
+        }
+        else
+        {
+            self.slotTime.text = startString
+        }
     }
     
     /// Updates the label that shows how long the slot lasted
@@ -102,12 +110,19 @@ class TimelineCell : UITableViewCell
     }
     
     /// Updates the line that displays shows how long the TimeSlot lasted
-    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool)
+    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool, lastInPastDay: Bool = false)
     {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         self.lineHeightConstraint.constant = newHeight
         
         self.lineView.backgroundColor = color
+        
+        if lastInPastDay
+        {
+            self.ensureLineFadeExists()
+        }
+        self.lineFadeView?.isHidden = !lastInPastDay
+        
         self.lineView.layoutIfNeeded()
         
         self.indicatorDot.backgroundColor = color
@@ -115,34 +130,21 @@ class TimelineCell : UITableViewCell
         self.indicatorDot.layoutIfNeeded()
     }
     
-    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool, lastInPastDay: Bool)
+    private func ensureLineFadeExists()
     {
-        let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
-        self.lineHeightConstraint.constant = newHeight
+        guard self.lineFadeView == nil else { return }
         
-        self.lineView.backgroundColor = color
-        
-        //Fade the line if it is the last TimeSlot of a past day
-        if lastInPastDay
-        {
-            let bottomFadeStartColor = Color.white.withAlphaComponent(1.0) //1.0
-            let bottomFadeEndColor = Color.white.withAlphaComponent(0.0) //0.0
-            let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
-            let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
-            self.lineView.addSubview(fadeView)
-            fadeView.snp.makeConstraints { make in
-                make.bottom.equalTo(self.lineView.snp.bottom)
-                make.left.equalTo(self.lineView.snp.left)
-                make.right.equalTo(self.lineView.snp.right)
-                make.height.equalTo(100)
-            }
+        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
+        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
+        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
+        self.lineView.addSubview(fadeView)
+        fadeView.snp.makeConstraints { make in
+            make.bottom.left.right.equalToSuperview()
+            make.height.lessThanOrEqualToSuperview()
+            make.height.equalTo(100).priority(1)
         }
-        
-        self.lineView.layoutIfNeeded()
-        
-        self.indicatorDot.backgroundColor = color
-        self.indicatorDot.isHidden = !isRunning
-        self.indicatorDot.layoutIfNeeded()
+        self.lineFadeView = fadeView
     }
     
     /// Configure the fade overlay
