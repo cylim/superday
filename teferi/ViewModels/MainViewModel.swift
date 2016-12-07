@@ -114,12 +114,8 @@ class MainViewModel
         self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
         self.metricsService.log(event: .timeSlotEditing)
         
-        timeSlot.category = category
-        
-        self.editStateService.notifyEditingEnded()
-        
         let smartGuessId = timeSlot.smartGuessId
-        if timeSlot.categoryWasSetByUser && smartGuessId != nil
+        if !timeSlot.categoryWasSetByUser && smartGuessId != nil
         {
             //Strike the smart guess if it was wrong
             self.smartGuessService.strike(withId: smartGuessId!)
@@ -128,5 +124,10 @@ class MainViewModel
         {
             self.smartGuessService.add(withCategory: category, location: location)
         }
+        
+        timeSlot.category = category
+        timeSlot.categoryWasSetByUser = true
+        
+        self.editStateService.notifyEditingEnded()
     }
 }
