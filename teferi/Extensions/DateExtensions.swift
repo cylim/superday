@@ -30,7 +30,7 @@ extension Date
         var dayComponent = DateComponents()
         dayComponent.day = daysToAdd
         
-        let calendar = Calendar.current;
+        let calendar = Calendar.current
         let nextDate = (calendar as NSCalendar).date(byAdding: dayComponent, to: self, options: NSCalendar.Options())!
         return nextDate
     }
@@ -92,6 +92,7 @@ extension Date
             return Calendar.current.dateComponents([.month], from: self).month ?? 0
         }
     }
+    
     var year: Int
     {
         get
@@ -100,4 +101,13 @@ extension Date
         }
     }
     
+    func differenceInDays(toDate date: Date) -> Int
+    {
+        let calendar = Calendar.current
+        let units = Set<Calendar.Component>([ .day]);
+        
+        let components = calendar.dateComponents(units, from: self.ignoreTimeComponents(), to: date.ignoreTimeComponents())
+
+        return components.day!
+    }
 }

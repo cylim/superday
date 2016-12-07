@@ -10,6 +10,7 @@ class MockLocationService : LocationService
     
     //MARK: Properties
     private(set) var locationStarted = false
+    var useNilOnLastKnownLocation = false
     
     //MARK: LocationService implementation
     var isInBackground : Bool = false
@@ -22,6 +23,11 @@ class MockLocationService : LocationService
     func stopLocationTracking()
     {
         self.locationStarted = false
+    }
+    
+    func getLastKnownLocation() -> CLLocation?
+    {
+        return self.useNilOnLastKnownLocation ? nil : self.locationVariable.value
     }
     
     var locationObservable : Observable<CLLocation> { return locationVariable.asObservable() }

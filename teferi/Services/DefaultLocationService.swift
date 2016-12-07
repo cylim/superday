@@ -56,6 +56,11 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         self.locationManager.stopMonitoringSignificantLocationChanges()
     }
     
+    func getLastKnownLocation() -> CLLocation?
+    {
+        return self.locationManager.location
+    }
+    
     //MARK: CLLocationManagerDelegate Implementation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {

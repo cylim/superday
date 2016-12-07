@@ -1,7 +1,8 @@
 import Foundation
 import CoreData
+import CoreLocation
 
-class CoreDataModelAdapter<T : BaseModel>
+class CoreDataModelAdapter<T>
 {
     func getModel(fromManagedObject managedObject: NSManagedObject) -> T
     {
@@ -14,31 +15,21 @@ class CoreDataModelAdapter<T : BaseModel>
     }
     
     var sortDescriptors : [NSSortDescriptor]!
-}
-
-class TimeSlotModelAdapter : CoreDataModelAdapter<TimeSlot>
-{
-    override init()
-    {
-        super.init()
-        
-        self.sortDescriptors = [ NSSortDescriptor(key: "startTime", ascending: false) ]
-    }
     
-    override func getModel(fromManagedObject managedObject: NSManagedObject) -> TimeSlot
+    func getLocation(_ managedObject: NSManagedObject, timeKey: String, latKey: String, lngKey: String) -> CLLocation?
     {
-        let timeSlot = TimeSlot()
-        timeSlot.startTime = managedObject.value(forKey: "startTime") as! Date
-        timeSlot.endTime = managedObject.value(forKey: "endTime") as? Date
-        timeSlot.category = Category(rawValue: managedObject.value(forKey: "category") as! String)!
+        var location : CLLocation? = nil
         
-        return timeSlot
-    }
-    
-    override func setManagedElementProperties(fromModel model: TimeSlot, managedObject: NSManagedObject)
-    {
-        managedObject.setValue(model.startTime, forKey: "startTime")
-        managedObject.setValue(model.endTime, forKey: "endTime")
-        managedObject.setValue(model.category.rawValue, forKey: "category")
+        let possibleTime = managedObject.value(forKey: timeKey) as? Date
+        let possibleLatitude = managedObject.value(forKey: latKey) as? Double
+        let possibleLongitude = managedObject.value(forKey: lngKey) as? Double
+        
+        if let time = possibleTime, let latitude = possibleLatitude, let longitude = possibleLongitude
+        {
+            let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            location = CLLocation(coordinate: coord, altitude: 0, horizontalAccuracy: 0, verticalAccuracy: 0, timestamp: time)
+        }
+        
+        return location
     }
 }

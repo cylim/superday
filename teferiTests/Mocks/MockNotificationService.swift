@@ -24,4 +24,9 @@ class MockNotificationService : NotificationService
     {
         
     }
+    
+    func subscribeToCategoryAction(_ action : @escaping (teferi.Category) -> ())
+    {
+        
+    }
 }

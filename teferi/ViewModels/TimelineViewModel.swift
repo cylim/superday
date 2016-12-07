@@ -51,7 +51,7 @@ class TimelineViewModel
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0
         {
-            self.timeSlotService.add(timeSlot: TimeSlot())
+            self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
         }
     }
     

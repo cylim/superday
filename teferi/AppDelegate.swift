@@ -20,6 +20,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let timeSlotService : TimeSlotService
     private let trackingService : TrackingService
     private let editStateService : EditStateService
+    private let smartGuessService : SmartGuessService
     private let notificationService : NotificationService
     private let feedbackService: FeedbackService
     
@@ -37,12 +38,18 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
         self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Superday feedback", body: "")
         
-        let persistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
-                                                                      modelAdapter: TimeSlotModelAdapter())
+        let timeSlotPersistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
+                                                                              modelAdapter: TimeSlotModelAdapter())
         
+        let smartGuessPersistencyService = CoreDataPersistencyService<SmartGuess>(loggingService: self.loggingService,
+                                                                                  modelAdapter: SmartGuessModelAdapter())
+        
+        self.smartGuessService = DefaultSmartGuessService(loggingService: self.loggingService,
+                                                          settingsService: self.settingsService,
+                                                          persistencyService: smartGuessPersistencyService)
         
         self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
-                                                      persistencyService: persistencyService)
+                                                      persistencyService: timeSlotPersistencyService)
         
         if #available(iOS 10.0, *)
         {
@@ -59,6 +66,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             DefaultTrackingService(loggingService: self.loggingService,
                                    settingsService: self.settingsService,
                                    timeSlotService: self.timeSlotService,
+                                   smartGuessService: self.smartGuessService,
                                    notificationService: self.notificationService)
     }
     
@@ -70,7 +78,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         //Starts location tracking
         self.locationService
             .locationObservable
-            .subscribe(onNext: self.trackingService.onNewLocation)
+            .subscribe(onNext: self.trackingService.onLocation)
+            .addDisposableTo(disposeBag)
+        
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.trackingService.onAppState)
             .addDisposableTo(disposeBag)
         
         //Faster startup when the app wakes up for location updates
@@ -80,11 +93,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             return true
         }
         
-        if #available(iOS 10.0, *) {
-            (self.notificationService as? PostiOSTenNotificationService)?.setUserNotificationActions()
+        if #available(iOS 10.0, *)
+        {
+            let notificationService = self.notificationService as? PostiOSTenNotificationService
+            notificationService?.setUserNotificationActions()
         }
         
         self.initializeWindowIfNeeded()
+        self.smartGuessService.purgeEntries(olderThan: Date().add(days: -30))
         
         return true
     }
@@ -106,7 +122,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.settingsService,
                                       self.timeSlotService,
                                       self.editStateService,
-                                      self.feedbackService)
+                                      self.feedbackService,
+                                      self.smartGuessService)
         
         if self.settingsService.installDate == nil
         {
@@ -151,10 +168,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         self.appStateService.currentAppState = .active
         self.initializeWindowIfNeeded()
-        self.locationService.stopLocationTracking()
         self.notificationService.unscheduleAllNotifications()
         
-        if invalidateOnWakeup
+        if self.invalidateOnWakeup
         {
             self.invalidateOnWakeup = false
             self.appStateService.currentAppState = .needsRefreshing
