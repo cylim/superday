@@ -22,7 +22,8 @@ class MainViewModel
          timeSlotService: TimeSlotService,
          locationService : LocationService,
          editStateService: EditStateService,
-         smartGuessService : SmartGuessService)
+         smartGuessService : SmartGuessService,
+        selectedDateService : SelectedDateService)
     {
         self.metricsService = metricsService
         self.feedbackService = feedbackService
@@ -31,10 +32,14 @@ class MainViewModel
         self.locationService = locationService
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
+        
+        self.dateObservable = selectedDateService.currentlySelectedDateObservable
     }
     
     // MARK: Properties
     var currentDate = Date()
+    
+    let dateObservable : Observable<Date>
     
     var shouldShowLocationPermissionOverlay : Bool
     {

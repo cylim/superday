@@ -7,11 +7,15 @@ class PagerViewModelTests : XCTestCase
     //MARK: Fields
     private var viewModel : PagerViewModel!
     private var settingsService : SettingsService!
+    private var selectedDateService : SelectedDateService!
     
     override func setUp()
     {
         self.settingsService = MockSettingsService()
-        self.viewModel = PagerViewModel(settingsService: self.settingsService)
+        self.selectedDateService = DefaultSelectedDateService()
+        
+        self.viewModel = PagerViewModel(settingsService: self.settingsService,
+                                        selectedDateService: self.selectedDateService)
     }
     
     func testTheViewModelCanNotAllowScrollsAfterTheCurrentDate()

@@ -5,22 +5,32 @@ class PagerViewModel
 {
     //MARK: Fields
     private let settingsService : SettingsService
-    private let dateVariable = Variable(Date())
+    private var selectedDateService : SelectedDateService
     
-    init(settingsService: SettingsService)
+    init(settingsService: SettingsService, selectedDateService: SelectedDateService)
     {
         self.settingsService = settingsService
-        self.dateObservable = self.dateVariable.asObservable()
+        self.selectedDateService = selectedDateService
     }
     
     //MARK: Properties
-    var date : Date
+    private(set) lazy var dateObservable : Observable<Date> =
     {
-        get { return self.dateVariable.value }
-        set(value) { self.dateVariable.value = value }
-    }
+        return self.selectedDateService
+            .currentlySelectedDateObservable
+            .filter(self.dateIsDifferentFromCurrent)
+    }()
     
-    let dateObservable : Observable<Date>
+    private var selectedDate = Date()
+    var currentlySelectedDate : Date
+    {
+        get { return self.selectedDate }
+        set(value)
+        {
+            self.selectedDate = value
+            self.selectedDateService.currentlySelectedDate = value
+        }
+    }
     
     //Methods
     func canScroll(toDate date: Date) -> Bool
@@ -30,5 +40,16 @@ class PagerViewModel
         let dateWithNoTime = date.ignoreTimeComponents()
         
         return dateWithNoTime >= minDate && dateWithNoTime <= maxDate
+    }
+    
+    private func dateIsDifferentFromCurrent(_ date: Date) -> Bool
+    {
+        if date != self.currentlySelectedDate
+        {
+            self.selectedDate = date
+            return true
+        }
+        
+        return false
     }
 }

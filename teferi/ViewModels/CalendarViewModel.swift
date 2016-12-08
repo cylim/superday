@@ -12,31 +12,36 @@ class CalendarViewModel
 {
     //MARK: Fields
     private let timeSlotService : TimeSlotService
+    private var selectedDateService : SelectedDateService
+    
     private let shouldHideVariable = Variable(false)
-    private let selectedDateVariable = Variable(Date())
     
     var selectedDate : Date
     {
-        get { return self.selectedDateVariable.value }
-        set(value) { self.selectedDateVariable.value = value }
+        get { return self.selectedDateService.currentlySelectedDate }
+        set(value) { self.selectedDateService.currentlySelectedDate = value }
     }
+    
     var shouldHide : Bool
-    {
+        {
         get { return self.shouldHideVariable.value }
         set(value) { self.shouldHideVariable.value = value }
     }
+    
     let dateObservable : Observable<Date>
     let shouldHideObservable : Observable<Bool>
     
-    init(timeSlotService: TimeSlotService)
+    init(timeSlotService: TimeSlotService, selectedDateService: SelectedDateService)
     {
         self.timeSlotService = timeSlotService
-        self.dateObservable = self.selectedDateVariable.asObservable()
+        self.selectedDateService = selectedDateService
+        
         self.shouldHideObservable = self.shouldHideVariable.asObservable()
+        self.dateObservable = self.selectedDateService.currentlySelectedDateObservable
     }
     
     // Categories order: Commute, Food, Friends, Work and Leisure
-    func getCategoriesSlots(date:Date) -> [CategorySlot]
+    func getCategoriesSlots(date: Date) -> [CategorySlot]
     {
         let timeSlots = self.timeSlotService.getTimeSlots(forDay: date)
         let activeTimeSlots = timeSlots.filter

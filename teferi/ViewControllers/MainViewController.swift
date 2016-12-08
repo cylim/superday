@@ -23,7 +23,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                              timeSlotService: self.timeSlotService,
                              locationService: self.locationService,
                              editStateService: self.editStateService,
-                             smartGuessService: self.smartGuessService)
+                             smartGuessService: self.smartGuessService,
+                             selectedDateService: self.selectedDateService)
     }()
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
@@ -37,6 +38,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
     private var smartGuessService: SmartGuessService!
+    private var selectedDateService : SelectedDateService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
@@ -64,7 +66,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 _ timeSlotService: TimeSlotService,
                 _ editStateService: EditStateService,
                 _ feedbackService: FeedbackService,
-                _ smartGuessService: SmartGuessService) -> MainViewController
+                _ smartGuessService: SmartGuessService,
+                _ selectedDateService: SelectedDateService) -> MainViewController
     {
         self.metricsService = metricsService
         self.feedbackService = feedbackService
@@ -74,6 +77,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.timeSlotService = timeSlotService
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
+        self.selectedDateService = selectedDateService
         
         return self
     }
@@ -88,7 +92,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                                         self.appStateService,
                                         self.settingsService,
                                         self.timeSlotService,
-                                        self.editStateService)        
+                                        self.editStateService,
+                                        self.selectedDateService)
         
         //Add fade overlay at bottom of timeline
         let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
@@ -154,7 +159,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .addDisposableTo(disposeBag!)
         
         //Date updates for title label
-        self.pagerViewController
+        self.viewModel
             .dateObservable
             .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(disposeBag!)
@@ -203,8 +208,10 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private func initCalendar(calendarController: CalendarViewController?)
     {
         calendarController?.inject(startDate: self.settingsService.installDate ?? Date(),
-                                      currentDate: self.viewModel.currentDate,
-                                      timeSlotService: self.timeSlotService)
+                                   currentDate: self.viewModel.currentDate,
+                                   timeSlotService: self.timeSlotService,
+                                   selectedDateService: self.selectedDateService)
+        
         calendarController?
             .dateObservable
             .subscribe(onNext: self.onDateSelected)

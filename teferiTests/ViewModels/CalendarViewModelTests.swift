@@ -6,16 +6,19 @@ import Nimble
 
 class CalendarViewModelTests : XCTestCase
 {
-    
     private var viewModel : CalendarViewModel!
     private var mockTimeSlotService : MockTimeSlotService!
+    private var selectedDateService : SelectedDateService!
     private var disposable : Disposable? = nil
     
     override func setUp()
     {
         super.setUp()
+        
+        self.selectedDateService = DefaultSelectedDateService()
         self.mockTimeSlotService = MockTimeSlotService()
-        self.viewModel = CalendarViewModel(timeSlotService: self.mockTimeSlotService)
+        self.viewModel = CalendarViewModel(timeSlotService: self.mockTimeSlotService,
+                                           selectedDateService: self.selectedDateService)
     }
     
     override func tearDown()

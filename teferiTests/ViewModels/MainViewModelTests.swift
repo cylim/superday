@@ -13,7 +13,9 @@ class MainViewModelTests : XCTestCase
     private var mockLocationService : MockLocationService!
     private var mockSettingsService : MockSettingsService!
     private var mockTimeSlotService : MockTimeSlotService!
+    private var selectedDateService : SelectedDateService!
     private var mockSmartGuessService : MockSmartGuessService!
+    
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
@@ -23,6 +25,7 @@ class MainViewModelTests : XCTestCase
         self.mockTimeSlotService = MockTimeSlotService()
         self.mockFeedbackService = MockFeedbackService()
         self.mockSmartGuessService = MockSmartGuessService()
+        self.selectedDateService = DefaultSelectedDateService()
         
         self.viewModel = MainViewModel(metricsService: self.mockMetricsService,
                                        feedbackService: self.mockFeedbackService,
@@ -30,7 +33,8 @@ class MainViewModelTests : XCTestCase
                                        timeSlotService: self.mockTimeSlotService,
                                        locationService: self.mockLocationService,
                                        editStateService: self.editStateService,
-                                       smartGuessService: self.mockSmartGuessService)
+                                       smartGuessService: self.mockSmartGuessService,
+                                       selectedDateService: self.selectedDateService)
     }
     
     override func tearDown()

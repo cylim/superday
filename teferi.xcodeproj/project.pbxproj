@@ -20,6 +20,8 @@
 		24168E371DC21042004F90AD /* TrackingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24168E361DC21042004F90AD /* TrackingServiceTests.swift */; };
 		24168E3A1DC21125004F90AD /* MockLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24168E381DC21125004F90AD /* MockLoggingService.swift */; };
 		24168E3B1DC21125004F90AD /* MockNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24168E391DC21125004F90AD /* MockNotificationService.swift */; };
+		241D7E401DF969CC001C885F /* SelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241D7E3F1DF969CC001C885F /* SelectedDateService.swift */; };
+		241D7E421DF96A2A001C885F /* DefaultSelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241D7E411DF96A2A001C885F /* DefaultSelectedDateService.swift */; };
 		2420A8661DB56B5500C0478C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8651DB56B5500C0478C /* EmptyStateView.swift */; };
 		2420A8681DB56B6800C0478C /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A8671DB56B6800C0478C /* EmptyStateView.xib */; };
 		2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8691DB6271000C0478C /* EditTimeSlotView.swift */; };
@@ -184,6 +186,8 @@
 		24168E361DC21042004F90AD /* TrackingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingServiceTests.swift; path = Services/TrackingServiceTests.swift; sourceTree = "<group>"; };
 		24168E381DC21125004F90AD /* MockLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLoggingService.swift; path = Mocks/MockLoggingService.swift; sourceTree = "<group>"; };
 		24168E391DC21125004F90AD /* MockNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockNotificationService.swift; path = Mocks/MockNotificationService.swift; sourceTree = "<group>"; };
+		241D7E3F1DF969CC001C885F /* SelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedDateService.swift; path = Services/Protocols/SelectedDateService.swift; sourceTree = "<group>"; };
+		241D7E411DF96A2A001C885F /* DefaultSelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultSelectedDateService.swift; path = Services/DefaultSelectedDateService.swift; sourceTree = "<group>"; };
 		2420A8651DB56B5500C0478C /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = Views/EmptyStateView.swift; sourceTree = "<group>"; };
 		2420A8671DB56B6800C0478C /* EmptyStateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStateView.xib; path = Views/EmptyStateView.xib; sourceTree = "<group>"; };
 		2420A8691DB6271000C0478C /* EditTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditTimeSlotView.swift; path = Views/EditTimeSlotView.swift; sourceTree = "<group>"; };
@@ -519,10 +523,10 @@
 		24D99F661D74B8D700E68163 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				836616BD1DEDBC730068195A /* CalendarViewModel.swift */,
 				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
 				24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */,
 				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
-				836616BD1DEDBC730068195A /* CalendarViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -531,10 +535,10 @@
 			isa = PBXGroup;
 			children = (
 				513535D41DA2752A00A365A9 /* Onboarding */,
+				831B58361DEC3043006B3D46 /* CalendarViewController.swift */,
 				24564F4F1D8320FC00D9A8AE /* MainViewController.swift */,
 				24564F711D832A4F00D9A8AE /* PagerViewController.swift */,
 				24564F501D8320FC00D9A8AE /* TimelineViewController.swift */,
-				831B58361DEC3043006B3D46 /* CalendarViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -656,6 +660,7 @@
 			children = (
 				24EB966D1DE7080F0040C211 /* EditStateService.swift */,
 				24D213AA1DB8CA4600E429CA /* AppStateService.swift */,
+				241D7E3F1DF969CC001C885F /* SelectedDateService.swift */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -675,6 +680,7 @@
 			children = (
 				24EB966A1DE7080F0040C211 /* DefaultEditStateService.swift */,
 				24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */,
+				241D7E411DF96A2A001C885F /* DefaultSelectedDateService.swift */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -1237,6 +1243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				241D7E401DF969CC001C885F /* SelectedDateService.swift in Sources */,
 				24EB96741DE7080F0040C211 /* DefaultTrackingService.swift in Sources */,
 				24EB96791DE7080F0040C211 /* CoreDataModelAdapter.swift in Sources */,
 				24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */,
@@ -1261,6 +1268,7 @@
 				24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */,
 				51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */,
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
+				241D7E421DF96A2A001C885F /* DefaultSelectedDateService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24EB96831DE709790040C211 /* DelayedSequence.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,

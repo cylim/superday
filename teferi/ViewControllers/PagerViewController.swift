@@ -11,13 +11,13 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     private var settingsService : SettingsService!
     private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
+    private var selectedDateService : SelectedDateService!
     
     private var currentDateViewController : TimelineViewController!
     
     private var viewModel : PagerViewModel!
     
     // MARK: Properties
-    var dateObservable : Observable<Date> { return viewModel.dateObservable }
     var feedbackUIClosing : Bool = false
     
     // MARK: Initializers
@@ -41,15 +41,18 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
                 _ appStateService: AppStateService,
                 _ settingsService: SettingsService,
                 _ timeSlotService: TimeSlotService,
-                _ editStateService: EditStateService)
+                _ editStateService: EditStateService,
+                _ selectedDateService: SelectedDateService)
     {
         self.metricsService = metricsService
         self.appStateService = appStateService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
         self.editStateService = editStateService
+        self.selectedDateService = selectedDateService
         
-        self.viewModel = PagerViewModel(settingsService: settingsService)
+        self.viewModel = PagerViewModel(settingsService: settingsService,
+                                        selectedDateService: selectedDateService)
     }
     
     override func viewDidLoad()
@@ -65,19 +68,25 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         self.disposeBag = self.disposeBag ?? DisposeBag()
         
+        self.viewModel
+            .dateObservable
+            .subscribe(onNext: self.onDateChanged)
+            .addDisposableTo(self.disposeBag!)
+        
         self.editStateService
             .isEditingObservable
             .subscribe(onNext: onEditChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag!)
         
         self.appStateService
             .appStateObservable
             .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag!)
         
+        //TODO: Figure this out
         if !self.feedbackUIClosing
         {
-            self.initCurrentDateViewController()
+            self.setCurrentViewController(forDate: Date(), animated: false)
         }
         
         self.feedbackUIClosing = false
@@ -89,27 +98,17 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     }
     
     // MARK: Methods
-    private func initCurrentDateViewController()
-    {
-        self.currentDateViewController =
-            TimelineViewController(date: Date(),
-                                   metricsService: self.metricsService,
-                                   timeSlotService: self.timeSlotService,
-                                   editStateService: self.editStateService)
-        
-        self.setViewControllers(
-            [ currentDateViewController ],
-            direction: .forward,
-            animated: false,
-            completion: nil)
-    }
-    
     private func onEditChanged(_ isEditing: Bool)
     {
         self.view
             .subviews
             .flatMap { v in v as? UIScrollView }
             .forEach { scrollView in scrollView.isScrollEnabled = !isEditing }
+    }
+    
+    private func onDateChanged(_ date: Date)
+    {
+        self.setCurrentViewController(forDate: date, animated: true)
     }
     
     private func onAppStateChanged(appState: AppState)
@@ -122,7 +121,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
                 guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
                 
                 self.settingsService.setLastInactiveDate(nil)
-                self.initCurrentDateViewController()
+                self.setCurrentViewController(forDate: Date(), animated: false)
                 break
             
             case .inactive:
@@ -131,9 +130,20 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             
             case .needsRefreshing:
                 self.settingsService.setLastInactiveDate(nil)
-                self.initCurrentDateViewController()
+                self.setCurrentViewController(forDate: Date(), animated: false)
                 break
         }
+    }
+    
+    private func setCurrentViewController(forDate date: Date, animated: Bool)
+    {
+        let viewController =
+            [ TimelineViewController(date: date,
+                                     metricsService: self.metricsService,
+                                     timeSlotService: self.timeSlotService,
+                                     editStateService: self.editStateService) ]
+        
+        self.setViewControllers(viewController, direction: .forward, animated: animated, completion: nil)
     }
     
     // MARK: UIPageViewControllerDelegate implementation
@@ -148,7 +158,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             self.currentDateViewController = timelineController
         }
         
-        self.viewModel.date = timelineController.date
+        self.viewModel.currentlySelectedDate = timelineController.date
     }
     
     // MARK: UIPageViewControllerDataSource implementation

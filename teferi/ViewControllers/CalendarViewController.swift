@@ -3,59 +3,61 @@ import JTAppleCalendar
 import RxSwift
 let kCalendarViewController = "kCalendarViewController"
 
-class CalendarViewController: UIViewController
+class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
 {
     // MARK: Fields
-    @IBOutlet weak fileprivate var calendarView: JTAppleCalendarView!
+    @IBOutlet weak private var calendarView: JTAppleCalendarView!
     @IBOutlet weak private var monthLabel: UILabel!
-    @IBOutlet weak fileprivate var leftButton: UIButton!
-    @IBOutlet weak fileprivate var rightButton: UIButton!
-    fileprivate let endDate = Date().getStart()
-    fileprivate var startDate: Date = Date().getStart()
-    fileprivate var viewModel: CalendarViewModel!
+    @IBOutlet weak private var leftButton: UIButton!
+    @IBOutlet weak private var rightButton: UIButton!
+    private let endDate = Date().getStart()
+    private var startDate: Date = Date().getStart()
+    private var viewModel: CalendarViewModel!
     
     // MARK: Properties
     var isVisble: Bool = false
     var dateObservable: Observable<Date> { return self.viewModel.dateObservable }
     var shouldHideObservable: Observable<Bool> { return self.viewModel.shouldHideObservable }
-
+    
     func inject(startDate: Date,
-        currentDate: Date, timeSlotService: TimeSlotService)
+                currentDate: Date,
+                timeSlotService: TimeSlotService,
+                selectedDateService: SelectedDateService)
     {
-        self.viewModel = CalendarViewModel(timeSlotService: timeSlotService)
+        self.viewModel = CalendarViewModel(timeSlotService: timeSlotService, selectedDateService: selectedDateService)
         self.startDate = startDate
         self.viewModel.selectedDate = currentDate
     }
-
+    
     func update(startDate: Date, currentDate: Date)
     {
         self.startDate = startDate
         self.viewModel.selectedDate = currentDate
     }
-
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         self.setCalendar()
     }
-
+    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         self.setDate()
         self.calendarView.reloadData()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
     }
-
+    
     private func setDate()
     {
         self.setupHeader(date: self.viewModel.selectedDate)
     }
-
+    
     private func setCalendar()
     {
         self.calendarView.dataSource = self
@@ -91,35 +93,33 @@ class CalendarViewController: UIViewController
         }
         self.setupHeader(date: startDate)
     }
-
+    
     @IBAction func onPrevMonthPressed(_ sender: Any)
     {
         self.calendarView.scrollToPreviousSegment(true, animateScroll: true, completionHandler: nil)
     }
-
+    
     @IBAction func onNextMonthPressed(_ sender: Any)
     {
         self.calendarView.scrollToNextSegment(true, animateScroll: true, completionHandler: nil)
     }
-}
-extension CalendarViewController: UIGestureRecognizerDelegate
-{
+    
+    //MARK: UIGestureRecognizerDelegate implementation
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
     {
         if let view = touch.view,
             view.isDescendant(of: self.calendarView) ||
-            view.isDescendant(of: self.leftButton) ||
-            view.isDescendant(of: self.rightButton)
+                view.isDescendant(of: self.leftButton) ||
+                view.isDescendant(of: self.rightButton)
         {
-                return false
+            return false
         }
         self.viewModel.shouldHide = true
         return true
     }
-}
-// MARK : JTAppleCalendarDelegate
-extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
-{
+    
+    //MARK: JTAppleCalendarDelegate implementation
+    
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters
     {
         let parameters = ConfigurationParameters(startDate: self.startDate,
@@ -131,7 +131,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
                                                  firstDayOfWeek: .monday)
         return parameters
     }
-
+    
     func calendar(_ calendar: JTAppleCalendarView,
                   willDisplayCell cell: JTAppleDayCellView,
                   date: Date, cellState: CellState)
@@ -158,7 +158,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate, JTAppleCalendarVi
             selectedDate: date,
             categorySlots: self.viewModel.getCategoriesSlots(date: date))
     }
-
+    
     func calendar(_ calendar: JTAppleCalendarView,
                   didScrollToDateSegmentWith visibleDates: DateSegmentInfo)
     {

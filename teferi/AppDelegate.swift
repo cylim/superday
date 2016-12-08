@@ -14,6 +14,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     
     private let metricsService : MetricsService
     private let loggingService : LoggingService
+    private let feedbackService: FeedbackService
     private var appStateService : AppStateService
     private let locationService : LocationService
     private let settingsService : SettingsService
@@ -22,7 +23,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let editStateService : EditStateService
     private let smartGuessService : SmartGuessService
     private let notificationService : NotificationService
-    private let feedbackService: FeedbackService
+    private let selectedDateService : DefaultSelectedDateService
     
     //MARK: Properties
     var window: UIWindow?
@@ -35,6 +36,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.settingsService = DefaultSettingsService()
         self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
+        self.selectedDateService = DefaultSelectedDateService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
         self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Superday feedback", body: "")
         
@@ -123,7 +125,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                       self.timeSlotService,
                                       self.editStateService,
                                       self.feedbackService,
-                                      self.smartGuessService)
+                                      self.smartGuessService,
+                                      self.selectedDateService)
         
         if self.settingsService.installDate == nil
         {
