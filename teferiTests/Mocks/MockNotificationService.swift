@@ -3,6 +3,8 @@ import Foundation
 
 class MockNotificationService : NotificationService
 {
+    var schedulings = 0
+    var cancellations = 0
     var scheduledNotifications = 0
     
     func requestNotificationPermission(completed: @escaping () -> ())
@@ -12,12 +14,14 @@ class MockNotificationService : NotificationService
     
     func scheduleNotification(date: Date, title: String, message: String)
     {
-        scheduledNotifications += 1
+        self.schedulings += 1
+        self.scheduledNotifications += 1
     }
     
     func unscheduleAllNotifications()
     {
-        scheduledNotifications = 0
+        self.cancellations += 1
+        self.scheduledNotifications = 0
     }
     
     func handleNotificationAction(withIdentifier identifier: String?)

@@ -13,7 +13,7 @@ class TrackingServiceTests : XCTestCase
     private var trackingService : TrackingService!
     private var timeSlotService : MockTimeSlotService!
     private var smartGuessService : SmartGuessService!
-    private var notificationService : NotificationService!
+    private var notificationService : MockNotificationService!
     
     override func setUp()
     {
@@ -67,17 +67,12 @@ class TrackingServiceTests : XCTestCase
     
     func testTheAlgorithmDetectsACommuteIfMultipleEntriesHappenInAShortPeriodOfTime()
     {
-        let date = self.getDate(minutesBeforeNoon: 15)
-        
-        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
-        self.timeSlotService.add(timeSlot: timeSlot)
-        
-        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
         
         let location = self.getLocation(withTimestamp: self.noon)
-        
         self.trackingService.onLocation(location)
         
+        let timeSlot = self.timeSlotService.timeSlots[0]
         expect(timeSlot.category).to(equal(Category.commute))
     }
     
@@ -116,17 +111,13 @@ class TrackingServiceTests : XCTestCase
     
     func testTheAlgorithmCreatesNewTimeSlotWhenANewUpdateComesAfterAWhile()
     {
-        let date = self.getDate(minutesBeforeNoon: 30)
         
-        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
-        self.timeSlotService.add(timeSlot: timeSlot)
-        
-        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
         
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)
         
-        let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: date)
+        let allTimeSlots = self.timeSlotService.getTimeSlots(forDay: self.getDate(minutesBeforeNoon: 30))
         let newlyCreatedTimeSlot = allTimeSlots.last!
         
         expect(allTimeSlots.count).to(equal(2))
@@ -149,6 +140,40 @@ class TrackingServiceTests : XCTestCase
         expect(allTimeSlots.count).to(equal(5))
         expect(commutesDetected.count).to(equal(2))
         expect(allTimeSlots[3].startTime).to(equal(dates[4]))
+    }
+    
+    func testTheAlgorithmReschedulesNotificationsOnCommute()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.cancellations).to(equal(1))
+        expect(self.notificationService.schedulings).to(equal(1))
+        expect(self.notificationService.scheduledNotifications).to(equal(1))
+    }
+    
+    func testTheAlgorithmRechedulesNotificationsOnNonCommute()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.cancellations).to(equal(1))
+        expect(self.notificationService.schedulings).to(equal(1))
+        expect(self.notificationService.scheduledNotifications).to(equal(1))
+    }
+    
+    func setupFirstTimeSlotAndLastLocation(minutesBeforeNoon : Int)
+    {
+        let date = self.getDate(minutesBeforeNoon: minutesBeforeNoon)
+        
+        let timeSlot = TimeSlot(withStartTime: date, categoryWasSetByUser: false)
+        self.timeSlotService.add(timeSlot: timeSlot)
+        
+        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
     }
     
     func getDate(minutesBeforeNoon: Int) -> Date
