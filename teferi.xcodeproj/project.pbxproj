@@ -233,6 +233,7 @@
 		24B03B621D9E946900452D16 /* MockMetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockMetricsService.swift; path = Mocks/MockMetricsService.swift; sourceTree = "<group>"; };
 		24B03B641DA3864500452D16 /* AddTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddTimeSlotView.swift; path = Views/AddTimeSlotView.swift; sourceTree = "<group>"; };
 		24B03B661DA3866400452D16 /* AddTimeSlotView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddTimeSlotView.xib; path = Views/AddTimeSlotView.xib; sourceTree = "<group>"; };
+		24C1FB741DF86F98006AFBD4 /* teferi2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teferi2.xcdatamodel; sourceTree = "<group>"; };
 		24C72AA51D906BDA00DABAC3 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogLevel.swift; path = Models/LogLevel.swift; sourceTree = "<group>"; };
 		24C72AA91D90731C00DABAC3 /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Services/Protocols/LoggingService.swift; sourceTree = "<group>"; };
 		24D18E211DEF69030046B202 /* SmartGuessService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartGuessService.swift; path = Services/Protocols/SmartGuessService.swift; sourceTree = "<group>"; };
@@ -1620,9 +1621,10 @@
 		240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				24C1FB741DF86F98006AFBD4 /* teferi2.xcdatamodel */,
 				240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */,
 			);
-			currentVersion = 240AC71F1D748C8800F21F4F /* teferi.xcdatamodel */;
+			currentVersion = 24C1FB741DF86F98006AFBD4 /* teferi2.xcdatamodel */;
 			path = teferi.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
