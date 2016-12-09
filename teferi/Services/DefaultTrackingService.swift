@@ -48,6 +48,8 @@ class DefaultTrackingService : TrackingService
         
         guard location.timestamp > previousLocation.timestamp else { return }
         
+        guard location.distance(from: previousLocation) > 50 else { return }
+        
         self.settingsService.setLastLocation(location)
         
         let currentTimeSlot = self.timeSlotService.getLast()
