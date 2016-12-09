@@ -106,9 +106,11 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             .forEach { scrollView in scrollView.isScrollEnabled = !isEditing }
     }
     
-    private func onDateChanged(_ date: Date)
+    private func onDateChanged(_ dateChange: DateChange)
     {
-        self.setCurrentViewController(forDate: date, animated: true)
+        self.setCurrentViewController(forDate: dateChange.newDate,
+                                      animated: true,
+                                      moveBackwards: dateChange.newDate < dateChange.oldDate)
     }
     
     private func onAppStateChanged(appState: AppState)
@@ -135,7 +137,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         }
     }
     
-    private func setCurrentViewController(forDate date: Date, animated: Bool)
+    private func setCurrentViewController(forDate date: Date, animated: Bool, moveBackwards: Bool = false)
     {
         let viewController =
             [ TimelineViewController(date: date,
@@ -143,7 +145,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
                                      timeSlotService: self.timeSlotService,
                                      editStateService: self.editStateService) ]
         
-        self.setViewControllers(viewController, direction: .forward, animated: animated, completion: nil)
+        self.setViewControllers(viewController, direction: moveBackwards ? .reverse : .forward, animated: animated, completion: nil)
     }
     
     // MARK: UIPageViewControllerDelegate implementation

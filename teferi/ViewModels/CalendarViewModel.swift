@@ -15,6 +15,7 @@ class CalendarViewModel
     private var selectedDateService : SelectedDateService
     
     private let shouldHideVariable = Variable(false)
+    private let currentVisibleCalendarDateVariable = Variable(Date())
     
     var selectedDate : Date
     {
@@ -23,21 +24,35 @@ class CalendarViewModel
     }
     
     var shouldHide : Bool
-        {
+    {
         get { return self.shouldHideVariable.value }
         set(value) { self.shouldHideVariable.value = value }
     }
     
-    let dateObservable : Observable<Date>
     let shouldHideObservable : Observable<Bool>
+    var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable }
+    let currentVisibleCalendarDateObservable : Observable<Date>
     
-    init(timeSlotService: TimeSlotService, selectedDateService: SelectedDateService)
+    let minValidDate : Date
+    var maxValidDate : Date { return Date() }
+    
+    var currentVisibleCalendarDate : Date
+    {
+        get { return self.currentVisibleCalendarDateVariable.value }
+        set(value) { self.currentVisibleCalendarDateVariable.value = value }
+    }
+    
+    init(settingsService: SettingsService,
+         timeSlotService: TimeSlotService,
+         selectedDateService: SelectedDateService)
     {
         self.timeSlotService = timeSlotService
         self.selectedDateService = selectedDateService
         
+        self.minValidDate = settingsService.installDate ?? Date()
         self.shouldHideObservable = self.shouldHideVariable.asObservable()
-        self.dateObservable = self.selectedDateService.currentlySelectedDateObservable
+        
+        self.currentVisibleCalendarDateObservable = self.currentVisibleCalendarDateVariable.asObservable()
     }
     
     // Categories order: Commute, Food, Friends, Work and Leisure
