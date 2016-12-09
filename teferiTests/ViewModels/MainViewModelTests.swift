@@ -45,7 +45,7 @@ class MainViewModelTests : XCTestCase
     func testTheTitlePropertyReturnsSuperdayForTheCurrentDate()
     {
         let today = Date()
-        self.viewModel.currentDate = today
+        self.selectedDateService.currentlySelectedDate = today
         
         expect(self.viewModel.title).to(equal("Superday".translate()))
     }
@@ -53,14 +53,14 @@ class MainViewModelTests : XCTestCase
     func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
     {
         let yesterday = Date().yesterday
-        self.viewModel.currentDate = yesterday
+        self.selectedDateService.currentlySelectedDate = yesterday
         expect(self.viewModel.title).to(equal("Superyesterday".translate()))
     }
     
     func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()
     {
         let olderDate = Date().add(days: -2)
-        self.viewModel.currentDate = olderDate
+        self.selectedDateService.currentlySelectedDate = olderDate
         
         let formatter = DateFormatter();
         formatter.timeZone = TimeZone.autoupdatingCurrent;

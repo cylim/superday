@@ -7,6 +7,7 @@ import Nimble
 class CalendarViewModelTests : XCTestCase
 {
     private var viewModel : CalendarViewModel!
+    private var settingsService : SettingsService!
     private var mockTimeSlotService : MockTimeSlotService!
     private var selectedDateService : SelectedDateService!
     private var disposable : Disposable? = nil
@@ -15,9 +16,12 @@ class CalendarViewModelTests : XCTestCase
     {
         super.setUp()
         
-        self.selectedDateService = DefaultSelectedDateService()
+        self.settingsService = MockSettingsService()
         self.mockTimeSlotService = MockTimeSlotService()
-        self.viewModel = CalendarViewModel(timeSlotService: self.mockTimeSlotService,
+        self.selectedDateService = DefaultSelectedDateService()
+        
+        self.viewModel = CalendarViewModel(settingsService: self.settingsService,
+                                           timeSlotService: self.mockTimeSlotService,
                                            selectedDateService: self.selectedDateService)
     }
     

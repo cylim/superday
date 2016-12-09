@@ -27,7 +27,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                              selectedDateService: self.selectedDateService)
     }()
     
-    private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
+    private var pagerViewController : PagerViewController { return self.childViewControllers.firstOfType() }
+    
+    private var calendarViewController : CalendarViewController { return self.childViewControllers.firstOfType() }
     
     //Dependencies
     private var metricsService : MetricsService!
@@ -44,15 +46,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var addButton : AddTimeSlotView!
     private var permissionView : PermissionView?
     private var launchAnim : LaunchAnimationView!
-    private lazy var calendarViewController: CalendarViewController? =
-    {
-        let calendarController = self.storyboard?.instantiateViewController(
-            withIdentifier: kCalendarViewController
-            ) as? CalendarViewController
-        self.initCalendar(calendarController: calendarController)
-        return calendarController
-    }()
-    
     
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var titleLabel : UILabel!
@@ -87,7 +80,10 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         super.viewDidLoad()
         
-        //Inject PagerViewController's dependencies
+        self.calendarViewController.inject(settingsService: self.settingsService,
+                                           timeSlotService: self.timeSlotService,
+                                           selectedDateService: self.selectedDateService)
+        
         self.pagerViewController.inject(self.metricsService,
                                         self.appStateService,
                                         self.settingsService,
@@ -164,6 +160,22 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(disposeBag!)
         
+        self.calendarViewController
+            .shouldHideObservable
+            .subscribe(
+                {[unowned self] (event) in
+                    switch event {
+                    case .next(let flag):
+                        if flag
+                        {
+                            CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController)
+                        }
+                    default:
+                        break
+                    }
+            })
+            .addDisposableTo(disposeBag!)
+        
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
         self.appStateService
@@ -189,50 +201,18 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Actions
     @IBAction func onCalendarTouchUpInside()
     {
-        if let calendarViewController = self.calendarViewController
+        if self.calendarViewController.view.isHidden
         {
-            if calendarViewController.isVisble == false
-            { //show
-                calendarViewController.update(startDate: self.settingsService.installDate ?? Date(),
-                                              currentDate: self.viewModel.currentDate)
-                CalendarPresenter.showCalendar(mainViewController: self, calendarViewController: self.calendarViewController, aboveView: self.pagerViewController.view)
-            } else
-            { //hide
-                CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController, completion: nil)
-            }
+            CalendarPresenter.showCalendar(mainViewController: self, calendarViewController: self.calendarViewController, aboveView: self.pagerViewController.view)
+        }
+        else
+        {
+            //hide
+            CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController)
         }
     }
     
     // MARK: Calendar Actions
-    
-    private func initCalendar(calendarController: CalendarViewController?)
-    {
-        calendarController?.inject(startDate: self.settingsService.installDate ?? Date(),
-                                   currentDate: self.viewModel.currentDate,
-                                   timeSlotService: self.timeSlotService,
-                                   selectedDateService: self.selectedDateService)
-        
-        calendarController?
-            .dateObservable
-            .subscribe(onNext: self.onDateSelected)
-            .addDisposableTo(disposeBag!)
-        calendarController?
-            .shouldHideObservable
-            .subscribe(
-            {[unowned self] (event) in
-                switch event {
-                case .next(let flag):
-                    if flag
-                    {
-                        CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController, completion: nil)
-                    }
-                default:
-                    break
-                }
-            })
-            .addDisposableTo(disposeBag!)
-    }
-    
     @IBAction func onContactTouchUpInside()
     {
         self.feedbackService.composeFeedback(parentViewController: self) {
@@ -295,7 +275,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     private func onDateChanged(date: Date)
     {
-        self.viewModel.currentDate = date
         self.titleLabel.text = viewModel.title
         
         let today = Date().ignoreTimeComponents()
@@ -309,6 +288,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         self.addButton.close()
         self.addButton.isUserInteractionEnabled = isToday
+        
+        self.updateSelectedDate(date: date)
     }
     
     private func onEditChanged(_ isEditing: Bool)
@@ -333,42 +314,12 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     func updateSelectedDate(date: Date)
     {
-        let selectedDate = date.ignoreTimeComponents()
-        guard self.viewModel.currentDate.ignoreTimeComponents() != selectedDate else { return }
-        if let calendarController = self.calendarViewController
-        {
-            var direction:UIPageViewControllerNavigationDirection = .forward
-            if selectedDate.compare(self.viewModel.currentDate) == .orderedAscending
-            {
-                direction = .reverse
-            }
-            CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController: calendarController)
-            {
-                self.pagerViewController.setViewControllers(
-                    [ TimelineViewController(date: selectedDate,
-                                             metricsService: self.metricsService,
-                                             timeSlotService: self.timeSlotService,
-                                             editStateService: self.editStateService) ],
-                    direction: direction,
-                    animated: true,
-                    completion: nil)
-                
-                self.onDateChanged(date: selectedDate)
-            }
-        }
+        CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController: calendarViewController)
     }
+    
     private func onCalendarClose(date: Date)
     {
-        if let calendarController = self.calendarViewController
-        {
-            CalendarPresenter.hideCalendar(mainViewController: self,
-                                           calendarViewController: calendarController,
-                                           completion: nil)
-        }
-    }
-
-    private func onDateSelected(date: Date)
-    {
-        self.updateSelectedDate(date: date)
+        CalendarPresenter.hideCalendar(mainViewController: self,
+                                       calendarViewController: calendarViewController)
     }
 }
