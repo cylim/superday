@@ -48,9 +48,13 @@ class DefaultTrackingService : TrackingService
         
         guard location.timestamp > previousLocation.timestamp else { return }
         
+        guard location.distance(from: previousLocation) > 50 else { return }
+        
         self.settingsService.setLastLocation(location)
         
         let currentTimeSlot = self.timeSlotService.getLast()
+        
+        let scheduleNotification : Bool
         
         if self.isCommute(now: location.timestamp, then: previousLocation.timestamp)
         {
@@ -59,6 +63,7 @@ class DefaultTrackingService : TrackingService
             {
                 self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute, setByUser: false)
             }
+            scheduleNotification = true
         }
         else
         {
@@ -71,10 +76,17 @@ class DefaultTrackingService : TrackingService
             let guessedCategory = self.persistTimeSlot(withLocation: location)
             
             //We only schedule notifications if we couldn't guess any category
-            guard guessedCategory == .unknown else { return }
+            scheduleNotification = guessedCategory == .unknown
         }
         
+        self.cancelNotification(andScheduleNew: scheduleNotification)
+    }
+    
+    private func cancelNotification(andScheduleNew scheduleNew : Bool)
+    {
         self.notificationService.unscheduleAllNotifications()
+        
+        guard scheduleNew else { return }
         
         let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
         self.notificationService.scheduleNotification(date: notificationDate,
