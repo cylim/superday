@@ -38,7 +38,7 @@ All code changes to Superday are added using GitHub's pull requests. To be able 
 3. Pull requests should be presented well
     - Use a clear and succinct title
         - If this is not possible, the pull request is most likely too big
-    - Add a description of needed
+    - Add a description if needed
     - Add references to related issues/pull requests to the description
         - If the pull request closes an issue, [include `Closes #issue`](https://github.com/blog/1506-closing-issues-via-pull-requests)
 
