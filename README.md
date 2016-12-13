@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/toggl/superday/master/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday
+# ![](https://raw.githubusercontent.com/toggl/superday/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday
 More time, more life.
 Superday tracks your activities, you give the context.
 
@@ -62,7 +62,7 @@ When merging, consider which type of merge supported by GitHub is the best choic
 
 ### Swift style guide
 
-Please refer to [this document](https://github.com/toggl/superday/blob/develop/SwiftStyleGuide.md).
+Please refer to [this document](https://github.com/toggl/superday/blob/develop/docs/SwiftStyleGuide.md).
 
 ### Commits
 
@@ -91,3 +91,7 @@ Consider selecting the appropriate emoji for each of your commits (based on [Ato
 - :triangular_ruler: `:triangular_ruler:` - Pixel perfect changes to UI
 - :earth_americas: `:earth_americas:` - Changes to the location tracker
 - :chart_with_upwards_trend: `:chart_with_upwards_trend:` - General improvements
+
+### Branching and releasing
+
+Superday uses an adapted version of GitFlow [by Vincent Driessen](http://nvie.com/posts/a-successful-git-branching-model/ "Original Blog post 'A successful Git branching model' by Vincent Driessen") called SuperFlow which is documented in [this document](https://github.com/toggl/superday/blob/develop/docs/superflow.md "SuperFlow: Superday's branching work flow").
