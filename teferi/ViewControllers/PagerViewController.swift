@@ -4,7 +4,7 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private var disposeBag : DisposeBag? = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
@@ -50,6 +50,8 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.editStateService = editStateService
         
         self.viewModel = PagerViewModel(settingsService: settingsService)
+        
+        self.createBindings()
     }
     
     override func viewDidLoad()
@@ -63,18 +65,6 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.disposeBag = self.disposeBag ?? DisposeBag()
-        
-        self.editStateService
-            .isEditingObservable
-            .subscribe(onNext: onEditChanged)
-            .addDisposableTo(disposeBag!)
-        
-        self.appStateService
-            .appStateObservable
-            .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(disposeBag!)
-        
         if !self.feedbackUIClosing
         {
             self.initCurrentDateViewController()
@@ -83,9 +73,17 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.feedbackUIClosing = false
     }
     
-    override func viewWillDisappear(_ animated: Bool)
+    private func createBindings()
     {
-        self.disposeBag = nil
+        self.editStateService
+            .isEditingObservable
+            .subscribe(onNext: onEditChanged)
+            .addDisposableTo(self.disposeBag)
+        
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.onAppStateChanged)
+            .addDisposableTo(self.disposeBag)
     }
     
     // MARK: Methods
