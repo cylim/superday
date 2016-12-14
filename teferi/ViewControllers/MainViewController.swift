@@ -160,22 +160,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(disposeBag!)
         
-        self.calendarViewController
-            .shouldHideObservable
-            .subscribe(
-                {[unowned self] (event) in
-                    switch event {
-                    case .next(let flag):
-                        if flag
-                        {
-                            CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController)
-                        }
-                    default:
-                        break
-                    }
-            })
-            .addDisposableTo(disposeBag!)
-        
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
         self.appStateService
@@ -201,15 +185,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Actions
     @IBAction func onCalendarTouchUpInside()
     {
-        if self.calendarViewController.view.isHidden
-        {
-            CalendarPresenter.showCalendar(mainViewController: self, calendarViewController: self.calendarViewController, aboveView: self.pagerViewController.view)
-        }
-        else
-        {
-            //hide
-            CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController:self.calendarViewController)
-        }
+        self.calendarViewController.toggle()
     }
     
     // MARK: Calendar Actions
@@ -314,12 +290,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     func updateSelectedDate(date: Date)
     {
-        CalendarPresenter.hideCalendar(mainViewController: self, calendarViewController: calendarViewController)
+        self.calendarViewController.hide()
     }
     
     private func onCalendarClose(date: Date)
     {
-        CalendarPresenter.hideCalendar(mainViewController: self,
-                                       calendarViewController: calendarViewController)
+        self.calendarViewController.hide()
     }
 }

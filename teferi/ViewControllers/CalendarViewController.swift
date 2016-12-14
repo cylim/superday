@@ -69,9 +69,56 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     }
     
     override func viewWillDisappear(_ animated: Bool)
+    func toggle()
+    {
+        if self.isVisible
+        {
+            self.hide()
+        }
+        else
+        {
+            self.show()
+        }
+    }
+    
+    func hide()
     {
         self.disposeBag = nil
         super.viewWillDisappear(animated)
+        guard self.isVisible else { return }
+
+        self.view.superview!.isUserInteractionEnabled = false
+        
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: [ .curveEaseIn ],
+                       animations: { self.view.alpha = 0 },
+                       completion: { completed in
+                        
+                        self.view.isHidden = true
+                        self.view.isUserInteractionEnabled = false
+                        self.isVisible = false
+        })
+    }
+    
+    func show()
+    {
+        guard !self.isVisible else { return }
+        
+        self.view.isHidden = false
+        self.view.superview!.isUserInteractionEnabled = true
+        
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: [ .curveEaseIn ],
+                       animations: { self.view.alpha = 1 },
+                       completion: { completed in
+                        
+                        self.view.isUserInteractionEnabled = true
+                        self.isVisible = true
+
+                        
+        })
     }
     
     private func onLeftClick()
