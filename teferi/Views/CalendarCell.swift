@@ -1,46 +1,45 @@
 import UIKit
 import JTAppleCalendar
 
-class CalendarCellView: JTAppleDayCellView
+class CalendarCell : JTAppleDayCellView
 {
-
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var activityView: UIView!
-    let fontSize = CGFloat(14.0)
+    @IBOutlet weak var dateLabel : UILabel!
+    @IBOutlet weak var activityView : UIView!
     
-    func updateCell(cellState: CellState,
-                    startDate: Date,
-                    date: Date,
-                    selectedDate: Date,
-                    categorySlots: [CategorySlot])
+    private let fontSize = CGFloat(14.0)
+    
+    func reset()
     {
-        self.resetCell()
-        if cellState.dateBelongsTo == .thisMonth
+        for subView in self.activityView.subviews { subView.removeFromSuperview() }
+        
+        self.dateLabel.text = ""
+        self.dateLabel.textColor = UIColor.black
+        self.backgroundColor = UIColor.white
+        self.activityView.backgroundColor = UIColor.white
+        self.activityView.clipsToBounds = true
+        self.activityView.layer.cornerRadius = 1.0
+        self.layer.cornerRadius = 0
+        self.clipsToBounds = true
+        self.dateLabel.font = UIFont.systemFont(ofSize: fontSize)
+        self.isUserInteractionEnabled = false
+    }
+    
+    func bind(toDate date: Date, isSelected: Bool, categorySlots: [CategorySlot]?)
+    {
+        self.dateLabel.text = String(date.day)
+        self.activityView.backgroundColor = Color.lightGreyColor
+        
+        self.updateActivity(categorySlots: categorySlots!)
+        self.dateLabel.textColor = UIColor.black
+        
+        if isSelected
         {
-            self.dateLabel.text = cellState.text
-            if Calendar.current.compare(date,
-                                           to: startDate,
-                                           toGranularity: .day) == .orderedAscending
-            {// is smaller
-                self.activityView.backgroundColor = Color.lightGreyColor
-            } else
-            {
-                self.activityView.backgroundColor = Color.lightGreyColor
-                self.updateActivity(categorySlots: categorySlots)
-                self.dateLabel.textColor = UIColor.black
-            }
-        }
-        if Calendar.current.isDate(date, inSameDayAs: selectedDate)
-        {//is the same
-            if cellState.dateBelongsTo == .thisMonth
-            {
-                self.updateForCurrentDay()
-            }
+            self.updateForCurrentDay()
         }
     }
-
+    
     // updates Activity based on sorted time slots for the day
-    func updateActivity(categorySlots: [CategorySlot])
+    private func updateActivity(categorySlots: [CategorySlot])
     {
         self.activityView.layoutIfNeeded()
         let timeSpent:TimeInterval = categorySlots.reduce(0.0)
@@ -84,8 +83,8 @@ class CalendarCellView: JTAppleDayCellView
         if let lastTimeSlot = prev
         {
             lastTimeSlot.snp.makeConstraints(
-            {(make) in
-                make.right.equalTo(self.activityView.snp.right)
+                {(make) in
+                    make.right.equalTo(self.activityView.snp.right)
             })
             self.activityView.backgroundColor = UIColor.clear
         }
@@ -93,29 +92,11 @@ class CalendarCellView: JTAppleDayCellView
         self.layoutIfNeeded()
     }
     
-    func updateForCurrentDay()
+    private func updateForCurrentDay()
     {
         self.backgroundColor = Color.lightGreyColor
         self.layer.cornerRadius = 14
         self.clipsToBounds = true
         self.dateLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
-    }
-    
-    func resetCell()
-    {
-        for subView in self.activityView.subviews
-        {
-            subView.removeFromSuperview()
-        }
-        self.dateLabel.text = ""
-        self.dateLabel.textColor = UIColor.black
-        self.backgroundColor = UIColor.white
-        self.activityView.backgroundColor = UIColor.white
-        self.activityView.clipsToBounds = true
-        self.activityView.layer.cornerRadius = 1.0
-        self.layer.cornerRadius = 0
-        self.clipsToBounds = true
-        self.dateLabel.font = UIFont.systemFont(ofSize: fontSize)
-        self.isUserInteractionEnabled = false
     }
 }

@@ -84,22 +84,12 @@ extension Date
         let (_, end) = self.calcStartAndEndOfDay()
         return end
     }
-
-    var month: Int
-    {
-        get
-        {
-            return Calendar.current.dateComponents([.month], from: self).month ?? 0
-        }
-    }
     
-    var year: Int
-    {
-        get
-        {
-            return Calendar.current.component(.year, from: self)
-        }
-    }
+    var day : Int { return Calendar.current.component(.day, from: self) }
+    
+    var month : Int { return Calendar.current.component(.month, from: self) }
+    
+    var year: Int { return Calendar.current.component(.year, from: self) }
     
     func differenceInDays(toDate date: Date) -> Int
     {

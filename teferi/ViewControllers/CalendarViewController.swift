@@ -3,7 +3,7 @@ import JTAppleCalendar
 import RxSwift
 let kCalendarViewController = "kCalendarViewController"
 
-class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
+class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
 {
     // MARK: Fields
     @IBOutlet weak private var calendarView: JTAppleCalendarView!
@@ -11,12 +11,11 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     @IBOutlet weak private var leftButton: UIButton!
     @IBOutlet weak private var rightButton: UIButton!
     
+    private var disposeBag = DisposeBag()
     private var viewModel : CalendarViewModel!
-    private var disposeBag : DisposeBag? = DisposeBag()
     
     // MARK: Properties
     var isVisible = false
-    var shouldHideObservable: Observable<Bool> { return self.viewModel.shouldHideObservable }
     
     func inject(settingsService: SettingsService,
                 timeSlotService: TimeSlotService,
@@ -27,15 +26,9 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
                                            selectedDateService: selectedDateService)
     }
     
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        
         
         let layer = CAGradientLayer()
         layer.frame = self.view.frame
@@ -43,32 +36,33 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         layer.locations = [0.0, 0.5, 1.0]
         self.view.layer.insertSublayer(layer, at: 0)
         
-        
         //Configures the calendar
         self.calendarView.dataSource = self
         self.calendarView.delegate = self
-        self.calendarView.registerCellViewXib(file: "CalendarCellView")
+        self.calendarView.registerCellViewXib(file: "CalendarCell")
         self.calendarView.cellInset = CGPoint(x: 1.5, y: 2)
         
         self.leftButton.rx.tap
             .subscribe(onNext: self.onLeftClick)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.rightButton.rx.tap
             .subscribe(onNext: self.onRightClick)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.viewModel
             .currentVisibleCalendarDateObservable
             .subscribe(onNext: self.onCurrentCalendarDateChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
-        self.view.isUserInteractionEnabled = false
+        self.viewModel
+            .dateObservable
+            .subscribe(onNext: self.onCurrentlySelectedDateChanged)
+            .addDisposableTo(self.disposeBag)
         
         self.calendarView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool)
     func toggle()
     {
         if self.isVisible
@@ -83,8 +77,6 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     
     func hide()
     {
-        self.disposeBag = nil
-        super.viewWillDisappear(animated)
         guard self.isVisible else { return }
 
         self.view.superview!.isUserInteractionEnabled = false
@@ -139,18 +131,10 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         self.rightButton.alpha =  date.month == self.viewModel.maxValidDate.month ? 0.2 : 1.0
     }
     
-    //MARK: UIGestureRecognizerDelegate implementation
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
+    private func onCurrentlySelectedDateChanged(_ date: Date)
     {
-        if let view = touch.view,
-            view.isDescendant(of: self.calendarView) ||
-                view.isDescendant(of: self.leftButton) ||
-                view.isDescendant(of: self.rightButton)
-        {
-            return false
-        }
-        self.viewModel.shouldHide = true
-        return true
+        self.calendarView.selectDates([date])
+        self.calendarView.reloadData()
     }
     
     //MARK: JTAppleCalendarDelegate implementation
@@ -170,12 +154,9 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
                   willDisplayCell cell: JTAppleDayCellView,
                   date: Date, cellState: CellState)
     {
-        (cell as? CalendarCellView)?.updateCell(
-            cellState: cellState,
-            startDate: self.viewModel.minValidDate,
-            date: date,
-            selectedDate: self.viewModel.selectedDate,
-            categorySlots: self.viewModel.getCategoriesSlots(date: date))
+        guard let calendarCell = cell as? CalendarCell else { return }
+        
+        self.update(cell: calendarCell, toDate: date, belongsToMonth: cellState.dateBelongsTo == .thisMonth)
     }
     
     func calendar(_ calendar: JTAppleCalendarView,
@@ -185,12 +166,10 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     {
         self.viewModel.selectedDate = date
         calendar.reloadData()
-        (cell as? CalendarCellView)?.updateCell(
-            cellState: cellState,
-            startDate: self.viewModel.minValidDate,
-            date: date,
-            selectedDate: date,
-            categorySlots: self.viewModel.getCategoriesSlots(date: date))
+        
+        guard let calendarCell = cell as? CalendarCell else { return }
+        
+        self.update(cell: calendarCell, toDate: date, belongsToMonth: cellState.dateBelongsTo == .thisMonth)
     }
     
     func calendar(_ calendar: JTAppleCalendarView,
@@ -198,5 +177,20 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     {
         guard let startDate = visibleDates.monthDates.first else { return }
         self.viewModel.currentVisibleCalendarDate = startDate
+    }
+    
+    private func update(cell: CalendarCell, toDate date: Date, belongsToMonth: Bool)
+    {
+        guard belongsToMonth else
+        {
+            cell.reset()
+            return
+        }
+        
+        let slots = self.viewModel.getCategoriesSlots(forDate: date)
+        let isSelected = Calendar.current.isDate(date, inSameDayAs: self.viewModel.selectedDate)
+        
+        cell.bind(toDate: date, isSelected: isSelected, categorySlots: slots)
+        
     }
 }
