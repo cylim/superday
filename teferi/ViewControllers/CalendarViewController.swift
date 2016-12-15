@@ -1,11 +1,12 @@
 import UIKit
 import JTAppleCalendar
 import RxSwift
-let kCalendarViewController = "kCalendarViewController"
 
 class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
 {
     // MARK: Fields
+    private let calendarCell = "CalendarCell"
+    
     @IBOutlet weak private var calendarView: JTAppleCalendarView!
     @IBOutlet weak private var monthLabel: UILabel!
     @IBOutlet weak private var leftButton: UIButton!
@@ -39,8 +40,9 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         //Configures the calendar
         self.calendarView.dataSource = self
         self.calendarView.delegate = self
-        self.calendarView.registerCellViewXib(file: "CalendarCell")
+        self.calendarView.registerCellViewXib(file: self.calendarCell)
         self.calendarView.cellInset = CGPoint(x: 1.5, y: 2)
+        self.calendarView.scrollToDate(Date())
         
         self.leftButton.rx.tap
             .subscribe(onNext: self.onLeftClick)
@@ -134,7 +136,6 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
     private func onCurrentlySelectedDateChanged(_ date: Date)
     {
         self.calendarView.selectDates([date])
-        self.calendarView.reloadData()
     }
     
     //MARK: JTAppleCalendarDelegate implementation
@@ -150,19 +151,14 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         return parameters
     }
     
-    func calendar(_ calendar: JTAppleCalendarView,
-                  willDisplayCell cell: JTAppleDayCellView,
-                  date: Date, cellState: CellState)
+    func calendar(_ calendar: JTAppleCalendarView, willDisplayCell cell: JTAppleDayCellView, date: Date, cellState: CellState)
     {
         guard let calendarCell = cell as? CalendarCell else { return }
         
         self.update(cell: calendarCell, toDate: date, belongsToMonth: cellState.dateBelongsTo == .thisMonth)
     }
     
-    func calendar(_ calendar: JTAppleCalendarView,
-                  didSelectDate date: Date,
-                  cell: JTAppleDayCellView?,
-                  cellState: CellState)
+    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleDayCellView?, cellState: CellState)
     {
         self.viewModel.selectedDate = date
         calendar.reloadData()
@@ -172,10 +168,10 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         self.update(cell: calendarCell, toDate: date, belongsToMonth: cellState.dateBelongsTo == .thisMonth)
     }
     
-    func calendar(_ calendar: JTAppleCalendarView,
-                  didScrollToDateSegmentWith visibleDates: DateSegmentInfo)
+    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo)
     {
         guard let startDate = visibleDates.monthDates.first else { return }
+        
         self.viewModel.currentVisibleCalendarDate = startDate
     }
     
