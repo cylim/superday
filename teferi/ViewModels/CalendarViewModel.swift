@@ -17,7 +17,7 @@ class CalendarViewModel
     private let currentVisibleCalendarDateVariable = Variable(Date())
     
     var selectedDate : Date
-        {
+    {
         get { return self.selectedDateService.currentlySelectedDate }
         set(value) { self.selectedDateService.currentlySelectedDate = value }
     }
@@ -45,6 +45,16 @@ class CalendarViewModel
         self.minValidDate = settingsService.installDate ?? Date()
         
         self.currentVisibleCalendarDateObservable = self.currentVisibleCalendarDateVariable.asObservable()
+    }
+    
+    func canScroll(toDate date: Date) -> Bool
+    {
+        let cellDate = date.ignoreTimeComponents()
+        let minDate = self.minValidDate.ignoreTimeComponents()
+        let maxDate = self.maxValidDate.ignoreTimeComponents()
+        
+        let result = minDate...maxDate ~= cellDate
+        return result
     }
     
     // Categories order: Commute, Food, Friends, Work and Leisure

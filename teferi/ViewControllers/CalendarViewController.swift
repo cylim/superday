@@ -179,14 +179,14 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
     {
         guard belongsToMonth else
         {
-            cell.reset()
+            cell.reset(allowScrollingToDate: false)
             return
         }
         
+        let canScrollToDate = self.viewModel.canScroll(toDate: date)
         let slots = self.viewModel.getCategoriesSlots(forDate: date)
         let isSelected = Calendar.current.isDate(date, inSameDayAs: self.viewModel.selectedDate)
         
-        cell.bind(toDate: date, isSelected: isSelected, categorySlots: slots)
-        
+        cell.bind(toDate: date, isSelected: isSelected, allowsScrollingToDate: canScrollToDate, categorySlots: slots)
     }
 }

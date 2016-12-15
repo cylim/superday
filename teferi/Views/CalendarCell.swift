@@ -8,24 +8,28 @@ class CalendarCell : JTAppleDayCellView
     
     private let fontSize = CGFloat(14.0)
     
-    func reset()
+    func reset(allowScrollingToDate: Bool)
     {
         for subView in self.activityView.subviews { subView.removeFromSuperview() }
         
+        self.clipsToBounds = true
+        self.layer.cornerRadius = 0
+        self.backgroundColor = UIColor.white
+        self.isUserInteractionEnabled = allowScrollingToDate
+        
         self.dateLabel.text = ""
         self.dateLabel.textColor = UIColor.black
-        self.backgroundColor = UIColor.white
-        self.activityView.backgroundColor = UIColor.white
+        self.dateLabel.font = UIFont.systemFont(ofSize: fontSize)
+        
         self.activityView.clipsToBounds = true
         self.activityView.layer.cornerRadius = 1.0
-        self.layer.cornerRadius = 0
-        self.clipsToBounds = true
-        self.dateLabel.font = UIFont.systemFont(ofSize: fontSize)
-        self.isUserInteractionEnabled = false
+        self.activityView.backgroundColor = UIColor.white
     }
     
-    func bind(toDate date: Date, isSelected: Bool, categorySlots: [CategorySlot]?)
+    func bind(toDate date: Date, isSelected: Bool, allowsScrollingToDate: Bool, categorySlots: [CategorySlot]?)
     {
+        self.reset(allowScrollingToDate: allowsScrollingToDate)
+        
         self.dateLabel.text = String(date.day)
         self.activityView.backgroundColor = Color.lightGreyColor
         
@@ -34,7 +38,10 @@ class CalendarCell : JTAppleDayCellView
         
         if isSelected
         {
-            self.updateForCurrentDay()
+            self.clipsToBounds = true
+            self.layer.cornerRadius = 14
+            self.backgroundColor = Color.lightGreyColor
+            self.dateLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
         }
     }
     
@@ -90,13 +97,5 @@ class CalendarCell : JTAppleDayCellView
         }
         self.activityView.layoutIfNeeded()
         self.layoutIfNeeded()
-    }
-    
-    private func updateForCurrentDay()
-    {
-        self.backgroundColor = Color.lightGreyColor
-        self.layer.cornerRadius = 14
-        self.clipsToBounds = true
-        self.dateLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
     }
 }
