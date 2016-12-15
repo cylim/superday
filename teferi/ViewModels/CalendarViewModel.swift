@@ -1,12 +1,6 @@
 import Foundation
 import RxSwift
 
-struct CategorySlot
-{
-    var duration: TimeInterval
-    var category: Category
-}
-
 ///ViewModel for the CalendardViewModel.
 class CalendarViewModel
 {
@@ -58,31 +52,19 @@ class CalendarViewModel
     }
     
     // Categories order: Commute, Food, Friends, Work and Leisure
-    func getCategoriesSlots(forDate date: Date) -> [CategorySlot]
+    func getCategoriesSlots(forDate date: Date) -> [CategoryDuration]?
     {
-        let timeSlots = self.timeSlotService.getTimeSlots(forDay: date)
-        let activeTimeSlots = timeSlots.filter { $0.category != .unknown }
+        guard self.canScroll(toDate: date) else { return nil }
         
-        let categoriesOrder: [Category] = [.commute, .food, .friends, .work, .leisure]
-        var categoriesSlots:[CategorySlot] = []
-        for category in categoriesOrder
-        {
-            let durationSum = activeTimeSlots.reduce(0.0)
-            {
-                if $1.category == category
-                {
-                    return $0 + $1.duration
-                }
-                return $0
-            }
-            if durationSum > 0
-            {
-                categoriesSlots.append(CategorySlot(duration: durationSum,
-                                                    category: category)
-                )
-            }
-        }
-        return categoriesSlots
+        let result =
+            self.timeSlotService
+                .getTimeSlots(forDay: date)
+                .filter(self.filterInvalidTimeSlots)
+                .groupBy(self.groupByCategory)
+                .map(self.mapIntoTimeInterval)
+                .sorted(by: self.sortByCategory)
+        
+        return result
     }
     
     func getAttributedHeaderName(date: Date) -> NSMutableAttributedString
@@ -94,4 +76,43 @@ class CalendarViewModel
         myString.append(attrString)
         return myString
     }
+    
+    private func filterInvalidTimeSlots(_ timeSlot: TimeSlot) -> Bool
+    {
+        return timeSlot.category != .unknown
+    }
+    
+    private func groupByCategory(_ timeSlot: TimeSlot) -> Category
+    {
+        return timeSlot.category
+    }
+    
+    private func mapIntoTimeInterval(_ dictionaryEntry: (key: Category, value: [TimeSlot])) -> CategoryDuration
+    {
+        let totalTime =
+            dictionaryEntry.value
+                .map(self.mapIntoDuration)
+                .reduce(0, +)
+        
+        return CategoryDuration(category: dictionaryEntry.key, duration: totalTime)
+    }
+    
+    private func mapIntoDuration(_ timeSlot: TimeSlot) -> TimeInterval
+    {
+        return timeSlot.duration
+    }
+    
+    private func sortByCategory(_ element1: CategoryDuration, _ element2: CategoryDuration) -> Bool
+    {
+        let index1 = Constants.categories.index(of: element1.category)!
+        let index2 = Constants.categories.index(of: element2.category)!
+        
+        return index1 > index2
+    }
+}
+
+struct CategoryDuration
+{
+    let category : Category
+    let duration : TimeInterval
 }

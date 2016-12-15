@@ -26,14 +26,18 @@ class CalendarCell : JTAppleDayCellView
         self.activityView.backgroundColor = UIColor.white
     }
     
-    func bind(toDate date: Date, isSelected: Bool, allowsScrollingToDate: Bool, categorySlots: [CategorySlot]?)
+    func bind(toDate date: Date, isSelected: Bool, allowsScrollingToDate: Bool, categorySlots: [CategoryDuration]?)
     {
         self.reset(allowScrollingToDate: allowsScrollingToDate)
         
         self.dateLabel.text = String(date.day)
         self.activityView.backgroundColor = Color.lightGreyColor
         
-        self.updateActivity(categorySlots: categorySlots!)
+        if let slots = categorySlots
+        {
+            self.updateActivity(categorySlots: slots)
+        }
+        
         self.dateLabel.textColor = UIColor.black
         
         if isSelected
@@ -46,19 +50,17 @@ class CalendarCell : JTAppleDayCellView
     }
     
     // updates Activity based on sorted time slots for the day
-    private func updateActivity(categorySlots: [CategorySlot])
+    private func updateActivity(categorySlots: [ CategoryDuration ])
     {
         self.activityView.layoutIfNeeded()
         let timeSpent:TimeInterval = categorySlots.reduce(0.0)
         {
             return $0 + $1.duration
         }
+        
         let fullWidth = self.activityView.bounds.size.width - CGFloat(categorySlots.count) + 1.0
         var prev:UIView?
-        if categorySlots.count > 0
-        {
-            self.isUserInteractionEnabled = true
-        }
+        
         for categorySlot in categorySlots
         {
             let timeSlotView = UIView()
@@ -73,7 +75,8 @@ class CalendarCell : JTAppleDayCellView
                 if let previous = prev
                 {
                     make.left.equalTo(previous.snp.right).offset(1)
-                } else
+                }
+                else
                 {
                     make.left.equalTo(self.activityView.snp.left)
                 }
