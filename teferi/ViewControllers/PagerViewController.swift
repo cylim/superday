@@ -92,6 +92,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.currentDateViewController =
             TimelineViewController(date: Date(),
                                    metricsService: self.metricsService,
+                                   appStateService: self.appStateService,
                                    timeSlotService: self.timeSlotService,
                                    editStateService: self.editStateService)
         
@@ -159,6 +160,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         return TimelineViewController(date: nextDate,
                                       metricsService: self.metricsService,
+                                      appStateService: self.appStateService,
                                       timeSlotService: self.timeSlotService,
                                       editStateService: self.editStateService)
     }
@@ -172,6 +174,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         return TimelineViewController(date: nextDate,
                                       metricsService: self.metricsService,
+                                      appStateService: self.appStateService,
                                       timeSlotService: self.timeSlotService,
                                       editStateService: self.editStateService)
     }

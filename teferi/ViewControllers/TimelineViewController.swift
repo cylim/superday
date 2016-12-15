@@ -21,12 +21,14 @@ class TimelineViewController : UITableViewController
     //MARK: Initializers
     init(date: Date,
          metricsService: MetricsService,
+         appStateService: AppStateService,
          timeSlotService: TimeSlotService,
          editStateService: EditStateService)
     {
         self.editStateService = editStateService
         self.viewModel = TimelineViewModel(date: date,
                                            metricsService: metricsService,
+                                           appStateService: appStateService,
                                            timeSlotService: timeSlotService)
         
         super.init(style: .plain)
@@ -65,6 +67,11 @@ class TimelineViewController : UITableViewController
         self.viewModel
             .timeObservable
             .subscribe(onNext: self.onTimeTick)
+            .addDisposableTo(self.disposeBag)
+        
+        self.viewModel
+            .refreshScreenObservable
+            .subscribe(onNext: self.onScreenRefresh)
             .addDisposableTo(self.disposeBag)
         
         self.editStateService
@@ -119,6 +126,11 @@ class TimelineViewController : UITableViewController
     {
         self.editingIndex = index
         self.editStateService.notifyEditingBegan(point: point, timeSlot: self.viewModel.timeSlots[index])
+    }
+    
+    private func onScreenRefresh()
+    {
+        self.tableView.reloadData()
     }
     
     // MARK: UITableViewDataSource methods

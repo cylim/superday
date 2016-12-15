@@ -177,6 +177,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.pagerViewController.setViewControllers(
             [ TimelineViewController(date: today,
                                      metricsService: self.metricsService,
+                                     appStateService: self.appStateService,
                                      timeSlotService: self.timeSlotService,
                                      editStateService: self.editStateService) ],
             direction: .forward,

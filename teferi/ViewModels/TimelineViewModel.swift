@@ -5,7 +5,9 @@ import RxSwift
 class TimelineViewModel
 {
     //MARK: Fields
+    private let isCurrentDay : Bool
     private let metricsService : MetricsService
+    private let appStateService : AppStateService
     private let timeSlotService : TimeSlotService
     private let isEditingVariable = Variable(false)
     private let timeSlotUpdatingVariable = Variable(-1)
@@ -18,6 +20,17 @@ class TimelineViewModel
     let timeSlotUpdatingObservable : Observable<Int>
     let timeSlotCreationObservable : Observable<Int>
     
+    private(set) lazy var refreshScreenObservable : Observable<Void> =
+    {
+        guard self.isCurrentDay else { return Observable.empty() }
+        
+        return
+            self.appStateService
+                .appStateObservable
+                .filter(self.filterRefreshStates)
+                .map(self.refreshTimeSlotsFromService)
+    }()
+
     private(set) var timeSlots : [TimeSlot]
     
     var isEditing : Bool
@@ -27,23 +40,29 @@ class TimelineViewModel
     }
     
     //MARK: Initializers
-    init(date: Date, metricsService : MetricsService, timeSlotService: TimeSlotService)
+    init(date: Date,
+         metricsService : MetricsService,
+         appStateService: AppStateService,
+         timeSlotService: TimeSlotService)
     {
-        let isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
+        self.isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
         self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
         
-        //UI gets notified once every n seconds that the last item might need to be redrawn
-        self.timeObservable = isCurrentDay ? Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) : Observable.empty()
-        
         self.metricsService = metricsService
+        self.appStateService = appStateService
         self.timeSlotService = timeSlotService
         self.date = date.ignoreTimeComponents()
         self.isEditingObservable = self.isEditingVariable.asObservable()
         self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
         self.timeSlotUpdatingObservable = self.timeSlotUpdatingVariable.asObservable().filter { $0 >= 0 }
         
+        self.timeObservable =
+            self.isCurrentDay ?
+                Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) :
+                Observable.empty()
+        
         //Only the current day subscribes for new TimeSlots
-        guard isCurrentDay else { return }
+        guard self.isCurrentDay else { return }
         
         self.timeSlotService.subscribeToTimeSlotChanges(on: .create, self.onTimeSlotCreated)
         self.timeSlotService.subscribeToTimeSlotChanges(on: .update, self.onTimeSlotUpdated)
@@ -77,5 +96,12 @@ class TimelineViewModel
             self.timeSlots[index] = timeSlot
             self.timeSlotUpdatingVariable.value = index
         }
+    }
+    
+    private func filterRefreshStates(_ appState: AppState) -> Bool { return appState == .active }
+    
+    private func refreshTimeSlotsFromService(_ appState: AppState) -> Void
+    {
+        self.timeSlots = self.timeSlotService.getTimeSlots(forDay: self.date)
     }
 }
