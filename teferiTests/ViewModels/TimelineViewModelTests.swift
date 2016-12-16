@@ -9,14 +9,18 @@ class TimelineViewModelTests : XCTestCase
     private var disposable : Disposable? = nil
     private var viewModel : TimelineViewModel!
     private var mockMetricsService : MockMetricsService!
+    private var mockAppStateService : MockAppStateService!
     private var mockTimeSlotService : MockTimeSlotService!
 
     override func setUp()
     {
         self.mockMetricsService = MockMetricsService()
+        self.mockAppStateService = MockAppStateService()
         self.mockTimeSlotService = MockTimeSlotService()
+        
         self.viewModel = TimelineViewModel(date: Date(),
                                            metricsService: self.mockMetricsService,
+                                           appStateService: self.mockAppStateService,
                                            timeSlotService: self.mockTimeSlotService)
     }
     
@@ -40,6 +44,7 @@ class TimelineViewModelTests : XCTestCase
         let newMockTimeSlotService = MockTimeSlotService()
         _ = TimelineViewModel(date: Date().yesterday,
                               metricsService: self.mockMetricsService,
+                              appStateService: self.mockAppStateService,
                               timeSlotService: newMockTimeSlotService)
         
         expect(newMockTimeSlotService.didSubscribe).to(beFalse())

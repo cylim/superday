@@ -90,8 +90,13 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         guard let nextPage = self.pageAt(index: currentPageIndex + 1) else
         {
             self.settingsService.setInstallDate(Date())
-            self.mainViewController.modalTransitionStyle = .crossDissolve
-            self.present(self.mainViewController, animated: true)
+         
+            DispatchQueue.main.async
+            {
+                self.mainViewController.modalTransitionStyle = .crossDissolve
+                self.present(self.mainViewController, animated: true)
+            }
+
             return
         }
         
@@ -99,6 +104,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
                                 direction: .forward,
                                 animated: true,
                                 completion: nil)
+        
         self.onNew(page: nextPage)
     }
     

@@ -46,7 +46,7 @@ class SmartGuessModelAdapter : CoreDataModelAdapter<SmartGuess>
     override func setManagedElementProperties(fromModel model: SmartGuess, managedObject: NSManagedObject)
     {
         managedObject.setValue(model.id, forKey: SmartGuessModelAdapter.idKey)
-        managedObject.setValue(model.category, forKey: self.categoryKey)
+        managedObject.setValue(model.category.rawValue, forKey: self.categoryKey)
         managedObject.setValue(model.lastUsed, forKey: self.lastUsedKey)
         managedObject.setValue(model.errorCount, forKey: self.errorCountKey)
         
