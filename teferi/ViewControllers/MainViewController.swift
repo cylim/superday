@@ -13,7 +13,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var isFirstUse = false
     private let animationDuration = 0.08
     
-    private var disposeBag : DisposeBag? = DisposeBag()
+    private let disposeBag : DisposeBag = DisposeBag()
     private var gestureRecognizer : UIGestureRecognizer!
     private lazy var viewModel : MainViewModel =
     {
@@ -127,6 +127,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             self.launchAnim = LaunchAnimationView(frame: view.frame)
             self.view.addSubview(launchAnim)
         }
+        
+        self.createBindings()
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -136,48 +138,48 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.startLaunchAnimation()
         
         self.calendarButton.setTitle(viewModel.calendarDay, for: .normal)
-        
-        //Refresh Dispose bag, if needed
-        self.disposeBag = self.disposeBag ?? DisposeBag()
-        
+    }
+    
+     private func createBindings()
+     {
         self.gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.editStateService.notifyEditingEnded() })
         
         //Edit state
         self.editStateService
             .isEditingObservable
             .subscribe(onNext: self.onEditChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.editStateService
             .beganEditingObservable
             .subscribe(onNext: self.editView.onEditBegan)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         //Category creation
         self.addButton
             .categoryObservable
             .subscribe(onNext: self.viewModel.addNewSlot)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         //Date updates for title label
         self.viewModel
             .dateObservable
             .subscribe(onNext: self.onDateChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
         self.appStateService
             .appStateObservable
             .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(disposeBag!)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        self.disposeBag = nil
-        self.editView.removeGestureRecognizer(self.gestureRecognizer)
-        super.viewWillDisappear(animated)
+            .addDisposableTo(self.disposeBag)
+        
+        //Add button must be added like this due to .xib/.storyboard restrictions
+        self.view.insertSubview(self.addButton, belowSubview: self.editView)
+        self.addButton.snp.makeConstraints { make in
+            make.height.equalTo(320)
+            make.left.right.bottom.equalTo(self.view)
+        }
     }
     
     // MARK: Actions

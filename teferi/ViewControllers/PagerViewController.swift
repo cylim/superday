@@ -4,7 +4,7 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private var disposeBag : DisposeBag? = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
@@ -53,6 +53,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         self.viewModel = PagerViewModel(settingsService: settingsService,
                                         selectedDateService: selectedDateService)
+        self.createBindings()
     }
     
     override func viewDidLoad()
@@ -66,23 +67,6 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.disposeBag = self.disposeBag ?? DisposeBag()
-        
-        self.viewModel
-            .dateObservable
-            .subscribe(onNext: self.onDateChanged)
-            .addDisposableTo(self.disposeBag!)
-        
-        self.editStateService
-            .isEditingObservable
-            .subscribe(onNext: onEditChanged)
-            .addDisposableTo(self.disposeBag!)
-        
-        self.appStateService
-            .appStateObservable
-            .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(self.disposeBag!)
-        
         //TODO: Figure this out
         if !self.feedbackUIClosing
         {
@@ -92,9 +76,22 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.feedbackUIClosing = false
     }
     
-    override func viewWillDisappear(_ animated: Bool)
+    private func createBindings()
     {
-        self.disposeBag = nil
+        self.viewModel
+            .dateObservable
+            .subscribe(onNext: self.onDateChanged)
+            .addDisposableTo(self.disposeBag)
+        
+        self.editStateService
+            .isEditingObservable
+            .subscribe(onNext: onEditChanged)
+            .addDisposableTo(self.disposeBag)
+        
+        self.appStateService
+            .appStateObservable
+            .subscribe(onNext: self.onAppStateChanged)
+            .addDisposableTo(self.disposeBag)
     }
     
     // MARK: Methods
@@ -142,6 +139,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         let viewController =
             [ TimelineViewController(date: date,
                                      metricsService: self.metricsService,
+                                     appStateService: self.appStateService,
                                      timeSlotService: self.timeSlotService,
                                      editStateService: self.editStateService) ]
         
@@ -173,6 +171,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         return TimelineViewController(date: nextDate,
                                       metricsService: self.metricsService,
+                                      appStateService: self.appStateService,
                                       timeSlotService: self.timeSlotService,
                                       editStateService: self.editStateService)
     }
@@ -186,6 +185,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         return TimelineViewController(date: nextDate,
                                       metricsService: self.metricsService,
+                                      appStateService: self.appStateService,
                                       timeSlotService: self.timeSlotService,
                                       editStateService: self.editStateService)
     }
