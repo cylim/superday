@@ -23,6 +23,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG6-wl-hm1">
+                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
+                                <connections>
+                                    <segue destination="7OT-Wf-TWW" kind="embed" id="6ps-b0-68Z"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PD4-NN-riZ">
+                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
+                                <connections>
+                                    <segue destination="CEq-nK-As0" kind="embed" id="n0i-6z-P8e"/>
+                                </connections>
+                            </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSuperday" translatesAutoresizingMaskIntoConstraints="NO" id="4Kc-Yx-eCd">
                                 <rect key="frame" x="21" y="32" width="24" height="24"/>
                                 <constraints>
@@ -36,12 +48,6 @@
                                 <color key="textColor" red="0.015686274509803921" green="0.015686274509803921" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG6-wl-hm1">
-                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
-                                <connections>
-                                    <segue destination="7OT-Wf-TWW" kind="embed" id="6ps-b0-68Z"/>
-                                </connections>
-                            </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icCalendar" translatesAutoresizingMaskIntoConstraints="NO" id="RET-NJ-inr">
                                 <rect key="frame" x="335" y="32" width="24" height="24"/>
                                 <constraints>
@@ -80,12 +86,6 @@
                                     <action selector="onContactTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="SJU-HT-pd9"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PD4-NN-riZ">
-                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
-                                <connections>
-                                    <segue destination="CEq-nK-As0" kind="embed" id="n0i-6z-P8e"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -261,6 +261,7 @@
                     </view>
                     <connections>
                         <outlet property="calendarView" destination="P1q-Pj-kdM" id="pJ2-x8-kri"/>
+                        <outlet property="dayOfWeekLabels" destination="Ik7-d5-Fp7" id="MCX-hh-XH3"/>
                         <outlet property="leftButton" destination="knj-9u-WUa" id="efc-Wq-pZF"/>
                         <outlet property="monthLabel" destination="6jf-tP-iE3" id="CLc-rB-jhT"/>
                         <outlet property="rightButton" destination="aEt-Kt-vQb" id="dl4-Ow-wzP"/>

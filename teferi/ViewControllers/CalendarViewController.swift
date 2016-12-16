@@ -7,13 +7,28 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
     // MARK: Fields
     private let calendarCell = "CalendarCell"
     
-    @IBOutlet weak private var calendarView: JTAppleCalendarView!
-    @IBOutlet weak private var monthLabel: UILabel!
-    @IBOutlet weak private var leftButton: UIButton!
-    @IBOutlet weak private var rightButton: UIButton!
+    @IBOutlet weak private var calendarView : JTAppleCalendarView!
+    @IBOutlet weak private var monthLabel : UILabel!
+    @IBOutlet weak private var leftButton : UIButton!
+    @IBOutlet weak private var rightButton : UIButton!
+    @IBOutlet weak private var dayOfWeekLabels : UIStackView!
+    
+    private lazy var viewsToAnimate : [ UIView ] =
+        {
+            let result : [ UIView ] = [
+                self.calendarView,
+                self.monthLabel,
+                self.dayOfWeekLabels,
+                self.leftButton,
+                self.rightButton
+            ]
+            
+            return result
+    }()
     
     private var disposeBag = DisposeBag()
     private var viewModel : CalendarViewModel!
+    private var calendarCellsShouldAnimate = false
     
     // MARK: Properties
     var isVisible = false
@@ -65,56 +80,83 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         self.calendarView.reloadData()
     }
     
-    func toggle()
-    {
-        if self.isVisible
-        {
-            self.hide()
-        }
-        else
-        {
-            self.show()
-        }
-    }
-    
     func hide()
     {
         guard self.isVisible else { return }
-
-        self.view.superview!.isUserInteractionEnabled = false
         
-        UIView.animate(withDuration: 0.3,
-                       delay: 0,
-                       options: [ .curveEaseIn ],
-                       animations: { self.view.alpha = 0 },
-                       completion: { completed in
-                        
-                        self.view.isHidden = true
-                        self.view.isUserInteractionEnabled = false
-                        self.isVisible = false
-        })
+        DelayedSequence
+            .start()
+            .then(self.fadeOverlay(fadeIn: false))
+            .then(self.fadeElements(fadeIn: false))
+            .then(self.toggleInteraction(enable: false))
     }
     
     func show()
     {
         guard !self.isVisible else { return }
         
-        self.view.isHidden = false
-        self.view.superview!.isUserInteractionEnabled = true
+        self.calendarCellsShouldAnimate = true
         
-        UIView.animate(withDuration: 0.3,
-                       delay: 0,
-                       options: [ .curveEaseIn ],
-                       animations: { self.view.alpha = 1 },
-                       completion: { completed in
-                        
-                        self.view.isUserInteractionEnabled = true
-                        self.isVisible = true
-
-                        
-        })
+        DelayedSequence
+            .start()
+            .then(self.slideCalendarCells)
+            .then(self.fadeOverlay(fadeIn: true))
+            .after(0.105, self.fadeElements(fadeIn: true))
+            .then(self.toggleInteraction(enable: true))
     }
     
+    //MARK: Animations
+    private func fadeOverlay(fadeIn: Bool) -> (TimeInterval) -> ()
+    {
+        let alpha = CGFloat(fadeIn ? 1 : 0)
+        return { delay in UIView.animate(withDuration: 0.225, delay: delay) { self.view.alpha = alpha } }
+    }
+    
+    private func fadeElements(fadeIn: Bool) -> (TimeInterval) -> ()
+    {
+        let yDiff = CGFloat(fadeIn ? 0 : -20)
+        let alpha = CGFloat(fadeIn ? 1.0 : 0.0)
+        
+        return { delay in
+            
+            UIView.animate(withDuration: 0.225, delay: delay)
+            {
+                self.viewsToAnimate.forEach { v in
+                    v.alpha = alpha
+                    v.transform = CGAffineTransform(translationX: 0, y: yDiff)
+                }
+            }
+        }
+    }
+    
+    private func slideCalendarCells(delay: TimeInterval)
+    {
+        Timer.schedule(withDelay: delay)
+        {
+            DispatchQueue.main.async
+            {
+                self.calendarView.reloadData(withAnchor: nil, animation: true, completionHandler:
+                {
+                    self.calendarCellsShouldAnimate = false
+                })
+            }
+        }
+    }
+    
+    private func toggleInteraction(enable: Bool) -> (Double) -> ()
+    {
+        return { delay in
+            
+            Timer.schedule(withDelay: delay)
+            {
+                self.isVisible = enable
+                self.view.isUserInteractionEnabled = enable
+                self.view.superview!.isUserInteractionEnabled = enable
+            }
+        }
+    }
+    
+    //MARK: Rx methods
     private func onLeftClick()
     {
         self.calendarView.scrollToPreviousSegment(true, animateScroll: true, completionHandler: nil)
@@ -155,7 +197,7 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
     {
         guard let calendarCell = cell as? CalendarCell else { return }
         
-        self.update(cell: calendarCell, toDate: date, belongsToMonth: cellState.dateBelongsTo == .thisMonth)
+        self.update(cell: calendarCell, toDate: date, row: cellState.row(), belongsToMonth: cellState.dateBelongsTo == .thisMonth)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleDayCellView?, cellState: CellState)
@@ -165,7 +207,7 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         
         guard let calendarCell = cell as? CalendarCell else { return }
         
-        self.update(cell: calendarCell, toDate: date, belongsToMonth: cellState.dateBelongsTo == .thisMonth)
+        self.update(cell: calendarCell, toDate: date, row: cellState.row(), belongsToMonth: cellState.dateBelongsTo == .thisMonth)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo)
@@ -175,7 +217,7 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         self.viewModel.currentVisibleCalendarDate = startDate
     }
     
-    private func update(cell: CalendarCell, toDate date: Date, belongsToMonth: Bool)
+    private func update(cell: CalendarCell, toDate date: Date, row: Int, belongsToMonth: Bool)
     {
         guard belongsToMonth else
         {
@@ -188,5 +230,16 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
         let isSelected = Calendar.current.isDate(date, inSameDayAs: self.viewModel.selectedDate)
         
         cell.bind(toDate: date, isSelected: isSelected, allowsScrollingToDate: canScrollToDate, categorySlots: slots)
+        
+        guard self.calendarCellsShouldAnimate else { return }
+        
+        cell.alpha = 0
+        cell.transform = CGAffineTransform(translationX: -20, y: 0)
+        
+        UIView.animate(withDuration: 0.225, delay: 0.05 + (Double(row) / 20.0))
+        {
+            cell.alpha = 1
+            cell.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
     }
 }

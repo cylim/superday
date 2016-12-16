@@ -103,13 +103,18 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             make.height.equalTo(100)
         }
         
-        //Add button
-        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
-        
         //Edit View
         self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
-        self.view.addSubview(self.editView)
+        self.view.insertSubview(self.editView, belowSubview: self.calendarViewController.view)
         self.editView.constrainEdges(to: self.view)
+        
+        //Add button
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
+        self.view.insertSubview(self.addButton, belowSubview: self.editView)
+        self.addButton.snp.makeConstraints { make in
+            make.height.equalTo(320)
+            make.left.right.bottom.equalTo(self.view)
+        }
         
         if self.isFirstUse
         {
@@ -166,13 +171,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .appStateObservable
             .subscribe(onNext: self.onAppStateChanged)
             .addDisposableTo(disposeBag!)
-        
-        //Add button must be added like this due to .xib/.storyboard restrictions
-        self.view.insertSubview(self.addButton, belowSubview: self.editView)
-        self.addButton.snp.makeConstraints { make in
-            make.height.equalTo(320)
-            make.left.right.bottom.equalTo(self.view)
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool)
@@ -185,7 +183,14 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Actions
     @IBAction func onCalendarTouchUpInside()
     {
-        self.calendarViewController.toggle()
+        if self.calendarViewController.isVisible
+        {
+            self.calendarViewController.hide()
+        }
+        else
+        {
+            self.calendarViewController.show()
+        }
     }
     
     // MARK: Calendar Actions
