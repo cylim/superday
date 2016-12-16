@@ -37,4 +37,9 @@ extension UIView
             UIView.animate(withDuration: duration, delay: 0, options: [], animations: animations, completion: nil)
         }
     }
+    
+    func constrainEdges(to view: UIView)
+    {
+        self.snp.makeConstraints { make in make.edges.equalTo(view) }
+    }
 }

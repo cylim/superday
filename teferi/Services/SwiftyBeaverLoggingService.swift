@@ -11,7 +11,7 @@ class SwiftyBeaverLoggingService : LoggingService
     {
         let file = FileDestination()
         file.format = "$Dyyyy-MM-dd HH:mm:ss.fff:$d $L => $M"
-        swiftBeaver.addDestination(file)
+        self.swiftBeaver.addDestination(file)
     }
     
     //MARK: LoggingService implementation
@@ -20,20 +20,20 @@ class SwiftyBeaverLoggingService : LoggingService
         switch logLevel
         {
             case .verbose:
-                swiftBeaver.verbose(message)
+                self.swiftBeaver.verbose(message)
             case .debug:
-                swiftBeaver.debug(message)
+                self.swiftBeaver.debug(message)
             case .info:
-                swiftBeaver.info(message)
+                self.swiftBeaver.info(message)
             case .warning:
-                swiftBeaver.warning(message)
+                self.swiftBeaver.warning(message)
             case .error:
-                swiftBeaver.error(message)
+                self.swiftBeaver.error(message)
         }
     }
     
     func log(withLogLevel logLevel: LogLevel, message: CustomStringConvertible)
     {
-        log(withLogLevel: logLevel, message: message.description)
+        self.log(withLogLevel: logLevel, message: message.description)
     }
 }

@@ -3,44 +3,109 @@ import Foundation
 ///Service that persists data locally
 protocol PersistencyService
 {
+    associatedtype T
+    
     //MARK: Methods
     
-    ///Returns the last TimeSlot created.
-    func getLastTimeSlot() -> TimeSlot
+    ///Returns the last saved instance of type T created.
+    func getLast() -> T?
     
     /**
-     Get TimeSlots for any given day.
+     Get objects givem a predicate.
      
-     - Parameter day: The day used for filtering the TimeSlots.
+     - Parameter predicate: Predicate used for filtering.
      
-     - Returns: The found TimeSlots for the day or an empty array if there are none.
+     - Returns: The found entities that comply to the provided predicate.
      */
-    func getTimeSlots(forDay day: Date) -> [TimeSlot]
+    func get(withPredicate predicate: Predicate?) -> [ T ]
     
     /**
-     Persists a new TimeSlot and ends the previous one.
+     Persists the provided element.
      
-     - Parameter timeSlot: The TimeSlots to be added.
+     - Parameter element: The element to be persisted.
      
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
-    @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    @discardableResult func create(_ element: T) -> Bool
     
     /**
-     Changes the category of an existing TimeSlot.
+     Updates the element.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Parameter updateFunction: Function that will apply the changes to the element.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
+    
+    /**
+     Updates the element.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func delete(withPredicate predicate: Predicate) -> Bool
+}
+
+class BasePersistencyService<T> : PersistencyService
+{
+    
+    ///Returns the last saved instance of type T created.
+    func getLast() -> T?
+    {
+        fatalError("Not implemented")
+    }
+    
+    /**
+     Get objects givem a predicate.
+     
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: The found entities that comply to the provided predicate.
+     */
+    func get(withPredicate predicate: Predicate? = nil) -> [ T ]
+    {
+        fatalError("Not implemented")
+    }
+    
+    /**
+     Persists the provided element.
+     
+     - Parameter element: The element to be persisted.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
+     */
+    @discardableResult func create(_ element: T) -> Bool
+    {
+        fatalError("Not implemented")
+    }
+    
+    /**
+     Updates the provided element.
      
      - Parameter timeSlot: The TimeSlots to be updated.
      
-     - Parameter category: The new category of the TimeSlot.
+     - Parameter changes: Function that will apply the changes to the element.
      
      - Returns: A Bool indicating whether the operation suceeded or not.
      */
-    @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category) -> Bool
+    @discardableResult func update(withPredicate predicate: Predicate, updateFunction: (T) -> T) -> Bool
+    {
+        fatalError("Not implemented")
+    }
+    
     
     /**
-     Adds a callback that gets called everytime a new TimeSlot is created.
+     Updates the element.
      
-     - Parameter callback: The function that gets invoked.
+     - Parameter predicate: Predicate used for filtering.
+     
+     - Returns: A Bool indicating whether the operation suceeded or not.
      */
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    @discardableResult func delete(withPredicate predicate: Predicate) -> Bool
+    {
+        fatalError("Not implemented")
+    }
 }

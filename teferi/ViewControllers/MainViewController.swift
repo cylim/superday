@@ -7,31 +7,36 @@ import QuartzCore
 import CoreLocation
 import SnapKit
 
-class MainViewController : UIViewController
+class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
     private var isFirstUse = false
     private let animationDuration = 0.08
     
-    private var disposeBag : DisposeBag? = DisposeBag()
+    private let disposeBag : DisposeBag = DisposeBag()
     private var gestureRecognizer : UIGestureRecognizer!
     private lazy var viewModel : MainViewModel =
     {
         return MainViewModel(metricsService: self.metricsService,
+                             feedbackService: self.feedbackService,
                              settingsService: self.settingsService,
+                             timeSlotService: self.timeSlotService,
+                             locationService: self.locationService,
                              editStateService: self.editStateService,
-                             persistencyService: self.persistencyService)
+                             smartGuessService: self.smartGuessService)
     }()
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
     
     //Dependencies
     private var metricsService : MetricsService!
+    private var feedbackService: FeedbackService!
     private var appStateService : AppStateService!
     private var locationService : LocationService!
     private var settingsService : SettingsService!
+    private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
-    private var persistencyService : PersistencyService!
+    private var smartGuessService: SmartGuessService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
@@ -41,20 +46,25 @@ class MainViewController : UIViewController
     @IBOutlet private weak var icon : UIImageView!
     @IBOutlet private weak var titleLabel : UILabel!
     @IBOutlet private weak var calendarButton : UIButton!
+    @IBOutlet private weak var contactButton: UIButton!
     
     func inject(_ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ locationService: LocationService,
                 _ settingsService: SettingsService,
+                _ timeSlotService: TimeSlotService,
                 _ editStateService: EditStateService,
-                _ persistencyService: PersistencyService) -> MainViewController
+                _ feedbackService: FeedbackService,
+                _ smartGuessService: SmartGuessService) -> MainViewController
     {
         self.metricsService = metricsService
+        self.feedbackService = feedbackService
         self.appStateService = appStateService
         self.locationService = locationService
         self.settingsService = settingsService
+        self.timeSlotService = timeSlotService
         self.editStateService = editStateService
-        self.persistencyService = persistencyService
+        self.smartGuessService = smartGuessService
         
         return self
     }
@@ -68,27 +78,42 @@ class MainViewController : UIViewController
         self.pagerViewController.inject(self.metricsService,
                                         self.appStateService,
                                         self.settingsService,
-                                        self.editStateService,
-                                        self.persistencyService)
+                                        self.timeSlotService,
+                                        self.editStateService)        
+        
+        //Add fade overlay at bottom of timeline
+        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
+        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
+        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
+        fadeView.isUserInteractionEnabled = false
+        self.view.addSubview(fadeView)
+        fadeView.snp.makeConstraints { make in
+            make.bottom.left.right.equalTo(self.view)
+            make.height.equalTo(100)
+        }
         
         //Add button
         self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
         
         //Edit View
-        self.editView = EditTimeSlotView(frame: self.view.frame, editEndedCallback: self.viewModel.updateTimeSlot)
+        self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
         self.view.addSubview(self.editView)
+        self.editView.constrainEdges(to: self.view)
         
         if self.isFirstUse
         {
             //Sets the first TimeSlot's category to leisure
-            let timeSlot = TimeSlot(category: .leisure)
-            self.persistencyService.addNewTimeSlot(timeSlot)
+            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure, categoryWasSetByUser: false)
+            self.timeSlotService.add(timeSlot: timeSlot)
         }
         else
         {
             self.launchAnim = LaunchAnimationView(frame: view.frame)
             self.view.addSubview(launchAnim)
         }
+        
+        self.createBindings()
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -98,57 +123,48 @@ class MainViewController : UIViewController
         self.startLaunchAnimation()
         
         self.calendarButton.setTitle(viewModel.calendarDay, for: .normal)
-        
-        //Refresh Dispose bag, if needed
-        self.disposeBag = self.disposeBag ?? DisposeBag()
-        
+    }
+    
+     private func createBindings()
+     {
         self.gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.editStateService.notifyEditingEnded() })
         
         //Edit state
         self.editStateService
             .isEditingObservable
             .subscribe(onNext: self.onEditChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.editStateService
             .beganEditingObservable
             .subscribe(onNext: self.editView.onEditBegan)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         //Category creation
         self.addButton
             .categoryObservable
             .subscribe(onNext: self.viewModel.addNewSlot)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         //Date updates for title label
         self.pagerViewController
             .dateObservable
             .subscribe(onNext: self.onDateChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.editView.addGestureRecognizer(self.gestureRecognizer)
         
         self.appStateService
             .appStateObservable
             .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         //Add button must be added like this due to .xib/.storyboard restrictions
         self.view.insertSubview(self.addButton, belowSubview: self.editView)
         self.addButton.snp.makeConstraints { make in
             make.height.equalTo(320)
-            make.left.equalTo(self.view.snp.left)
-            make.width.equalTo(self.view.snp.width)
-            make.bottom.equalTo(self.view.snp.bottom)
+            make.left.right.bottom.equalTo(self.view)
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        self.disposeBag = nil
-        self.editView.removeGestureRecognizer(self.gestureRecognizer)
-        super.viewWillDisappear(animated)
     }
     
     // MARK: Actions
@@ -161,13 +177,21 @@ class MainViewController : UIViewController
         self.pagerViewController.setViewControllers(
             [ TimelineViewController(date: today,
                                      metricsService: self.metricsService,
-                                     editStateService: self.editStateService,
-                                     persistencyService: self.persistencyService) ],
+                                     appStateService: self.appStateService,
+                                     timeSlotService: self.timeSlotService,
+                                     editStateService: self.editStateService) ],
             direction: .forward,
             animated: true,
             completion: nil)
         
         self.onDateChanged(date: today)
+    }
+    
+    @IBAction func onContactTouchUpInside()
+    {
+        self.feedbackService.composeFeedback(parentViewController: self) {
+            self.pagerViewController.feedbackUIClosing = true
+        }
     }
     
     // MARK: Methods
@@ -248,5 +272,16 @@ class MainViewController : UIViewController
         
         //Grey out views
         self.editView.isEditing = isEditing
+    }
+    
+    //Configure overlay
+    private func fadeOverlay(startColor: UIColor, endColor: UIColor) -> CAGradientLayer
+    {
+        let fadeOverlay = CAGradientLayer()
+        fadeOverlay.colors = [startColor.cgColor, endColor.cgColor]
+        fadeOverlay.locations = [0.1]
+        fadeOverlay.startPoint = CGPoint(x: 0.0, y: 1.0)
+        fadeOverlay.endPoint = CGPoint(x: 0.0, y: 0.0)
+        return fadeOverlay
     }
 }

@@ -5,7 +5,7 @@ import SnapKit
 class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     //MARK: Fields
-    private lazy var pages : [OnboardingPage] = { return (1...4).map { i in self.page("\(i)") } } ()
+    internal lazy var pages : [OnboardingPage] = { return (1...4).map { i in self.page("\(i)") } } ()
     
     private var launchAnim : LaunchAnimationView!
     
@@ -14,7 +14,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     private var settingsService : SettingsService!
     private var appStateService : AppStateService!
     private var mainViewController : MainViewController!
-    private var notificationUpdateObservable : Observable<Bool>!
+    private var notificationService : NotificationService!
     
     //MARK: ViewController lifecycle
     override func viewDidLoad()
@@ -23,15 +23,15 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
 
         self.dataSource = self
         self.delegate = self
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Color.white
         self.setViewControllers([pages.first!],
                            direction: .forward,
                            animated: true,
                            completion: nil)
         
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [type(of: self)])
-        pageControl.pageIndicatorTintColor = UIColor.green.withAlphaComponent(0.4)
-        pageControl.currentPageIndicatorTintColor = UIColor.green
+        pageControl.pageIndicatorTintColor = Color.green.withAlphaComponent(0.4)
+        pageControl.currentPageIndicatorTintColor = Color.green
         pageControl.backgroundColor = UIColor.clear
         
         self.view.addSubview(self.pager)
@@ -58,12 +58,12 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     func inject(_ settingsService: SettingsService,
                 _ appStateService: AppStateService,
                 _ mainViewController: MainViewController,
-                _ notificationUpdateObservable: Observable<Bool>) -> OnboardingPageViewController
+                _ notificationService: NotificationService) -> OnboardingPageViewController
     {
         self.appStateService = appStateService
         self.settingsService = settingsService
         self.mainViewController = mainViewController
-        self.notificationUpdateObservable = notificationUpdateObservable
+        self.notificationService = notificationService
         return self
     }
     
@@ -90,8 +90,13 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         guard let nextPage = self.pageAt(index: currentPageIndex + 1) else
         {
             self.settingsService.setInstallDate(Date())
-            self.mainViewController.modalTransitionStyle = .crossDissolve
-            self.present(self.mainViewController, animated: true)
+         
+            DispatchQueue.main.async
+            {
+                self.mainViewController.modalTransitionStyle = .crossDissolve
+                self.present(self.mainViewController, animated: true)
+            }
+
             return
         }
         
@@ -99,6 +104,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
                                 direction: .forward,
                                 animated: true,
                                 completion: nil)
+        
         self.onNew(page: nextPage)
     }
     
@@ -118,7 +124,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
             .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
             as! OnboardingPage
         
-        page.inject(self.settingsService, self.appStateService, self, self.notificationUpdateObservable)
+        page.inject(self.settingsService, self.appStateService, self.notificationService, self)
         return page
     }
     

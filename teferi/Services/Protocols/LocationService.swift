@@ -12,6 +12,9 @@ protocol LocationService
     ///Stops the tracking service.
     func stopLocationTracking()
     
+    ///Gets the last known position
+    func getLastKnownLocation() -> CLLocation?
+    
     /**
      Observable that emits events when new locations are received.
      */

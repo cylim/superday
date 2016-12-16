@@ -10,17 +10,21 @@ class TimelineCell : UITableViewCell
     private var currentIndex = 0
     private let hourMask = "%02d h %02d min"
     private let minuteMask = "%02d min"
+    
     private lazy var lineHeightConstraint : NSLayoutConstraint =
     {
         return self.lineView.constraints.filter{ $0.firstAttribute == .height }.first!
     }()
-    
+
     @IBOutlet private weak var lineView : UIView!
+    @IBOutlet private weak var slotTime : UILabel!
+    @IBOutlet weak var categoryIcon : UIImageView!
     @IBOutlet private weak var elapsedTime : UILabel!
     @IBOutlet private weak var indicatorDot : UIView!
     @IBOutlet private weak var categoryButton : UIButton!
     @IBOutlet private weak var slotDescription : UILabel!
-    @IBOutlet weak var categoryIcon : UIImageView!
+    @IBOutlet private weak var timeSlotDistanceConstraint : NSLayoutConstraint!
+    private var lineFadeView : AutoResizingLayerView?
     
     //MARK: Properties
     private(set) var isSubscribedToClickObservable = false
@@ -45,7 +49,7 @@ class TimelineCell : UITableViewCell
      
      - Parameter timeSlot: TimeSlot that will be bound.
      */
-    func bind(toTimeSlot timeSlot: TimeSlot, index: Int)
+    func bind(toTimeSlot timeSlot: TimeSlot, index: Int, lastInPastDay: Bool)
     {
         self.currentIndex = index
         
@@ -56,53 +60,101 @@ class TimelineCell : UITableViewCell
         let categoryColor = timeSlot.category.color
         
         //Updates each one of the cell's components
-        self.layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, isRunning: isRunning)
+        self.layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, isRunning: isRunning, lastInPastDay: lastInPastDay)
+        self.layoutSlotTime(withTimeSlot: timeSlot, lastInPastDay: lastInPastDay)
         self.layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes)
-        self.layoutDescriptionLabel(withStartTime: timeSlot.startTime, category: timeSlot.category)
+        self.layoutDescriptionLabel(withTimeSlot: timeSlot)
         self.layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor)
     }
     
     /// Updates the icon that indicates the slot's category
     private func layoutCategoryIcon(withImageName name: String, color: UIColor)
     {
-        categoryIcon?.backgroundColor = color
-        categoryIcon?.layer.cornerRadius = 16
-        categoryIcon?.image = UIImage(named: name)
+        self.categoryIcon.backgroundColor = color
+        self.categoryIcon.layer.cornerRadius = 16
+        self.categoryIcon.image = UIImage(named: name)
     }
     
     /// Updates the label that displays the description and starting time of the slot
-    private func layoutDescriptionLabel(withStartTime startTime: Date, category: Category)
+    private func layoutDescriptionLabel(withTimeSlot timeSlot: TimeSlot)
+    {
+        let isCategoryUnknown = timeSlot.category == .unknown
+        let categoryText = isCategoryUnknown ? "" : timeSlot.category.rawValue.capitalized
+        self.slotDescription.text = categoryText
+        self.timeSlotDistanceConstraint.constant = isCategoryUnknown ? 0 : 6
+    }
+    
+    /// Updates the label that shows the time the TimeSlot was created
+    private func layoutSlotTime(withTimeSlot timeSlot: TimeSlot, lastInPastDay: Bool)
     {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        let dateString = formatter.string(from: startTime)
-        let categoryText = category == .unknown ? "" : category.rawValue.capitalized
+        let startString = formatter.string(from: timeSlot.startTime)
         
-        let description = "\(categoryText) \(dateString)"
-        let nonBoldRange = NSMakeRange(categoryText.characters.count, dateString.characters.count + 1)
-        let attributedText = description.getBoldStringWithNonBoldText(nonBoldRange)
-        
-        slotDescription?.attributedText = attributedText
+        if lastInPastDay, let endTime = timeSlot.endTime
+        {
+            let endString = formatter.string(from: endTime)
+            self.slotTime.text = startString + " - " + endString
+        }
+        else
+        {
+            self.slotTime.text = startString
+        }
     }
     
     /// Updates the label that shows how long the slot lasted
     private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int)
     {
-        elapsedTime?.textColor = color
-        elapsedTime?.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
+        self.elapsedTime.textColor = color
+        self.elapsedTime.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
     }
     
     /// Updates the line that displays shows how long the TimeSlot lasted
-    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool)
+    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool, lastInPastDay: Bool = false)
     {
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
-        lineHeightConstraint.constant = newHeight
+        self.lineHeightConstraint.constant = newHeight
         
-        lineView?.backgroundColor = color
-        lineView?.layoutIfNeeded()
+        self.lineView.backgroundColor = color
         
-        indicatorDot?.backgroundColor = color
-        indicatorDot?.isHidden = !isRunning
-        indicatorDot?.layoutIfNeeded()
+        if lastInPastDay
+        {
+            self.ensureLineFadeExists()
+        }
+        self.lineFadeView?.isHidden = !lastInPastDay
+        
+        self.lineView.layoutIfNeeded()
+        
+        self.indicatorDot.backgroundColor = color
+        self.indicatorDot.isHidden = !isRunning
+        self.indicatorDot.layoutIfNeeded()
+    }
+    
+    private func ensureLineFadeExists()
+    {
+        guard self.lineFadeView == nil else { return }
+        
+        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
+        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
+        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
+        self.lineView.addSubview(fadeView)
+        fadeView.snp.makeConstraints { make in
+            make.bottom.left.right.equalToSuperview()
+            make.height.lessThanOrEqualToSuperview()
+            make.height.equalTo(100).priority(1)
+        }
+        self.lineFadeView = fadeView
+    }
+    
+    /// Configure the fade overlay
+    private func fadeOverlay(startColor: UIColor, endColor: UIColor) -> CAGradientLayer
+    {
+        let fadeOverlay = CAGradientLayer()
+        fadeOverlay.colors = [startColor.cgColor, endColor.cgColor]
+        fadeOverlay.locations = [0.1]
+        fadeOverlay.startPoint = CGPoint(x: 0.0, y: 1.0)
+        fadeOverlay.endPoint = CGPoint(x: 0.0, y: 0.0)
+        return fadeOverlay
     }
 }

@@ -19,7 +19,7 @@ class DefaultAppStateService : AppStateService
         get { return self.appStateVariable.value }
         set(value)
         {
-            guard value != currentAppState else { return }
+            guard value != self.currentAppState else { return }
             
             self.appStateVariable.value = value
         }

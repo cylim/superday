@@ -1,47 +1,83 @@
 import Foundation
+import CoreData
+import CoreLocation
 
 /// Represents each individual activity performed by the app user.
 class TimeSlot
 {
     // MARK: Properties
-    var startTime = Date()
+    let startTime : Date
+    let location : CLLocation?
+    
+    var smartGuessId : Int?
     var endTime : Date? = nil
     var category = Category.unknown
+    var categoryWasSetByUser : Bool
+    
     
     ///Calculates and returns the total duration for the TimeSlot.
     var duration : TimeInterval
     {
-        let endTime = self.endTime ?? getEndDate()
-        return endTime.timeIntervalSince(startTime)
+        let endTime = self.endTime ?? self.getEndTime()
+        return endTime.timeIntervalSince(self.startTime)
     }
     
     // MARK: Initializers
-    init() { }
-    
-    init(category: Category, startTime: Date, endTime: Date)
+    init(withStartTime time: Date, categoryWasSetByUser: Bool)
     {
+        self.location = nil
+        self.startTime = time
+        self.categoryWasSetByUser = categoryWasSetByUser
+    }
+    
+    init(withStartTime time: Date, category: Category, categoryWasSetByUser: Bool)
+    {
+        self.location = nil
+        self.startTime = time
         self.category = category
-        self.startTime = startTime
+        self.categoryWasSetByUser = categoryWasSetByUser
+    }
+    
+    init(withStartTime time: Date, category: Category, location: CLLocation?, categoryWasSetByUser: Bool)
+    {
+        self.startTime = time
+        self.location = location
+        self.category = category
+        self.categoryWasSetByUser = categoryWasSetByUser
+    }
+    
+    init(withStartTime time: Date, endTime: Date?, category: Category, categoryWasSetByUser: Bool)
+    {
+        self.location = nil
+        self.startTime = time
         self.endTime = endTime
-    }
-    
-    convenience init(category: Category)
-    {
-        self.init()
         self.category = category
+        self.categoryWasSetByUser = categoryWasSetByUser
     }
     
-    convenience init(withStartDate date: Date)
+    init(withStartTime time: Date, smartGuess: SmartGuess, location: CLLocation?)
     {
-        self.init()
-        self.startTime = date
+        self.startTime = time
+        self.location = location
+        self.categoryWasSetByUser = false
+        self.smartGuessId = smartGuess.id
+        self.category = smartGuess.category
+    }
+    
+    init(withStartTime startTime: Date, endTime: Date?, category: Category, location: CLLocation?, categoryWasSetByUser: Bool)
+    {
+        self.endTime = endTime
+        self.category = category
+        self.location = location
+        self.startTime = startTime
+        self.categoryWasSetByUser = categoryWasSetByUser
     }
     
     // MARK: Methods
-    private func getEndDate() -> Date
+    private func getEndTime() -> Date
     {
         let date = Date()
-        let timeEntryLimit = startTime.tomorrow.ignoreTimeComponents()
+        let timeEntryLimit = self.startTime.tomorrow.ignoreTimeComponents()
         let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == ComparisonResult.orderedDescending
     
         //The `endTime` property can never exceed midnight of the TimeSlot day, so this property considers it before returning the proper TimeInterval

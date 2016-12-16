@@ -25,6 +25,6 @@ class ClosureGestureRecognizerTarget : NSObject
     
     @objc func runClosure()
     {
-        closure()
+        self.closure()
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 @testable import teferi
 
-class MockPersistencyService : PersistencyService
+class MockTimeSlotService : TimeSlotService
 {
     //MARK: Fields
     private var newTimeSlotCallbacks = [(TimeSlot) -> ()]()
@@ -16,9 +16,9 @@ class MockPersistencyService : PersistencyService
     }
     
     //PersistencyService implementation
-    func getLastTimeSlot() -> TimeSlot
+    func getLast() -> TimeSlot
     {
-        getLastTimeSlotWasCalled = true
+        self.getLastTimeSlotWasCalled = true
         return timeSlots.last!
     }
     
@@ -27,30 +27,33 @@ class MockPersistencyService : PersistencyService
         let startDate = day.ignoreTimeComponents()
         let endDate = day.tomorrow.ignoreTimeComponents()
         
-        return timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
+        return self.timeSlots.filter { t in t.startTime > startDate && t.startTime < endDate }
     }
     
-    @discardableResult func addNewTimeSlot(_ timeSlot: TimeSlot) -> Bool
+    @discardableResult func add(timeSlot: TimeSlot)
     {
         if let lastTimeSlot = timeSlots.last
         {
             lastTimeSlot.endTime = timeSlot.startTime
         }
         
-        timeSlots.append(timeSlot)
-        newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
-        
-        return true
+        self.timeSlots.append(timeSlot)
+        self.newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
     }
     
-    @discardableResult func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: teferi.Category) -> Bool
+    @discardableResult func update(timeSlot: TimeSlot, withCategory category: teferi.Category, setByUser: Bool)
     {
         timeSlot.category = category
-        return true
+        timeSlot.categoryWasSetByUser = setByUser
     }
     
-    func subscribeToTimeSlotChanges(_ callback: @escaping (TimeSlot) -> ())
+    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
     {
-        newTimeSlotCallbacks.append(callback)
+        timeSlot.smartGuessId = smartGuessId
+    }
+    
+    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
+    {
+        self.newTimeSlotCallbacks.append(callback)
     }
 }

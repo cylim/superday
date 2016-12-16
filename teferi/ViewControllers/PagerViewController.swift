@@ -4,27 +4,21 @@ import RxSwift
 class PagerViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     // MARK: Fields
-    private let lastInactiveDateKey = "lastInactiveDate"
-    private var lastInactiveDate : Date?
-    {
-        get { return UserDefaults.standard.object(forKey: lastInactiveDateKey) as? Date }
-        set(value) { UserDefaults.standard.set(value, forKey: lastInactiveDateKey) }
-    }
-    
-    private let dateVariable = Variable(Date())
-    private var disposeBag : DisposeBag? = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
+    private var settingsService : SettingsService!
+    private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
-    private var persistencyService : PersistencyService!
     
     private var currentDateViewController : TimelineViewController!
     
     private var viewModel : PagerViewModel!
     
     // MARK: Properties
-    var dateObservable : Observable<Date> { return dateVariable.asObservable() }
+    var dateObservable : Observable<Date> { return viewModel.dateObservable }
+    var feedbackUIClosing : Bool = false
     
     // MARK: Initializers
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?)
@@ -34,11 +28,11 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
                    options: options)
     }
     
-    required init?(coder: NSCoder)
+    required convenience init?(coder: NSCoder)
     {
-        super.init(transitionStyle: .scroll,
-                   navigationOrientation: .horizontal,
-                   options: nil)
+        self.init(transitionStyle: .scroll,
+                  navigationOrientation: .horizontal,
+                  options: nil)
     }
     
     // MARK: UIViewController lifecycle
@@ -46,15 +40,18 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     func inject(_ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ settingsService: SettingsService,
-                _ editStateService: EditStateService,
-                _ persistencyService: PersistencyService)
+                _ timeSlotService: TimeSlotService,
+                _ editStateService: EditStateService)
     {
         self.metricsService = metricsService
         self.appStateService = appStateService
+        self.settingsService = settingsService
+        self.timeSlotService = timeSlotService
         self.editStateService = editStateService
-        self.persistencyService = persistencyService
         
         self.viewModel = PagerViewModel(settingsService: settingsService)
+        
+        self.createBindings()
     }
     
     override func viewDidLoad()
@@ -63,39 +60,41 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         self.delegate = self
         self.dataSource = self
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Color.white
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.disposeBag = self.disposeBag ?? DisposeBag()
+        if !self.feedbackUIClosing
+        {
+            self.initCurrentDateViewController()
+        }
         
+        self.feedbackUIClosing = false
+    }
+    
+    private func createBindings()
+    {
         self.editStateService
             .isEditingObservable
             .subscribe(onNext: onEditChanged)
-            .addDisposableTo(disposeBag!)
+            .addDisposableTo(self.disposeBag)
         
         self.appStateService
             .appStateObservable
             .subscribe(onNext: self.onAppStateChanged)
-            .addDisposableTo(disposeBag!)
-        
-        self.initCurrentDateViewController()
+            .addDisposableTo(self.disposeBag)
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        self.disposeBag = nil
-    }
-    
-    // MARK: Methods    
+    // MARK: Methods
     private func initCurrentDateViewController()
     {
         self.currentDateViewController =
             TimelineViewController(date: Date(),
-                                   metricsService: metricsService,
-                                   editStateService: editStateService,
-                                   persistencyService: persistencyService)
+                                   metricsService: self.metricsService,
+                                   appStateService: self.appStateService,
+                                   timeSlotService: self.timeSlotService,
+                                   editStateService: self.editStateService)
         
         self.setViewControllers(
             [ currentDateViewController ],
@@ -114,18 +113,25 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     private func onAppStateChanged(appState: AppState)
     {
-        if appState == .active
+        switch appState
         {
-            let today = Date().ignoreTimeComponents()
+            case .active:
+                let today = Date().ignoreTimeComponents()
+                
+                guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
+                
+                self.settingsService.setLastInactiveDate(nil)
+                self.initCurrentDateViewController()
+                break
             
-            guard let inactiveDate = lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
+            case .inactive:
+                self.settingsService.setLastInactiveDate(Date())
+                break
             
-            self.lastInactiveDate = nil
-            self.initCurrentDateViewController()
-        }
-        else
-        {
-            self.lastInactiveDate = Date()
+            case .needsRefreshing:
+                self.settingsService.setLastInactiveDate(nil)
+                self.initCurrentDateViewController()
+                break
         }
     }
     
@@ -141,7 +147,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             self.currentDateViewController = timelineController
         }
         
-        self.dateVariable.value = timelineController.date
+        self.viewModel.date = timelineController.date
     }
     
     // MARK: UIPageViewControllerDataSource implementation
@@ -153,9 +159,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
-                                      metricsService: metricsService,
-                                      editStateService: editStateService,
-                                      persistencyService: persistencyService)
+                                      metricsService: self.metricsService,
+                                      appStateService: self.appStateService,
+                                      timeSlotService: self.timeSlotService,
+                                      editStateService: self.editStateService)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
@@ -163,11 +170,12 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         let timelineController = viewController as! TimelineViewController
         let nextDate = timelineController.date.tomorrow
         
-        guard viewModel.canScroll(toDate: nextDate) else { return nil }
+        guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
-                                      metricsService: metricsService,
-                                      editStateService: editStateService,
-                                      persistencyService: persistencyService)
+                                      metricsService: self.metricsService,
+                                      appStateService: self.appStateService,
+                                      timeSlotService: self.timeSlotService,
+                                      editStateService: self.editStateService)
     }
 }

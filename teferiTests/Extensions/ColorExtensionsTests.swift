@@ -56,4 +56,12 @@ class UIColorExtensionsTests : XCTestCase
         expect(green).to(equal(0))
         expect(blue).to(equal(0))
     }
+    
+    func testGetHexValueOfColor()
+    {
+        let color = UIColor(r: 255, g: 0, b: 42)
+        let hex = color.hexString.uppercased()
+        
+        expect(hex).to(equal("#FF002A"))
+    }
 }

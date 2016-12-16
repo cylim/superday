@@ -9,16 +9,28 @@ class MainViewModel
     private let superyesterday = "Superyesterday"
     
     private let metricsService : MetricsService
+    private let feedbackService: FeedbackService
+    private let timeSlotService : TimeSlotService
     private let settingsService : SettingsService
+    private let locationService : LocationService
     private let editStateService : EditStateService
-    private let persistencyService : PersistencyService
+    private let smartGuessService : SmartGuessService
     
-    init(metricsService: MetricsService, settingsService: SettingsService, editStateService: EditStateService, persistencyService: PersistencyService)
+    init(metricsService: MetricsService,
+         feedbackService: FeedbackService,
+         settingsService: SettingsService,
+         timeSlotService: TimeSlotService,
+         locationService : LocationService,
+         editStateService: EditStateService,
+         smartGuessService : SmartGuessService)
     {
         self.metricsService = metricsService
+        self.feedbackService = feedbackService
         self.settingsService = settingsService
+        self.timeSlotService = timeSlotService
+        self.locationService = locationService
         self.editStateService = editStateService
-        self.persistencyService = persistencyService
+        self.smartGuessService = smartGuessService
     }
     
     // MARK: Properties
@@ -75,9 +87,19 @@ class MainViewModel
      */
     func addNewSlot(withCategory category: Category)
     {
-        let newSlot = TimeSlot(category: category)
+        let currentLocation = self.locationService.getLastKnownLocation()
         
-        self.persistencyService.addNewTimeSlot(newSlot)
+        let newSlot = TimeSlot(withStartTime: Date(),
+                               category: category,
+                               location: currentLocation,
+                               categoryWasSetByUser: true)
+        
+        if let location = currentLocation
+        {
+            self.smartGuessService.add(withCategory: category, location: location)
+        }
+        
+        self.timeSlotService.add(timeSlot: newSlot)
         self.metricsService.log(event: .timeSlotManualCreation)
     }
     
@@ -89,10 +111,22 @@ class MainViewModel
      */
     func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category)
     {
-        self.persistencyService.updateTimeSlot(timeSlot, withCategory: category)
+        self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
         self.metricsService.log(event: .timeSlotEditing)
         
+        let smartGuessId = timeSlot.smartGuessId
+        if !timeSlot.categoryWasSetByUser && smartGuessId != nil
+        {
+            //Strike the smart guess if it was wrong
+            self.smartGuessService.strike(withId: smartGuessId!)
+        }
+        else if smartGuessId == nil, let location = timeSlot.location
+        {
+            self.smartGuessService.add(withCategory: category, location: location)
+        }
+        
         timeSlot.category = category
+        timeSlot.categoryWasSetByUser = true
         
         self.editStateService.notifyEditingEnded()
     }

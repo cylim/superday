@@ -27,17 +27,17 @@ enum Category : String
         switch(self)
         {
         case .friends:
-            return UIColor(hexString: "#28C980")
+            return Color.green
         case .work:
-            return UIColor(hexString: "#FFC31B")
+            return Color.yellow
         case .leisure:
-            return UIColor(hexString: "#BA5EFF")
+            return Color.purple
         case .commute:
-            return UIColor(hexString: "#63D5EE")
+            return Color.lightBlue
         case .food:
-            return UIColor(hexString: "#FF6453")
+            return Color.red
         case .unknown:
-            return UIColor(hexString: "#CECDCD")
+            return Color.gray
         }
     }
     

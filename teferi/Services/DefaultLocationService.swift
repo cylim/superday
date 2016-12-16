@@ -30,7 +30,7 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.activityType = .other
         
-        self.dateTimeFormatter.dateFormat = "yyyy-mm-dd HH:mm:ss"
+        self.dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         self.loggingService.log(withLogLevel: .verbose, message: "DefaultLocationService Initialized")
     }
@@ -54,6 +54,11 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
     {
         self.loggingService.log(withLogLevel: .debug, message: "DefaultLocationService stoped")
         self.locationManager.stopMonitoringSignificantLocationChanges()
+    }
+    
+    func getLastKnownLocation() -> CLLocation?
+    {
+        return self.locationManager.location
     }
     
     //MARK: CLLocationManagerDelegate Implementation
