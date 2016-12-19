@@ -33,7 +33,7 @@ class PostiOSTenNotificationService : NotificationService
         notification.fireDate = date
         notification.alertTitle = title
         notification.alertBody = message
-        notification.alertAction = "Superday"
+        notification.alertAction = "AppName".translate()
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.category = Constants.notificationTimeSlotCategorySelectionIdentifier
         
