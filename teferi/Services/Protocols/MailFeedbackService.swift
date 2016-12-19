@@ -57,7 +57,7 @@ class MailFeedbackService: NSObject, FeedbackService, MFMailComposeViewControlle
         //Attach log file, if it exists
         if let logURL = self.logURL, let data = try? Data(contentsOf: logURL)
         {
-            composeVC.addAttachmentData(data, mimeType: "text/xml", fileName: "superday.log")
+            composeVC.addAttachmentData(data, mimeType: "text/xml", fileName: "supertoday.log")
         }
         
         parentViewController.present(composeVC, animated: true)
