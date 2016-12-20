@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -243,6 +243,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Ik7-d5-Fp7" firstAttribute="top" secondItem="6jf-tP-iE3" secondAttribute="bottom" constant="16" id="55E-gd-gch"/>
                             <constraint firstAttribute="leadingMargin" secondItem="knj-9u-WUa" secondAttribute="leading" id="5dw-47-m0A"/>
@@ -258,6 +259,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="P1q-Pj-kdM" secondAttribute="trailing" id="u5j-Xs-4rb"/>
                             <constraint firstAttribute="leadingMargin" secondItem="P1q-Pj-kdM" secondAttribute="leading" id="vel-aV-nA5"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="O6r-BK-iay" appends="YES" id="gOe-4D-orW"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="calendarView" destination="P1q-Pj-kdM" id="pJ2-x8-kri"/>
@@ -268,6 +272,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdE-gL-Xxk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="O6r-BK-iay">
+                    <connections>
+                        <outlet property="delegate" destination="CEq-nK-As0" id="YPT-CC-t8C"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="260" y="1027"/>
         </scene>

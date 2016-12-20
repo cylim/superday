@@ -2,7 +2,7 @@ import UIKit
 import JTAppleCalendar
 import RxSwift
 
-class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
+class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
 {
     // MARK: Fields
     private let calendarCell = "CalendarCell"
@@ -178,6 +178,21 @@ class CalendarViewController : UIViewController, JTAppleCalendarViewDelegate, JT
     private func onCurrentlySelectedDateChanged(_ date: Date)
     {
         self.calendarView.selectDates([date])
+    }
+    
+    //MARK: UIGestureRecognizerDelegate implementation
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
+    {
+        if let view = touch.view,
+            view.isDescendant(of: self.calendarView) ||
+                view.isDescendant(of: self.leftButton) ||
+                view.isDescendant(of: self.rightButton)
+        {
+            return false
+        }
+        
+        self.hide()
+        return true
     }
     
     //MARK: JTAppleCalendarDelegate implementation

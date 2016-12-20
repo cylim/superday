@@ -91,21 +91,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                                         self.editStateService,
                                         self.selectedDateService)
         
-        //Add fade overlay at bottom of timeline
-        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
-        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
-        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
-        let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
-        fadeView.isUserInteractionEnabled = false
-        self.view.addSubview(fadeView)
-        fadeView.snp.makeConstraints { make in
-            make.bottom.left.right.equalTo(self.view)
-            make.height.equalTo(100)
-        }
-        
         //Edit View
         self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
-        self.view.insertSubview(self.editView, belowSubview: self.calendarViewController.view)
+        self.view.insertSubview(self.editView, belowSubview: self.calendarViewController.view.superview!)
         self.editView.constrainEdges(to: self.view)
         
         //Add button
@@ -114,6 +102,18 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.addButton.snp.makeConstraints { make in
             make.height.equalTo(320)
             make.left.right.bottom.equalTo(self.view)
+        }
+        
+        //Add fade overlay at bottom of timeline
+        let bottomFadeStartColor = Color.white
+        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
+        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
+        fadeView.isUserInteractionEnabled = false
+        self.view.insertSubview(fadeView, aboveSubview: self.addButton)
+        fadeView.snp.makeConstraints { make in
+            make.bottom.left.right.equalTo(self.view)
+            make.height.equalTo(100)
         }
         
         if self.isFirstUse
