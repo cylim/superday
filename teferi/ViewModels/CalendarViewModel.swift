@@ -87,14 +87,14 @@ class CalendarViewModel
         return timeSlot.category
     }
     
-    private func mapIntoTimeInterval(_ dictionaryEntry: (key: Category, value: [TimeSlot])) -> CategoryDuration
+    private func mapIntoTimeInterval(_ timeSlots: [TimeSlot]) -> CategoryDuration
     {
         let totalTime =
-            dictionaryEntry.value
+            timeSlots
                 .map(self.mapIntoDuration)
                 .reduce(0, +)
         
-        return CategoryDuration(category: dictionaryEntry.key, duration: totalTime)
+        return CategoryDuration(category: timeSlots.first!.category, duration: totalTime)
     }
     
     private func mapIntoDuration(_ timeSlot: TimeSlot) -> TimeInterval

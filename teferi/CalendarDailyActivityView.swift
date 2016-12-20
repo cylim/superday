@@ -30,17 +30,22 @@ class CalendarDailyActivityView : UIView
         
         var startingX = 0.0
         
+        
+        
         for categorySlot in categorySlots
         {
-            let width = availableWidth * (categorySlot.duration / totalTimeSpent)
+            let layerWidth = availableWidth * (categorySlot.duration / totalTimeSpent)
+            
+            //Filters layers too small to be seen
+            guard layerWidth > 1 else { continue }
             
             let layer = CALayer()
             layer.cornerRadius = 1
             layer.backgroundColor = categorySlot.category.color.cgColor
-            layer.frame = CGRect(x: startingX, y: 0, width: width, height: Double(self.frame.height))
-            self.layer.addSublayer(layer)
+            layer.frame = CGRect(x: startingX, y: 0, width: layerWidth, height: Double(self.frame.height))
+            startingX += layerWidth + 1
             
-            startingX += width + 1
+            self.layer.addSublayer(layer)
         }
         
         self.layoutIfNeeded()
