@@ -26,6 +26,7 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         return result
     }()
     
+    private var layer = CAGradientLayer()
     private var disposeBag = DisposeBag()
     private var viewModel : CalendarViewModel!
     private var calendarCellsShouldAnimate = false
@@ -46,10 +47,19 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     {
         super.viewWillAppear(animated)
         
-        let layer = CAGradientLayer()
-        layer.frame = self.view.frame
-        layer.colors = [ Color.white.cgColor, Color.white.cgColor, Color.white.withAlphaComponent(0).cgColor]
-        layer.locations = [0.0, 0.5, 1.0]
+        let layerWhiteFadePoint = Float(self.calendarView.frame.maxY / UIScreen.main.bounds.height)
+        
+        self.layer.frame = self.view.frame
+        self.layer.colors = [ Color.white.cgColor,
+                         Color.white.cgColor,
+                         Color.white.withAlphaComponent(0.5).cgColor,
+                         Color.white.withAlphaComponent(0.5).cgColor]
+        
+        self.layer.locations = [0.0,
+                                NSNumber(value: layerWhiteFadePoint),
+                                NSNumber(value: layerWhiteFadePoint + 0.001),
+                                1.0]
+        
         self.view.layer.insertSublayer(layer, at: 0)
         
         //Configures the calendar
@@ -170,6 +180,13 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     private func onCurrentCalendarDateChanged(_ date: Date)
     {
         self.monthLabel.attributedText = self.viewModel.getAttributedHeaderName(date: date)
+        let layerWhiteFadePoint = self.calculateWhiteFadePoint(forDate: date)
+        
+        self.layer.locations = [0.0,
+                                NSNumber(value: layerWhiteFadePoint),
+                                NSNumber(value: layerWhiteFadePoint + 0.001),
+                                1.0]
+        
         
         self.leftButton.alpha = date.month == self.viewModel.minValidDate.month ? 0.2 : 1.0
         self.rightButton.alpha =  date.month == self.viewModel.maxValidDate.month ? 0.2 : 1.0
@@ -178,6 +195,17 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     private func onCurrentlySelectedDateChanged(_ date: Date)
     {
         self.calendarView.selectDates([date])
+    }
+    
+    private func calculateWhiteFadePoint(forDate date: Date) -> Float
+    {
+        let startDay = (date.dayOfWeek + 6) % 7
+        let daysInMonth = date.daysInMonth
+        var numberOfRows = (startDay + daysInMonth) / 7
+        
+        if (startDay + daysInMonth) % 7 != 0 { numberOfRows += 1 }
+        
+        return Float(CGFloat(140 + 39 * numberOfRows) / UIScreen.main.bounds.height)
     }
     
     //MARK: UIGestureRecognizerDelegate implementation

@@ -12,7 +12,7 @@ class CalendarCell : JTAppleDayCellView
     {
         self.clipsToBounds = true
         self.layer.cornerRadius = 0
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         self.isUserInteractionEnabled = allowScrollingToDate
         
         self.dateLabel.text = ""

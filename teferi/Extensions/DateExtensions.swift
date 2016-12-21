@@ -79,11 +79,18 @@ extension Date
         return start
     }
 
-    func getEnd() -> Date
+    
+    var daysInMonth : Int
     {
-        let (_, end) = self.calcStartAndEndOfDay()
-        return end
+        let dateComponents = DateComponents(year: self.year, month: self.month)
+        let calendar = Calendar.current
+        let date = calendar.date(from: dateComponents)!
+        
+        let range = calendar.range(of: .day, in: .month, for: date)!
+        return range.count
     }
+    
+    var dayOfWeek : Int { return Calendar.current.component(.weekday, from: self) - 1 }
     
     var day : Int { return Calendar.current.component(.day, from: self) }
     
