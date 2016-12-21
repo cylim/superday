@@ -9,14 +9,14 @@ class CalendarDailyActivityView : UIView
         
         self.clipsToBounds = true
         self.layer.cornerRadius = 1.0
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
     }
     
-    func updateActivity(dailyActivity: [ CategoryDuration ]?)
+    func update(dailyActivity: [ Activity ]?)
     {
         self.reset()
         
-        guard let categorySlots = dailyActivity else
+        guard let activities = dailyActivity else
         {
             self.backgroundColor = Color.lightGreyColor
             return
@@ -25,23 +25,21 @@ class CalendarDailyActivityView : UIView
         self.backgroundColor = UIColor.clear
         
         //self.activityView.layoutIfNeeded()
-        let totalTimeSpent = categorySlots.reduce(0.0, self.sumDuration)
-        let availableWidth = Double(self.bounds.size.width - CGFloat(categorySlots.count) + 1.0)
+        let totalTimeSpent = activities.reduce(0.0, self.sumDuration)
+        let availableWidth = Double(self.bounds.size.width - CGFloat(activities.count) + 1.0)
         
         var startingX = 0.0
         
-        
-        
-        for categorySlot in categorySlots
+        for activity in activities
         {
-            let layerWidth = availableWidth * (categorySlot.duration / totalTimeSpent)
+            let layerWidth = availableWidth * (activity.duration / totalTimeSpent)
             
             //Filters layers too small to be seen
             guard layerWidth > 1 else { continue }
             
             let layer = CALayer()
             layer.cornerRadius = 1
-            layer.backgroundColor = categorySlot.category.color.cgColor
+            layer.backgroundColor = activity.category.color.cgColor
             layer.frame = CGRect(x: startingX, y: 0, width: layerWidth, height: Double(self.frame.height))
             startingX += layerWidth + 1
             
@@ -51,8 +49,8 @@ class CalendarDailyActivityView : UIView
         self.layoutIfNeeded()
     }
     
-    private func sumDuration(accumulator: Double, dailyActivity: CategoryDuration) -> TimeInterval
+    private func sumDuration(accumulator: Double, activity: Activity) -> TimeInterval
     {
-        return accumulator + dailyActivity.duration
+        return accumulator + activity.duration
     }
 }

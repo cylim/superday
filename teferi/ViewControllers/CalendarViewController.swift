@@ -179,7 +179,6 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     
     private func onCurrentCalendarDateChanged(_ date: Date)
     {
-        self.monthLabel.attributedText = self.viewModel.getAttributedHeaderName(date: date)
         let layerWhiteFadePoint = self.calculateWhiteFadePoint(forDate: date)
         
         self.layer.locations = [0.0,
@@ -187,6 +186,7 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
                                 NSNumber(value: layerWhiteFadePoint + 0.001),
                                 1.0]
         
+        self.monthLabel.attributedText = self.getHeaderName(forDate: date)
         
         self.leftButton.alpha = date.month == self.viewModel.minValidDate.month ? 0.2 : 1.0
         self.rightButton.alpha =  date.month == self.viewModel.maxValidDate.month ? 0.2 : 1.0
@@ -206,6 +206,19 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         if (startDay + daysInMonth) % 7 != 0 { numberOfRows += 1 }
         
         return Float(CGFloat(140 + 39 * numberOfRows) / UIScreen.main.bounds.height)
+    }
+    
+    private func getHeaderName(forDate date: Date) -> NSMutableAttributedString
+    {
+        let monthName = DateFormatter().monthSymbols[(date.month - 1) % 12 ]
+        
+        let result = NSMutableAttributedString(string: "\(monthName) ", attributes: [ NSForegroundColorAttributeName: UIColor.black ] )
+        
+        let yearString = NSAttributedString(string: String(date.year),
+                                            attributes: [ NSForegroundColorAttributeName: Color.offBlackTransparent ])
+        result.append(yearString)
+        
+        return result
     }
     
     //MARK: UIGestureRecognizerDelegate implementation
@@ -269,10 +282,10 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         }
         
         let canScrollToDate = self.viewModel.canScroll(toDate: date)
-        let slots = self.viewModel.getCategoriesSlots(forDate: date)
+        let activities = self.viewModel.getActivities(forDate: date)
         let isSelected = Calendar.current.isDate(date, inSameDayAs: self.viewModel.selectedDate)
         
-        cell.bind(toDate: date, isSelected: isSelected, allowsScrollingToDate: canScrollToDate, categorySlots: slots)
+        cell.bind(toDate: date, isSelected: isSelected, allowsScrollingToDate: canScrollToDate, dailyActivity: activities)
         
         guard self.calendarCellsShouldAnimate else { return }
         

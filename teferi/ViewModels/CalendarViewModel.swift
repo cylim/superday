@@ -52,7 +52,7 @@ class CalendarViewModel
     }
     
     // Categories order: Commute, Food, Friends, Work and Leisure
-    func getCategoriesSlots(forDate date: Date) -> [CategoryDuration]?
+    func getActivities(forDate date: Date) -> [Activity]?
     {
         guard self.canScroll(toDate: date) else { return nil }
         
@@ -67,16 +67,6 @@ class CalendarViewModel
         return result
     }
     
-    func getAttributedHeaderName(date: Date) -> NSMutableAttributedString
-    {
-        let monthName = DateFormatter().monthSymbols[(date.month-1) % 12] //GetHumanDate(month: month)
-        let myAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
-        let myString = NSMutableAttributedString(string: "\(monthName) ", attributes: myAttribute )
-        let attrString = NSAttributedString(string: String(date.year), attributes: [NSForegroundColorAttributeName: Color.offBlackTransparent])
-        myString.append(attrString)
-        return myString
-    }
-    
     private func filterInvalidTimeSlots(_ timeSlot: TimeSlot) -> Bool
     {
         return timeSlot.category != .unknown
@@ -87,14 +77,14 @@ class CalendarViewModel
         return timeSlot.category
     }
     
-    private func mapIntoTimeInterval(_ timeSlots: [TimeSlot]) -> CategoryDuration
+    private func mapIntoTimeInterval(_ timeSlots: [TimeSlot]) -> Activity
     {
         let totalTime =
             timeSlots
                 .map(self.mapIntoDuration)
                 .reduce(0, +)
         
-        return CategoryDuration(category: timeSlots.first!.category, duration: totalTime)
+        return Activity(category: timeSlots.first!.category, duration: totalTime)
     }
     
     private func mapIntoDuration(_ timeSlot: TimeSlot) -> TimeInterval
@@ -102,7 +92,7 @@ class CalendarViewModel
         return timeSlot.duration
     }
     
-    private func sortByCategory(_ element1: CategoryDuration, _ element2: CategoryDuration) -> Bool
+    private func sortByCategory(_ element1: Activity, _ element2: Activity) -> Bool
     {
         let index1 = Constants.categories.index(of: element1.category)!
         let index2 = Constants.categories.index(of: element2.category)!
@@ -111,7 +101,7 @@ class CalendarViewModel
     }
 }
 
-struct CategoryDuration
+struct Activity
 {
     let category : Category
     let duration : TimeInterval

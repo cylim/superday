@@ -22,13 +22,13 @@ class CalendarCell : JTAppleDayCellView
         self.activityView.reset()
     }
     
-    func bind(toDate date: Date, isSelected: Bool, allowsScrollingToDate: Bool, categorySlots: [CategoryDuration]?)
+    func bind(toDate date: Date, isSelected: Bool, allowsScrollingToDate: Bool, dailyActivity: [Activity]?)
     {
         self.reset(allowScrollingToDate: allowsScrollingToDate)
         
         self.dateLabel.text = String(date.day)
         
-        self.activityView.updateActivity(dailyActivity: categorySlots)
+        self.activityView.update(dailyActivity: dailyActivity)
         
         self.dateLabel.textColor = UIColor.black
         

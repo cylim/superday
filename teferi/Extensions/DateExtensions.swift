@@ -57,28 +57,6 @@ extension Date
         let endDate = startDate.addingTimeInterval(interval - 1)
         return (startDate, endDate)
     }
-
-    func calcStartAndEndOfDay() -> (Date, Date)
-    {
-        return self.rangeOfPeriod(period: .day)
-    }
-
-    func calcStartAndEndOfWeek() -> (Date, Date)
-    {
-        return self.rangeOfPeriod(period: .weekday)
-    }
-
-    func calcStartAndEndOfMonth() -> (Date, Date)
-    {
-        return self.rangeOfPeriod(period: .month)
-    }
-
-    func getStart() -> Date
-    {
-        let (start, _) = self.calcStartAndEndOfDay()
-        return start
-    }
-
     
     var daysInMonth : Int
     {
