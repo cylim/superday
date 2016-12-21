@@ -105,11 +105,10 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     {
         guard !self.isVisible else { return }
         
-        self.calendarCellsShouldAnimate = true
+        self.slideCalendarCells()
         
         DelayedSequence
             .start()
-            .then(self.slideCalendarCells)
             .then(self.fadeOverlay(fadeIn: true))
             .after(0.105, self.fadeElements(fadeIn: true))
             .then(self.toggleInteraction(enable: true))
@@ -139,18 +138,15 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         }
     }
     
-    private func slideCalendarCells(delay: TimeInterval)
+    private func slideCalendarCells()
     {
-        Timer.schedule(withDelay: delay)
-        {
-            DispatchQueue.main.async
-            {
-                self.calendarView.reloadData(withAnchor: nil, animation: true, completionHandler:
-                {
-                    self.calendarCellsShouldAnimate = false
-                })
-            }
-        }
+        self.calendarCellsShouldAnimate = true
+        self.calendarView.reloadData()
+        DispatchQueue.main.async { self.calendarCellsShouldAnimate = false }
+    }
+    
+    private func cancelAnimations()
+    {
     }
     
     private func toggleInteraction(enable: Bool) -> (Double) -> ()
