@@ -14,16 +14,16 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     @IBOutlet weak private var dayOfWeekLabels : UIStackView!
     
     private lazy var viewsToAnimate : [ UIView ] =
-        {
-            let result : [ UIView ] = [
-                self.calendarView,
-                self.monthLabel,
-                self.dayOfWeekLabels,
-                self.leftButton,
-                self.rightButton
-            ]
+    {
+        let result : [ UIView ] = [
+            self.calendarView,
+            self.monthLabel,
+            self.dayOfWeekLabels,
+            self.leftButton,
+            self.rightButton
+        ]
             
-            return result
+        return result
     }()
     
     private var disposeBag = DisposeBag()
@@ -185,8 +185,8 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     {
         if let view = touch.view,
             view.isDescendant(of: self.calendarView) ||
-                view.isDescendant(of: self.leftButton) ||
-                view.isDescendant(of: self.rightButton)
+            view.isDescendant(of: self.leftButton) ||
+            view.isDescendant(of: self.rightButton)
         {
             return false
         }
