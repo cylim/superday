@@ -10,6 +10,7 @@ class PagerViewControllerTests : XCTestCase
     private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
     private var pagerViewController : PagerViewController!
+    private var selectedDateService : SelectedDateService!
     
     override func setUp()
     {
@@ -20,13 +21,15 @@ class PagerViewControllerTests : XCTestCase
         self.appStateService = MockAppStateService()
         self.timeSlotService = MockTimeSlotService()
         self.editStateService = MockEditStateService()
+        self.selectedDateService = DefaultSelectedDateService()
         
         self.pagerViewController = PagerViewController(coder: NSCoder())!
         self.pagerViewController.inject(self.metricsService,
                                         self.appStateService,
                                         self.settingsService,
                                         self.timeSlotService,
-                                        self.editStateService)
+                                        self.editStateService,
+                                        self.selectedDateService)
         
         self.pagerViewController.loadViewIfNeeded()
         UIApplication.shared.keyWindow!.rootViewController = self.pagerViewController
@@ -97,8 +100,8 @@ class PagerViewControllerTests : XCTestCase
     {
         var didNotify = false
         
-        _ = self.pagerViewController
-                .dateObservable
+        _ = self.selectedDateService
+                .currentlySelectedDateObservable
                 .subscribe(onNext: { _ in didNotify = true })
         
         self.pagerViewController.pageViewController(self.pagerViewController, didFinishAnimating: true, previousViewControllers: self.pagerViewController.viewControllers!, transitionCompleted: true)
