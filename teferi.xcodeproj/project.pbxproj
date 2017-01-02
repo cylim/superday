@@ -67,6 +67,8 @@
 		2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */; };
 		2482CAFE1DB12F9F00E892C1 /* OnboardingPage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */; };
 		2482CAFF1DB12F9F00E892C1 /* OnboardingPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */; };
+		249B359F1E1A8BBA005793B9 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B359E1E1A8BBA005793B9 /* Activity.swift */; };
+		249B35A11E1A8C33005793B9 /* DateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35A01E1A8C33005793B9 /* DateChange.swift */; };
 		249E888F1DFA2E2D000EDFCD /* ObservableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E888E1DFA2E2D000EDFCD /* ObservableExtensions.swift */; };
 		249E88911DFB097B000EDFCD /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E88901DFB097B000EDFCD /* ArrayExtensions.swift */; };
 		24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */; };
@@ -235,6 +237,8 @@
 		2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage3.swift; path = Onboarding/OnboardingPage3.swift; sourceTree = "<group>"; };
 		2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage4.swift; path = Onboarding/OnboardingPage4.swift; sourceTree = "<group>"; };
 		2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPager.swift; path = Onboarding/OnboardingPager.swift; sourceTree = "<group>"; };
+		249B359E1E1A8BBA005793B9 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Models/Activity.swift; sourceTree = "<group>"; };
+		249B35A01E1A8C33005793B9 /* DateChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateChange.swift; path = Models/DateChange.swift; sourceTree = "<group>"; };
 		249E888E1DFA2E2D000EDFCD /* ObservableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableExtensions.swift; path = Extensions/ObservableExtensions.swift; sourceTree = "<group>"; };
 		249E88901DFB097B000EDFCD /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtensions.swift; path = Extensions/ArrayExtensions.swift; sourceTree = "<group>"; };
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -496,6 +500,8 @@
 				24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */,
 				24C72AA51D906BDA00DABAC3 /* LogLevel.swift */,
 				24D18E251DEF6D640046B202 /* SmartGuess.swift */,
+				249B359E1E1A8BBA005793B9 /* Activity.swift */,
+				249B35A01E1A8C33005793B9 /* DateChange.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1311,6 +1317,8 @@
 				2420A86C1DB7BE6900C0478C /* PermissionView.swift in Sources */,
 				243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
+				249B359F1E1A8BBA005793B9 /* Activity.swift in Sources */,
+				249B35A11E1A8C33005793B9 /* DateChange.swift in Sources */,
 				24EB967F1DE708570040C211 /* Predicate.swift in Sources */,
 				24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */,
 				836616BE1DEDBC730068195A /* CalendarViewModel.swift in Sources */,

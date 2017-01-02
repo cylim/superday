@@ -1,12 +1,6 @@
 import RxSwift
 import Foundation
 
-struct DateChange
-{
-    let newDate : Date
-    let oldDate : Date
-}
-
 class PagerViewModel
 {
     //MARK: Fields
@@ -24,7 +18,7 @@ class PagerViewModel
     {
         return self.selectedDateService
             .currentlySelectedDateObservable
-            .map(self.dateIsDifferentFromCurrent)
+            .map(self.toDateChange)
             .filterNil()
     }()
     
@@ -49,7 +43,7 @@ class PagerViewModel
         return dateWithNoTime >= minDate && dateWithNoTime <= maxDate
     }
     
-    private func dateIsDifferentFromCurrent(_ date: Date) -> DateChange?
+    private func toDateChange(_ date: Date) -> DateChange?
     {
         if date != self.currentlySelectedDate
         {

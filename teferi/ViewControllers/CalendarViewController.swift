@@ -145,10 +145,6 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         DispatchQueue.main.async { self.calendarCellsShouldAnimate = false }
     }
     
-    private func cancelAnimations()
-    {
-    }
-    
     private func toggleInteraction(enable: Bool) -> (Double) -> ()
     {
         return { delay in
@@ -206,13 +202,12 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     
     private func getHeaderName(forDate date: Date) -> NSMutableAttributedString
     {
-        let monthName = DateFormatter().monthSymbols[(date.month - 1) % 12 ]
+        let monthName = DateFormatter().monthSymbols[(date.month - 1) % 12]
+        let result = NSMutableAttributedString(string: "\(monthName) ",
+                                               attributes: [ NSForegroundColorAttributeName: UIColor.black ])
         
-        let result = NSMutableAttributedString(string: "\(monthName) ", attributes: [ NSForegroundColorAttributeName: UIColor.black ] )
-        
-        let yearString = NSAttributedString(string: String(date.year),
-                                            attributes: [ NSForegroundColorAttributeName: Color.offBlackTransparent ])
-        result.append(yearString)
+        result.append(NSAttributedString(string: String(date.year),
+                                         attributes: [ NSForegroundColorAttributeName: Color.offBlackTransparent ]))
         
         return result
     }

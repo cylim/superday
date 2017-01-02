@@ -5,7 +5,7 @@ class CalendarDailyActivityView : UIView
 {
     func reset()
     {
-        self.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        self.layer.sublayers?.forEach { sublayer in sublayer.removeFromSuperlayer() }
         
         self.clipsToBounds = true
         self.layer.cornerRadius = 1.0
@@ -18,13 +18,12 @@ class CalendarDailyActivityView : UIView
         
         guard let activities = dailyActivity else
         {
-            self.backgroundColor = Color.lightGreyColor
+            self.backgroundColor = Color.lightGray
             return
         }
         
         self.backgroundColor = UIColor.clear
         
-        //self.activityView.layoutIfNeeded()
         let totalTimeSpent = activities.reduce(0.0, self.sumDuration)
         let availableWidth = Double(self.bounds.size.width - CGFloat(activities.count) + 1.0)
         
