@@ -15,6 +15,7 @@ class MainViewModel
     private let locationService : LocationService
     private let editStateService : EditStateService
     private let smartGuessService : SmartGuessService
+    private let selectedDateService : SelectedDateService
     
     init(metricsService: MetricsService,
          feedbackService: FeedbackService,
@@ -22,7 +23,8 @@ class MainViewModel
          timeSlotService: TimeSlotService,
          locationService : LocationService,
          editStateService: EditStateService,
-         smartGuessService : SmartGuessService)
+         smartGuessService : SmartGuessService,
+        selectedDateService : SelectedDateService)
     {
         self.metricsService = metricsService
         self.feedbackService = feedbackService
@@ -31,10 +33,11 @@ class MainViewModel
         self.locationService = locationService
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
+        self.selectedDateService = selectedDateService
     }
     
     // MARK: Properties
-    var currentDate = Date()
+    var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable}
     
     var shouldShowLocationPermissionOverlay : Bool
     {
@@ -50,6 +53,8 @@ class MainViewModel
     }
     
     ///Current date for the calendar button
+    var currentlySelectedDate : Date { return self.selectedDateService.currentlySelectedDate }
+    
     var calendarDay : String
     {
         let currentDay = Calendar.current.component(.day, from: Date())
@@ -62,11 +67,11 @@ class MainViewModel
         let today = Date().ignoreTimeComponents()
         let yesterday = today.yesterday.ignoreTimeComponents()
         
-        if currentDate.ignoreTimeComponents() == today
+        if self.currentlySelectedDate.ignoreTimeComponents() == today
         {
             return self.currentDayBarTitle.translate()
         }
-        else if currentDate.ignoreTimeComponents() == yesterday
+        else if self.currentlySelectedDate.ignoreTimeComponents() == yesterday
         {
             return self.yesterdayBarTitle.translate()
         }
@@ -75,7 +80,7 @@ class MainViewModel
         dayOfMonthFormatter.timeZone = TimeZone.autoupdatingCurrent;
         dayOfMonthFormatter.dateFormat = "dd MMMM";
         
-        return dayOfMonthFormatter.string(from: currentDate)
+        return dayOfMonthFormatter.string(from: self.currentlySelectedDate)
     }
     
     //MARK: Methods
