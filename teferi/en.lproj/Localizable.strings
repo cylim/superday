@@ -1,5 +1,7 @@
-"Superday" = "Superday";
-"Superyesterday" = "Superyesterday";
+"AppName" = "Supertoday";
+
+"CurrentDayBarTitle" = "Supertoday";
+"YesterdayBarTitle" = "Superyesterday";
 
 "LocationDisabledTitleFirstUse" = "You're almost done!";
 "LocationDisabledDescriptionFirstUse" = "We need to access your location to make the whole experience possible. 😎";

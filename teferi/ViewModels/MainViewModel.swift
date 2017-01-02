@@ -5,8 +5,8 @@ import RxSwift
 class MainViewModel
 {
     // MARK: Fields
-    private let superday = "Superday"
-    private let superyesterday = "Superyesterday"
+    private let currentDayBarTitle = "CurrentDayBarTitle"
+    private let yesterdayBarTitle = "YesterdayBarTitle"
     
     private let metricsService : MetricsService
     private let feedbackService: FeedbackService
@@ -69,11 +69,11 @@ class MainViewModel
         
         if self.currentlySelectedDate.ignoreTimeComponents() == today
         {
-            return superday.translate()
+            return self.currentDayBarTitle.translate()
         }
         else if self.currentlySelectedDate.ignoreTimeComponents() == yesterday
         {
-            return superyesterday.translate()
+            return self.yesterdayBarTitle.translate()
         }
         
         let dayOfMonthFormatter = DateFormatter();

@@ -38,7 +38,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         self.loggingService = SwiftyBeaverLoggingService()
         self.selectedDateService = DefaultSelectedDateService()
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
-        self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Superday feedback", body: "")
+        self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Supertoday feedback", body: "")
         
         let timeSlotPersistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
                                                                               modelAdapter: TimeSlotModelAdapter())
