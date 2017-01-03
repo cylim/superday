@@ -8,17 +8,21 @@ class TimelineViewModelTests : XCTestCase
 {
     private var disposable : Disposable? = nil
     private var viewModel : TimelineViewModel!
+    
+    private var timeService : TimeService!
     private var mockMetricsService : MockMetricsService!
     private var mockAppStateService : MockAppStateService!
     private var mockTimeSlotService : MockTimeSlotService!
 
     override func setUp()
     {
+        self.timeService = MockTimeService()
         self.mockMetricsService = MockMetricsService()
         self.mockAppStateService = MockAppStateService()
         self.mockTimeSlotService = MockTimeSlotService()
         
         self.viewModel = TimelineViewModel(date: Date(),
+                                           timeService: self.timeService,
                                            metricsService: self.mockMetricsService,
                                            appStateService: self.mockAppStateService,
                                            timeSlotService: self.mockTimeSlotService)
@@ -43,6 +47,7 @@ class TimelineViewModelTests : XCTestCase
     {
         let newMockTimeSlotService = MockTimeSlotService()
         _ = TimelineViewModel(date: Date().yesterday,
+                              timeService: self.timeService,
                               metricsService: self.mockMetricsService,
                               appStateService: self.mockAppStateService,
                               timeSlotService: newMockTimeSlotService)

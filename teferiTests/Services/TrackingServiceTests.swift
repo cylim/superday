@@ -11,6 +11,8 @@ class TrackingServiceTests : XCTestCase
     
     private var midnight : Date!
     private var noon : Date!
+    
+    private var timeService : TimeService!
     private var loggingService : LoggingService!
     private var settingsService : SettingsService!
     private var trackingService : TrackingService!
@@ -22,13 +24,16 @@ class TrackingServiceTests : XCTestCase
     {
         self.midnight = Date().ignoreTimeComponents()
         self.noon = self.midnight.addingTimeInterval(12 * 60 * 60)
+        
+        self.timeService = MockTimeService()
         self.loggingService = MockLoggingService()
         self.settingsService = MockSettingsService()
         self.timeSlotService = MockTimeSlotService()
         self.smartGuessService = MockSmartGuessService()
         self.notificationService = MockNotificationService()
         
-        self.trackingService = DefaultTrackingService(loggingService: self.loggingService,
+        self.trackingService = DefaultTrackingService(timeService: self.timeService,
+                                                      loggingService: self.loggingService,
                                                       settingsService: self.settingsService,
                                                       timeSlotService: self.timeSlotService,
                                                       smartGuessService: self.smartGuessService,

@@ -17,18 +17,23 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var gestureRecognizer : UIGestureRecognizer!
     private lazy var viewModel : MainViewModel =
     {
-        return MainViewModel(metricsService: self.metricsService,
+        return MainViewModel(timeService: self.timeService,
+                             metricsService: self.metricsService,
                              feedbackService: self.feedbackService,
                              settingsService: self.settingsService,
                              timeSlotService: self.timeSlotService,
                              locationService: self.locationService,
                              editStateService: self.editStateService,
-                             smartGuessService: self.smartGuessService)
+                             smartGuessService: self.smartGuessService,
+                             selectedDateService: self.selectedDateService)
     }()
     
-    private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
+    private var pagerViewController : PagerViewController { return self.childViewControllers.firstOfType() }
+    
+    private var calendarViewController : CalendarViewController { return self.childViewControllers.firstOfType() }
     
     //Dependencies
+    private var timeService : TimeService!
     private var metricsService : MetricsService!
     private var feedbackService: FeedbackService!
     private var appStateService : AppStateService!
@@ -37,6 +42,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var timeSlotService : TimeSlotService!
     private var editStateService : EditStateService!
     private var smartGuessService: SmartGuessService!
+    private var selectedDateService : SelectedDateService!
     
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
@@ -48,15 +54,18 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var calendarButton : UIButton!
     @IBOutlet private weak var contactButton: UIButton!
     
-    func inject(_ metricsService: MetricsService,
+    func inject(_ timeService: TimeService,
+                _ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ locationService: LocationService,
                 _ settingsService: SettingsService,
                 _ timeSlotService: TimeSlotService,
                 _ editStateService: EditStateService,
                 _ feedbackService: FeedbackService,
-                _ smartGuessService: SmartGuessService) -> MainViewController
+                _ smartGuessService: SmartGuessService,
+                _ selectedDateService: SelectedDateService) -> MainViewController
     {
+        self.timeService = timeService
         self.metricsService = metricsService
         self.feedbackService = feedbackService
         self.appStateService = appStateService
@@ -65,6 +74,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.timeSlotService = timeSlotService
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
+        self.selectedDateService = selectedDateService
         
         return self
     }
@@ -74,37 +84,48 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         super.viewDidLoad()
         
-        //Inject PagerViewController's dependencies
-        self.pagerViewController.inject(self.metricsService,
+        self.calendarViewController.inject(timeService: self.timeService,
+                                           settingsService: self.settingsService,
+                                           timeSlotService: self.timeSlotService,
+                                           selectedDateService: self.selectedDateService)
+        
+        self.pagerViewController.inject(self.timeService,
+                                        self.metricsService,
                                         self.appStateService,
                                         self.settingsService,
                                         self.timeSlotService,
-                                        self.editStateService)        
+                                        self.editStateService,
+                                        self.selectedDateService)
+        
+        //Edit View
+        self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
+        self.view.insertSubview(self.editView, belowSubview: self.calendarViewController.view.superview!)
+        self.editView.constrainEdges(to: self.view)
+        
+        //Add button
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
+        self.view.insertSubview(self.addButton, belowSubview: self.editView)
+        self.addButton.snp.makeConstraints { make in
+            make.height.equalTo(320)
+            make.left.right.bottom.equalTo(self.view)
+        }
         
         //Add fade overlay at bottom of timeline
-        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
+        let bottomFadeStartColor = Color.white
         let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
         let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
         let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
         fadeView.isUserInteractionEnabled = false
-        self.view.addSubview(fadeView)
+        self.view.insertSubview(fadeView, aboveSubview: self.addButton)
         fadeView.snp.makeConstraints { make in
             make.bottom.left.right.equalTo(self.view)
             make.height.equalTo(100)
         }
         
-        //Add button
-        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
-        
-        //Edit View
-        self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
-        self.view.addSubview(self.editView)
-        self.editView.constrainEdges(to: self.view)
-        
         if self.isFirstUse
         {
             //Sets the first TimeSlot's category to leisure
-            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure, categoryWasSetByUser: false)
+            let timeSlot = TimeSlot(withStartTime: self.timeService.now, category: .leisure, categoryWasSetByUser: false)
             self.timeSlotService.add(timeSlot: timeSlot)
         }
         else
@@ -147,7 +168,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .addDisposableTo(self.disposeBag)
         
         //Date updates for title label
-        self.pagerViewController
+        self.viewModel
             .dateObservable
             .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(self.disposeBag)
@@ -170,23 +191,17 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Actions
     @IBAction func onCalendarTouchUpInside()
     {
-        let today = Date().ignoreTimeComponents()
-        
-        guard self.viewModel.currentDate.ignoreTimeComponents() != today else { return }
-        
-        self.pagerViewController.setViewControllers(
-            [ TimelineViewController(date: today,
-                                     metricsService: self.metricsService,
-                                     appStateService: self.appStateService,
-                                     timeSlotService: self.timeSlotService,
-                                     editStateService: self.editStateService) ],
-            direction: .forward,
-            animated: true,
-            completion: nil)
-        
-        self.onDateChanged(date: today)
+        if self.calendarViewController.isVisible
+        {
+            self.calendarViewController.hide()
+        }
+        else
+        {
+            self.calendarViewController.show()
+        }
     }
     
+    // MARK: Calendar Actions
     @IBAction func onContactTouchUpInside()
     {
         self.feedbackService.composeFeedback(parentViewController: self) {
@@ -249,10 +264,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     private func onDateChanged(date: Date)
     {
-        self.viewModel.currentDate = date
         self.titleLabel.text = viewModel.title
         
-        let today = Date().ignoreTimeComponents()
+        let today = self.timeService.now.ignoreTimeComponents()
         let isToday = today == date.ignoreTimeComponents()
         let alpha = CGFloat(isToday ? 1 : 0)
         
@@ -263,6 +277,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         self.addButton.close()
         self.addButton.isUserInteractionEnabled = isToday
+        
+        self.updateSelectedDate(date: date)
     }
     
     private func onEditChanged(_ isEditing: Bool)
@@ -283,5 +299,15 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         fadeOverlay.startPoint = CGPoint(x: 0.0, y: 1.0)
         fadeOverlay.endPoint = CGPoint(x: 0.0, y: 0.0)
         return fadeOverlay
+    }
+    
+    func updateSelectedDate(date: Date)
+    {
+        self.calendarViewController.hide()
+    }
+    
+    private func onCalendarClose(date: Date)
+    {
+        self.calendarViewController.hide()
     }
 }

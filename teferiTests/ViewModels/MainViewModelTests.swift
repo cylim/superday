@@ -7,30 +7,38 @@ class MainViewModelTests : XCTestCase
 {
     private var viewModel : MainViewModel!
     private var disposable : Disposable? = nil
+    
+    private var timeService : TimeService!
     private var editStateService : EditStateService!
     private var mockMetricsService : MockMetricsService!
     private var mockFeedbackService: MockFeedbackService!
     private var mockLocationService : MockLocationService!
     private var mockSettingsService : MockSettingsService!
     private var mockTimeSlotService : MockTimeSlotService!
+    private var selectedDateService : SelectedDateService!
     private var mockSmartGuessService : MockSmartGuessService!
+    
     override func setUp()
     {
+        self.timeService = MockTimeService()
         self.mockMetricsService = MockMetricsService()
         self.mockLocationService = MockLocationService()
         self.mockSettingsService = MockSettingsService()
-        self.editStateService = DefaultEditStateService()
         self.mockTimeSlotService = MockTimeSlotService()
         self.mockFeedbackService = MockFeedbackService()
         self.mockSmartGuessService = MockSmartGuessService()
+        self.editStateService = DefaultEditStateService(timeService: self.timeService)
+        self.selectedDateService = DefaultSelectedDateService(timeService: self.timeService)
         
-        self.viewModel = MainViewModel(metricsService: self.mockMetricsService,
+        self.viewModel = MainViewModel(timeService: self.timeService,
+                                       metricsService: self.mockMetricsService,
                                        feedbackService: self.mockFeedbackService,
                                        settingsService: self.mockSettingsService,
                                        timeSlotService: self.mockTimeSlotService,
                                        locationService: self.mockLocationService,
                                        editStateService: self.editStateService,
-                                       smartGuessService: self.mockSmartGuessService)
+                                       smartGuessService: self.mockSmartGuessService,
+                                       selectedDateService: self.selectedDateService)
     }
     
     override func tearDown()
@@ -41,22 +49,22 @@ class MainViewModelTests : XCTestCase
     func testTheTitlePropertyReturnsSuperdayForTheCurrentDate()
     {
         let today = Date()
-        self.viewModel.currentDate = today
+        self.selectedDateService.currentlySelectedDate = today
         
-        expect(self.viewModel.title).to(equal("Superday".translate()))
+        expect(self.viewModel.title).to(equal("CurrentDayBarTitle".translate()))
     }
     
     func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
     {
         let yesterday = Date().yesterday
-        self.viewModel.currentDate = yesterday
-        expect(self.viewModel.title).to(equal("Superyesterday".translate()))
+        self.selectedDateService.currentlySelectedDate = yesterday
+        expect(self.viewModel.title).to(equal("YesterdayBarTitle".translate()))
     }
     
     func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()
     {
         let olderDate = Date().add(days: -2)
-        self.viewModel.currentDate = olderDate
+        self.selectedDateService.currentlySelectedDate = olderDate
         
         let formatter = DateFormatter();
         formatter.timeZone = TimeZone.autoupdatingCurrent;

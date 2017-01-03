@@ -4,14 +4,18 @@ import Foundation
 class DefaultTimeSlotService : TimeSlotService
 {
     //MARK: Fields
+    private let timeService : TimeService
     private let loggingService : LoggingService
     private let persistencyService : BasePersistencyService<TimeSlot>
     
     private var createCallbacks = [(TimeSlot) -> ()]()
     private var updateCallbacks = [(TimeSlot) -> ()]()
     
-    init(loggingService: LoggingService, persistencyService: BasePersistencyService<TimeSlot>)
+    init(timeService: TimeService,
+         loggingService: LoggingService,
+         persistencyService: BasePersistencyService<TimeSlot>)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.persistencyService = persistencyService
     }
@@ -65,7 +69,8 @@ class DefaultTimeSlotService : TimeSlotService
     
     func getLast() -> TimeSlot
     {
-        return self.persistencyService.getLast() ?? TimeSlot(withStartTime: Date(), categoryWasSetByUser: false)
+        return self.persistencyService.getLast() ?? TimeSlot(withStartTime: self.timeService.now,
+                                                             categoryWasSetByUser: false)
     }
     
     func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())

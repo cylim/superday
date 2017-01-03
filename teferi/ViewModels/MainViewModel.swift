@@ -5,9 +5,10 @@ import RxSwift
 class MainViewModel
 {
     // MARK: Fields
-    private let superday = "Superday"
-    private let superyesterday = "Superyesterday"
+    private let currentDayBarTitle = "CurrentDayBarTitle"
+    private let yesterdayBarTitle = "YesterdayBarTitle"
     
+    private let timeService : TimeService
     private let metricsService : MetricsService
     private let feedbackService: FeedbackService
     private let timeSlotService : TimeSlotService
@@ -15,15 +16,19 @@ class MainViewModel
     private let locationService : LocationService
     private let editStateService : EditStateService
     private let smartGuessService : SmartGuessService
+    private let selectedDateService : SelectedDateService
     
-    init(metricsService: MetricsService,
+    init(timeService: TimeService,
+         metricsService: MetricsService,
          feedbackService: FeedbackService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          locationService : LocationService,
          editStateService: EditStateService,
-         smartGuessService : SmartGuessService)
+         smartGuessService : SmartGuessService,
+         selectedDateService : SelectedDateService)
     {
+        self.timeService = timeService
         self.metricsService = metricsService
         self.feedbackService = feedbackService
         self.settingsService = settingsService
@@ -31,10 +36,16 @@ class MainViewModel
         self.locationService = locationService
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
+        self.selectedDateService = selectedDateService
+        
+        self.currentDate = self.timeService.now
+    
     }
     
     // MARK: Properties
-    var currentDate = Date()
+    var currentDate : Date
+    
+    var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable}
     
     var shouldShowLocationPermissionOverlay : Bool
     {
@@ -46,36 +57,38 @@ class MainViewModel
         let minimumRequestDate = lastRequestedDate.add(days: 1)
         
         //If we previously showed the overlay, we must only do it again after 24 hours
-        return minimumRequestDate < Date()
+        return minimumRequestDate < self.timeService.now
     }
     
     ///Current date for the calendar button
+    var currentlySelectedDate : Date { return self.selectedDateService.currentlySelectedDate }
+    
     var calendarDay : String
     {
-        let currentDay = Calendar.current.component(.day, from: Date())
+        let currentDay = Calendar.current.component(.day, from: self.timeService.now)
         return String(format: "%02d", currentDay)
     }
     
     ///Gets the title for the header. Changes on new locations.
     var title : String
     {
-        let today = Date().ignoreTimeComponents()
+        let today = self.timeService.now.ignoreTimeComponents()
         let yesterday = today.yesterday.ignoreTimeComponents()
         
-        if currentDate.ignoreTimeComponents() == today
+        if self.currentlySelectedDate.ignoreTimeComponents() == today
         {
-            return superday.translate()
+            return self.currentDayBarTitle.translate()
         }
-        else if currentDate.ignoreTimeComponents() == yesterday
+        else if self.currentlySelectedDate.ignoreTimeComponents() == yesterday
         {
-            return superyesterday.translate()
+            return self.yesterdayBarTitle.translate()
         }
         
         let dayOfMonthFormatter = DateFormatter();
         dayOfMonthFormatter.timeZone = TimeZone.autoupdatingCurrent;
         dayOfMonthFormatter.dateFormat = "dd MMMM";
         
-        return dayOfMonthFormatter.string(from: currentDate)
+        return dayOfMonthFormatter.string(from: self.currentlySelectedDate)
     }
     
     //MARK: Methods
@@ -89,7 +102,7 @@ class MainViewModel
     {
         let currentLocation = self.locationService.getLastKnownLocation()
         
-        let newSlot = TimeSlot(withStartTime: Date(),
+        let newSlot = TimeSlot(withStartTime: self.timeService.now,
                                category: category,
                                location: currentLocation,
                                categoryWasSetByUser: true)

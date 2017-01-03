@@ -6,12 +6,17 @@ class DefaultSmartGuessService : SmartGuessService
     //MARK: Fields
     private let smartGuessErrorThreshold = 3
     private let smartGuessIdKey = "smartGuessId"
+    private let timeService : TimeService
     private let loggingService: LoggingService
     private let settingsService: SettingsService
     private let persistencyService : BasePersistencyService<SmartGuess>
     
-    init(loggingService: LoggingService, settingsService: SettingsService, persistencyService: BasePersistencyService<SmartGuess>)
+    init(timeService: TimeService,
+         loggingService: LoggingService,
+         settingsService: SettingsService,
+         persistencyService: BasePersistencyService<SmartGuess>)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.settingsService = settingsService
         self.persistencyService = persistencyService
@@ -20,7 +25,7 @@ class DefaultSmartGuessService : SmartGuessService
     @discardableResult func add(withCategory category: Category, location: CLLocation) -> SmartGuess?
     {
         let id = self.getNextSmartGuessId()
-        let smartGuess = SmartGuess(withId: id, category: category, location: location, lastUsed: Date())
+        let smartGuess = SmartGuess(withId: id, category: category, location: location, lastUsed: self.timeService.now)
         
         guard self.persistencyService.create(smartGuess) else
         {
@@ -76,7 +81,7 @@ class DefaultSmartGuessService : SmartGuessService
         
         //Every time a dictionary entry gets used in a guess, it gets refreshed.
         //Entries not refresh in N days get purged
-        let lastUsedDate = Date()
+        let lastUsedDate = self.timeService.now
         
         let predicate = Predicate(parameter: SmartGuessModelAdapter.idKey, equals: bestMatch.id as AnyObject)
         self.persistencyService.update(withPredicate: predicate, updateFunction: { smartGuess in

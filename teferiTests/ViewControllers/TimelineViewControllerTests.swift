@@ -6,6 +6,8 @@ import RxSwift
 class TimelineViewControllerTests : XCTestCase
 {
     private var viewModel : TimelineViewModel!
+    
+    private var timeService : TimeService!
     private var mockMetricsService : MockMetricsService!
     private var mockAppStateService : MockAppStateService!
     private var mockTimeSlotService : MockTimeSlotService!
@@ -16,17 +18,20 @@ class TimelineViewControllerTests : XCTestCase
     {
         super.setUp()
         
+        self.timeService = MockTimeService()
         self.mockMetricsService = MockMetricsService()
         self.mockAppStateService = MockAppStateService()
         self.mockTimeSlotService = MockTimeSlotService()
         self.mockEditStateService = MockEditStateService()
         
         self.viewModel = TimelineViewModel(date: Date(),
+                                           timeService: self.timeService,
                                            metricsService: self.mockMetricsService,
                                            appStateService: self.mockAppStateService,
                                            timeSlotService: self.mockTimeSlotService)
         
         self.timelineViewController = TimelineViewController(date: Date(),
+                                                             timeService: self.timeService,
                                                              metricsService: self.mockMetricsService,
                                                              appStateService: self.mockAppStateService,
                                                              timeSlotService: self.mockTimeSlotService,

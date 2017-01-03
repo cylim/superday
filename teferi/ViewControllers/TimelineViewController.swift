@@ -11,7 +11,9 @@ class TimelineViewController : UITableViewController
     private static let baseCellHeight = 40
     private let disposeBag = DisposeBag()
     private let viewModel : TimelineViewModel
-    private var editStateService : EditStateService
+    
+    private var timeService : TimeService!
+    private var editStateService : EditStateService!
     
     private let cellIdentifier = "timelineCell"
     private let emptyCellIdentifier = "emptyStateView"
@@ -20,13 +22,17 @@ class TimelineViewController : UITableViewController
     
     //MARK: Initializers
     init(date: Date,
+         timeService: TimeService,
          metricsService: MetricsService,
          appStateService: AppStateService,
          timeSlotService: TimeSlotService,
          editStateService: EditStateService)
     {
+        self.timeService = timeService
         self.editStateService = editStateService
+        
         self.viewModel = TimelineViewModel(date: date,
+                                           timeService: timeService,
                                            metricsService: metricsService,
                                            appStateService: appStateService,
                                            timeSlotService: timeSlotService)
@@ -160,7 +166,7 @@ class TimelineViewController : UITableViewController
         
         //Check if need to display the endTime
         var lastInPastDay = false
-        let isPastDay = Date().ignoreTimeComponents() != date.ignoreTimeComponents()
+        let isPastDay = self.timeService.now.ignoreTimeComponents() != date.ignoreTimeComponents()
         let isLastEntry = self.viewModel.timeSlots.count - 1 == indexPath.row
         if isPastDay && isLastEntry
         {

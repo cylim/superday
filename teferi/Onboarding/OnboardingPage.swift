@@ -5,6 +5,8 @@ class OnboardingPage : UIViewController
 {
     private(set) var didAppear = false
     private(set) var nextButtonText : String?
+    
+    private(set) var timeService : TimeService!
     private(set) var settingsService : SettingsService!
     private(set) var appStateService : AppStateService!
     private(set) var notificationService : NotificationService!
@@ -30,11 +32,13 @@ class OnboardingPage : UIViewController
         NotificationCenter.default.removeObserver(self)
     }
     
-    func inject(_ settingsService: SettingsService,
+    func inject(_ timeService: TimeService,
+                _ settingsService: SettingsService,
                 _ appStateService: AppStateService,
                 _ notificationService: NotificationService,
                 _ onboardingPageViewController: OnboardingPageViewController)
     {
+        self.timeService = timeService
         self.appStateService = appStateService
         self.settingsService = settingsService
         self.notificationService = notificationService
@@ -64,9 +68,9 @@ class OnboardingPage : UIViewController
         // override in page
     }
     
-    func t(_ hours : Int, _ minutes : Int) -> Date
+    func getDate(addingHours hours : Int, andMinutes minutes : Int) -> Date
     {
-        return Date()
+        return self.timeService.now
             .ignoreTimeComponents()
             .addingTimeInterval(TimeInterval((hours * 60 + minutes) * 60))
     }

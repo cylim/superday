@@ -6,6 +6,8 @@ class TimelineViewModel
 {
     //MARK: Fields
     private let isCurrentDay : Bool
+    
+    private let timeService : TimeService
     private let metricsService : MetricsService
     private let appStateService : AppStateService
     private let timeSlotService : TimeSlotService
@@ -41,16 +43,19 @@ class TimelineViewModel
     
     //MARK: Initializers
     init(date: Date,
+         timeService: TimeService,
          metricsService : MetricsService,
          appStateService: AppStateService,
          timeSlotService: TimeSlotService)
     {
-        self.isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
-        self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
-        
+        self.timeService = timeService
         self.metricsService = metricsService
         self.appStateService = appStateService
         self.timeSlotService = timeSlotService
+        
+        self.isCurrentDay = self.timeService.now.ignoreTimeComponents() == date.ignoreTimeComponents()
+        self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
+        
         self.date = date.ignoreTimeComponents()
         self.isEditingObservable = self.isEditingVariable.asObservable()
         self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
@@ -70,7 +75,7 @@ class TimelineViewModel
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0
         {
-            self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
+            self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: self.timeService.now, categoryWasSetByUser: false))
         }
     }
     
@@ -82,7 +87,7 @@ class TimelineViewModel
         //Finishes last task, if needed
         if let lastTimeSlot = self.timeSlots.last
         {
-            lastTimeSlot.endTime = Date()
+            lastTimeSlot.endTime = self.timeService.now
         }
         
         self.timeSlots.append(timeSlot)

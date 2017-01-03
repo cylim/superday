@@ -12,8 +12,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let disposeBag = DisposeBag()
     private let notificationAuthorizationVariable = Variable(false)
     
+    private let timeService : TimeService
     private let metricsService : MetricsService
     private let loggingService : LoggingService
+    private let feedbackService: FeedbackService
     private var appStateService : AppStateService
     private let locationService : LocationService
     private let settingsService : SettingsService
@@ -22,7 +24,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     private let editStateService : EditStateService
     private let smartGuessService : SmartGuessService
     private let notificationService : NotificationService
-    private let feedbackService: FeedbackService
+    private let selectedDateService : DefaultSelectedDateService
     
     //MARK: Properties
     var window: UIWindow?
@@ -30,13 +32,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     //Initializers
     override init()
     {
+        self.timeService = DefaultTimeService()
         self.metricsService = FabricMetricsService()
         self.appStateService = DefaultAppStateService()
         self.settingsService = DefaultSettingsService()
-        self.editStateService = DefaultEditStateService()
         self.loggingService = SwiftyBeaverLoggingService()
+        self.editStateService = DefaultEditStateService(timeService: self.timeService)
         self.locationService = DefaultLocationService(loggingService: self.loggingService)
-        self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Superday feedback", body: "")
+        self.selectedDateService = DefaultSelectedDateService(timeService: self.timeService)
+        self.feedbackService = MailFeedbackService(recipients: ["support@toggl.com"], subject: "Supertoday feedback", body: "")
         
         let timeSlotPersistencyService = CoreDataPersistencyService<TimeSlot>(loggingService: self.loggingService,
                                                                               modelAdapter: TimeSlotModelAdapter())
@@ -44,16 +48,19 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         let smartGuessPersistencyService = CoreDataPersistencyService<SmartGuess>(loggingService: self.loggingService,
                                                                                   modelAdapter: SmartGuessModelAdapter())
         
-        self.smartGuessService = DefaultSmartGuessService(loggingService: self.loggingService,
+        self.smartGuessService = DefaultSmartGuessService(timeService: self.timeService,
+                                                          loggingService: self.loggingService,
                                                           settingsService: self.settingsService,
                                                           persistencyService: smartGuessPersistencyService)
         
-        self.timeSlotService = DefaultTimeSlotService(loggingService: self.loggingService,
+        self.timeSlotService = DefaultTimeSlotService(timeService: self.timeService,
+                                                      loggingService: self.loggingService,
                                                       persistencyService: timeSlotPersistencyService)
         
         if #available(iOS 10.0, *)
         {
-            self.notificationService = PostiOSTenNotificationService(loggingService: self.loggingService,
+            self.notificationService = PostiOSTenNotificationService(timeService: self.timeService,
+                                                                     loggingService: self.loggingService,
                                                                      timeSlotService: self.timeSlotService)
         }
         else
@@ -63,7 +70,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         }
         
         self.trackingService =
-            DefaultTrackingService(loggingService: self.loggingService,
+            DefaultTrackingService(timeService: self.timeService,
+                                   loggingService: self.loggingService,
                                    settingsService: self.settingsService,
                                    timeSlotService: self.timeSlotService,
                                    smartGuessService: self.smartGuessService,
@@ -100,7 +108,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         }
         
         self.initializeWindowIfNeeded()
-        self.smartGuessService.purgeEntries(olderThan: Date().add(days: -30))
+        self.smartGuessService.purgeEntries(olderThan: self.timeService.now.add(days: -30))
         
         return true
     }
@@ -116,14 +124,16 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
         var initialViewController : UIViewController =
-            mainViewController.inject(self.metricsService,
+            mainViewController.inject(self.timeService,
+                                      self.metricsService,
                                       self.appStateService,
                                       self.locationService,
                                       self.settingsService,
                                       self.timeSlotService,
                                       self.editStateService,
                                       self.feedbackService,
-                                      self.smartGuessService)
+                                      self.smartGuessService,
+                                      self.selectedDateService)
         
         if self.settingsService.installDate == nil
         {
@@ -131,7 +141,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
             
             initialViewController =
-                onboardController.inject(self.settingsService,
+                onboardController.inject(self.timeService,
+                                         self.settingsService,
                                          self.appStateService,
                                          mainViewController,
                                          notificationService)

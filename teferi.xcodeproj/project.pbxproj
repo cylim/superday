@@ -28,6 +28,9 @@
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
 		242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */; };
+		243D1D7B1E0B152F00C66D84 /* DefaultTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243D1D7A1E0B152F00C66D84 /* DefaultTimeService.swift */; };
+		243D1D7D1E0B155900C66D84 /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243D1D7C1E0B155900C66D84 /* TimeService.swift */; };
+		243D1D7F1E0B1FAD00C66D84 /* MockTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243D1D7E1E0B1FAD00C66D84 /* MockTimeService.swift */; };
 		243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
 		24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A761D92D99F00DA3FA0 /* MetricsService.swift */; };
@@ -65,6 +68,17 @@
 		2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */; };
 		2482CAFE1DB12F9F00E892C1 /* OnboardingPage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */; };
 		2482CAFF1DB12F9F00E892C1 /* OnboardingPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */; };
+		249B35A31E1ADA00005793B9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35A21E1ADA00005793B9 /* CalendarViewController.swift */; };
+		249B35A51E1ADAB7005793B9 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35A41E1ADAB7005793B9 /* CalendarViewModel.swift */; };
+		249B35A71E1ADACB005793B9 /* SelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35A61E1ADACB005793B9 /* SelectedDateService.swift */; };
+		249B35A91E1ADAEE005793B9 /* DefaultSelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35A81E1ADAEE005793B9 /* DefaultSelectedDateService.swift */; };
+		249B35AD1E1ADB03005793B9 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35AA1E1ADB03005793B9 /* CalendarCell.swift */; };
+		249B35AE1E1ADB03005793B9 /* CalendarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 249B35AB1E1ADB03005793B9 /* CalendarCell.xib */; };
+		249B35AF1E1ADB03005793B9 /* CalendarDailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35AC1E1ADB03005793B9 /* CalendarDailyActivityView.swift */; };
+		249B35B21E1ADB40005793B9 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35B01E1ADB40005793B9 /* Activity.swift */; };
+		249B35B31E1ADB40005793B9 /* DateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35B11E1ADB40005793B9 /* DateChange.swift */; };
+		249B35B61E1ADBE6005793B9 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35B41E1ADBE6005793B9 /* ArrayExtensions.swift */; };
+		249B35B71E1ADBE6005793B9 /* ObservableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B35B51E1ADBE6005793B9 /* ObservableExtensions.swift */; };
 		24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */; };
 		24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5A1D9E4D1100452D16 /* SettingsService.swift */; };
 		24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */; };
@@ -186,6 +200,9 @@
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
 		242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoResizingLayerView.swift; path = Views/AutoResizingLayerView.swift; sourceTree = "<group>"; };
+		243D1D7A1E0B152F00C66D84 /* DefaultTimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeService.swift; path = Services/DefaultTimeService.swift; sourceTree = "<group>"; };
+		243D1D7C1E0B155900C66D84 /* TimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeService.swift; path = Services/Protocols/TimeService.swift; sourceTree = "<group>"; };
+		243D1D7E1E0B1FAD00C66D84 /* MockTimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTimeService.swift; path = Mocks/MockTimeService.swift; sourceTree = "<group>"; };
 		243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationService.swift; path = Services/PostiOSTenNotificationService.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24526A761D92D99F00DA3FA0 /* MetricsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsService.swift; path = Services/Protocols/MetricsService.swift; sourceTree = "<group>"; };
@@ -223,6 +240,17 @@
 		2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage3.swift; path = Onboarding/OnboardingPage3.swift; sourceTree = "<group>"; };
 		2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage4.swift; path = Onboarding/OnboardingPage4.swift; sourceTree = "<group>"; };
 		2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPager.swift; path = Onboarding/OnboardingPager.swift; sourceTree = "<group>"; };
+		249B35A21E1ADA00005793B9 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewController.swift; path = ViewControllers/CalendarViewController.swift; sourceTree = "<group>"; };
+		249B35A41E1ADAB7005793B9 /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModel.swift; path = ViewModels/CalendarViewModel.swift; sourceTree = "<group>"; };
+		249B35A61E1ADACB005793B9 /* SelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedDateService.swift; path = Services/Protocols/SelectedDateService.swift; sourceTree = "<group>"; };
+		249B35A81E1ADAEE005793B9 /* DefaultSelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultSelectedDateService.swift; path = Services/DefaultSelectedDateService.swift; sourceTree = "<group>"; };
+		249B35AA1E1ADB03005793B9 /* CalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCell.swift; path = Views/CalendarCell.swift; sourceTree = "<group>"; };
+		249B35AB1E1ADB03005793B9 /* CalendarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CalendarCell.xib; path = Views/CalendarCell.xib; sourceTree = "<group>"; };
+		249B35AC1E1ADB03005793B9 /* CalendarDailyActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarDailyActivityView.swift; path = Views/CalendarDailyActivityView.swift; sourceTree = "<group>"; };
+		249B35B01E1ADB40005793B9 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Models/Activity.swift; sourceTree = "<group>"; };
+		249B35B11E1ADB40005793B9 /* DateChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateChange.swift; path = Models/DateChange.swift; sourceTree = "<group>"; };
+		249B35B41E1ADBE6005793B9 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtensions.swift; path = Extensions/ArrayExtensions.swift; sourceTree = "<group>"; };
+		249B35B51E1ADBE6005793B9 /* ObservableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableExtensions.swift; path = Extensions/ObservableExtensions.swift; sourceTree = "<group>"; };
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewModel.swift; path = ViewModels/PagerViewModel.swift; sourceTree = "<group>"; };
@@ -347,12 +375,12 @@
 		240AC7161D748C8800F21F4F /* teferi */ = {
 			isa = PBXGroup;
 			children = (
-				51899C391DED953000633D82 /* Styles */,
 				24CD8A461D7A13560017C53E /* Extensions */,
 				2421F8C11D9BAC4A00AF8857 /* Helpers */,
 				24BA51A91D74D79C00042CDF /* Models */,
 				24BA51A51D74D69C00042CDF /* Services */,
 				24D99F681D74B92C00E68163 /* Storyboards */,
+				51899C391DED953000633D82 /* Styles */,
 				24D99F671D74B91900E68163 /* ViewControllers */,
 				24D99F661D74B8D700E68163 /* ViewModels */,
 				24D99F691D74B93C00E68163 /* Views */,
@@ -436,6 +464,7 @@
 				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
 				2FB611431DE785AB007C5646 /* MockFeedbackService.swift */,
 				24D18E271DF0251A0046B202 /* MockSmartGuessService.swift */,
+				243D1D7E1E0B1FAD00C66D84 /* MockTimeService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -466,6 +495,8 @@
 		24BA51A91D74D79C00042CDF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				249B35B01E1ADB40005793B9 /* Activity.swift */,
+				249B35B11E1ADB40005793B9 /* DateChange.swift */,
 				24EB967A1DE708570040C211 /* AppState.swift */,
 				24EB967C1DE708570040C211 /* Predicate.swift */,
 				512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */,
@@ -482,6 +513,8 @@
 		24CD8A461D7A13560017C53E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				249B35B41E1ADBE6005793B9 /* ArrayExtensions.swift */,
+				249B35B51E1ADBE6005793B9 /* ObservableExtensions.swift */,
 				24EB96841DE709830040C211 /* PredicateExtensions.swift */,
 				2407A98A1D9D534B00066889 /* TimerExtensions.swift */,
 				24564F611D83265900D9A8AE /* UIColorExtensions.swift */,
@@ -505,6 +538,7 @@
 		24D99F661D74B8D700E68163 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				249B35A41E1ADAB7005793B9 /* CalendarViewModel.swift */,
 				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
 				24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */,
 				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
@@ -516,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				513535D41DA2752A00A365A9 /* Onboarding */,
+				249B35A21E1ADA00005793B9 /* CalendarViewController.swift */,
 				24564F4F1D8320FC00D9A8AE /* MainViewController.swift */,
 				24564F711D832A4F00D9A8AE /* PagerViewController.swift */,
 				24564F501D8320FC00D9A8AE /* TimelineViewController.swift */,
@@ -536,6 +571,9 @@
 		24D99F691D74B93C00E68163 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				249B35AA1E1ADB03005793B9 /* CalendarCell.swift */,
+				249B35AB1E1ADB03005793B9 /* CalendarCell.xib */,
+				249B35AC1E1ADB03005793B9 /* CalendarDailyActivityView.swift */,
 				242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */,
 				24B03B641DA3864500452D16 /* AddTimeSlotView.swift */,
 				24B03B661DA3866400452D16 /* AddTimeSlotView.xib */,
@@ -636,8 +674,10 @@
 		24EB96661DE7079B0040C211 /* State */ = {
 			isa = PBXGroup;
 			children = (
-				24EB966D1DE7080F0040C211 /* EditStateService.swift */,
 				24D213AA1DB8CA4600E429CA /* AppStateService.swift */,
+				24EB966D1DE7080F0040C211 /* EditStateService.swift */,
+				249B35A61E1ADACB005793B9 /* SelectedDateService.swift */,
+				243D1D7C1E0B155900C66D84 /* TimeService.swift */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -655,8 +695,10 @@
 		24EB96681DE707BF0040C211 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				249B35A81E1ADAEE005793B9 /* DefaultSelectedDateService.swift */,
 				24EB966A1DE7080F0040C211 /* DefaultEditStateService.swift */,
 				24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */,
+				243D1D7A1E0B152F00C66D84 /* DefaultTimeService.swift */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -813,7 +855,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Toggl;
 				TargetAttributes = {
 					240AC7131D748C8800F21F4F = {
@@ -872,6 +914,7 @@
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
 				2420A8681DB56B6800C0478C /* EmptyStateView.xib in Resources */,
 				513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */,
+				249B35AE1E1ADB03005793B9 /* CalendarCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,6 +1061,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				249B35A71E1ADACB005793B9 /* SelectedDateService.swift in Sources */,
+				249B35B61E1ADBE6005793B9 /* ArrayExtensions.swift in Sources */,
 				24EB96741DE7080F0040C211 /* DefaultTrackingService.swift in Sources */,
 				24EB96791DE7080F0040C211 /* CoreDataModelAdapter.swift in Sources */,
 				24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */,
@@ -1029,11 +1074,13 @@
 				24EB96751DE7080F0040C211 /* EditStateService.swift in Sources */,
 				2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */,
 				51899C3B1DED954A00633D82 /* Color.swift in Sources */,
+				249B35B71E1ADBE6005793B9 /* ObservableExtensions.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
 				246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */,
 				24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */,
 				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
 				24EB96731DE7080F0040C211 /* DefaultTimeSlotService.swift in Sources */,
+				243D1D7D1E0B155900C66D84 /* TimeService.swift in Sources */,
 				24526A751D92D98800DA3FA0 /* Constants.swift in Sources */,
 				24EB96721DE7080F0040C211 /* DefaultEditStateService.swift in Sources */,
 				24526A771D92D99F00DA3FA0 /* MetricsService.swift in Sources */,
@@ -1041,6 +1088,7 @@
 				24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */,
 				51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */,
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
+				249B35A91E1ADAEE005793B9 /* DefaultSelectedDateService.swift in Sources */,
 				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24EB96831DE709790040C211 /* DelayedSequence.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
@@ -1050,7 +1098,9 @@
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
 				24EB96761DE7080F0040C211 /* TimeSlotService.swift in Sources */,
 				24D18E261DEF6D640046B202 /* SmartGuess.swift in Sources */,
+				243D1D7B1E0B152F00C66D84 /* DefaultTimeService.swift in Sources */,
 				2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */,
+				249B35AD1E1ADB03005793B9 /* CalendarCell.swift in Sources */,
 				24B03B651DA3864500452D16 /* AddTimeSlotView.swift in Sources */,
 				2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */,
 				24526A7D1D92D9BB00DA3FA0 /* Location.swift in Sources */,
@@ -1069,17 +1119,22 @@
 				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
 				247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */,
 				2482CAFE1DB12F9F00E892C1 /* OnboardingPage4.swift in Sources */,
+				249B35AF1E1ADB03005793B9 /* CalendarDailyActivityView.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
+				249B35A51E1ADAB7005793B9 /* CalendarViewModel.swift in Sources */,
 				24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */,
 				24D18E221DEF69030046B202 /* SmartGuessService.swift in Sources */,
 				24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */,
 				242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */,
 				24EB96771DE7080F0040C211 /* MotionService.swift in Sources */,
 				2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */,
+				249B35A31E1ADA00005793B9 /* CalendarViewController.swift in Sources */,
 				24EB967D1DE708570040C211 /* AppState.swift in Sources */,
 				24D18E2E1DF06B450046B202 /* TimeSlotModelAdapter.swift in Sources */,
 				24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */,
 				2420A86C1DB7BE6900C0478C /* PermissionView.swift in Sources */,
+				249B35B21E1ADB40005793B9 /* Activity.swift in Sources */,
+				249B35B31E1ADB40005793B9 /* DateChange.swift in Sources */,
 				243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24EB967F1DE708570040C211 /* Predicate.swift in Sources */,
@@ -1097,6 +1152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
+				243D1D7F1E0B1FAD00C66D84 /* MockTimeService.swift in Sources */,
 				240575B91DC7F39E002C0C06 /* MockAppStateService.swift in Sources */,
 				24EB96871DE7163E0040C211 /* MockTimeSlotService.swift in Sources */,
 				240575BB1DC7F3F4002C0C06 /* MockEditStateService.swift in Sources */,
