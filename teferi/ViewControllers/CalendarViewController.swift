@@ -34,11 +34,13 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     // MARK: Properties
     var isVisible = false
     
-    func inject(settingsService: SettingsService,
+    func inject(timeService: TimeService,
+                settingsService: SettingsService,
                 timeSlotService: TimeSlotService,
                 selectedDateService: SelectedDateService)
     {
-        self.viewModel = CalendarViewModel(settingsService: settingsService,
+        self.viewModel = CalendarViewModel(timeService: timeService,
+                                           settingsService: settingsService,
                                            timeSlotService: timeSlotService,
                                            selectedDateService: selectedDateService)
     }
@@ -67,7 +69,7 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         self.calendarView.delegate = self
         self.calendarView.registerCellViewXib(file: self.calendarCell)
         self.calendarView.cellInset = CGPoint(x: 1.5, y: 2)
-        self.calendarView.scrollToDate(Date())
+        self.calendarView.scrollToDate(self.viewModel.maxValidDate)
         
         self.leftButton.rx.tap
             .subscribe(onNext: self.onLeftClick)

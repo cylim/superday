@@ -5,10 +5,10 @@ import RxSwift
 class CalendarViewModel
 {
     //MARK: Fields
+    private let timeService : TimeService
     private let timeSlotService : TimeSlotService
     private var selectedDateService : SelectedDateService
-    
-    private let currentVisibleCalendarDateVariable = Variable(Date())
+    private let currentVisibleCalendarDateVariable : Variable<Date>
     
     var selectedDate : Date
     {
@@ -17,7 +17,7 @@ class CalendarViewModel
     }
     
     let minValidDate : Date
-    var maxValidDate : Date { return Date() }
+    var maxValidDate : Date { return self.timeService.now }
     
     let currentVisibleCalendarDateObservable : Observable<Date>
     
@@ -29,15 +29,18 @@ class CalendarViewModel
         set(value) { self.currentVisibleCalendarDateVariable.value = value }
     }
     
-    init(settingsService: SettingsService,
+    init(timeService: TimeService,
+         settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          selectedDateService: SelectedDateService)
     {
+        self.timeService = timeService
         self.timeSlotService = timeSlotService
         self.selectedDateService = selectedDateService
         
-        self.minValidDate = settingsService.installDate ?? Date()
+        self.minValidDate = settingsService.installDate ?? timeService.now
         
+        self.currentVisibleCalendarDateVariable = Variable(timeService.now)
         self.currentVisibleCalendarDateObservable = self.currentVisibleCalendarDateVariable.asObservable()
     }
     

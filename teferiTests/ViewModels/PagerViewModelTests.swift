@@ -6,15 +6,19 @@ class PagerViewModelTests : XCTestCase
 {
     //MARK: Fields
     private var viewModel : PagerViewModel!
+    
+    private var timeService : TimeService!
     private var settingsService : SettingsService!
     private var selectedDateService : SelectedDateService!
     
     override func setUp()
     {
+        self.timeService = MockTimeService()
         self.settingsService = MockSettingsService()
-        self.selectedDateService = DefaultSelectedDateService()
+        self.selectedDateService = DefaultSelectedDateService(timeService: self.timeService)
         
-        self.viewModel = PagerViewModel(settingsService: self.settingsService,
+        self.viewModel = PagerViewModel(timeService: self.timeService,
+                                        settingsService: self.settingsService,
                                         selectedDateService: self.selectedDateService)
     }
     

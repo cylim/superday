@@ -8,6 +8,7 @@ class MainViewModel
     private let currentDayBarTitle = "CurrentDayBarTitle"
     private let yesterdayBarTitle = "YesterdayBarTitle"
     
+    private let timeService : TimeService
     private let metricsService : MetricsService
     private let feedbackService: FeedbackService
     private let timeSlotService : TimeSlotService
@@ -17,15 +18,17 @@ class MainViewModel
     private let smartGuessService : SmartGuessService
     private let selectedDateService : SelectedDateService
     
-    init(metricsService: MetricsService,
+    init(timeService: TimeService,
+         metricsService: MetricsService,
          feedbackService: FeedbackService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          locationService : LocationService,
          editStateService: EditStateService,
          smartGuessService : SmartGuessService,
-        selectedDateService : SelectedDateService)
+         selectedDateService : SelectedDateService)
     {
+        self.timeService = timeService
         self.metricsService = metricsService
         self.feedbackService = feedbackService
         self.settingsService = settingsService
@@ -34,9 +37,14 @@ class MainViewModel
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
         self.selectedDateService = selectedDateService
+        
+        self.currentDate = self.timeService.now
+    
     }
     
     // MARK: Properties
+    var currentDate : Date
+    
     var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable}
     
     var shouldShowLocationPermissionOverlay : Bool
@@ -49,7 +57,7 @@ class MainViewModel
         let minimumRequestDate = lastRequestedDate.add(days: 1)
         
         //If we previously showed the overlay, we must only do it again after 24 hours
-        return minimumRequestDate < Date()
+        return minimumRequestDate < self.timeService.now
     }
     
     ///Current date for the calendar button
@@ -57,14 +65,14 @@ class MainViewModel
     
     var calendarDay : String
     {
-        let currentDay = Calendar.current.component(.day, from: Date())
+        let currentDay = Calendar.current.component(.day, from: self.timeService.now)
         return String(format: "%02d", currentDay)
     }
     
     ///Gets the title for the header. Changes on new locations.
     var title : String
     {
-        let today = Date().ignoreTimeComponents()
+        let today = self.timeService.now.ignoreTimeComponents()
         let yesterday = today.yesterday.ignoreTimeComponents()
         
         if self.currentlySelectedDate.ignoreTimeComponents() == today
@@ -94,7 +102,7 @@ class MainViewModel
     {
         let currentLocation = self.locationService.getLastKnownLocation()
         
-        let newSlot = TimeSlot(withStartTime: Date(),
+        let newSlot = TimeSlot(withStartTime: self.timeService.now,
                                category: category,
                                location: currentLocation,
                                categoryWasSetByUser: true)

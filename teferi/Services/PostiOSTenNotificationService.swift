@@ -6,14 +6,16 @@ import UserNotifications
 class PostiOSTenNotificationService : NotificationService
 {
     //MARK: Fields
+    private let timeService : TimeService
     private let loggingService : LoggingService
     private let timeSlotService : TimeSlotService
     
     private var actionSubsribers = [(Category) -> ()]()
     
     //MARK: Initializers
-    init(loggingService: LoggingService, timeSlotService : TimeSlotService)
+    init(timeService: TimeService, loggingService: LoggingService, timeSlotService : TimeSlotService)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.timeSlotService = timeSlotService
     }
@@ -27,7 +29,7 @@ class PostiOSTenNotificationService : NotificationService
     
     func scheduleNotification(date: Date, title: String, message: String)
     {
-        loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
+        self.loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
         
         let notification = UILocalNotification()
         notification.fireDate = date
@@ -42,7 +44,7 @@ class PostiOSTenNotificationService : NotificationService
         
         let lastThreeTimeSlotsDictionary =
             self.timeSlotService
-                .getTimeSlots(forDay: Date())
+                .getTimeSlots(forDay: self.timeService.now)
                 .suffix(3)
                 .map { (timeSlot) -> [String: String] in
                     

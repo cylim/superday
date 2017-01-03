@@ -4,11 +4,13 @@ import Foundation
 class DefaultSelectedDateService : SelectedDateService
 {
     //MARK: Fields
-    private let currentlySelectedDateVariable = Variable(Date())
+    private let currentlySelectedDateVariable : Variable<Date>
     
     //MARK: Initializers
-    init()
+    init(timeService: TimeService)
     {
+        self.currentlySelectedDateVariable = Variable(timeService.now)
+        
         self.currentlySelectedDateObservable =
             self.currentlySelectedDateVariable
                 .asObservable()

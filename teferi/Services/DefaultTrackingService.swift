@@ -11,6 +11,7 @@ class DefaultTrackingService : TrackingService
     private let notificationTitle = "NotificationTitle".translate()
     private let notificationTimeout = TimeInterval(20 * 60)
     
+    private let timeService : TimeService
     private let loggingService : LoggingService
     private let settingsService : SettingsService
     private let timeSlotService : TimeSlotService
@@ -20,12 +21,14 @@ class DefaultTrackingService : TrackingService
     private var isOnBackground = false
     
     //MARK: Init
-    init(loggingService: LoggingService,
+    init(timeService: TimeService,
+         loggingService: LoggingService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          smartGuessService: SmartGuessService,
          notificationService: NotificationService)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
@@ -88,7 +91,7 @@ class DefaultTrackingService : TrackingService
         
         guard scheduleNew else { return }
         
-        let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
+        let notificationDate = self.timeService.now.addingTimeInterval(self.notificationTimeout)
         self.notificationService.scheduleNotification(date: notificationDate,
                                                       title: self.notificationTitle,
                                                       message: self.notificationBody)
@@ -96,7 +99,7 @@ class DefaultTrackingService : TrackingService
     
     private func onNotificationAction(withCategory category : Category)
     {
-        self.tryStoppingCommuteRetroactively(at: Date())
+        self.tryStoppingCommuteRetroactively(at: self.timeService.now)
         
         let currentTimeSlot = self.timeSlotService.getLast()
         self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: category, setByUser: true)
@@ -131,7 +134,7 @@ class DefaultTrackingService : TrackingService
     {
         if appState == .active
         {
-            self.onAppActivates(at: Date())
+            self.onAppActivates(at: self.timeService.now)
         }
         
         self.isOnBackground = appState == .inactive

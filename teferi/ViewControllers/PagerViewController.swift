@@ -6,6 +6,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     // MARK: Fields
     private let disposeBag = DisposeBag()
     
+    private var timeService : TimeService!
     private var metricsService : MetricsService!
     private var appStateService : AppStateService!
     private var settingsService : SettingsService!
@@ -37,13 +38,15 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     // MARK: UIViewController lifecycle
     
-    func inject(_ metricsService: MetricsService,
+    func inject(_ timeService: TimeService,
+                _ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ settingsService: SettingsService,
                 _ timeSlotService: TimeSlotService,
                 _ editStateService: EditStateService,
                 _ selectedDateService: SelectedDateService)
     {
+        self.timeService = timeService
         self.metricsService = metricsService
         self.appStateService = appStateService
         self.settingsService = settingsService
@@ -51,8 +54,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         self.editStateService = editStateService
         self.selectedDateService = selectedDateService
         
-        self.viewModel = PagerViewModel(settingsService: settingsService,
+        self.viewModel = PagerViewModel(timeService: timeService,
+                                        settingsService: settingsService,
                                         selectedDateService: selectedDateService)
+        
         self.createBindings()
     }
     
@@ -70,7 +75,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         //TODO: Figure this out
         if !self.feedbackUIClosing
         {
-            self.setCurrentViewController(forDate: Date(), animated: false)
+            self.setCurrentViewController(forDate: self.timeService.now, animated: false)
         }
         
         self.feedbackUIClosing = false
@@ -115,21 +120,21 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         switch appState
         {
             case .active:
-                let today = Date().ignoreTimeComponents()
+                let today = self.timeService.now.ignoreTimeComponents()
                 
                 guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
                 
                 self.settingsService.setLastInactiveDate(nil)
-                self.setCurrentViewController(forDate: Date(), animated: false)
+                self.setCurrentViewController(forDate: self.timeService.now, animated: false)
                 break
             
             case .inactive:
-                self.settingsService.setLastInactiveDate(Date())
+                self.settingsService.setLastInactiveDate(self.timeService.now)
                 break
             
             case .needsRefreshing:
                 self.settingsService.setLastInactiveDate(nil)
-                self.setCurrentViewController(forDate: Date(), animated: false)
+                self.setCurrentViewController(forDate: self.timeService.now, animated: false)
                 break
         }
     }
@@ -138,6 +143,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     {
         let viewController =
             [ TimelineViewController(date: date,
+                                     timeService: self.timeService,
                                      metricsService: self.metricsService,
                                      appStateService: self.appStateService,
                                      timeSlotService: self.timeSlotService,
@@ -153,7 +159,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         let timelineController = self.viewControllers!.first as! TimelineViewController
         
-        if timelineController.date.ignoreTimeComponents() == Date().ignoreTimeComponents()
+        if timelineController.date.ignoreTimeComponents() == self.timeService.now.ignoreTimeComponents()
         {
             self.currentDateViewController = timelineController
         }
@@ -170,6 +176,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
+                                      timeService: self.timeService,
                                       metricsService: self.metricsService,
                                       appStateService: self.appStateService,
                                       timeSlotService: self.timeSlotService,
@@ -184,6 +191,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
         return TimelineViewController(date: nextDate,
+                                      timeService: self.timeService,
                                       metricsService: self.metricsService,
                                       appStateService: self.appStateService,
                                       timeSlotService: self.timeSlotService,

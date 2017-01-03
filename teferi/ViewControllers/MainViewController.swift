@@ -17,7 +17,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var gestureRecognizer : UIGestureRecognizer!
     private lazy var viewModel : MainViewModel =
     {
-        return MainViewModel(metricsService: self.metricsService,
+        return MainViewModel(timeService: self.timeService,
+                             metricsService: self.metricsService,
                              feedbackService: self.feedbackService,
                              settingsService: self.settingsService,
                              timeSlotService: self.timeSlotService,
@@ -32,6 +33,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var calendarViewController : CalendarViewController { return self.childViewControllers.firstOfType() }
     
     //Dependencies
+    private var timeService : TimeService!
     private var metricsService : MetricsService!
     private var feedbackService: FeedbackService!
     private var appStateService : AppStateService!
@@ -52,7 +54,8 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var calendarButton : UIButton!
     @IBOutlet private weak var contactButton: UIButton!
     
-    func inject(_ metricsService: MetricsService,
+    func inject(_ timeService: TimeService,
+                _ metricsService: MetricsService,
                 _ appStateService: AppStateService,
                 _ locationService: LocationService,
                 _ settingsService: SettingsService,
@@ -62,6 +65,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
                 _ smartGuessService: SmartGuessService,
                 _ selectedDateService: SelectedDateService) -> MainViewController
     {
+        self.timeService = timeService
         self.metricsService = metricsService
         self.feedbackService = feedbackService
         self.appStateService = appStateService
@@ -80,11 +84,13 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         super.viewDidLoad()
         
-        self.calendarViewController.inject(settingsService: self.settingsService,
+        self.calendarViewController.inject(timeService: self.timeService,
+                                           settingsService: self.settingsService,
                                            timeSlotService: self.timeSlotService,
                                            selectedDateService: self.selectedDateService)
         
-        self.pagerViewController.inject(self.metricsService,
+        self.pagerViewController.inject(self.timeService,
+                                        self.metricsService,
                                         self.appStateService,
                                         self.settingsService,
                                         self.timeSlotService,
@@ -119,7 +125,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         if self.isFirstUse
         {
             //Sets the first TimeSlot's category to leisure
-            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure, categoryWasSetByUser: false)
+            let timeSlot = TimeSlot(withStartTime: self.timeService.now, category: .leisure, categoryWasSetByUser: false)
             self.timeSlotService.add(timeSlot: timeSlot)
         }
         else
@@ -260,7 +266,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         self.titleLabel.text = viewModel.title
         
-        let today = Date().ignoreTimeComponents()
+        let today = self.timeService.now.ignoreTimeComponents()
         let isToday = today == date.ignoreTimeComponents()
         let alpha = CGFloat(isToday ? 1 : 0)
         

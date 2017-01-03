@@ -4,13 +4,19 @@ import Foundation
 class PagerViewModel
 {
     //MARK: Fields
+    private let timeService : TimeService
     private let settingsService : SettingsService
     private var selectedDateService : SelectedDateService
     
-    init(settingsService: SettingsService, selectedDateService: SelectedDateService)
+    init(timeService: TimeService,
+         settingsService: SettingsService,
+         selectedDateService: SelectedDateService)
     {
+        self.timeService = timeService
         self.settingsService = settingsService
         self.selectedDateService = selectedDateService
+        
+        self.selectedDate = timeService.now
     }
     
     //MARK: Properties
@@ -22,7 +28,7 @@ class PagerViewModel
             .filterNil()
     }()
     
-    private var selectedDate = Date()
+    private var selectedDate : Date
     var currentlySelectedDate : Date
     {
         get { return self.selectedDate }
@@ -37,7 +43,7 @@ class PagerViewModel
     func canScroll(toDate date: Date) -> Bool
     {
         let minDate = self.settingsService.installDate!.ignoreTimeComponents()
-        let maxDate = Date().ignoreTimeComponents()
+        let maxDate = self.timeService.now.ignoreTimeComponents()
         let dateWithNoTime = date.ignoreTimeComponents()
         
         return dateWithNoTime >= minDate && dateWithNoTime <= maxDate

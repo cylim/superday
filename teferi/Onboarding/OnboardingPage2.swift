@@ -5,12 +5,23 @@ class OnboardingPage2 : OnboardingPage
     @IBOutlet private weak var textView: UIView!
     @IBOutlet private weak var timelineView: UIView!
     
-    private var timeSlots : [TimeSlot]!
     private var editedTimeSlot : TimeSlot!
     private var timelineCells : [TimelineCell]!
     private var editedCell : TimelineCell!
     private var editView : EditTimeSlotView!
     private var touchCursor : UIImageView!
+    private lazy var timeSlots : [TimeSlot] =
+    {
+        return [
+            TimeSlot(withStartTime: self.getDate(addingHours: 10, andMinutes: 30),
+                     endTime: self.getDate(addingHours: 11, andMinutes: 0),
+                     category: .friends, categoryWasSetByUser: false),
+            
+            TimeSlot(withStartTime: self.getDate(addingHours: 11, andMinutes: 0),
+                     endTime: self.getDate(addingHours: 11, andMinutes: 55),
+                     category: .work, categoryWasSetByUser: false)
+        ]
+    }()
     
     private let editIndex = 1
     private let editTo = Category.commute
@@ -18,21 +29,16 @@ class OnboardingPage2 : OnboardingPage
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder, nextButtonText: "Ok, got it")
-        
-        self.timeSlots = [
-            TimeSlot(withStartTime: t(10, 30), endTime: t(11, 0), category: .friends, categoryWasSetByUser: false),
-            TimeSlot(withStartTime: t(11, 0), endTime: t(11, 55), category: .work, categoryWasSetByUser: false)
-        ]
-        
+    }
+    
+    override func viewDidLoad()
+    {   
         let slot = self.timeSlots[self.editIndex]
         self.editedTimeSlot = TimeSlot(withStartTime: slot.startTime,
                                        endTime: slot.endTime,
                                        category: self.editTo,
                                        categoryWasSetByUser: false)
-    }
-    
-    override func viewDidLoad()
-    {
+        
         self.initAnimatedTitleText(self.textView)
         self.timelineCells = self.initAnimatingTimeline(with: self.timeSlots, in: self.timelineView)
         
