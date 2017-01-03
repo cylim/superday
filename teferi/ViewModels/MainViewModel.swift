@@ -86,7 +86,7 @@ class MainViewModel
         
         let dayOfMonthFormatter = DateFormatter();
         dayOfMonthFormatter.timeZone = TimeZone.autoupdatingCurrent;
-        dayOfMonthFormatter.dateFormat = "dd MMMM";
+        dayOfMonthFormatter.dateFormat = "EEE, dd MMM";
         
         return dayOfMonthFormatter.string(from: self.currentlySelectedDate)
     }

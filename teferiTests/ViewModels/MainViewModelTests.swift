@@ -68,7 +68,7 @@ class MainViewModelTests : XCTestCase
         
         let formatter = DateFormatter();
         formatter.timeZone = TimeZone.autoupdatingCurrent;
-        formatter.dateFormat = "dd MMMM";
+        formatter.dateFormat = "EEE, dd MMM";
         let expectedText = formatter.string(from: olderDate)
         
         expect(self.viewModel.title).to(equal(expectedText))
