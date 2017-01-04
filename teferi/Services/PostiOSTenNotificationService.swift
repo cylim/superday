@@ -67,13 +67,8 @@ class PostiOSTenNotificationService : NotificationService
     
     func unscheduleAllNotifications()
     {
-        guard let notifications = UIApplication.shared.scheduledLocalNotifications, notifications.count > 0 else
-        {
-            loggingService.log(withLogLevel: .warning, message: "Tried to unschedule notifications, but none are currently scheduled")
-            return
-        }
-        
-        notifications.forEach { n in UIApplication.shared.cancelLocalNotification(n)  }
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
     func handleNotificationAction(withIdentifier identifier: String?)
