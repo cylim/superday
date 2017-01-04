@@ -11,14 +11,13 @@ class TimelineViewModel
     private let metricsService : MetricsService
     private let appStateService : AppStateService
     private let timeSlotService : TimeSlotService
-    private let isEditingVariable = Variable(false)
+    private let editStateService : EditStateService
     private let timeSlotUpdatingVariable = Variable(-1)
     private let timeSlotCreationVariable = Variable(-1)
     
     //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
-    let isEditingObservable : Observable<Bool>
     let timeSlotUpdatingObservable : Observable<Int>
     let timeSlotCreationObservable : Observable<Int>
     
@@ -35,29 +34,27 @@ class TimelineViewModel
 
     private(set) var timeSlots : [TimeSlot]
     
-    var isEditing : Bool
-    {
-        get { return self.isEditingVariable.value }
-        set(value) { self.isEditingVariable.value = value }
-    }
+    var currentDay : Date { return self.timeService.now }
+    var isEditingObservable : Observable<Bool> { return self.editStateService.isEditingObservable }
     
     //MARK: Initializers
     init(date: Date,
          timeService: TimeService,
          metricsService : MetricsService,
          appStateService: AppStateService,
-         timeSlotService: TimeSlotService)
+         timeSlotService: TimeSlotService,
+         editStateService: EditStateService)
     {
         self.timeService = timeService
         self.metricsService = metricsService
         self.appStateService = appStateService
         self.timeSlotService = timeSlotService
+        self.editStateService = editStateService
         
         self.isCurrentDay = self.timeService.now.ignoreTimeComponents() == date.ignoreTimeComponents()
         self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
         
         self.date = date.ignoreTimeComponents()
-        self.isEditingObservable = self.isEditingVariable.asObservable()
         self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
         self.timeSlotUpdatingObservable = self.timeSlotUpdatingVariable.asObservable().filter { $0 >= 0 }
         
@@ -78,6 +75,14 @@ class TimelineViewModel
             self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: self.timeService.now, categoryWasSetByUser: false))
         }
     }
+    
+    func notifyEditingBegan(point: CGPoint, index: Int)
+    {
+        self.editStateService
+            .notifyEditingBegan(point: point,
+                                timeSlot: self.timeSlots[index])
+    }
+    
     
     //MARK: Methods
     

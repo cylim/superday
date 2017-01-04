@@ -6,36 +6,21 @@ import CoreGraphics
 class TimelineViewController : UITableViewController
 {
     // MARK: Fields
-    private var editingIndex = -1
-    
     private static let baseCellHeight = 40
+    
     private let disposeBag = DisposeBag()
     private let viewModel : TimelineViewModel
     
-    private var timeService : TimeService!
-    private var editStateService : EditStateService!
-    
+    private var editingIndex = -1
     private let cellIdentifier = "timelineCell"
     private let emptyCellIdentifier = "emptyStateView"
     
     private lazy var footerCell : UITableViewCell = { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 120)) }()
     
-    //MARK: Initializers
-    init(date: Date,
-         timeService: TimeService,
-         metricsService: MetricsService,
-         appStateService: AppStateService,
-         timeSlotService: TimeSlotService,
-         editStateService: EditStateService)
+    // MARK: Initializers
+    init(viewModel: TimelineViewModel)
     {
-        self.timeService = timeService
-        self.editStateService = editStateService
-        
-        self.viewModel = TimelineViewModel(date: date,
-                                           timeService: timeService,
-                                           metricsService: metricsService,
-                                           appStateService: appStateService,
-                                           timeSlotService: timeSlotService)
+        self.viewModel = viewModel
         
         super.init(style: .plain)
     }
@@ -80,7 +65,7 @@ class TimelineViewController : UITableViewController
             .subscribe(onNext: self.onScreenRefresh)
             .addDisposableTo(self.disposeBag)
         
-        self.editStateService
+        self.viewModel
             .isEditingObservable
             .subscribe(onNext: self.onIsEditing)
             .addDisposableTo(self.disposeBag)
@@ -102,10 +87,10 @@ class TimelineViewController : UITableViewController
     // MARK: Methods
     private func onTimeSlotUpdated(atIndex index: Int)
     {
-        guard !tableView.isEditing else { return }
+        guard !self.tableView.isEditing else { return }
         
         let indexPath = IndexPath(row: index, section: 0)
-        self.tableView.reloadRows(at: [indexPath], with: .none)
+        self.tableView.reloadRows(at: [ indexPath ], with: .none)
     }
     
     private func onIsEditing(isEditing: Bool)
@@ -131,7 +116,7 @@ class TimelineViewController : UITableViewController
     private func onCategoryTapped(point: CGPoint, index: Int)
     {
         self.editingIndex = index
-        self.editStateService.notifyEditingBegan(point: point, timeSlot: self.viewModel.timeSlots[index])
+        self.viewModel.notifyEditingBegan(point: point, index: index)
     }
     
     private func onScreenRefresh()
@@ -154,11 +139,10 @@ class TimelineViewController : UITableViewController
     {
         guard self.viewModel.timeSlots.count > 0 else
         {
-            return tableView.dequeueReusableCell(withIdentifier: emptyCellIdentifier, for: indexPath);
+            return self.tableView.dequeueReusableCell(withIdentifier: emptyCellIdentifier, for: indexPath);
         }
         
-        let index = indexPath.item
-        
+        let index = indexPath.row
         if index == self.viewModel.timeSlots.count { return footerCell }
         
         let timeSlot = self.viewModel.timeSlots[index]
@@ -166,7 +150,7 @@ class TimelineViewController : UITableViewController
         
         //Check if need to display the endTime
         var lastInPastDay = false
-        let isPastDay = self.timeService.now.ignoreTimeComponents() != date.ignoreTimeComponents()
+        let isPastDay = self.viewModel.currentDay.ignoreTimeComponents() != self.viewModel.date.ignoreTimeComponents()
         let isLastEntry = self.viewModel.timeSlots.count - 1 == indexPath.row
         if isPastDay && isLastEntry
         {

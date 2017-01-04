@@ -5,37 +5,19 @@ import RxSwift
 
 class TimelineViewControllerTests : XCTestCase
 {
+    private var locator : MockLocator!
     private var viewModel : TimelineViewModel!
-    
-    private var timeService : TimeService!
-    private var mockMetricsService : MockMetricsService!
-    private var mockAppStateService : MockAppStateService!
-    private var mockTimeSlotService : MockTimeSlotService!
-    private var mockEditStateService : MockEditStateService!
     private var timelineViewController : TimelineViewController!
     
     override func setUp()
     {
         super.setUp()
         
-        self.timeService = MockTimeService()
-        self.mockMetricsService = MockMetricsService()
-        self.mockAppStateService = MockAppStateService()
-        self.mockTimeSlotService = MockTimeSlotService()
-        self.mockEditStateService = MockEditStateService()
+        self.locator = MockLocator()
         
-        self.viewModel = TimelineViewModel(date: Date(),
-                                           timeService: self.timeService,
-                                           metricsService: self.mockMetricsService,
-                                           appStateService: self.mockAppStateService,
-                                           timeSlotService: self.mockTimeSlotService)
+        self.viewModel = self.locator.getTimelineViewModel(forDate: Date())
         
-        self.timelineViewController = TimelineViewController(date: Date(),
-                                                             timeService: self.timeService,
-                                                             metricsService: self.mockMetricsService,
-                                                             appStateService: self.mockAppStateService,
-                                                             timeSlotService: self.mockTimeSlotService,
-                                                             editStateService: self.mockEditStateService)
+        self.timelineViewController = TimelineViewController(viewModel: self.viewModel)
     }
     
     override func tearDown()
@@ -48,7 +30,8 @@ class TimelineViewControllerTests : XCTestCase
     
     func testScrollingIsDisabledWhenEnteringEditMode()
     {
-        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
+        self.locator.editStateService.notifyEditingBegan(point: CGPoint(),
+                                                         timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
         
         let scrollView = self.timelineViewController.tableView!
         
@@ -57,8 +40,8 @@ class TimelineViewControllerTests : XCTestCase
     
     func testScrollingIsEnabledWhenExitingEditMode()
     {
-        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
-        self.mockEditStateService.notifyEditingEnded();
+        self.locator.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
+        self.locator.editStateService.notifyEditingEnded();
         
         let scrollView = self.timelineViewController.tableView!
         

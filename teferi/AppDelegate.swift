@@ -121,19 +121,20 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
+        let viewModelLocator = DefaultViewModelLocator(timeService: self.timeService,
+                                                       metricsService: self.metricsService,
+                                                       appStateService: self.appStateService,
+                                                       feedbackService: self.feedbackService,
+                                                       locationService: self.locationService,
+                                                       settingsService: self.settingsService,
+                                                       timeSlotService: self.timeSlotService,
+                                                       editStateService: self.editStateService,
+                                                       smartGuessService : self.smartGuessService,
+                                                       selectedDateService: self.selectedDateService)
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
-        var initialViewController : UIViewController =
-            mainViewController.inject(self.timeService,
-                                      self.metricsService,
-                                      self.appStateService,
-                                      self.locationService,
-                                      self.settingsService,
-                                      self.timeSlotService,
-                                      self.editStateService,
-                                      self.feedbackService,
-                                      self.smartGuessService,
-                                      self.selectedDateService)
+        var initialViewController : UIViewController = mainViewController.inject(viewModelLocator: viewModelLocator)
         
         if self.settingsService.installDate == nil
         {

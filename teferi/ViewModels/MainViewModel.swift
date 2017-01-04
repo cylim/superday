@@ -11,6 +11,7 @@ class MainViewModel
     private let timeService : TimeService
     private let metricsService : MetricsService
     private let feedbackService: FeedbackService
+    private let appStateService : AppStateService
     private let timeSlotService : TimeSlotService
     private let settingsService : SettingsService
     private let locationService : LocationService
@@ -20,6 +21,7 @@ class MainViewModel
     
     init(timeService: TimeService,
          metricsService: MetricsService,
+         appStateService: AppStateService,
          feedbackService: FeedbackService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
@@ -30,6 +32,7 @@ class MainViewModel
     {
         self.timeService = timeService
         self.metricsService = metricsService
+        self.appStateService = appStateService
         self.feedbackService = feedbackService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
@@ -38,16 +41,30 @@ class MainViewModel
         self.smartGuessService = smartGuessService
         self.selectedDateService = selectedDateService
         
-        self.currentDate = self.timeService.now
-    
+        self.isEditingObservable = self.editStateService.isEditingObservable
+        self.beganEditingObservable = self.editStateService.beganEditingObservable
     }
     
     // MARK: Properties
-    var currentDate : Date
+    let isEditingObservable : Observable<Bool>
+    let beganEditingObservable : Observable<(CGPoint, TimeSlot)>
+    
+    private(set) lazy var overlayStateObservable : Observable<Bool> =
+    {
+        return self.appStateService
+          .appStateObservable
+          .filter { $0 == .active }
+          .map { _ in return self.shouldShowLocationPermissionOverlay }
+    }()
+    
+    // MARK: Properties
+    var currentDate : Date { return self.timeService.now }
     
     var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable}
     
-    var shouldShowLocationPermissionOverlay : Bool
+    var canIgnoreLocationPermission : Bool { return self.settingsService.canIgnoreLocationPermission }
+    
+    private var shouldShowLocationPermissionOverlay : Bool
     {
         if self.settingsService.hasLocationPermission { return false }
         
@@ -98,14 +115,20 @@ class MainViewModel
      
      - Parameter category: Category of the newly created TimeSlot.
      */
+    
     func addNewSlot(withCategory category: Category)
+    {
+        self.addNewSlot(withCategory: category, isFirstTimeSlot: false)
+    }
+    
+    func addNewSlot(withCategory category: Category, isFirstTimeSlot: Bool)
     {
         let currentLocation = self.locationService.getLastKnownLocation()
         
         let newSlot = TimeSlot(withStartTime: self.timeService.now,
                                category: category,
                                location: currentLocation,
-                               categoryWasSetByUser: true)
+                               categoryWasSetByUser: !isFirstTimeSlot)
         
         if let location = currentLocation
         {
@@ -143,4 +166,12 @@ class MainViewModel
         
         self.editStateService.notifyEditingEnded()
     }
+    
+    func composeFeedback(_ completed: @escaping () -> ()) { self.feedbackService.composeFeedback(completed: completed) }
+    
+    func setLastAskedForLocationPermission() { self.settingsService.setLastAskedForLocationPermission(Date()) }
+    
+    func setAllowedLocationPermission() { self.settingsService.setAllowedLocationPermission() }
+    
+    func notifyEditingEnded() { self.editStateService.notifyEditingEnded() }
 }

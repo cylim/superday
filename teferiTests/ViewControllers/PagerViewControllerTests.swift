@@ -4,35 +4,17 @@ import Nimble
 
 class PagerViewControllerTests : XCTestCase
 {
-    private var timeService : TimeService!
-    private var metricsService : MetricsService!
-    private var appStateService : AppStateService!
-    private var settingsService : SettingsService!
-    private var timeSlotService : TimeSlotService!
-    private var editStateService : EditStateService!
+    private var locator : MockLocator!
     private var pagerViewController : PagerViewController!
-    private var selectedDateService : SelectedDateService!
     
     override func setUp()
     {
         super.setUp()
  
-        self.timeService = MockTimeService()
-        self.metricsService = MockMetricsService()
-        self.settingsService = MockSettingsService()
-        self.appStateService = MockAppStateService()
-        self.timeSlotService = MockTimeSlotService()
-        self.editStateService = MockEditStateService()
-        self.selectedDateService = DefaultSelectedDateService(timeService: self.timeService)
+        self.locator = MockLocator()
         
         self.pagerViewController = PagerViewController(coder: NSCoder())!
-        self.pagerViewController.inject(self.timeService,
-                                        self.metricsService,
-                                        self.appStateService,
-                                        self.settingsService,
-                                        self.timeSlotService,
-                                        self.editStateService,
-                                        self.selectedDateService)
+        self.pagerViewController.inject(viewModelLocator: self.locator)
         
         self.pagerViewController.loadViewIfNeeded()
         UIApplication.shared.keyWindow!.rootViewController = self.pagerViewController
@@ -46,7 +28,7 @@ class PagerViewControllerTests : XCTestCase
     
     func testScrollingIsDisabledWhenEnteringEditMode()
     {
-        self.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: self.createEmptyTimeSlot());
+        self.locator.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: self.createEmptyTimeSlot());
         
         let scrollViews =
             self.pagerViewController
@@ -59,8 +41,8 @@ class PagerViewControllerTests : XCTestCase
     
     func testScrollingIsEnabledWhenExitingEditMode()
     {
-        self.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: self.createEmptyTimeSlot());
-        self.editStateService.notifyEditingEnded();
+        self.locator.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: self.createEmptyTimeSlot());
+        self.locator.editStateService.notifyEditingEnded();
         
         let scrollViews =
             self.pagerViewController
@@ -73,10 +55,10 @@ class PagerViewControllerTests : XCTestCase
     
     func testWhenTheAppGetsInactiveTheLastInactiveDateGetsSet()
     {
-        self.settingsService.setLastInactiveDate(nil)
-        self.appStateService.currentAppState = .inactive
+        self.locator.settingsService.setLastInactiveDate(nil)
+        self.locator.appStateService.currentAppState = .inactive
         
-        expect(self.settingsService.lastInactiveDate).toNot(beNil())
+        expect(self.locator.settingsService.lastInactiveDate).toNot(beNil())
     }
     
     func testUiGetsRefreshedWhenTheAppGoesToForegroundTheDayAfterItWentToSleep()
@@ -84,8 +66,8 @@ class PagerViewControllerTests : XCTestCase
         self.pagerViewController.setViewControllers( [ UIViewController() ], direction: .forward, animated: false, completion: nil)
         
         let date = Date().add(days: -2)
-        self.settingsService.setLastInactiveDate(date)
-        self.appStateService.currentAppState = .active
+        self.locator.settingsService.setLastInactiveDate(date)
+        self.locator.appStateService.currentAppState = .active
         
         expect(self.pagerViewController.viewControllers!.first).to(beAnInstanceOf(TimelineViewController.self))
     }
@@ -93,19 +75,20 @@ class PagerViewControllerTests : XCTestCase
     func testTheLastInactiveDateGetsResetWhenTheAppIsAwakeAndRefreshed()
     {
         let date = Date().add(days: -2)
-        self.settingsService.setLastInactiveDate(date)
-        self.appStateService.currentAppState = .active
+        self.locator.settingsService.setLastInactiveDate(date)
+        self.locator.appStateService.currentAppState = .active
         
-        expect(self.settingsService.lastInactiveDate).to(beNil())
+        expect(self.locator.settingsService.lastInactiveDate).to(beNil())
     }
     
     func testTheDateObservableNotifiesANewDateWhenTheUserScrollsToADifferentPage()
     {
         var didNotify = false
         
-        _ = self.selectedDateService
-                .currentlySelectedDateObservable
-                .subscribe(onNext: { _ in didNotify = true })
+        _ = self.locator
+            .selectedDateService
+            .currentlySelectedDateObservable
+            .subscribe(onNext: { _ in didNotify = true })
         
         self.pagerViewController.pageViewController(self.pagerViewController, didFinishAnimating: true, previousViewControllers: self.pagerViewController.viewControllers!, transitionCompleted: true)
         
@@ -121,7 +104,7 @@ class PagerViewControllerTests : XCTestCase
     
     func testTheViewControllerDoesNotAllowScrollingBeforeTheInstallDate()
     {
-        self.settingsService.setInstallDate(Date())
+        self.locator.settingsService.setInstallDate(Date())
         
         let previousViewController = self.scrollBack()
         
@@ -130,7 +113,7 @@ class PagerViewControllerTests : XCTestCase
     
     func testTheViewControllerScrollsBackOneDayAtATime()
     {
-        self.settingsService.setInstallDate(Date().add(days: -10))
+        self.locator.settingsService.setInstallDate(Date().add(days: -10))
         
         let previousViewController = self.scrollBack()!
         
@@ -139,7 +122,7 @@ class PagerViewControllerTests : XCTestCase
     
     func testTheViewControllerScrollsForwardOneDayAtATime()
     {
-        self.settingsService.setInstallDate(Date().add(days: -10))
+        self.locator.settingsService.setInstallDate(Date().add(days: -10))
         
         var previous = self.scrollBack(from: nil)
         previous = self.scrollBack(from: previous)

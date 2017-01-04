@@ -10,7 +10,7 @@ class PermissionView : UIView
     private let descriptionFirstUseKey = "LocationDisabledDescriptionFirstUse"
     
     private var isFirstTimeUser = false
-    private var settingsService : SettingsService!
+    private var remindMeLaterCallback : (() -> ())!
     
     private var titleText : String
     {
@@ -47,7 +47,7 @@ class PermissionView : UIView
     
     @IBAction func remindMeLater()
     {
-        self.settingsService.setLastAskedForLocationPermission(Date())
+        self.remindMeLaterCallback()
         self.fadeView()
     }
     
@@ -58,11 +58,11 @@ class PermissionView : UIView
                        completion: { _ in self.removeFromSuperview() })
     }
     
-    func inject(_ frame: CGRect, _ settingsService: SettingsService, isFirstTimeUser: Bool) -> PermissionView
+    func inject(_ frame: CGRect, _ remindMeLaterCallback: @escaping () -> (), isFirstTimeUser: Bool) -> PermissionView
     {
         self.frame = frame
         self.isFirstTimeUser = isFirstTimeUser
-        self.settingsService = settingsService
+        self.remindMeLaterCallback = remindMeLaterCallback
         
         self.titleLabel.text = self.titleText
         self.descriptionLabel.text = self.descriptionText

@@ -8,7 +8,7 @@ class MockFeedbackService: FeedbackService
         return nil
     }
     
-    func composeFeedback(parentViewController: UIViewController, completed: @escaping () -> ())
+    func composeFeedback(completed: @escaping () -> ())
     {
         
     }

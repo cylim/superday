@@ -7,11 +7,11 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     // MARK: Fields
     private let calendarCell = "CalendarCell"
     
-    @IBOutlet weak private var calendarView : JTAppleCalendarView!
     @IBOutlet weak private var monthLabel : UILabel!
     @IBOutlet weak private var leftButton : UIButton!
     @IBOutlet weak private var rightButton : UIButton!
     @IBOutlet weak private var dayOfWeekLabels : UIStackView!
+    @IBOutlet weak private var calendarView : JTAppleCalendarView!
     
     private lazy var viewsToAnimate : [ UIView ] =
     {
@@ -34,15 +34,9 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     // MARK: Properties
     var isVisible = false
     
-    func inject(timeService: TimeService,
-                settingsService: SettingsService,
-                timeSlotService: TimeSlotService,
-                selectedDateService: SelectedDateService)
+    func inject(viewModel: CalendarViewModel)
     {
-        self.viewModel = CalendarViewModel(timeService: timeService,
-                                           settingsService: settingsService,
-                                           timeSlotService: timeSlotService,
-                                           selectedDateService: selectedDateService)
+        self.viewModel = viewModel
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -53,9 +47,9 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
         
         self.layer.frame = self.view.frame
         self.layer.colors = [ Color.white.cgColor,
-                         Color.white.cgColor,
-                         Color.white.withAlphaComponent(0.5).cgColor,
-                         Color.white.withAlphaComponent(0.5).cgColor]
+                              Color.white.cgColor,
+                              Color.white.withAlphaComponent(0.5).cgColor,
+                              Color.white.withAlphaComponent(0.5).cgColor]
         
         self.layer.locations = [0.0,
                                 NSNumber(value: layerWhiteFadePoint),
