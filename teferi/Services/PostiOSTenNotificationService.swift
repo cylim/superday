@@ -11,6 +11,7 @@ class PostiOSTenNotificationService : NotificationService
     private let timeSlotService : TimeSlotService
     
     private var actionSubsribers = [(Category) -> ()]()
+    private let notificationCenter = UNUserNotificationCenter.current()
     
     //MARK: Initializers
     init(timeService: TimeService, loggingService: LoggingService, timeSlotService : TimeSlotService)
@@ -23,21 +24,19 @@ class PostiOSTenNotificationService : NotificationService
     //MARK: NotificationService implementation
     func requestNotificationPermission(completed: @escaping () -> ())
     {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge],
-                                                                completionHandler: { (granted, error) in completed() })
+        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge],
+                                                completionHandler: { (granted, error) in completed() })
     }
     
     func scheduleNotification(date: Date, title: String, message: String)
     {
         self.loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
         
-        let notification = UILocalNotification()
-        notification.fireDate = date
-        notification.alertTitle = title
-        notification.alertBody = message
-        notification.alertAction = "AppName".translate()
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.category = Constants.notificationTimeSlotCategorySelectionIdentifier
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = message
+        content.categoryIdentifier = Constants.notificationTimeSlotCategorySelectionIdentifier
+        content.sound = UNNotificationSound(named: UILocalNotificationDefaultSoundName)
         
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -60,15 +59,28 @@ class PostiOSTenNotificationService : NotificationService
                     return timeSlotDictionary
                 }
         
-        notification.userInfo = ["timeSlots": lastThreeTimeSlotsDictionary]
+        content.userInfo = ["timeSlots": lastThreeTimeSlotsDictionary]
         
-        UIApplication.shared.scheduleLocalNotification(notification)
+        let fireTime = date.timeIntervalSinceNow
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: fireTime, repeats: false)
+        
+        let identifier = String(date.timeIntervalSince1970)
+        
+        let request  = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { (error) in
+            if let error = error
+            {
+                self.loggingService.log(withLogLevel: .error, message: "Tried to schedule notifications, but could't. Got error: \(error)")
+            }
+        }
     }
     
     func unscheduleAllNotifications()
     {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        notificationCenter.removeAllDeliveredNotifications()
+        notificationCenter.removeAllPendingNotificationRequests()
     }
     
     func handleNotificationAction(withIdentifier identifier: String?)
@@ -107,6 +119,6 @@ class PostiOSTenNotificationService : NotificationService
             actions: [food, friends, work, leisure],
             intentIdentifiers: [])
         
-        UNUserNotificationCenter.current().setNotificationCategories([category])
+        notificationCenter.setNotificationCategories([category])
     }
 }
