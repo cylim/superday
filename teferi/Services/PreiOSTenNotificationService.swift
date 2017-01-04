@@ -19,7 +19,7 @@ class PreiOSTenNotificationService : NotificationService
     //MARK: NotificationService implementation
     func requestNotificationPermission(completed: @escaping () -> ())
     {
-        let notificationSettings = UIUserNotificationSettings(types: [ .alert, .badge ], categories: nil)
+        let notificationSettings = UIUserNotificationSettings(types: [ .alert, .sound, .badge ], categories: nil)
         
         self.notificationSubscription =
             self.notificationAuthorizationObservable
@@ -49,13 +49,7 @@ class PreiOSTenNotificationService : NotificationService
     
     func unscheduleAllNotifications()
     {
-        guard let notifications = UIApplication.shared.scheduledLocalNotifications, notifications.count > 0 else
-        {
-            loggingService.log(withLogLevel: .warning, message: "Tried to unschedule notifications, but none are currently scheduled")
-            return
-        }
-        
-        notifications.forEach { n in UIApplication.shared.cancelLocalNotification(n)  }
+        UIApplication.shared.cancelAllLocalNotifications()
     }
     
     func handleNotificationAction(withIdentifier identifier: String?)
