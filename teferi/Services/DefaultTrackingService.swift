@@ -9,7 +9,7 @@ class DefaultTrackingService : TrackingService
     // MARK: Fields
     private let notificationBody = "NotificationBody".translate()
     private let notificationTitle = "NotificationTitle".translate()
-    private let notificationTimeout = TimeInterval(20 * 60)
+    private let commuteDetectionLimit = TimeInterval(25 * 60)
     
     private let timeService : TimeService
     private let loggingService : LoggingService
@@ -91,7 +91,7 @@ class DefaultTrackingService : TrackingService
         
         guard scheduleNew else { return }
         
-        let notificationDate = self.timeService.now.addingTimeInterval(self.notificationTimeout)
+        let notificationDate = self.timeService.now.addingTimeInterval(self.commuteDetectionLimit)
         self.notificationService.scheduleNotification(date: notificationDate,
                                                       title: self.notificationTitle,
                                                       message: self.notificationBody)
@@ -126,7 +126,7 @@ class DefaultTrackingService : TrackingService
     
     private func isCommute(now : Date, then : Date) -> Bool
     {
-        return now.timeIntervalSince(then) / 60 < 25.0
+        return now.timeIntervalSince(then) < self.commuteDetectionLimit
     }
     
     func onAppState(_ appState: AppState)
