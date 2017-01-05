@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/toggl/superday/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) SuperFlow: Superday's branching work flow
+# ![](https://github.com/toggl/superday/blob/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) SuperFlow: Superday's branching work flow
 
 To ensure - as much as possible - the quality and correctness of our code base, and to enable many contributors to work on Superday at the same time without getting in each other's way we use a modified version of the GitFlow work flow [by Vincent Driessen](http://nvie.com/posts/a-successful-git-branching-model/ "Original Blog post 'A successful Git branching model' by Vincent Driessen").
 
@@ -8,7 +8,7 @@ Below you will find Vincent's original diagram adapted and extended correspondin
 
 ## SuperFlow
 
-![SuperFlow diagram](https://raw.githubusercontent.com/toggl/superday/develop/docs/images/superflow.png)
+![SuperFlow diagram](https://github.com/toggl/superday/blob/develop/docs/images/superflow.png)
 
 **Legend:**
 - Purple bubble: start of a release or hotfix branch

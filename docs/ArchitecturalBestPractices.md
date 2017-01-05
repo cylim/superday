@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/toggl/superday/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday's Architectural best practices
+# ![](https://github.com/toggl/superday/blob/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday's Architectural best practices
 
 This document's goal is to list the good practices one should take into account when adding new code to Superday. Every new line of code added should comply to those rules. Adding new rules is encouraged and, when doing so, also open a new Pull Request that ensures the new rule is being followed throughout the existing codebase.
 

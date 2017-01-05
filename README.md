@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/toggl/superday/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday
+# ![](https://github.com/toggl/superday/blob/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday
 More time, more life.
 Superday tracks your activities, you give the context.
 

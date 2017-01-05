@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/toggl/superday/master/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday's Swift Style Guide
+# ![](https://github.com/toggl/superday/blob/develop/teferi/Assets.xcassets/icSuperday.imageset/icSuperday.png) Superday's Swift Style Guide
 ##### AKA "The Dos And Don'ts Of This Codebase"
 
 ____________________
