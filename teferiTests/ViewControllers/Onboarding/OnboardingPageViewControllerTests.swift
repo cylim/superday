@@ -29,7 +29,7 @@ class OnboardingPageViewControllerTests : XCTestCase
     func testTheGoToNextPageMethodNavigatesBetweenPages()
     {
         let page = self.onBoardingPageViewController.viewControllers!.first!
-        self.onBoardingPageViewController.goToNextPage()
+        self.onBoardingPageViewController.goToNextPage(forceNext: false)
         
         expect(self.onBoardingPageViewController.viewControllers!.first).toNot(equal(page))
     }

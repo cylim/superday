@@ -11,6 +11,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     @IBOutlet var pager: OnboardingPager!
     
+    private var lastSeenIndex = 0
     private var timeService : TimeService!
     private var settingsService : SettingsService!
     private var appStateService : AppStateService!
@@ -52,7 +53,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     //MARK: Actions
     @IBAction func pagerButtonTouchUpInside()
     {
-        self.goToNextPage()
+        self.goToNextPage(forceNext: false)
     }
     
     //MARK: Methods
@@ -87,9 +88,10 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         }
     }
     
-    func goToNextPage()
+    func goToNextPage(forceNext: Bool)
     {
-        let currentPageIndex = self.index(of: self.viewControllers!.first!)!
+        let currentlyVisibleIndex = self.index(of: self.viewControllers!.first!)!
+        let currentPageIndex = forceNext ? self.lastSeenIndex : currentlyVisibleIndex
         guard let nextPage = self.pageAt(index: currentPageIndex + 1) else
         {
             self.settingsService.setInstallDate(self.timeService.now)
@@ -113,6 +115,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     private func pageAt(index : Int) -> OnboardingPage?
     {
+        self.lastSeenIndex = max(self.lastSeenIndex, index)
         return 0..<self.pages.count ~= index ? self.pages[index] : nil
     }
     

@@ -55,7 +55,7 @@ class OnboardingPage : UIViewController
     
     func finish()
     {
-        self.onboardingPageViewController.goToNextPage()
+        self.onboardingPageViewController.goToNextPage(forceNext: false)
     }
     
     func startAnimations()
