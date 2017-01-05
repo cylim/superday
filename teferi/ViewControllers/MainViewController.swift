@@ -225,8 +225,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         
         self.addButton.close()
         self.addButton.isUserInteractionEnabled = isToday
-        
-        self.updateSelectedDate(date: date)
     }
     
     private func onEditChanged(_ isEditing: Bool)
@@ -247,15 +245,5 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         fadeOverlay.startPoint = CGPoint(x: 0.0, y: 1.0)
         fadeOverlay.endPoint = CGPoint(x: 0.0, y: 0.0)
         return fadeOverlay
-    }
-    
-    func updateSelectedDate(date: Date)
-    {
-        self.calendarViewController.hide()
-    }
-    
-    private func onCalendarClose(date: Date)
-    {
-        self.calendarViewController.hide()
     }
 }
