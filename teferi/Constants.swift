@@ -6,9 +6,6 @@ class Constants
     ///All possible categories
     static let categories : [Category] =  [ .commute, .food, .friends, .work, .leisure ]
     
-    ///Distance the user has to travel in order to trigger a new location event.
-    static let distanceFilter = 100.0
-    
     ///Minimum size of the cosmetic line that appears on a TimeSlot cell.
     static let minLineSize = 12
     
