@@ -67,10 +67,9 @@ class DefaultTimeSlotService : TimeSlotService
         }
     }
     
-    func getLast() -> TimeSlot
+    func getLast() -> TimeSlot?
     {
-        return self.persistencyService.getLast() ?? TimeSlot(withStartTime: self.timeService.now,
-                                                             categoryWasSetByUser: false)
+        return self.persistencyService.getLast()
     }
     
     func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())

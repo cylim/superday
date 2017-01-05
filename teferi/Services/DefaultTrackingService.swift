@@ -55,7 +55,7 @@ class DefaultTrackingService : TrackingService
         
         self.settingsService.setLastLocation(location)
         
-        let currentTimeSlot = self.timeSlotService.getLast()
+        guard let currentTimeSlot = self.timeSlotService.getLast() else { return }
         
         let scheduleNotification : Bool
         
@@ -101,7 +101,7 @@ class DefaultTrackingService : TrackingService
     {
         self.tryStoppingCommuteRetroactively(at: self.timeService.now)
         
-        let currentTimeSlot = self.timeSlotService.getLast()
+        guard let currentTimeSlot = self.timeSlotService.getLast() else { return }
         self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: category, setByUser: true)
     }
     
@@ -114,9 +114,8 @@ class DefaultTrackingService : TrackingService
     {
         guard let lastLocation = self.settingsService.lastLocation else { return }
         
-        let currentTimeSlot = self.timeSlotService.getLast()
-        
         guard
+            let currentTimeSlot = self.timeSlotService.getLast(),
             currentTimeSlot.category == .commute,
             currentTimeSlot.startTime <= lastLocation.timestamp,
             !self.isCommute(now: time, then: lastLocation.timestamp)

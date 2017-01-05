@@ -10,9 +10,9 @@ import SnapKit
 class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
-    private var isFirstUse = false
     private let animationDuration = 0.08
     
+    private var isFirstUse = false
     private var viewModel : MainViewModel!
     private var viewModelLocator : ViewModelLocator!
     private let disposeBag : DisposeBag = DisposeBag()
@@ -33,8 +33,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var calendarButton : UIButton!
     @IBOutlet private weak var contactButton: UIButton!
     
-    func inject(viewModelLocator: ViewModelLocator) -> MainViewController
+    func inject(viewModelLocator: ViewModelLocator, isFirstUse: Bool) -> MainViewController
     {
+        self.isFirstUse = isFirstUse
         self.viewModelLocator = viewModelLocator
         self.viewModel = viewModelLocator.getMainViewModel(forViewController: self)
         return self
@@ -73,12 +74,7 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             make.height.equalTo(100)
         }
         
-        if self.isFirstUse
-        {
-            //Sets the first TimeSlot's category to leisure
-            self.viewModel.addNewSlot(withCategory: .leisure, isFirstTimeSlot: true)
-        }
-        else
+        if !self.isFirstUse
         {
             self.launchAnim = LaunchAnimationView(frame: view.frame)
             self.view.addSubview(launchAnim)
@@ -161,11 +157,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     }
     
     // MARK: Methods
-    func setIsFirstUse()
-    {
-        self.isFirstUse = true
-    }
-    
     private func startLaunchAnimation()
     {
         guard self.launchAnim != nil else { return }

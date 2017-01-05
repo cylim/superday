@@ -132,11 +132,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                                        smartGuessService : self.smartGuessService,
                                                        selectedDateService: self.selectedDateService)
         
+        
+        let isFirstUse = self.settingsService.installDate == nil
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
-        var initialViewController : UIViewController = mainViewController.inject(viewModelLocator: viewModelLocator)
+        var initialViewController : UIViewController =
+            mainViewController.inject(viewModelLocator: viewModelLocator, isFirstUse: isFirstUse)
         
-        if self.settingsService.installDate == nil
+        if isFirstUse
         {
             let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
             let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
@@ -147,9 +151,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                                          self.appStateService,
                                          mainViewController,
                                          notificationService)
-            
-            mainViewController.setIsFirstUse()
         }
+        
         
         self.window!.rootViewController = initialViewController
         self.window!.makeKeyAndVisible()

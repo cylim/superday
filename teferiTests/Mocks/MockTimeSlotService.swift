@@ -16,10 +16,10 @@ class MockTimeSlotService : TimeSlotService
     }
     
     //PersistencyService implementation
-    func getLast() -> TimeSlot
+    func getLast() -> TimeSlot?
     {
         self.getLastTimeSlotWasCalled = true
-        return timeSlots.last!
+        return timeSlots.last
     }
     
     func getTimeSlots(forDay day: Date) -> [TimeSlot]

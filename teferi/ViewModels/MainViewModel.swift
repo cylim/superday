@@ -43,6 +43,12 @@ class MainViewModel
         
         self.isEditingObservable = self.editStateService.isEditingObservable
         self.beganEditingObservable = self.editStateService.beganEditingObservable
+        
+        let shouldCreateLeisureTimeSlot = self.timeSlotService.getLast() == nil
+        if shouldCreateLeisureTimeSlot
+        {
+            self.addNewSlot(withCategory: .leisure)
+        }
     }
     
     // MARK: Properties
@@ -115,20 +121,14 @@ class MainViewModel
      
      - Parameter category: Category of the newly created TimeSlot.
      */
-    
     func addNewSlot(withCategory category: Category)
-    {
-        self.addNewSlot(withCategory: category, isFirstTimeSlot: false)
-    }
-    
-    func addNewSlot(withCategory category: Category, isFirstTimeSlot: Bool)
     {
         let currentLocation = self.locationService.getLastKnownLocation()
         
         let newSlot = TimeSlot(withStartTime: self.timeService.now,
                                category: category,
                                location: currentLocation,
-                               categoryWasSetByUser: !isFirstTimeSlot)
+                               categoryWasSetByUser: true)
         
         if let location = currentLocation
         {
