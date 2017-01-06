@@ -12,7 +12,7 @@ class TrackingServiceTests : XCTestCase
     private var midnight : Date!
     private var noon : Date!
     
-    private var timeService : TimeService!
+    private var timeService : MockTimeService!
     private var loggingService : LoggingService!
     private var settingsService : SettingsService!
     private var trackingService : TrackingService!
@@ -231,6 +231,18 @@ class TrackingServiceTests : XCTestCase
         self.trackingService.onLocation(location)
         
         expect(self.settingsService.lastLocation).to(equal(initialLastLocation))
+    }
+    
+    func testCommuteIsNotStoppedRetroactivelyIfItWouldResultInZeroLengthSlot()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(
+            minutesBeforeNoon: 0, slotCategory: .commute, wasSetByUser: true)
+        
+        self.timeService.now = self.getDate(minutesPastNoon: 30)
+        self.trackingService.onAppState(.active)
+        
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+        expect(timeSlot.category).to(equal(Category.commute))
     }
     
     // Helper methods

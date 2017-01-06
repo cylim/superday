@@ -117,7 +117,7 @@ class DefaultTrackingService : TrackingService
         guard
             let currentTimeSlot = self.timeSlotService.getLast(),
             currentTimeSlot.category == .commute,
-            currentTimeSlot.startTime <= lastLocation.timestamp,
+            currentTimeSlot.startTime < lastLocation.timestamp,
             !self.isCommute(now: time, then: lastLocation.timestamp)
         else { return }
         
