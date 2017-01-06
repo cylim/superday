@@ -7,6 +7,8 @@ class MockNotificationService : NotificationService
     var cancellations = 0
     var scheduledNotifications = 0
     
+    var subscriptions : [(teferi.Category) -> ()] = []
+    
     func requestNotificationPermission(completed: @escaping () -> ())
     {
         completed()
@@ -31,6 +33,12 @@ class MockNotificationService : NotificationService
     
     func subscribeToCategoryAction(_ action : @escaping (teferi.Category) -> ())
     {
-        
+        self.subscriptions.append(action)
+    }
+    
+    
+    func sendAction(withCategory category : teferi.Category)
+    {
+        self.subscriptions.forEach { $0(category) }
     }
 }

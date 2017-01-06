@@ -9,10 +9,12 @@ class MockSmartGuessService : SmartGuessService
     
     var addShouldWork = true
     var smartGuessToReturn : SmartGuess? = nil
+    var locationsAskedFor = [CLLocation]()
     
-    func get(forLocation: CLLocation) -> SmartGuess?
+    func get(forLocation location: CLLocation) -> SmartGuess?
     {
-        return smartGuessToReturn
+        self.locationsAskedFor.append(location)
+        return self.smartGuessToReturn
     }
     
     @discardableResult func add(withCategory category: teferi.Category, location: CLLocation) -> SmartGuess?
