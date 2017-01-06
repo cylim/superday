@@ -99,7 +99,7 @@ class DefaultTimeSlotService : TimeSlotService
         //TimeSlot is going for over one day, we should end it at midnight
         if startDate.ignoreTimeComponents() != endDate.ignoreTimeComponents()
         {
-            self.loggingService.log(withLogLevel: .debug, message: "Trying to create a negative duration TimeSlot")
+            self.loggingService.log(withLogLevel: .debug, message: "Early ending TimeSlot at midnight")
             endDate = startDate.tomorrow.ignoreTimeComponents()
         }
         
