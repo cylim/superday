@@ -46,8 +46,7 @@ class DefaultTimeSlotService : TimeSlotService
     
     func update(timeSlot: TimeSlot, withCategory category: Category, setByUser: Bool)
     {
-        //No need to persist anything if the categories are the same
-        guard timeSlot.category != category else { return }
+        guard self.canChangeCategory(of: timeSlot, to: category, setByUser: setByUser) else { return }
         
         let predicate = Predicate(parameter: "startTime", equals: timeSlot.startTime as AnyObject)
         let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
@@ -66,6 +65,22 @@ class DefaultTimeSlotService : TimeSlotService
         {
             self.loggingService.log(withLogLevel: .error, message: "Error updating category of TimeSlot created on \(timeSlot.startTime) from \(timeSlot.category) to \(category)")
         }
+    }
+    
+    private func canChangeCategory(of timeSlot : TimeSlot, to category : Category, setByUser : Bool) -> Bool
+    {
+        if setByUser == timeSlot.categoryWasSetByUser
+        {
+            return category != timeSlot.category
+        }
+        
+        if setByUser
+        {
+            return true
+        }
+        
+        self.loggingService.log(withLogLevel: .warning, message: "Tried automatically updating category of TimeSlot which was set by user")
+        return false
     }
     
     func getLast() -> TimeSlot?
