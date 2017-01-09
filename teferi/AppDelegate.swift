@@ -83,6 +83,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     {
         let isInBackground = launchOptions?[UIApplicationLaunchOptionsKey.location] != nil
         
+        let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        self.loggingService.log(withLogLevel: .debug,
+                                message: "Application started on \(isInBackground ? "background" : "foreground"). App Version: \(versionNumber) Build: \(buildNumber)")
+        
         //Starts location tracking
         self.locationService
             .locationObservable
