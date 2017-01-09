@@ -149,13 +149,9 @@ class TimelineViewController : UITableViewController
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
         
         //Check if need to display the endTime
-        var lastInPastDay = false
         let isPastDay = self.viewModel.currentDay.ignoreTimeComponents() != self.viewModel.date.ignoreTimeComponents()
         let isLastEntry = self.viewModel.timeSlots.count - 1 == indexPath.row
-        if isPastDay && isLastEntry
-        {
-            lastInPastDay = true
-        }
+        let lastInPastDay = isPastDay && isLastEntry
         
         cell.bind(toTimeSlot: timeSlot, index: index, lastInPastDay: lastInPastDay)
         
@@ -177,7 +173,6 @@ class TimelineViewController : UITableViewController
         }
         
         let index = indexPath.item
-        
         if index == self.viewModel.timeSlots.count { return 120 }
         
         let timeSlot = self.viewModel.timeSlots[index]
