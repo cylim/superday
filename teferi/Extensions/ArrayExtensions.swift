@@ -10,42 +10,20 @@ extension Array
         return flatMap { $0 as? T }.last!
     }
     
-    func groupBy<G: Hashable>(_ closure: (Element) -> G) -> [[Element]]
+    func groupBy<Key: Hashable>(_ selectKey: (Element) -> Key) -> [[Element]]
     {
-        var groups = [[Element]]()
+        var groups = [Key:[Element]]()
         
         for element in self
         {
-            let key = closure(element)
-            var active = Int()
-            var isNewGroup = true
-            var array = [Element]()
+            let key = selectKey(element)
             
-            for (index, group) in groups.enumerated()
+            if case nil = groups[key]?.append(element)
             {
-                let firstKey = closure(group[0])
-                if firstKey == key
-                {
-                    array = group
-                    active = index
-                    isNewGroup = false
-                    break
-                }
-            }
-            
-            array.append(element)
-            
-            if isNewGroup
-            {
-                groups.append(array)
-            }
-            else
-            {
-                groups.remove(at: active)
-                groups.insert(array, at: active)
+                groups[key] = [element]
             }
         }
         
-        return groups
+        return groups.map { $0.value }
     }
 }
