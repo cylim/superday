@@ -59,6 +59,7 @@ class DefaultTimeSlotService : TimeSlotService
         
         if self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
         {
+            timeSlot.category = category
             self.updateCallbacks.forEach { callback in callback(timeSlot) }
         }
         else
