@@ -87,10 +87,10 @@ class TimelineViewController : UITableViewController
     // MARK: Methods
     private func onTimeSlotUpdated(atIndex index: Int)
     {
-        guard !self.tableView.isEditing else { return }
-        
         let indexPath = IndexPath(row: index, section: 0)
-        self.tableView.reloadRows(at: [ indexPath ], with: .none)
+        
+        self.tableView(self.tableView, cellForRowAt: indexPath).setNeedsLayout()
+        self.tableView.reloadRows(at: [ indexPath ], with: .fade)
     }
     
     private func onIsEditing(isEditing: Bool)

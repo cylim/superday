@@ -51,9 +51,9 @@ class TimelineCellTests : XCTestCase
         self.timeSlot.category = .work
     }
     
-    private func editCellSetUp(_ shouldFade: Bool = true, isEditingCategory: Bool = true)
+    private func editCellSetUp(lastInPastDay: Bool = false)
     {
-        self.view.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: false)
+        self.view.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: lastInPastDay)
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
@@ -158,13 +158,12 @@ class TimelineCellTests : XCTestCase
         expect(expectedColor).to(equal(actualColor))
     }
     
-    func testRebindingACellAfterEditingRemovesTheExtraViews()
+    func testNoCategoryIsShownIfTheTimeSlotHasThePropertyShouldDisplayCategoryNameSetToFalse()
     {
-        let numberOfViewsBeforeBinding = view.subviews.count
+        self.timeSlot.shouldDisplayCategoryName = false
         self.editCellSetUp()
-        self.editCellSetUp(true, isEditingCategory: false)
         
-        expect(self.view.subviews.count).to(equal(numberOfViewsBeforeBinding))
+        expect(self.slotDescription.text).to(equal(""))
     }
     
     private func createTimeSlot(withStartTime time: Date) -> TimeSlot

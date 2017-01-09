@@ -33,6 +33,12 @@ class TimelineViewModel
     }()
 
     private(set) var timeSlots : [TimeSlot]
+    {
+        didSet
+        {
+            self.processTimeSlots(self.timeSlots)
+        }
+    }
     
     var currentDay : Date { return self.timeService.now }
     var isEditingObservable : Observable<Bool> { return self.editStateService.isEditingObservable }
@@ -62,6 +68,8 @@ class TimelineViewModel
             self.isCurrentDay ?
                 Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) :
                 Observable.empty()
+        
+        self.processTimeSlots(self.timeSlots)
         
         //Only the current day subscribes for new TimeSlots
         guard self.isCurrentDay else { return }
@@ -95,6 +103,8 @@ class TimelineViewModel
             lastTimeSlot.endTime = self.timeService.now
         }
         
+        timeSlot.shouldDisplayCategoryName =
+            self.shouldDisplayCategoryName(currentTimeSlot: timeSlot, previousTimeSlot: self.timeSlots.last)
         self.timeSlots.append(timeSlot)
         self.timeSlotCreationVariable.value = self.timeSlots.count - 1
     }
@@ -104,7 +114,7 @@ class TimelineViewModel
         if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
         {
             self.timeSlots[index] = timeSlot
-            self.timeSlotUpdatingVariable.value = index
+            self.processTimeSlots(self.timeSlots)
         }
     }
     
@@ -113,5 +123,34 @@ class TimelineViewModel
     private func refreshTimeSlotsFromService(_ appState: AppState) -> Void
     {
         self.timeSlots = self.timeSlotService.getTimeSlots(forDay: self.date)
+    }
+    
+    private func processTimeSlots(_ timeSlots: [TimeSlot])
+    {
+        var changedIndexes = [Int]()
+        var previousTimeSlot : TimeSlot? = nil
+        for (index, timeSlot) in timeSlots.enumerated()
+        {
+            let oldValue = timeSlot.shouldDisplayCategoryName
+            let newValue = self.shouldDisplayCategoryName(currentTimeSlot: timeSlot, previousTimeSlot: previousTimeSlot)
+
+            timeSlot.shouldDisplayCategoryName = newValue
+            
+            if oldValue != newValue
+            {
+                changedIndexes.append(index)
+            }
+            
+            previousTimeSlot = timeSlot
+        }
+        
+        changedIndexes.forEach { index in self.timeSlotUpdatingVariable.value = index }
+    }
+    
+    private func shouldDisplayCategoryName(currentTimeSlot: TimeSlot, previousTimeSlot: TimeSlot?) -> Bool
+    {
+        guard let previous = previousTimeSlot else { return true }
+        
+        return previous.category != currentTimeSlot.category
     }
 }

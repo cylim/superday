@@ -78,10 +78,10 @@ class TimelineCell : UITableViewCell
     /// Updates the label that displays the description and starting time of the slot
     private func layoutDescriptionLabel(withTimeSlot timeSlot: TimeSlot)
     {
-        let isCategoryUnknown = timeSlot.category == .unknown
-        let categoryText = isCategoryUnknown ? "" : timeSlot.category.rawValue.capitalized
+        let shouldShowCategory = !timeSlot.shouldDisplayCategoryName || timeSlot.category == .unknown
+        let categoryText = shouldShowCategory ? "" : timeSlot.category.rawValue.capitalized
         self.slotDescription.text = categoryText
-        self.timeSlotDistanceConstraint.constant = isCategoryUnknown ? 0 : 6
+        self.timeSlotDistanceConstraint.constant = shouldShowCategory ? 0 : 6
     }
     
     /// Updates the label that shows the time the TimeSlot was created

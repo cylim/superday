@@ -13,7 +13,7 @@ class TimeSlot
     var endTime : Date? = nil
     var category = Category.unknown
     var categoryWasSetByUser : Bool
-    
+    var shouldDisplayCategoryName = true
     
     ///Calculates and returns the total duration for the TimeSlot.
     var duration : TimeInterval

@@ -5,6 +5,7 @@ class MockTimeSlotService : TimeSlotService
 {
     //MARK: Fields
     private var newTimeSlotCallbacks = [(TimeSlot) -> ()]()
+    private var updateTimeSlotCallbacks = [(TimeSlot) -> ()]()
     
     //MARK: Properties
     private(set) var timeSlots = [TimeSlot]()
@@ -45,15 +46,23 @@ class MockTimeSlotService : TimeSlotService
     {
         timeSlot.category = category
         timeSlot.categoryWasSetByUser = setByUser
+        self.updateTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
     }
     
     func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
     {
         timeSlot.smartGuessId = smartGuessId
+        self.updateTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
     }
     
     func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
     {
-        self.newTimeSlotCallbacks.append(callback)
+        switch event
+        {
+        case .create:
+            self.newTimeSlotCallbacks.append(callback)
+        case .update:
+            self.updateTimeSlotCallbacks.append(callback)
+        }
     }
 }
