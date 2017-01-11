@@ -361,16 +361,65 @@ class TrackingServiceTests : XCTestCase
     }
     
     
+    func testAlgorithmIgnoresInaccurateLocations()
+    {
+        self.setupFirstTimeSlotAndLastLocation(
+            minutesBeforeNoon: 30, slotCategory: .food, wasSetByUser: false,
+            metersFromOrigin: 1500, horizontalAccuracy: 0)
+        let lastLocation = self.settingsService.lastLocation!
+        
+        self.trackingService.onLocation(self.getLocation(withTimestamp: self.noon, horizontalAccuracy: 1000))
+        
+        expect(self.settingsService.lastLocation).to(equal(lastLocation))
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+        expect(self.timeSlotService.getLast()!.category).to(equal(Category.food))
+    }
+    
+    func testAlgorithmIgnoresButSavesBetterInaccurateLocation()
+    {
+        self.setupFirstTimeSlotAndLastLocation(
+            minutesBeforeNoon: 30, slotCategory: .food, wasSetByUser: false,
+            metersFromOrigin: 1500, horizontalAccuracy: 1000)
+        
+        let location = self.getLocation(withTimestamp: self.noon, horizontalAccuracy: 500)
+        self.trackingService.onLocation(location)
+        
+        expect(self.settingsService.lastLocation).to(equal(location))
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+        expect(self.timeSlotService.getLast()!.category).to(equal(Category.food))
+    }
+    
+    func testAlgorithmStartsCommuteRetroactivelyAfterBetterInaccurateLocation()
+    {
+        self.setupFirstTimeSlotAndLastLocation(
+            minutesBeforeNoon: 30, slotCategory: .food, wasSetByUser: false,
+            metersFromOrigin: 1500, horizontalAccuracy: 1000)
+        
+        self.trackingService.onLocation(self.getLocation(withTimestamp: self.noon))
+        let location = self.getLocation(withTimestamp: self.getDate(minutesPastNoon: 15))
+        self.trackingService.onLocation(location)
+        
+        expect(self.settingsService.lastLocation).to(equal(location))
+        expect(self.timeSlotService.timeSlots.count).to(equal(2))
+        expect(self.timeSlotService.timeSlots[0].category).to(equal(Category.food))
+        expect(self.timeSlotService.timeSlots[1].category).to(equal(Category.commute))
+        expect(self.timeSlotService.timeSlots[1].startTime).to(equal(self.noon))
+    }
+    
+    
     // Helper methods
     
-    @discardableResult func setupFirstTimeSlotAndLastLocation(minutesBeforeNoon : Int) -> TimeSlot
+    @discardableResult func setupFirstTimeSlotAndLastLocation(
+        minutesBeforeNoon : Int, metersFromOrigin: Double? = nil, horizontalAccuracy: Double = 20) -> TimeSlot
     {
         return self.setupFirstTimeSlotAndLastLocation(
-            minutesBeforeNoon: minutesBeforeNoon, slotCategory: .unknown, wasSetByUser: false)
+            minutesBeforeNoon: minutesBeforeNoon, slotCategory: .unknown, wasSetByUser: false,
+            metersFromOrigin: metersFromOrigin, horizontalAccuracy: horizontalAccuracy)
     }
     
     @discardableResult func setupFirstTimeSlotAndLastLocation(
-        minutesBeforeNoon : Int, slotCategory: teferi.Category, wasSetByUser: Bool) -> TimeSlot
+        minutesBeforeNoon : Int, slotCategory: teferi.Category, wasSetByUser: Bool,
+        metersFromOrigin: Double? = nil, horizontalAccuracy: Double = 20) -> TimeSlot
     {
         let date = self.getDate(minutesPastNoon: -minutesBeforeNoon)
         
@@ -378,7 +427,8 @@ class TrackingServiceTests : XCTestCase
         timeSlot.category = slotCategory
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
+        self.settingsService.setLastLocation(self.getLocation(
+            withTimestamp: date, metersFromOrigin: metersFromOrigin, horizontalAccuracy: horizontalAccuracy))
         
         return timeSlot
     }
@@ -391,21 +441,36 @@ class TrackingServiceTests : XCTestCase
     
     func getLocation(withTimestamp date: Date) -> CLLocation
     {
+        return self.getLocation(withTimestamp: date, horizontalAccuracy: 0)
+    }
+    
+    func getLocation(withTimestamp date: Date, metersFromOrigin: Double?, horizontalAccuracy: Double) -> CLLocation
+    {
+        guard let meters = metersFromOrigin else
+        {
+            return self.getLocation(withTimestamp: date, horizontalAccuracy: horizontalAccuracy)
+        }
+        
+        return self.getLocation(withTimestamp: date, metersFromOrigin: meters, horizontalAccuracy: horizontalAccuracy)
+    }
+    
+    func getLocation(withTimestamp date: Date, horizontalAccuracy: Double) -> CLLocation
+    {
         let metersPerSecond = self.defaultMovementSpeed / 60.0
         let secondsSinceNoon = date.timeIntervalSince(self.noon)
         let metersOffset = secondsSinceNoon * metersPerSecond
         
-        return self.getLocation(withTimestamp: date, metersFromOrigin: metersOffset)
+        return self.getLocation(withTimestamp: date, metersFromOrigin: metersOffset, horizontalAccuracy: horizontalAccuracy)
     }
     
-    func getLocation(withTimestamp date: Date, metersFromOrigin distance: Double) -> CLLocation
+    func getLocation(withTimestamp date: Date, metersFromOrigin distance: Double, horizontalAccuracy: Double = 20) -> CLLocation
     {
         let latitudeOffset = distance * self.metersToLatitudeFactor
         let coordinates = CLLocationCoordinate2D(latitude: self.baseCoordinates.latitude + latitudeOffset,
                                                  longitude: self.baseCoordinates.longitude)
         return CLLocation(coordinate: coordinates,
                           altitude: 0,
-                          horizontalAccuracy: 0,
+                          horizontalAccuracy: horizontalAccuracy,
                           verticalAccuracy: 0,
                           timestamp: date)
     }

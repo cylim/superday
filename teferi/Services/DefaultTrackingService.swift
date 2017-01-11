@@ -51,7 +51,14 @@ class DefaultTrackingService : TrackingService
         
         guard location.timestamp > previousLocation.timestamp else { return }
         
-        guard location.distance(from: previousLocation) > 50 else { return }
+        guard self.locationsAreSignificantlyDifferent(current: location, previous: previousLocation) else
+        {
+            if location.isMoreAccurate(than: previousLocation)
+            {
+                self.settingsService.setLastLocation(location)
+            }
+            return
+        }
         
         self.settingsService.setLastLocation(location)
         
@@ -61,10 +68,16 @@ class DefaultTrackingService : TrackingService
         
         if self.isCommute(now: location.timestamp, then: previousLocation.timestamp)
         {
-            //If it was smart guessed and we detect movement, we got it wrong and override it with a commute
-            if !currentTimeSlot.categoryWasSetByUser
+            if currentTimeSlot.startTime == previousLocation.timestamp
             {
-                self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute, setByUser: false)
+                if !currentTimeSlot.categoryWasSetByUser
+                {
+                    self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute, setByUser: false)
+                }
+            }
+            else if currentTimeSlot.category != .commute
+            {
+                self.startCommute(fromLocation: previousLocation)
             }
             scheduleNotification = true
         }
@@ -83,6 +96,14 @@ class DefaultTrackingService : TrackingService
         }
         
         self.cancelNotification(andScheduleNew: scheduleNotification)
+    }
+    
+    private func locationsAreSignificantlyDifferent(current: CLLocation, previous: CLLocation) -> Bool
+    {
+        let higherInaccuracy = max(current.horizontalAccuracy, previous.horizontalAccuracy)
+        let thresholdDistance = higherInaccuracy * 2
+        
+        return current.distance(from: previous) > thresholdDistance
     }
     
     private func cancelNotification(andScheduleNew scheduleNew : Bool)
@@ -137,6 +158,13 @@ class DefaultTrackingService : TrackingService
         }
         
         self.isOnBackground = appState == .inactive
+    }
+    
+    private func startCommute(fromLocation location: CLLocation)
+    {
+        let timeSlot = TimeSlot(withStartTime: location.timestamp, category: .commute, location: location, categoryWasSetByUser: false);
+        
+        self.timeSlotService.add(timeSlot: timeSlot)
     }
     
     @discardableResult private func persistTimeSlot(withLocation location: CLLocation) -> Category
