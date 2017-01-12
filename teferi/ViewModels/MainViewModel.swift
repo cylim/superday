@@ -169,7 +169,7 @@ class MainViewModel
     
     func composeFeedback(_ completed: @escaping () -> ()) { self.feedbackService.composeFeedback(completed: completed) }
     
-    func setLastAskedForLocationPermission() { self.settingsService.setLastAskedForLocationPermission(Date()) }
+    func setLastAskedForLocationPermission() { self.settingsService.setLastAskedForLocationPermission(self.timeService.now) }
     
     func setAllowedLocationPermission() { self.settingsService.setAllowedLocationPermission() }
     
