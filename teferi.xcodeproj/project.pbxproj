@@ -86,6 +86,8 @@
 		24D18E301DF06B9E0046B202 /* SmartGuessModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */; };
 		24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AA1DB8CA4600E429CA /* AppStateService.swift */; };
 		24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */; };
+		24D73F2B1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */; };
+		24D73F2D1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D73F2C1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift */; };
 		24DE23EC1E1BB3180089B49E /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23E91E1BB3180089B49E /* CalendarCell.swift */; };
 		24DE23ED1E1BB3180089B49E /* CalendarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24DE23EA1E1BB3180089B49E /* CalendarCell.xib */; };
 		24DE23EE1E1BB3180089B49E /* CalendarDailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23EB1E1BB3180089B49E /* CalendarDailyActivityView.swift */; };
@@ -266,6 +268,8 @@
 		24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartGuessModelAdapter.swift; sourceTree = "<group>"; };
 		24D213AA1DB8CA4600E429CA /* AppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppStateService.swift; path = Services/Protocols/AppStateService.swift; sourceTree = "<group>"; };
 		24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultAppStateService.swift; path = Services/DefaultAppStateService.swift; sourceTree = "<group>"; };
+		24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartGuessServiceTests.swift; path = Services/SmartGuessServiceTests.swift; sourceTree = "<group>"; };
+		24D73F2C1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockSmartGuessPersistencyService.swift; path = Mocks/MockSmartGuessPersistencyService.swift; sourceTree = "<group>"; };
 		24DE23E91E1BB3180089B49E /* CalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCell.swift; path = Views/CalendarCell.swift; sourceTree = "<group>"; };
 		24DE23EA1E1BB3180089B49E /* CalendarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CalendarCell.xib; path = Views/CalendarCell.xib; sourceTree = "<group>"; };
 		24DE23EB1E1BB3180089B49E /* CalendarDailyActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarDailyActivityView.swift; path = Views/CalendarDailyActivityView.swift; sourceTree = "<group>"; };
@@ -419,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				24168E361DC21042004F90AD /* TrackingServiceTests.swift */,
+				24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				24D18E271DF0251A0046B202 /* MockSmartGuessService.swift */,
 				249B359C1E1A6015005793B9 /* MockLocator.swift */,
 				24DE24051E1BBD6E0089B49E /* MockSelectedDateService.swift */,
+				24D73F2C1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -1186,9 +1192,11 @@
 				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
 				2416B27D1E278B1300CE283B /* CalendarViewControllerTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
+				24D73F2B1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift in Sources */,
 				24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */,
 				24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */,
 				249B359D1E1A6015005793B9 /* MockLocator.swift in Sources */,
+				24D73F2D1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift in Sources */,
 				24B03B611D9E5DEE00452D16 /* MockSettingsService.swift in Sources */,
 				24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */,
 				24564F6D1D8326F100D9A8AE /* MainViewModelTests.swift in Sources */,
