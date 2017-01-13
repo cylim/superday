@@ -4,31 +4,13 @@ import RxSwift
 ///ViewModel for the CalendardViewModel.
 class CalendarViewModel
 {
-    //MARK: Fields
+    // MARK: Fields
     private let timeService : TimeService
     private let timeSlotService : TimeSlotService
     private var selectedDateService : SelectedDateService
     private let currentVisibleCalendarDateVariable : Variable<Date>
     
-    var selectedDate : Date
-    {
-        get { return self.selectedDateService.currentlySelectedDate }
-        set(value) { self.selectedDateService.currentlySelectedDate = value }
-    }
-    
-    let minValidDate : Date
-    var maxValidDate : Date { return self.timeService.now }
-    
-    let currentVisibleCalendarDateObservable : Observable<Date>
-    
-    var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable }
-    
-    var currentVisibleCalendarDate : Date
-    {
-        get { return self.currentVisibleCalendarDateVariable.value }
-        set(value) { self.currentVisibleCalendarDateVariable.value = value }
-    }
-    
+    // MARK: Initializers
     init(timeService: TimeService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
@@ -41,9 +23,30 @@ class CalendarViewModel
         self.minValidDate = settingsService.installDate ?? timeService.now
         
         self.currentVisibleCalendarDateVariable = Variable(timeService.now)
+        self.dateObservable = self.selectedDateService.currentlySelectedDateObservable
         self.currentVisibleCalendarDateObservable = self.currentVisibleCalendarDateVariable.asObservable()
     }
     
+    // MARK: Properties
+    let minValidDate : Date
+    var maxValidDate : Date { return self.timeService.now }
+    
+    let dateObservable : Observable<Date>
+    let currentVisibleCalendarDateObservable : Observable<Date>
+    
+    var selectedDate : Date
+    {
+        get { return self.selectedDateService.currentlySelectedDate }
+        set(value) { self.selectedDateService.currentlySelectedDate = value }
+    }
+    
+    var currentVisibleCalendarDate : Date
+    {
+        get { return self.currentVisibleCalendarDateVariable.value }
+        set(value) { self.currentVisibleCalendarDateVariable.value = value }
+    }
+    
+    // MARK: Methods
     func canScroll(toDate date: Date) -> Bool
     {
         let cellDate = date.ignoreTimeComponents()

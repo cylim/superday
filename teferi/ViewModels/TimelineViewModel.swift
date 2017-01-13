@@ -91,7 +91,6 @@ class TimelineViewModel
                                 timeSlot: self.timeSlots[index])
     }
     
-    
     //MARK: Methods
     
     ///Called when the persistency service indicates that a TimeSlot has been created/updated.

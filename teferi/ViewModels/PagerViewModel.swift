@@ -58,7 +58,6 @@ class PagerViewModel
         }
     }
     
-    
     //Methods
     func canScroll(toDate date: Date) -> Bool
     {
@@ -74,7 +73,7 @@ class PagerViewModel
         switch appState
         {
             case .active:
-                let today = Date().ignoreTimeComponents()
+                let today = self.timeService.now.ignoreTimeComponents()
                 
                 guard let inactiveDate = self.settingsService.lastInactiveDate,
                     today > inactiveDate.ignoreTimeComponents() else { return false }
@@ -83,7 +82,7 @@ class PagerViewModel
                 return true
             
             case .inactive:
-                self.settingsService.setLastInactiveDate(Date())
+                self.settingsService.setLastInactiveDate(self.timeService.now)
                 break
             
             case .needsRefreshing:

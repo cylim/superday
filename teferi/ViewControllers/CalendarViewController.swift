@@ -149,7 +149,7 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
             {
                 self.isVisible = enable
                 self.view.isUserInteractionEnabled = enable
-                self.view.superview!.isUserInteractionEnabled = enable
+                self.view.superview?.isUserInteractionEnabled = enable
             }
         }
     }
@@ -183,6 +183,7 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     private func onCurrentlySelectedDateChanged(_ date: Date)
     {
         self.calendarView.selectDates([date])
+        self.hide()
     }
     
     private func calculateWhiteFadePoint(forDate date: Date) -> Float
