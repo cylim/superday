@@ -6,6 +6,7 @@ class TimelineViewModel
 {
     //MARK: Fields
     private let isCurrentDay : Bool
+    private let disposeBag = DisposeBag()
     
     private let timeService : TimeService
     private let metricsService : MetricsService
@@ -61,6 +62,7 @@ class TimelineViewModel
         self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
         
         self.date = date.ignoreTimeComponents()
+
         self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
         self.timeSlotUpdatingObservable = self.timeSlotUpdatingVariable.asObservable().filter { $0 >= 0 }
         
@@ -74,8 +76,15 @@ class TimelineViewModel
         //Only the current day subscribes for new TimeSlots
         guard self.isCurrentDay else { return }
         
-        self.timeSlotService.subscribeToTimeSlotChanges(on: .create, self.onTimeSlotCreated)
-        self.timeSlotService.subscribeToTimeSlotChanges(on: .update, self.onTimeSlotUpdated)
+        self.timeSlotService
+            .timeSlotCreatedObservable
+            .subscribe(onNext: self.onTimeSlotCreated)
+            .addDisposableTo(self.disposeBag)
+            
+        self.timeSlotService
+            .timeSlotUpdatedObservable
+            .subscribe(onNext: self.onTimeSlotUpdated)
+            .addDisposableTo(self.disposeBag)
         
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.timeSlots.count == 0

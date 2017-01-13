@@ -1,16 +1,18 @@
 import CoreData
+import RxSwift
 import Foundation
 
 class DefaultTimeSlotService : TimeSlotService
 {
-    //MARK: Fields
+    // MARK: Fields
     private let timeService : TimeService
     private let loggingService : LoggingService
     private let persistencyService : BasePersistencyService<TimeSlot>
     
-    private var createCallbacks = [(TimeSlot) -> ()]()
-    private var updateCallbacks = [(TimeSlot) -> ()]()
+    private let timeSlotCreatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
+    private let timeSlotUpdatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
     
+    // MARK: Properties
     init(timeService: TimeService,
          loggingService: LoggingService,
          persistencyService: BasePersistencyService<TimeSlot>)
@@ -18,8 +20,16 @@ class DefaultTimeSlotService : TimeSlotService
         self.timeService = timeService
         self.loggingService = loggingService
         self.persistencyService = persistencyService
+
+        self.timeSlotCreatedObservable = timeSlotCreatedVariable.asObservable().skip(1)
+        self.timeSlotUpdatedObservable = timeSlotUpdatedVariable.asObservable().skip(1)
     }
     
+    // MARK: Properties
+    let timeSlotCreatedObservable : Observable<TimeSlot>
+    let timeSlotUpdatedObservable : Observable<TimeSlot>
+
+    // MARK: Methods
     func add(timeSlot: TimeSlot)
     {
         //The previous TimeSlot needs to be finished before a new one can start
@@ -31,7 +41,7 @@ class DefaultTimeSlotService : TimeSlotService
         
         self.loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
         
-        self.createCallbacks.forEach { callback in callback(timeSlot) }
+        self.timeSlotCreatedVariable.value = timeSlot
     }
     
     func getTimeSlots(forDay day: Date) -> [TimeSlot]
@@ -59,7 +69,7 @@ class DefaultTimeSlotService : TimeSlotService
         if self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
         {
             timeSlot.category = category
-            self.updateCallbacks.forEach { callback in callback(timeSlot) }
+            self.timeSlotUpdatedVariable.value = timeSlot
         }
         else
         {
@@ -86,17 +96,6 @@ class DefaultTimeSlotService : TimeSlotService
     func getLast() -> TimeSlot?
     {
         return self.persistencyService.getLast()
-    }
-    
-    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
-    {
-        switch event
-        {
-            case .create:
-                self.createCallbacks.append(callback)
-            case .update:
-                self.updateCallbacks.append(callback)
-        }
     }
     
     private func endPreviousTimeSlot(atDate date: Date) -> Bool

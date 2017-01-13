@@ -1,20 +1,33 @@
 import Foundation
+import RxSwift
 @testable import teferi
 
 class MockTimeSlotService : TimeSlotService
 {
     //MARK: Fields
-    private var newTimeSlotCallbacks = [(TimeSlot) -> ()]()
-    private var updateTimeSlotCallbacks = [(TimeSlot) -> ()]()
+    private let timeSlotCreatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
+    private let timeSlotUpdatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
     
     //MARK: Properties
     private(set) var timeSlots = [TimeSlot]()
     private(set) var getLastTimeSlotWasCalled = false
     
-    var didSubscribe : Bool
+    init()
     {
-        return newTimeSlotCallbacks.count > 0
+        self._timeSlotCreatedObservable = timeSlotCreatedVariable.asObservable().skip(1)
+        self.timeSlotUpdatedObservable = timeSlotUpdatedVariable.asObservable().skip(1)
     }
+    
+    // MARK: Properties
+    private let _timeSlotCreatedObservable : Observable<TimeSlot>
+    var timeSlotCreatedObservable : Observable<TimeSlot>
+    {
+        self.didSubscribe = true
+        return _timeSlotCreatedObservable
+    }
+
+    let timeSlotUpdatedObservable : Observable<TimeSlot>
+    var didSubscribe = false
     
     //PersistencyService implementation
     func getLast() -> TimeSlot?
@@ -39,30 +52,13 @@ class MockTimeSlotService : TimeSlotService
         }
         
         self.timeSlots.append(timeSlot)
-        self.newTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
+        self.timeSlotCreatedVariable.value = timeSlot
     }
     
     @discardableResult func update(timeSlot: TimeSlot, withCategory category: teferi.Category, setByUser: Bool)
     {
         timeSlot.category = category
         timeSlot.categoryWasSetByUser = setByUser
-        self.updateTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
-    }
-    
-    func update(timeSlot: TimeSlot, withSmartGuessId smartGuessId: Int?)
-    {
-        timeSlot.smartGuessId = smartGuessId
-        self.updateTimeSlotCallbacks.forEach { callback in callback(timeSlot) }
-    }
-    
-    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
-    {
-        switch event
-        {
-        case .create:
-            self.newTimeSlotCallbacks.append(callback)
-        case .update:
-            self.updateTimeSlotCallbacks.append(callback)
-        }
+        self.timeSlotUpdatedVariable.value = timeSlot
     }
 }

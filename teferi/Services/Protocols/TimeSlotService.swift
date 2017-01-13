@@ -1,16 +1,11 @@
-import CoreLocation
-import CoreMotion
+import RxSwift
 
 ///Service that creates and updates TimeSlots
 protocol TimeSlotService
 {
-    /**
-     Adds a callback that gets called everytime a new TimeSlot is created.
-     
-     - Parameter callback: The function that gets invoked.
-     */
-    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
-    
+    var timeSlotCreatedObservable : Observable<TimeSlot> { get }
+    var timeSlotUpdatedObservable : Observable<TimeSlot> { get }
+
     /**
      Adds a new TimeSlot and ensures its validity.
      

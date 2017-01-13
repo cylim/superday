@@ -81,7 +81,7 @@ class MainViewModelTests : XCTestCase
     {
         var didAdd = false
         
-        self.timeSlotService.subscribeToTimeSlotChanges(on: .create, { _ in didAdd = true })
+        self.disposable = self.timeSlotService.timeSlotCreatedObservable.subscribe(onNext: { _ in didAdd = true })
         self.viewModel.addNewSlot(withCategory: .commute)
         
         expect(didAdd).to(beTrue())
