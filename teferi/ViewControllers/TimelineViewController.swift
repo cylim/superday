@@ -153,7 +153,10 @@ class TimelineViewController : UITableViewController
         let isLastEntry = self.viewModel.timeSlots.count - 1 == indexPath.row
         let lastInPastDay = isPastDay && isLastEntry
         
-        cell.bind(toTimeSlot: timeSlot, index: index, lastInPastDay: lastInPastDay)
+        cell.bind(toTimeSlot: timeSlot,
+                  index: index,
+                  lastInPastDay: lastInPastDay,
+                  calculateDuration: self.viewModel.calculateDuration)
         
         if !cell.isSubscribedToClickObservable
         {
@@ -179,7 +182,7 @@ class TimelineViewController : UITableViewController
         let isRunning = timeSlot.endTime == nil
         
         return TimelineViewController.timelineCellHeight(
-            duration: timeSlot.duration, isRunning: isRunning)
+            duration: self.viewModel.calculateDuration(ofTimeSlot: timeSlot), isRunning: isRunning)
     }
     
     static func timelineCellHeight(duration : TimeInterval, isRunning : Bool) -> CGFloat

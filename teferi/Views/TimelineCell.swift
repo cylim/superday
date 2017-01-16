@@ -49,12 +49,12 @@ class TimelineCell : UITableViewCell
      
      - Parameter timeSlot: TimeSlot that will be bound.
      */
-    func bind(toTimeSlot timeSlot: TimeSlot, index: Int, lastInPastDay: Bool)
+    func bind(toTimeSlot timeSlot: TimeSlot, index: Int, lastInPastDay: Bool, calculateDuration: (TimeSlot) -> TimeInterval)
     {
         self.currentIndex = index
         
         let isRunning = timeSlot.endTime == nil
-        let interval = Int(timeSlot.duration)
+        let interval = Int(calculateDuration(timeSlot))
         let minutes = (interval / 60) % 60
         let hours = (interval / 3600)
         let categoryColor = timeSlot.category.color

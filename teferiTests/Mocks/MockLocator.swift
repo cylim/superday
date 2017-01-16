@@ -6,14 +6,19 @@ class MockLocator : ViewModelLocator
 {
     var timeService = MockTimeService()
     var metricsService = MockMetricsService()
+    var timeSlotService : MockTimeSlotService
     var appStateService = MockAppStateService()
     var feedbackService = MockFeedbackService()
     var settingsService = MockSettingsService()
-    var timeSlotService = MockTimeSlotService()
     var locationService = MockLocationService()
     var editStateService = MockEditStateService()
     var smartGuessService = MockSmartGuessService()
     var selectedDateService = MockSelectedDateService()
+    
+    init()
+    {
+        self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
+    }
     
     func getMainViewModel(forViewController viewController: UIViewController) -> MainViewModel
     {

@@ -39,4 +39,12 @@ protocol TimeSlotService
      - Returns: The last saved TimeSlot.
      */
     func getLast() -> TimeSlot?
+    
+    /**
+    Calculates the duration of a TimeSlot
+     
+     - Parameter timeSlot: The TimeSlot to use in the calculation
+     - Returns: The duration of a timeslot
+    */
+    func calculateDuration(ofTimeSlot timeSlot: TimeSlot) -> TimeInterval
 }

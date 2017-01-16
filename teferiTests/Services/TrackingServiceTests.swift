@@ -28,9 +28,9 @@ class TrackingServiceTests : XCTestCase
         self.timeService = MockTimeService()
         self.loggingService = MockLoggingService()
         self.settingsService = MockSettingsService()
-        self.timeSlotService = MockTimeSlotService()
         self.smartGuessService = MockSmartGuessService()
         self.notificationService = MockNotificationService()
+        self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
         
         self.trackingService = DefaultTrackingService(timeService: self.timeService,
                                                       loggingService: self.loggingService,
@@ -237,7 +237,7 @@ class TrackingServiceTests : XCTestCase
     {
         let timeSlot = self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
         
-        self.timeService.now = self.noon
+        self.timeService.mockDate = self.noon
         self.notificationService.sendAction(withCategory: .food)
         
         expect(timeSlot.category).to(equal(Category.food))
@@ -250,7 +250,7 @@ class TrackingServiceTests : XCTestCase
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)
         
-        self.timeService.now = self.getDate(minutesPastNoon: 30)
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
         self.notificationService.sendAction(withCategory: .food)
         
         expect(timeSlot.endTime).to(equal(self.noon))
@@ -266,7 +266,7 @@ class TrackingServiceTests : XCTestCase
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)
         
-        self.timeService.now = self.getDate(minutesPastNoon: 30)
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
         self.trackingService.onAppState(.active)
         
         expect(timeSlot.endTime).to(equal(self.noon))
@@ -280,7 +280,7 @@ class TrackingServiceTests : XCTestCase
         let location = self.getLocation(withTimestamp: self.noon)
         self.trackingService.onLocation(location)
         
-        self.timeService.now = self.getDate(minutesPastNoon: 15)
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 15)
         self.trackingService.onAppState(.active)
         
         expect(self.timeSlotService.timeSlots.count).to(equal(1))
@@ -292,7 +292,7 @@ class TrackingServiceTests : XCTestCase
         let timeSlot = self.setupFirstTimeSlotAndLastLocation(
             minutesBeforeNoon: 0, slotCategory: .commute, wasSetByUser: true)
         
-        self.timeService.now = self.getDate(minutesPastNoon: 30)
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
         self.trackingService.onAppState(.active)
         
         expect(self.timeSlotService.timeSlots.count).to(equal(1))
@@ -304,7 +304,7 @@ class TrackingServiceTests : XCTestCase
         let timeSlot = self.setupFirstTimeSlotAndLastLocation(
             minutesBeforeNoon: 0, slotCategory: .food, wasSetByUser: true)
         
-        self.timeService.now = self.getDate(minutesPastNoon: 30)
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
         self.trackingService.onAppState(.active)
         
         expect(self.timeSlotService.timeSlots.count).to(equal(1))

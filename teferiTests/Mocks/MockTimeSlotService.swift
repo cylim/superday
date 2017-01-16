@@ -5,6 +5,7 @@ import RxSwift
 class MockTimeSlotService : TimeSlotService
 {
     //MARK: Fields
+    private let timeService : TimeService
     private let timeSlotCreatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
     private let timeSlotUpdatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
     
@@ -12,8 +13,10 @@ class MockTimeSlotService : TimeSlotService
     private(set) var timeSlots = [TimeSlot]()
     private(set) var getLastTimeSlotWasCalled = false
     
-    init()
+    init(timeService: TimeService)
     {
+        self.timeService = timeService
+        
         self._timeSlotCreatedObservable = timeSlotCreatedVariable.asObservable().skip(1)
         self.timeSlotUpdatedObservable = timeSlotUpdatedVariable.asObservable().skip(1)
     }
@@ -29,7 +32,27 @@ class MockTimeSlotService : TimeSlotService
     let timeSlotUpdatedObservable : Observable<TimeSlot>
     var didSubscribe = false
     
-    //PersistencyService implementation
+    // MARK: PersistencyService implementation
+    func calculateDuration(ofTimeSlot timeSlot: TimeSlot) -> TimeInterval
+    {
+        let endTime = self.getEndTime(ofTimeSlot: timeSlot)
+        
+        return endTime.timeIntervalSince(timeSlot.startTime)
+    }
+    
+    private func getEndTime(ofTimeSlot timeSlot: TimeSlot) -> Date
+    {
+        if let endTime = timeSlot.endTime { return endTime}
+        
+        let date = self.timeService.now
+        let timeEntryLimit = timeSlot.startTime.tomorrow.ignoreTimeComponents()
+        let timeEntryLastedOverOneDay = date > timeEntryLimit
+        
+        //TimeSlots can't go past midnight
+        let endTime = timeEntryLastedOverOneDay ? timeEntryLimit : date
+        return endTime
+    }
+    
     func getLast() -> TimeSlot?
     {
         self.getLastTimeSlotWasCalled = true

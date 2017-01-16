@@ -26,11 +26,11 @@ class MainViewModelTests : XCTestCase
         self.appStateService = MockAppStateService()
         self.locationService = MockLocationService()
         self.settingsService = MockSettingsService()
-        self.timeSlotService = MockTimeSlotService()
         self.feedbackService = MockFeedbackService()
         self.editStateService = MockEditStateService()
         self.smartGuessService = MockSmartGuessService()
         self.selectedDateService = MockSelectedDateService()
+        self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
         
         self.viewModel = MainViewModel(timeService: self.timeService,
                                        metricsService: self.metricsService,

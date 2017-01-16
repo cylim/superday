@@ -20,8 +20,8 @@ class TimelineViewModelTests : XCTestCase
         self.timeService = MockTimeService()
         self.metricsService = MockMetricsService()
         self.appStateService = MockAppStateService()
-        self.timeSlotService = MockTimeSlotService()
         self.editStateService = MockEditStateService()
+        self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
         
         self.viewModel = TimelineViewModel(date: Date(),
                                            timeService: self.timeService,
@@ -48,7 +48,7 @@ class TimelineViewModelTests : XCTestCase
     
     func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
     {
-        let newMockTimeSlotService = MockTimeSlotService()
+        let newMockTimeSlotService = MockTimeSlotService(timeService: self.timeService)
         _ = TimelineViewModel(date: Date().yesterday,
                               timeService: self.timeService,
                               metricsService: self.metricsService,
@@ -104,7 +104,7 @@ class TimelineViewModelTests : XCTestCase
     
     func testTheViewModelInitializesVerifyingTheShouldDisplayCategoryLogic()
     {
-        self.timeSlotService = MockTimeSlotService()
+        self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
         self.timeSlotService.add(timeSlot: self.createTimeSlot())
         
         let timeSlot = self.createTimeSlot()

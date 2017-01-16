@@ -86,15 +86,10 @@ class CalendarViewModel
     {
         let totalTime =
             timeSlots
-                .map(toDuration)
+                .map(timeSlotService.calculateDuration)
                 .reduce(0, +)
         
         return Activity(category: timeSlots.first!.category, duration: totalTime)
-    }
-    
-    private func toDuration(_ timeSlot: TimeSlot) -> TimeInterval
-    {
-        return timeSlot.duration
     }
     
     private func category(_ element1: Activity, _ element2: Activity) -> Bool

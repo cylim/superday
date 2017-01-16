@@ -101,6 +101,10 @@ class TimelineViewModel
     }
     
     //MARK: Methods
+    func calculateDuration(ofTimeSlot timeSlot: TimeSlot) -> TimeInterval
+    {
+        return self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+    }
     
     ///Called when the persistency service indicates that a TimeSlot has been created/updated.
     private func onTimeSlotCreated(timeSlot: TimeSlot)

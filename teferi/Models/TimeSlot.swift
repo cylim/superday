@@ -15,13 +15,6 @@ class TimeSlot
     var categoryWasSetByUser : Bool
     var shouldDisplayCategoryName = true
     
-    ///Calculates and returns the total duration for the TimeSlot.
-    var duration : TimeInterval
-    {
-        let endTime = self.endTime ?? self.getEndTime()
-        return endTime.timeIntervalSince(self.startTime)
-    }
-    
     // MARK: Initializers
     init(withStartTime time: Date, categoryWasSetByUser: Bool)
     {
@@ -71,16 +64,5 @@ class TimeSlot
         self.location = location
         self.startTime = startTime
         self.categoryWasSetByUser = categoryWasSetByUser
-    }
-    
-    // MARK: Methods
-    private func getEndTime() -> Date
-    {
-        let date = Date()
-        let timeEntryLimit = self.startTime.tomorrow.ignoreTimeComponents()
-        let timeEntryLastedOverOneDay = date.compare(timeEntryLimit) == ComparisonResult.orderedDescending
-    
-        //The `endTime` property can never exceed midnight of the TimeSlot day, so this property considers it before returning the proper TimeInterval
-        return timeEntryLastedOverOneDay ? timeEntryLimit : date
     }
 }

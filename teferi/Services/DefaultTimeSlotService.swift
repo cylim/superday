@@ -98,6 +98,26 @@ class DefaultTimeSlotService : TimeSlotService
         return self.persistencyService.getLast()
     }
     
+    func calculateDuration(ofTimeSlot timeSlot: TimeSlot) -> TimeInterval
+    {
+        let endTime = self.getEndTime(ofTimeSlot: timeSlot)
+        
+        return endTime.timeIntervalSince(timeSlot.startTime)
+    }
+    
+    private func getEndTime(ofTimeSlot timeSlot: TimeSlot) -> Date
+    {
+        if let endTime = timeSlot.endTime { return endTime}
+        
+        let date = self.timeService.now
+        let timeEntryLimit = timeSlot.startTime.tomorrow.ignoreTimeComponents()
+        let timeEntryLastedOverOneDay = date > timeEntryLimit
+        
+        //TimeSlots can't go past midnight
+        let endTime = timeEntryLastedOverOneDay ? timeEntryLimit : date
+        return endTime
+    }
+    
     private func endPreviousTimeSlot(atDate date: Date) -> Bool
     {
         guard let timeSlot = self.persistencyService.getLast() else { return true }

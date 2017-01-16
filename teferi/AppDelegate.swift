@@ -152,6 +152,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             
             initialViewController =
                 onboardController.inject(self.timeService,
+                                         self.timeSlotService,
                                          self.settingsService,
                                          self.appStateService,
                                          mainViewController,
