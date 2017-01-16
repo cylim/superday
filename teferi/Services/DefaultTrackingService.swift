@@ -113,9 +113,11 @@ class DefaultTrackingService : TrackingService
         guard scheduleNew else { return }
         
         let notificationDate = self.timeService.now.addingTimeInterval(self.commuteDetectionLimit)
+        let possibleFutureSlotStart = timeSlotService.getLast()?.category == Category.commute ? settingsService.lastLocation?.timestamp : nil
         self.notificationService.scheduleNotification(date: notificationDate,
                                                       title: self.notificationTitle,
-                                                      message: self.notificationBody)
+                                                      message: self.notificationBody,
+                                                      possibleFutureSlotStart: possibleFutureSlotStart)
     }
     
     private func onNotificationAction(withCategory category : Category)

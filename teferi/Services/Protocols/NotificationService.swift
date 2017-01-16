@@ -5,7 +5,7 @@ protocol NotificationService
 {
     func requestNotificationPermission(completed: @escaping () -> ())
     
-    func scheduleNotification(date: Date, title: String, message: String)
+    func scheduleNotification(date: Date, title: String, message: String, possibleFutureSlotStart: Date?)
     
     func unscheduleAllNotifications()
     

@@ -165,6 +165,26 @@ class TrackingServiceTests : XCTestCase
         expect(allTimeSlots[3].startTime).to(equal(dates[3]))
     }
     
+    func testFakeTimeSlotIsInsertedInNotificationOnCommute()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.shouldShowFakeTimeSlot).to(equal(true))
+    }
+    
+    func testFakeTimeSlotIsNotInsertedInNotificationOnNonCommute()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.shouldShowFakeTimeSlot).to(equal(false))
+    }
+    
     func testTheAlgorithmReschedulesNotificationsOnCommute()
     {
         self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)

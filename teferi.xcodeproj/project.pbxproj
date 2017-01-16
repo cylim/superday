@@ -138,6 +138,7 @@
 		51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EAA2871DC0BA910025680D /* UIViewExtensions.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
+		ACA337EC1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,6 +322,7 @@
 		51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage.swift; path = Onboarding/OnboardingPage.swift; sourceTree = "<group>"; };
 		51EAA2871DC0BA910025680D /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
+		ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationServiceTests.swift; path = Services/PostiOSTenNotificationServiceTests.swift; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -424,6 +426,7 @@
 			children = (
 				24168E361DC21042004F90AD /* TrackingServiceTests.swift */,
 				24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */,
+				ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -1190,6 +1193,7 @@
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
 				24168E3B1DC21125004F90AD /* MockNotificationService.swift in Sources */,
 				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
+				ACA337EC1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift in Sources */,
 				2416B27D1E278B1300CE283B /* CalendarViewControllerTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
 				24D73F2B1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift in Sources */,

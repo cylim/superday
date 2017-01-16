@@ -28,7 +28,7 @@ class PostiOSTenNotificationService : NotificationService
                                                 completionHandler: { (granted, error) in completed() })
     }
     
-    func scheduleNotification(date: Date, title: String, message: String)
+    func scheduleNotification(date: Date, title: String, message: String, possibleFutureSlotStart: Date?)
     {
         self.loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
         
@@ -41,25 +41,38 @@ class PostiOSTenNotificationService : NotificationService
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         
-        let lastThreeTimeSlotsDictionary =
+        let numberOfSlotsForNotification : Int = 3
+        
+        let latestTimeSlots =
             self.timeSlotService
                 .getTimeSlots(forDay: self.timeService.now)
-                .suffix(3)
-                .map { (timeSlot) -> [String: String] in
-                    
-                    var timeSlotDictionary = [String: String]()
-                    
-                    timeSlotDictionary["color"] = timeSlot.category.color.hexString
-                    
-                    if timeSlot.category != .unknown {
-                        timeSlotDictionary["category"] = timeSlot.category.rawValue.capitalized
-                    }
-                    
-                    timeSlotDictionary["date"] = formatter.string(from: timeSlot.startTime)
-                    return timeSlotDictionary
-                }
+                .suffix(numberOfSlotsForNotification)
         
-        content.userInfo = ["timeSlots": lastThreeTimeSlotsDictionary]
+        var latestTimeSlotsForNotification = latestTimeSlots.map { (timeSlot) -> [String: String] in
+            
+            var timeSlotDictionary = [String: String]()
+            
+            timeSlotDictionary["color"] = timeSlot.category.color.hexString
+            
+            if timeSlot.category != .unknown {
+                timeSlotDictionary["category"] = timeSlot.category.rawValue.capitalized
+            }
+            
+            timeSlotDictionary["date"] = formatter.string(from: timeSlot.startTime)
+            return timeSlotDictionary
+        }
+        
+        if let possibleFutureSlotStart = possibleFutureSlotStart
+        {
+            if latestTimeSlots.count > numberOfSlotsForNotification - 1
+            {
+                latestTimeSlotsForNotification.removeFirst()
+            }
+            
+            latestTimeSlotsForNotification.append( ["date": formatter.string(from: possibleFutureSlotStart)] )
+        }
+        
+        content.userInfo = ["timeSlots": latestTimeSlotsForNotification]
         
         let fireTime = date.timeIntervalSinceNow
         

@@ -6,6 +6,7 @@ class MockNotificationService : NotificationService
     var schedulings = 0
     var cancellations = 0
     var scheduledNotifications = 0
+    var shouldShowFakeTimeSlot : Bool?
     
     var subscriptions : [(teferi.Category) -> ()] = []
     
@@ -14,8 +15,9 @@ class MockNotificationService : NotificationService
         completed()
     }
     
-    func scheduleNotification(date: Date, title: String, message: String)
+    func scheduleNotification(date: Date, title: String, message: String, possibleFutureSlotStart: Date?)
     {
+        self.shouldShowFakeTimeSlot = possibleFutureSlotStart != nil
         self.schedulings += 1
         self.scheduledNotifications += 1
     }

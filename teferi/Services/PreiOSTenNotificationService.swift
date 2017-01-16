@@ -33,7 +33,7 @@ class PreiOSTenNotificationService : NotificationService
         UIApplication.shared.registerUserNotificationSettings(notificationSettings)
     }
     
-    func scheduleNotification(date: Date, title: String, message: String)
+    func scheduleNotification(date: Date, title: String, message: String, possibleFutureSlotStart: Date?)
     {
         loggingService.log(withLogLevel: .debug, message: "Scheduling message for date: \(date)")
         
