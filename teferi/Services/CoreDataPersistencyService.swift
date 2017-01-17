@@ -38,7 +38,6 @@ class CoreDataPersistencyService<T> : BasePersistencyService<T>
             let results = try self.getManagedObjectContext().fetch(fetchRequest) as! [NSManagedObject]
             
             let elements = results.map(self.mapManagedObjectIntoElement)
-            self.loggingService.log(withLogLevel: .info, message: "\(elements.count) \(self.entityName)s found")
             return elements
         }
         catch
