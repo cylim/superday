@@ -26,4 +26,10 @@ extension Array
         
         return groups.map { $0.value }
     }
+    
+    func safeGetElement(at index: Int) -> Element?
+    {
+        let element : Element? = self.indices.contains(index) ? self[index] : nil
+        return element
+    }
 }

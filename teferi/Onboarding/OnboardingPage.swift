@@ -83,7 +83,14 @@ class OnboardingPage : UIViewController
         let cell = Bundle.main
             .loadNibNamed("TimelineCell", owner: self, options: nil)?
             .first as! TimelineCell
-        cell.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: false, calculateDuration: self.timeSlotService.calculateDuration)
+        
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+        let timelineItem = TimelineItem(timeSlot: timeSlot,
+                                        durations:[ duration ],
+                                        lastInPastDay: false,
+                                        shouldDisplayCategoryName: true)
+        
+        cell.bind(toTimelineItem: timelineItem, index: 0, duration: duration)
         return cell
     }
     

@@ -6,7 +6,7 @@ import Nimble
 
 class TimelineViewModelTests : XCTestCase
 {
-    private var disposable : Disposable? = nil
+    private var disposeBag : DisposeBag? = nil
     private var viewModel : TimelineViewModel!
     
     private var timeService : TimeService!
@@ -17,12 +17,12 @@ class TimelineViewModelTests : XCTestCase
     
     override func setUp()
     {
+        self.disposeBag = DisposeBag()
         self.timeService = MockTimeService()
         self.metricsService = MockMetricsService()
         self.appStateService = MockAppStateService()
         self.editStateService = MockEditStateService()
         self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
-        
         self.viewModel = TimelineViewModel(date: Date(),
                                            timeService: self.timeService,
                                            metricsService: self.metricsService,
@@ -33,17 +33,7 @@ class TimelineViewModelTests : XCTestCase
     
     override func tearDown()
     {
-        self.disposable?.dispose()
-    }
-    
-    func testOnlyViewModelsForTheCurrentDaySubscribeForTimeSlotUpdates()
-    {
-        expect(self.timeSlotService.didSubscribe).to(beTrue())
-    }
-    
-    func testIfThereAreNoTimeSlotsForTheCurrentDayTheViewModelCreatesOne()
-    {
-        expect(self.viewModel.timeSlots.count).to(equal(1))
+        self.disposeBag = nil
     }
     
     func testViewModelsForTheOlderDaysDoNotSubscribeForTimeSlotUpdates()
@@ -63,7 +53,7 @@ class TimelineViewModelTests : XCTestCase
     {
         let timeSlot = self.createTimeSlot()
         self.timeSlotService.add(timeSlot: timeSlot)
-        let lastSlot = viewModel.timeSlots.last!
+        let lastSlot = viewModel.timelineItems.last!.timeSlot
         
         expect(lastSlot.endTime).to(beNil())
     }
@@ -72,7 +62,7 @@ class TimelineViewModelTests : XCTestCase
     {
         let timeSlot = self.createTimeSlot()
         self.timeSlotService.add(timeSlot: timeSlot)
-        let firstSlot = viewModel.timeSlots.first!
+        let firstSlot = viewModel.timelineItems.first!.timeSlot
         
         let otherTimeSlot = self.createTimeSlot()
         self.timeSlotService.add(timeSlot: otherTimeSlot)
@@ -82,24 +72,26 @@ class TimelineViewModelTests : XCTestCase
     
     func testConsecutiveTimeSlotsShouldNotDisplayTheCategoryText()
     {
-        self.timeSlotService.add(timeSlot: self.createTimeSlot())
-        self.timeSlotService.add(timeSlot: self.createTimeSlot())
+        self.timeSlotService.add(timeSlot: self.createTimeSlot(minutesAfterNoon: 0))
+        self.timeSlotService.add(timeSlot: self.createTimeSlot(minutesAfterNoon: 3))
         
-        expect(self.viewModel.timeSlots.last!.shouldDisplayCategoryName).to(beFalse())
+        expect(self.viewModel.timelineItems.last!.shouldDisplayCategoryName).to(beFalse())
     }
     
     func testUpdatingTheNthTimeSlotShouldRecalculateWhetherTheNPlus1thShouldDisplayTheCategoryTextOrNot()
     {
-        self.timeSlotService.add(timeSlot: self.createTimeSlot())
-        self.timeSlotService.add(timeSlot: self.createTimeSlot())
-        self.timeSlotService.add(timeSlot: self.createTimeSlot())
-        self.timeSlotService.add(timeSlot: self.createTimeSlot())
+        self.viewModel.refreshScreenObservable.subscribe(onNext: { _ in () }).addDisposableTo(self.disposeBag!)
         
-        self.timeSlotService.update(timeSlot: self.viewModel.timeSlots[2], withCategory: .leisure, setByUser: true)
+        self.timeSlotService.add(timeSlot: self.createTimeSlot(minutesAfterNoon: 0))
+        self.timeSlotService.add(timeSlot: self.createTimeSlot(minutesAfterNoon: 3))
+        self.timeSlotService.add(timeSlot: self.createTimeSlot(minutesAfterNoon: 5))
+        self.timeSlotService.add(timeSlot: self.createTimeSlot(minutesAfterNoon: 8))
         
-        [ true, true, true, true, false ]
+        self.timeSlotService.update(timeSlot: self.viewModel.timelineItems[2].timeSlot, withCategory: .leisure, setByUser: true)
+        
+        [ true, false, true, true ]
             .enumerated()
-            .forEach { i, result in expect(self.viewModel.timeSlots[i].shouldDisplayCategoryName).to(equal(result)) }
+            .forEach { i, result in expect(self.viewModel.timelineItems[i].shouldDisplayCategoryName).to(equal(result)) }
     }
     
     func testTheViewModelInitializesVerifyingTheShouldDisplayCategoryLogic()
@@ -123,11 +115,12 @@ class TimelineViewModelTests : XCTestCase
         
         [ true, true, true, false ]
             .enumerated()
-            .forEach { i, result in expect(self.viewModel.timeSlots[i].shouldDisplayCategoryName).to(equal(result)) }
+            .forEach { i, result in expect(self.viewModel.timelineItems[i].shouldDisplayCategoryName).to(equal(result)) }
     }
     
-    private func createTimeSlot() -> TimeSlot
+    private func createTimeSlot(minutesAfterNoon: Int = 0) -> TimeSlot
     {
-        return TimeSlot(withStartTime: Date(), category: .work, categoryWasSetByUser: false)
+        let noon = Date().ignoreTimeComponents().addingTimeInterval(12 * 60 * 60)
+        return TimeSlot(withStartTime: noon.addingTimeInterval(TimeInterval(minutesAfterNoon * 60)) 	, category: .work, categoryWasSetByUser: false)
     }
 }

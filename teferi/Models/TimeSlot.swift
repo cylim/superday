@@ -13,7 +13,6 @@ class TimeSlot
     var endTime : Date? = nil
     var category = Category.unknown
     var categoryWasSetByUser : Bool
-    var shouldDisplayCategoryName = true
     
     // MARK: Initializers
     init(withStartTime time: Date, categoryWasSetByUser: Bool)

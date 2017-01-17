@@ -17,7 +17,10 @@ class TimelineViewControllerTests : XCTestCase
         self.noon = Date().ignoreTimeComponents().addingTimeInterval(12 * 60 * 60)
         self.locator = MockLocator()
         
-        self.viewModel = self.locator.getTimelineViewModel(forDate: Date())
+        self.locator.timeService.mockDate = self.noon.addingTimeInterval(-120)
+        self.locator.timeSlotService.add(timeSlot: TimeSlot(withStartTime: self.noon.addingTimeInterval(-120),
+                                                            categoryWasSetByUser: true))
+        self.viewModel = self.locator.getTimelineViewModel(forDate: self.noon)
         
         self.timelineViewController = TimelineViewController(viewModel: self.viewModel)
     }
@@ -33,7 +36,7 @@ class TimelineViewControllerTests : XCTestCase
     func testScrollingIsDisabledWhenEnteringEditMode()
     {
         self.locator.editStateService.notifyEditingBegan(point: CGPoint(),
-                                                         timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
+                                                         timeSlot: TimeSlot(withStartTime: Date(),  categoryWasSetByUser: false));
         
         let scrollView = self.timelineViewController.tableView!
         
@@ -51,10 +54,8 @@ class TimelineViewControllerTests : XCTestCase
     }
     
     func testUIRefreshesAsTimePasses()
-    {
-        self.locator.timeService.mockDate = self.noon.addingTimeInterval(-120)
-        
-        let indexPath = IndexPath(row: self.viewModel.timeSlots.count - 1, section: 0)
+    {   
+        let indexPath = IndexPath(row: self.viewModel.timelineItems.count - 1, section: 0)
         let cell = self.timelineViewController.tableView(self.timelineViewController.tableView, cellForRowAt: indexPath) as! TimelineCell
         let elapsedTimeLabel = cell.subviews[4] as! UILabel
         let beforeElapsedTimeText = elapsedTimeLabel.text

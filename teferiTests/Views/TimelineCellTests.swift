@@ -6,10 +6,12 @@ import Nimble
 class TimelineCellTests : XCTestCase
 {
     // MARK: Fields
+    private var timeSlot : TimeSlot!
+    private var timelineItem : TimelineItem!
+
     private var timeService : MockTimeService!
     private var timeSlotService : MockTimeSlotService!
     
-    private var timeSlot : TimeSlot!
     private var view : TimelineCell!
     
     private var imageIcon : UIImageView
@@ -49,25 +51,19 @@ class TimelineCellTests : XCTestCase
         self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
         
         self.timeSlot = TimeSlot(withStartTime: self.timeService.now, category: .work, categoryWasSetByUser: false)
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+        self.timelineItem = TimelineItem(timeSlot: self.timeSlot,
+                                         durations: [ duration ],
+                                         lastInPastDay: false,
+                                         shouldDisplayCategoryName: true)
 
         self.view = Bundle.main.loadNibNamed("TimelineCell", owner: nil, options: nil)?.first! as! TimelineCell
-        self.view.bind(toTimeSlot: timeSlot,
-                       index: 0,
-                       lastInPastDay: false,
-                       calculateDuration: self.timeSlotService.calculateDuration)
+        self.view.bind(toTimelineItem: timelineItem, index: 0, duration: duration)
     }
     
     override func tearDown()
     {
-        self.timeSlot.category = .work
-    }
-    
-    private func editCellSetUp(lastInPastDay: Bool = false)
-    {
-        self.view.bind(toTimeSlot: timeSlot,
-                       index: 0,
-                       lastInPastDay: lastInPastDay,
-                       calculateDuration: self.timeSlotService.calculateDuration)
+        self.timelineItem.timeSlot.category = .work
     }
     
     func testTheImageChangesAccordingToTheBoundTimeSlot()
@@ -77,14 +73,14 @@ class TimelineCellTests : XCTestCase
     
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
     {
-        expect(self.slotDescription.text).to(equal(timeSlot.category.rawValue.capitalized))
+        expect(self.slotDescription.text).to(equal(self.timelineItem.timeSlot.category.rawValue.capitalized))
     }
     
     func testTheTimeChangesAccordingToTheBoundTimeSlot()
     {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        let dateString = formatter.string(from: timeSlot.startTime)
+        let dateString = formatter.string(from: self.timelineItem.timeSlot.startTime)
         
         expect(self.slotTime.text).to(equal(dateString))
     }
@@ -93,11 +89,16 @@ class TimelineCellTests : XCTestCase
     {
         let date = Date().yesterday.ignoreTimeComponents()
         let newTimeSlot = self.createTimeSlot(withStartTime: date)
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+        let newTimelineItem = TimelineItem(timeSlot: newTimeSlot,
+                                           durations: [duration],
+                                            lastInPastDay: true,
+                                            shouldDisplayCategoryName: true)
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         newTimeSlot.endTime = date.addingTimeInterval(5000)
-        
-        self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: true, calculateDuration: self.timeSlotService.calculateDuration)
+       
+        self.view.bind(toTimelineItem: newTimelineItem, index: 0, duration: duration)
         
         let startText = formatter.string(from: newTimeSlot.startTime)
         let endText = formatter.string(from: newTimeSlot.endTime!)
@@ -110,7 +111,13 @@ class TimelineCellTests : XCTestCase
     func testTheDescriptionHasNoTextWhenTheCategoryIsUnknown()
     {
         let unknownTimeSlot = self.createTimeSlot(withStartTime: Date())
-        view.bind(toTimeSlot: unknownTimeSlot, index: 0, lastInPastDay: false, calculateDuration: self.timeSlotService.calculateDuration)
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+        let unknownTimelineItem = TimelineItem(timeSlot: unknownTimeSlot,
+                                               durations: [duration],
+                                               lastInPastDay: false,
+                                               shouldDisplayCategoryName: true)
+
+        view.bind(toTimelineItem: unknownTimelineItem, index: 0, duration: duration)
         
         expect(self.slotDescription.text).to(equal(""))
     }
@@ -129,9 +136,16 @@ class TimelineCellTests : XCTestCase
     func testTheElapsedTimeLabelShowsHoursAndMinutesWhenOverAnHourHasPassed()
     {
         let date = Date().yesterday.ignoreTimeComponents()
+        self.timeService.mockDate = date.addingTimeInterval(5000)
+        
         let newTimeSlot = self.createTimeSlot(withStartTime: date)
-        newTimeSlot.endTime = date.addingTimeInterval(5000)
-        self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: false, calculateDuration: self.timeSlotService.calculateDuration)
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: newTimeSlot)
+        let newTimelineItem = TimelineItem(timeSlot: newTimeSlot,
+                                           durations: [duration],
+                                           lastInPastDay: false,
+                                           shouldDisplayCategoryName: true)
+        
+        self.view.bind(toTimelineItem: newTimelineItem, index: 0, duration: duration)
         
         let hourMask = "%02d h %02d min"
         let interval = Int(self.timeSlotService.calculateDuration(ofTimeSlot: newTimeSlot))
@@ -157,7 +171,13 @@ class TimelineCellTests : XCTestCase
         let date = Date().add(days: -1)
         let newTimeSlot = self.createTimeSlot(withStartTime: date)
         newTimeSlot.endTime = Date()
-        self.view.bind(toTimeSlot: newTimeSlot, index: 0, lastInPastDay: false, calculateDuration: self.timeSlotService.calculateDuration)
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: newTimeSlot)
+        let newTimelineItem = TimelineItem(timeSlot: newTimeSlot,
+                                           durations: [duration],
+                                           lastInPastDay: false,
+                                           shouldDisplayCategoryName: true)
+
+        self.view.bind(toTimelineItem: newTimelineItem, index: 0, duration: duration)
         self.view.layoutIfNeeded()
         let newLineHeight = line.frame.height
         
@@ -174,8 +194,14 @@ class TimelineCellTests : XCTestCase
     
     func testNoCategoryIsShownIfTheTimeSlotHasThePropertyShouldDisplayCategoryNameSetToFalse()
     {
-        self.timeSlot.shouldDisplayCategoryName = false
-        self.editCellSetUp()
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+        let newTimelineItem = TimelineItem(timeSlot: self.timelineItem.timeSlot,
+                                           durations: [duration],
+                                           lastInPastDay: false,
+                                           shouldDisplayCategoryName: false)
+
+        self.view.bind(toTimelineItem: newTimelineItem, index: 0, duration: duration)
+
         
         expect(self.slotDescription.text).to(equal(""))
     }

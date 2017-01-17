@@ -39,7 +39,6 @@ class TrackingServiceTests : XCTestCase
                                                       smartGuessService: self.smartGuessService,
                                                       notificationService: self.notificationService)
         
-        
         self.trackingService.onAppState(.inactive)
     }
     

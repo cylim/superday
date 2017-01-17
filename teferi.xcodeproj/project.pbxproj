@@ -28,6 +28,7 @@
 		2420A86E1DB7DD0F00C0478C /* PermissionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A86D1DB7DD0F00C0478C /* PermissionView.xib */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
+		24224B081E28E37700AD7575 /* TimelineItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24224B071E28E37700AD7575 /* TimelineItem.swift */; };
 		242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */; };
 		243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
@@ -208,6 +209,7 @@
 		2420A86D1DB7DD0F00C0478C /* PermissionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PermissionView.xib; path = Views/PermissionView.xib; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
+		24224B071E28E37700AD7575 /* TimelineItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineItem.swift; path = Models/TimelineItem.swift; sourceTree = "<group>"; };
 		242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoResizingLayerView.swift; path = Views/AutoResizingLayerView.swift; sourceTree = "<group>"; };
 		243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationService.swift; path = Services/PostiOSTenNotificationService.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */,
 				24C72AA51D906BDA00DABAC3 /* LogLevel.swift */,
 				24D18E251DEF6D640046B202 /* SmartGuess.swift */,
+				24224B071E28E37700AD7575 /* TimelineItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1120,6 +1123,7 @@
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				24D18E301DF06B9E0046B202 /* SmartGuessModelAdapter.swift in Sources */,
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
+				24224B081E28E37700AD7575 /* TimelineItem.swift in Sources */,
 				24EB96761DE7080F0040C211 /* TimeSlotService.swift in Sources */,
 				24D18E261DEF6D640046B202 /* SmartGuess.swift in Sources */,
 				2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */,

@@ -46,23 +46,18 @@ class TimelineViewController : UITableViewController
         self.tableView.register(UINib.init(nibName: "EmptyStateView", bundle: Bundle.main), forCellReuseIdentifier: emptyCellIdentifier)
         
         self.viewModel
-            .timeSlotCreationObservable
-            .subscribe(onNext: self.onTimeSlotCreated)
-            .addDisposableTo(self.disposeBag)
-        
-        self.viewModel
-            .timeSlotUpdatingObservable
-            .subscribe(onNext: self.onTimeSlotUpdated)
-            .addDisposableTo(self.disposeBag)
-        
-        self.viewModel
             .timeObservable
             .subscribe(onNext: self.onTimeTick)
             .addDisposableTo(self.disposeBag)
         
         self.viewModel
+            .timeSlotCreatedObservable
+            .subscribe(onNext: self.onTimeSlotCreated)
+            .addDisposableTo(self.disposeBag)
+        
+        self.viewModel
             .refreshScreenObservable
-            .subscribe(onNext: self.onScreenRefresh)
+            .subscribe(onNext: self.tableView.reloadData)
             .addDisposableTo(self.disposeBag)
         
         self.viewModel
@@ -74,23 +69,17 @@ class TimelineViewController : UITableViewController
     private func onTimeSlotCreated(atIndex index: Int)
     {
         self.tableView.reloadData()
+     
+        let numberOfItems = self.viewModel.timelineItems.count
         
-        let rowAnimation = index >= 0 ? UITableViewRowAnimation.top : .none
+        self.tableView.reloadRows(at: [IndexPath(row: numberOfItems - 1, section: 0)], with: .top)
+        if numberOfItems > 1
+        {
+            self.tableView.reloadRows(at: [IndexPath(row: numberOfItems - 2, section: 0)], with: .fade)
+        }
         
-        let updateIndexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
-        self.tableView.reloadRows(at: [updateIndexPath], with: rowAnimation)
-        
-        let scrollIndexPath = IndexPath(row: viewModel.timeSlots.count, section: 0)
+        let scrollIndexPath = IndexPath(row: numberOfItems, section: 0)
         self.tableView.scrollToRow(at: scrollIndexPath, at: .bottom, animated: true)
-    }
-    
-    // MARK: Methods
-    private func onTimeSlotUpdated(atIndex index: Int)
-    {
-        let indexPath = IndexPath(row: index, section: 0)
-        
-        self.tableView(self.tableView, cellForRowAt: indexPath).setNeedsLayout()
-        self.tableView.reloadRows(at: [ indexPath ], with: .fade)
     }
     
     private func onIsEditing(isEditing: Bool)
@@ -109,7 +98,7 @@ class TimelineViewController : UITableViewController
     {
         guard !tableView.isEditing else { return }
         
-        let indexPath = IndexPath(row: viewModel.timeSlots.count - 1, section: 0)
+        let indexPath = IndexPath(row: self.viewModel.timelineItems.count - 1, section: 0)
         self.tableView.reloadRows(at: [indexPath], with: .none)
     }
     
@@ -117,11 +106,6 @@ class TimelineViewController : UITableViewController
     {
         self.editingIndex = index
         self.viewModel.notifyEditingBegan(point: point, index: index)
-    }
-    
-    private func onScreenRefresh()
-    {
-        self.tableView.reloadData()
     }
     
     // MARK: UITableViewDataSource methods
@@ -132,31 +116,24 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return self.viewModel.timeSlots.count + 1
+        return self.viewModel.timelineItems.count + 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        guard self.viewModel.timeSlots.count > 0 else
+        guard self.viewModel.timelineItems.count > 0 else
         {
             return self.tableView.dequeueReusableCell(withIdentifier: emptyCellIdentifier, for: indexPath);
         }
         
         let index = indexPath.row
-        if index == self.viewModel.timeSlots.count { return footerCell }
+        if index == self.viewModel.timelineItems.count { return footerCell }
         
-        let timeSlot = self.viewModel.timeSlots[index]
+        let timelineItem = self.viewModel.timelineItems[index]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimelineCell;
         
-        //Check if need to display the endTime
-        let isPastDay = self.viewModel.currentDay.ignoreTimeComponents() != self.viewModel.date.ignoreTimeComponents()
-        let isLastEntry = self.viewModel.timeSlots.count - 1 == indexPath.row
-        let lastInPastDay = isPastDay && isLastEntry
-        
-        cell.bind(toTimeSlot: timeSlot,
-                  index: index,
-                  lastInPastDay: lastInPastDay,
-                  calculateDuration: self.viewModel.calculateDuration)
+        let duration = self.viewModel.calculateDuration(ofTimeSlot: timelineItem.timeSlot)
+        cell.bind(toTimelineItem: timelineItem, index: index, duration: duration)
         
         if !cell.isSubscribedToClickObservable
         {
@@ -170,19 +147,20 @@ class TimelineViewController : UITableViewController
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        guard self.viewModel.timeSlots.count > 0 else
+        guard self.viewModel.timelineItems.count > 0 else
         {
             return self.view.frame.height
         }
         
         let index = indexPath.item
-        if index == self.viewModel.timeSlots.count { return 120 }
+        if index == self.viewModel.timelineItems.count { return 120 }
         
-        let timeSlot = self.viewModel.timeSlots[index]
+        let timelineItem = self.viewModel.timelineItems[index]
+        let timeSlot = timelineItem.timeSlot
         let isRunning = timeSlot.endTime == nil
         
-        return TimelineViewController.timelineCellHeight(
-            duration: self.viewModel.calculateDuration(ofTimeSlot: timeSlot), isRunning: isRunning)
+        let duration = self.viewModel.calculateDuration(ofTimeSlot: timeSlot)
+        return TimelineViewController.timelineCellHeight(duration: duration, isRunning: isRunning)
     }
     
     static func timelineCellHeight(duration : TimeInterval, isRunning : Bool) -> CGFloat
