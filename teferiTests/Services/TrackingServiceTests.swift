@@ -381,52 +381,6 @@ class TrackingServiceTests : XCTestCase
     }
     
     
-    func testAlgorithmIgnoresInaccurateLocations()
-    {
-        self.setupFirstTimeSlotAndLastLocation(
-            minutesBeforeNoon: 30, slotCategory: .food, wasSetByUser: false,
-            metersFromOrigin: 1500, horizontalAccuracy: 0)
-        let lastLocation = self.settingsService.lastLocation!
-        
-        self.trackingService.onLocation(self.getLocation(withTimestamp: self.noon, horizontalAccuracy: 1000))
-        
-        expect(self.settingsService.lastLocation).to(equal(lastLocation))
-        expect(self.timeSlotService.timeSlots.count).to(equal(1))
-        expect(self.timeSlotService.getLast()!.category).to(equal(Category.food))
-    }
-    
-    func testAlgorithmIgnoresButSavesBetterInaccurateLocation()
-    {
-        self.setupFirstTimeSlotAndLastLocation(
-            minutesBeforeNoon: 30, slotCategory: .food, wasSetByUser: false,
-            metersFromOrigin: 1500, horizontalAccuracy: 1000)
-        
-        let location = self.getLocation(withTimestamp: self.noon, horizontalAccuracy: 500)
-        self.trackingService.onLocation(location)
-        
-        expect(self.settingsService.lastLocation).to(equal(location))
-        expect(self.timeSlotService.timeSlots.count).to(equal(1))
-        expect(self.timeSlotService.getLast()!.category).to(equal(Category.food))
-    }
-    
-    func testAlgorithmStartsCommuteRetroactivelyAfterBetterInaccurateLocation()
-    {
-        self.setupFirstTimeSlotAndLastLocation(
-            minutesBeforeNoon: 30, slotCategory: .food, wasSetByUser: false,
-            metersFromOrigin: 1500, horizontalAccuracy: 1000)
-        
-        self.trackingService.onLocation(self.getLocation(withTimestamp: self.noon))
-        let location = self.getLocation(withTimestamp: self.getDate(minutesPastNoon: 15))
-        self.trackingService.onLocation(location)
-        
-        expect(self.settingsService.lastLocation).to(equal(location))
-        expect(self.timeSlotService.timeSlots.count).to(equal(2))
-        expect(self.timeSlotService.timeSlots[0].category).to(equal(Category.food))
-        expect(self.timeSlotService.timeSlots[1].category).to(equal(Category.commute))
-        expect(self.timeSlotService.timeSlots[1].startTime).to(equal(self.noon))
-    }
-    
-    
     // Helper methods
     
     @discardableResult func setupFirstTimeSlotAndLastLocation(

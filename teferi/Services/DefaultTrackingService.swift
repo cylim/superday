@@ -7,6 +7,7 @@ import Foundation
 class DefaultTrackingService : TrackingService
 {
     // MARK: Fields
+    private let significantDistanceThreshold = 100.0
     private let notificationBody = "NotificationBody".translate()
     private let notificationTitle = "NotificationTitle".translate()
     private let commuteDetectionLimit = TimeInterval(25 * 60)
@@ -56,6 +57,7 @@ class DefaultTrackingService : TrackingService
             if location.isMoreAccurate(than: previousLocation)
             {
                 self.settingsService.setLastLocation(location)
+                self.loggingService.log(withLogLevel: .debug, message: "Location is more accurate than previous")
             }
             return
         }
@@ -100,10 +102,15 @@ class DefaultTrackingService : TrackingService
     
     private func locationsAreSignificantlyDifferent(current: CLLocation, previous: CLLocation) -> Bool
     {
-        let higherInaccuracy = max(current.horizontalAccuracy, previous.horizontalAccuracy)
-        let thresholdDistance = higherInaccuracy * 2
+        let distance = current.distance(from: previous)
+        let isSignificantDistance = distance > self.significantDistanceThreshold
         
-        return current.distance(from: previous) > thresholdDistance
+        self.loggingService.log(withLogLevel: .debug, message:
+            isSignificantDistance
+            ? "distance to previous update (\(distance)) is significant"
+            : "distance to previous update (\(distance)) is insignificant")
+        
+        return isSignificantDistance
     }
     
     private func cancelNotification(andScheduleNew scheduleNew : Bool)
