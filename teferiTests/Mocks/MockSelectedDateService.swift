@@ -13,7 +13,7 @@ class MockSelectedDateService : SelectedDateService
         self.currentlySelectedDateObservable =
             self.currentlySelectedDateVariable
                 .asObservable()
-                .distinctUntilChanged()
+                .distinctUntilChanged({ $0.differenceInDays(toDate: $1) == 0 })
     }
     
     // MARK: Properties
