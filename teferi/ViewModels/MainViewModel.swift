@@ -8,35 +8,69 @@ class MainViewModel
     private let currentDayBarTitle = "CurrentDayBarTitle"
     private let yesterdayBarTitle = "YesterdayBarTitle"
     
+    private let timeService : TimeService
     private let metricsService : MetricsService
     private let feedbackService: FeedbackService
+    private let appStateService : AppStateService
     private let timeSlotService : TimeSlotService
     private let settingsService : SettingsService
     private let locationService : LocationService
     private let editStateService : EditStateService
     private let smartGuessService : SmartGuessService
+    private let selectedDateService : SelectedDateService
     
-    init(metricsService: MetricsService,
+    init(timeService: TimeService,
+         metricsService: MetricsService,
+         appStateService: AppStateService,
          feedbackService: FeedbackService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          locationService : LocationService,
          editStateService: EditStateService,
-         smartGuessService : SmartGuessService)
+         smartGuessService : SmartGuessService,
+         selectedDateService : SelectedDateService)
     {
+        self.timeService = timeService
         self.metricsService = metricsService
+        self.appStateService = appStateService
         self.feedbackService = feedbackService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
         self.locationService = locationService
         self.editStateService = editStateService
         self.smartGuessService = smartGuessService
+        self.selectedDateService = selectedDateService
+        
+        self.isEditingObservable = self.editStateService.isEditingObservable
+        self.beganEditingObservable = self.editStateService.beganEditingObservable
+        
+        let shouldCreateLeisureTimeSlot = self.timeSlotService.getLast() == nil
+        if shouldCreateLeisureTimeSlot
+        {
+            self.addNewSlot(withCategory: .leisure)
+        }
     }
     
     // MARK: Properties
-    var currentDate = Date()
+    let isEditingObservable : Observable<Bool>
+    let beganEditingObservable : Observable<(CGPoint, TimeSlot)>
     
-    var shouldShowLocationPermissionOverlay : Bool
+    private(set) lazy var overlayStateObservable : Observable<Bool> =
+    {
+        return self.appStateService
+          .appStateObservable
+          .filter { $0 == .active }
+          .map { _ in return self.shouldShowLocationPermissionOverlay }
+    }()
+    
+    // MARK: Properties
+    var currentDate : Date { return self.timeService.now }
+    
+    var dateObservable : Observable<Date> { return self.selectedDateService.currentlySelectedDateObservable}
+    
+    var canIgnoreLocationPermission : Bool { return self.settingsService.canIgnoreLocationPermission }
+    
+    private var shouldShowLocationPermissionOverlay : Bool
     {
         if self.settingsService.hasLocationPermission { return false }
         
@@ -46,36 +80,38 @@ class MainViewModel
         let minimumRequestDate = lastRequestedDate.add(days: 1)
         
         //If we previously showed the overlay, we must only do it again after 24 hours
-        return minimumRequestDate < Date()
+        return minimumRequestDate < self.timeService.now
     }
     
     ///Current date for the calendar button
+    var currentlySelectedDate : Date { return self.selectedDateService.currentlySelectedDate }
+    
     var calendarDay : String
     {
-        let currentDay = Calendar.current.component(.day, from: Date())
+        let currentDay = Calendar.current.component(.day, from: self.timeService.now)
         return String(format: "%02d", currentDay)
     }
     
     ///Gets the title for the header. Changes on new locations.
     var title : String
     {
-        let today = Date().ignoreTimeComponents()
+        let today = self.timeService.now.ignoreTimeComponents()
         let yesterday = today.yesterday.ignoreTimeComponents()
         
-        if currentDate.ignoreTimeComponents() == today
+        if self.currentlySelectedDate.ignoreTimeComponents() == today
         {
             return self.currentDayBarTitle.translate()
         }
-        else if currentDate.ignoreTimeComponents() == yesterday
+        else if self.currentlySelectedDate.ignoreTimeComponents() == yesterday
         {
             return self.yesterdayBarTitle.translate()
         }
         
         let dayOfMonthFormatter = DateFormatter();
         dayOfMonthFormatter.timeZone = TimeZone.autoupdatingCurrent;
-        dayOfMonthFormatter.dateFormat = "dd MMMM";
+        dayOfMonthFormatter.dateFormat = "EEE, dd MMM";
         
-        return dayOfMonthFormatter.string(from: currentDate)
+        return dayOfMonthFormatter.string(from: self.currentlySelectedDate)
     }
     
     //MARK: Methods
@@ -89,7 +125,7 @@ class MainViewModel
     {
         let currentLocation = self.locationService.getLastKnownLocation()
         
-        let newSlot = TimeSlot(withStartTime: Date(),
+        let newSlot = TimeSlot(withStartTime: self.timeService.now,
                                category: category,
                                location: currentLocation,
                                categoryWasSetByUser: true)
@@ -130,4 +166,12 @@ class MainViewModel
         
         self.editStateService.notifyEditingEnded()
     }
+    
+    func composeFeedback(_ completed: @escaping () -> ()) { self.feedbackService.composeFeedback(completed: completed) }
+    
+    func setLastAskedForLocationPermission() { self.settingsService.setLastAskedForLocationPermission(self.timeService.now) }
+    
+    func setAllowedLocationPermission() { self.settingsService.setAllowedLocationPermission() }
+    
+    func notifyEditingEnded() { self.editStateService.notifyEditingEnded() }
 }

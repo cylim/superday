@@ -11,29 +11,33 @@ class TrackingServiceTests : XCTestCase
     
     private var midnight : Date!
     private var noon : Date!
+    
+    private var timeService : MockTimeService!
     private var loggingService : LoggingService!
     private var settingsService : SettingsService!
     private var trackingService : TrackingService!
     private var timeSlotService : MockTimeSlotService!
-    private var smartGuessService : SmartGuessService!
+    private var smartGuessService : MockSmartGuessService!
     private var notificationService : MockNotificationService!
     
     override func setUp()
     {
         self.midnight = Date().ignoreTimeComponents()
         self.noon = self.midnight.addingTimeInterval(12 * 60 * 60)
+        
+        self.timeService = MockTimeService()
         self.loggingService = MockLoggingService()
         self.settingsService = MockSettingsService()
-        self.timeSlotService = MockTimeSlotService()
         self.smartGuessService = MockSmartGuessService()
         self.notificationService = MockNotificationService()
+        self.timeSlotService = MockTimeSlotService(timeService: self.timeService)
         
-        self.trackingService = DefaultTrackingService(loggingService: self.loggingService,
+        self.trackingService = DefaultTrackingService(timeService: self.timeService,
+                                                      loggingService: self.loggingService,
                                                       settingsService: self.settingsService,
                                                       timeSlotService: self.timeSlotService,
                                                       smartGuessService: self.smartGuessService,
                                                       notificationService: self.notificationService)
-        
         
         self.trackingService.onAppState(.inactive)
     }
@@ -160,6 +164,26 @@ class TrackingServiceTests : XCTestCase
         expect(allTimeSlots[3].startTime).to(equal(dates[3]))
     }
     
+    func testFakeTimeSlotIsInsertedInNotificationOnCommute()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.shouldShowFakeTimeSlot).to(equal(true))
+    }
+    
+    func testFakeTimeSlotIsNotInsertedInNotificationOnNonCommute()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.shouldShowFakeTimeSlot).to(equal(false))
+    }
+    
     func testTheAlgorithmReschedulesNotificationsOnCommute()
     {
         self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
@@ -228,16 +252,147 @@ class TrackingServiceTests : XCTestCase
         expect(self.settingsService.lastLocation).to(equal(initialLastLocation))
     }
     
+    func testNotificationActionSetsCategory()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        
+        self.timeService.mockDate = self.noon
+        self.notificationService.sendAction(withCategory: .food)
+        
+        expect(timeSlot.category).to(equal(Category.food))
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+    }
+    
+    func testCommuteIsStoppedRetroactivelyOnNotificationAction()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
+        self.notificationService.sendAction(withCategory: .food)
+        
+        expect(timeSlot.endTime).to(equal(self.noon))
+        expect(self.timeSlotService.timeSlots.count).to(equal(2))
+        let newTimeSlot = self.timeSlotService.timeSlots[1]
+        expect(newTimeSlot.startTime).to(equal(self.noon))
+        expect(newTimeSlot.category).to(equal(Category.food))
+    }
+    
+    func testCommuteIsStoppedRetroactivelyOnAppActivation()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
+        self.trackingService.onAppState(.active)
+        
+        expect(timeSlot.endTime).to(equal(self.noon))
+        expect(self.timeSlotService.timeSlots.count).to(equal(2))
+        expect(self.timeSlotService.timeSlots[1].startTime).to(equal(self.noon))
+    }
+    
+    func testCommuteIsNotStoppedRetroactivelyOnAppActivationSoonAfterLocationUpdate()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 15)
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 15)
+        self.trackingService.onAppState(.active)
+        
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+        expect(timeSlot.category).to(equal(Category.commute))
+    }
+    
+    func testCommuteIsNotStoppedRetroactivelyIfItWouldResultInZeroLengthSlot()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(
+            minutesBeforeNoon: 0, slotCategory: .commute, wasSetByUser: true)
+        
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
+        self.trackingService.onAppState(.active)
+        
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+        expect(timeSlot.category).to(equal(Category.commute))
+    }
+    
+    func testNonCommuteSlotIsNotStoppedRetroactively()
+    {
+        let timeSlot = self.setupFirstTimeSlotAndLastLocation(
+            minutesBeforeNoon: 0, slotCategory: .food, wasSetByUser: true)
+        
+        self.timeService.mockDate = self.getDate(minutesPastNoon: 30)
+        self.trackingService.onAppState(.active)
+        
+        expect(self.timeSlotService.timeSlots.count).to(equal(1))
+        expect(timeSlot.category).to(equal(Category.food))
+    }
+    
+    func testAlgorithmAsksForSmartGuessWithCorrectLocation()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.smartGuessService.locationsAskedFor.count).to(equal(1))
+        expect(self.smartGuessService.locationsAskedFor[0]).to(equal(location))
+    }
+    
+    func testTimeSlotGetsUnknownCategoryIfNoSmartGuessExists()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        self.smartGuessService.smartGuessToReturn = nil
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.timeSlotService.timeSlots.count).to(equal(2))
+        expect(self.timeSlotService.timeSlots[1].category).to(equal(Category.unknown))
+    }
+    
+    func testTimeSlotGetsCorrectCategoryIfSmartGuessExists()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        self.smartGuessService.smartGuessToReturn = SmartGuess(
+            withId: 0, category: .food, location: CLLocation(), lastUsed: self.midnight)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.timeSlotService.timeSlots.count).to(equal(2))
+        expect(self.timeSlotService.timeSlots[1].category).to(equal(Category.food))
+    }
+    
+    func testNotificationIsCancelledIfSmartGuessExists()
+    {
+        self.setupFirstTimeSlotAndLastLocation(minutesBeforeNoon: 30)
+        self.smartGuessService.smartGuessToReturn = SmartGuess(
+            withId: 0, category: .food, location: CLLocation(), lastUsed: self.midnight)
+        
+        let location = self.getLocation(withTimestamp: self.noon)
+        self.trackingService.onLocation(location)
+        
+        expect(self.notificationService.cancellations).to(equal(1))
+        expect(self.notificationService.schedulings).to(equal(0))
+    }
+    
+    
     // Helper methods
     
-    @discardableResult func setupFirstTimeSlotAndLastLocation(minutesBeforeNoon : Int) -> TimeSlot
+    @discardableResult func setupFirstTimeSlotAndLastLocation(
+        minutesBeforeNoon : Int, metersFromOrigin: Double? = nil, horizontalAccuracy: Double = 20) -> TimeSlot
     {
         return self.setupFirstTimeSlotAndLastLocation(
-            minutesBeforeNoon: minutesBeforeNoon, slotCategory: .unknown, wasSetByUser: false)
+            minutesBeforeNoon: minutesBeforeNoon, slotCategory: .unknown, wasSetByUser: false,
+            metersFromOrigin: metersFromOrigin, horizontalAccuracy: horizontalAccuracy)
     }
     
     @discardableResult func setupFirstTimeSlotAndLastLocation(
-        minutesBeforeNoon : Int, slotCategory: teferi.Category, wasSetByUser: Bool) -> TimeSlot
+        minutesBeforeNoon : Int, slotCategory: teferi.Category, wasSetByUser: Bool,
+        metersFromOrigin: Double? = nil, horizontalAccuracy: Double = 20) -> TimeSlot
     {
         let date = self.getDate(minutesPastNoon: -minutesBeforeNoon)
         
@@ -245,7 +400,8 @@ class TrackingServiceTests : XCTestCase
         timeSlot.category = slotCategory
         self.timeSlotService.add(timeSlot: timeSlot)
         
-        self.settingsService.setLastLocation(self.getLocation(withTimestamp: date))
+        self.settingsService.setLastLocation(self.getLocation(
+            withTimestamp: date, metersFromOrigin: metersFromOrigin, horizontalAccuracy: horizontalAccuracy))
         
         return timeSlot
     }
@@ -258,21 +414,36 @@ class TrackingServiceTests : XCTestCase
     
     func getLocation(withTimestamp date: Date) -> CLLocation
     {
+        return self.getLocation(withTimestamp: date, horizontalAccuracy: 0)
+    }
+    
+    func getLocation(withTimestamp date: Date, metersFromOrigin: Double?, horizontalAccuracy: Double) -> CLLocation
+    {
+        guard let meters = metersFromOrigin else
+        {
+            return self.getLocation(withTimestamp: date, horizontalAccuracy: horizontalAccuracy)
+        }
+        
+        return self.getLocation(withTimestamp: date, metersFromOrigin: meters, horizontalAccuracy: horizontalAccuracy)
+    }
+    
+    func getLocation(withTimestamp date: Date, horizontalAccuracy: Double) -> CLLocation
+    {
         let metersPerSecond = self.defaultMovementSpeed / 60.0
         let secondsSinceNoon = date.timeIntervalSince(self.noon)
         let metersOffset = secondsSinceNoon * metersPerSecond
         
-        return self.getLocation(withTimestamp: date, metersFromOrigin: metersOffset)
+        return self.getLocation(withTimestamp: date, metersFromOrigin: metersOffset, horizontalAccuracy: horizontalAccuracy)
     }
     
-    func getLocation(withTimestamp date: Date, metersFromOrigin distance: Double) -> CLLocation
+    func getLocation(withTimestamp date: Date, metersFromOrigin distance: Double, horizontalAccuracy: Double = 20) -> CLLocation
     {
         let latitudeOffset = distance * self.metersToLatitudeFactor
         let coordinates = CLLocationCoordinate2D(latitude: self.baseCoordinates.latitude + latitudeOffset,
                                                  longitude: self.baseCoordinates.longitude)
         return CLLocation(coordinate: coordinates,
                           altitude: 0,
-                          horizontalAccuracy: 0,
+                          horizontalAccuracy: horizontalAccuracy,
                           verticalAccuracy: 0,
                           timestamp: date)
     }

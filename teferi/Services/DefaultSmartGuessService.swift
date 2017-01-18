@@ -3,15 +3,24 @@ import CoreLocation
 
 class DefaultSmartGuessService : SmartGuessService
 {
+    typealias WeightedGuess = (smartGuess: SmartGuess, weight: Double)
+    
     //MARK: Fields
+    private let distanceThreshold = 100.0
     private let smartGuessErrorThreshold = 3
     private let smartGuessIdKey = "smartGuessId"
+    
+    private let timeService : TimeService
     private let loggingService: LoggingService
     private let settingsService: SettingsService
     private let persistencyService : BasePersistencyService<SmartGuess>
     
-    init(loggingService: LoggingService, settingsService: SettingsService, persistencyService: BasePersistencyService<SmartGuess>)
+    init(timeService: TimeService,
+         loggingService: LoggingService,
+         settingsService: SettingsService,
+         persistencyService: BasePersistencyService<SmartGuess>)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.settingsService = settingsService
         self.persistencyService = persistencyService
@@ -20,7 +29,7 @@ class DefaultSmartGuessService : SmartGuessService
     @discardableResult func add(withCategory category: Category, location: CLLocation) -> SmartGuess?
     {
         let id = self.getNextSmartGuessId()
-        let smartGuess = SmartGuess(withId: id, category: category, location: location, lastUsed: Date())
+        let smartGuess = SmartGuess(withId: id, category: category, location: location, lastUsed: self.timeService.now)
         
         guard self.persistencyService.create(smartGuess) else
         {
@@ -68,15 +77,23 @@ class DefaultSmartGuessService : SmartGuessService
     func get(forLocation location: CLLocation) -> SmartGuess?
     {
         let bestMatches = self.persistencyService.get()
-            .filter(self.isWithinHundredMeters(location))
-            .sorted(by: self.sortByDistance(location))
+            .filter(isWithinDistanceThreshold(from: location))
+            .sorted(by: distance(from: location))
         
-        //TODO: This will have to be improved in the future to use some sort of weighted system taking into account more data.
-        guard let bestMatch = bestMatches.first else { return nil }
+        guard bestMatches.count > 0 else { return nil }
+        
+        let minimumDistance = bestMatches.first!.location.distance(from: location)
+        
+        guard let bestMatch =
+            bestMatches
+                .groupBy(category)
+                .map(toWeightedDistance(from: location, withMinimumDistance: minimumDistance))
+                .sorted(by: weight)
+                .first?.smartGuess else { return nil }
         
         //Every time a dictionary entry gets used in a guess, it gets refreshed.
         //Entries not refresh in N days get purged
-        let lastUsedDate = Date()
+        let lastUsedDate = self.timeService.now
         
         let predicate = Predicate(parameter: SmartGuessModelAdapter.idKey, equals: bestMatch.id as AnyObject)
         self.persistencyService.update(withPredicate: predicate, updateFunction: { smartGuess in
@@ -100,15 +117,49 @@ class DefaultSmartGuessService : SmartGuessService
         self.persistencyService.delete(withPredicate: predicate)
     }
     
-    private func isWithinHundredMeters(_ location: CLLocation) -> (SmartGuess) -> Bool
+    private func isWithinDistanceThreshold(from location: CLLocation) -> (SmartGuess) -> Bool
     {
         //TODO: We have to think about the 100m constant. Might be (significantly?) too low.
-        return { smartGuess in return smartGuess.location.distance(from: location) <= 100 }
+        return { smartGuess in return smartGuess.location.distance(from: location) <= self.distanceThreshold }
     }
     
-    private func sortByDistance(_ location: CLLocation) -> (SmartGuess, SmartGuess) -> Bool
+    private func distance(from location: CLLocation) -> (SmartGuess, SmartGuess) -> Bool
     {
         return { (smartGuess1, smartGuess2) in smartGuess1.location.distance(from: location) > smartGuess2.location.distance(from: location) }
+    }
+    
+    private func category(_ smartGuess: SmartGuess) -> Category
+    {
+        return smartGuess.category
+    }
+    
+    private func toWeightedDistance(from location: CLLocation, withMinimumDistance minimumDistance: Double) ->
+        ([SmartGuess]) -> WeightedGuess
+    {
+        return { smartGuesses in
+            
+            let weight = smartGuesses.reduce(0.0, self.weightedSumOfDistances(from: location, withMinimumDistance: minimumDistance))
+        
+            return (smartGuesses.first!, weight: weight)
+        }
+    }
+    
+    private func weightedSumOfDistances(from location: CLLocation, withMinimumDistance minimumDistance: Double) ->
+        (_ accumulator: Double, _ smartGuess: SmartGuess) -> Double
+    {
+        let divideConstant = self.distanceThreshold - minimumDistance
+        
+        return { (accumulator, smartGuess) in
+            
+            let distance = smartGuess.location.distance(from: location)
+            let weight = (self.distanceThreshold - distance) / divideConstant
+            return accumulator + pow(weight, 2)
+        }
+    }
+    
+    private func weight(_ weightedGuess1: WeightedGuess, _ weightedGuess2: WeightedGuess) -> Bool
+    {
+        return weightedGuess1.weight > weightedGuess2.weight
     }
     
     private func getNextSmartGuessId() -> Int

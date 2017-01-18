@@ -5,19 +5,11 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
 {
     // MARK: Fields
     private let disposeBag = DisposeBag()
-    
-    private var metricsService : MetricsService!
-    private var appStateService : AppStateService!
-    private var settingsService : SettingsService!
-    private var timeSlotService : TimeSlotService!
-    private var editStateService : EditStateService!
-    
+    private var viewModel : PagerViewModel!
+    private var viewModelLocator : ViewModelLocator!
     private var currentDateViewController : TimelineViewController!
     
-    private var viewModel : PagerViewModel!
-    
     // MARK: Properties
-    var dateObservable : Observable<Date> { return viewModel.dateObservable }
     var feedbackUIClosing : Bool = false
     
     // MARK: Initializers
@@ -37,19 +29,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     // MARK: UIViewController lifecycle
     
-    func inject(_ metricsService: MetricsService,
-                _ appStateService: AppStateService,
-                _ settingsService: SettingsService,
-                _ timeSlotService: TimeSlotService,
-                _ editStateService: EditStateService)
+    func inject(viewModelLocator: ViewModelLocator)
     {
-        self.metricsService = metricsService
-        self.appStateService = appStateService
-        self.settingsService = settingsService
-        self.timeSlotService = timeSlotService
-        self.editStateService = editStateService
-        
-        self.viewModel = PagerViewModel(settingsService: settingsService)
+        self.viewModelLocator = viewModelLocator
+        self.viewModel = viewModelLocator.getPagerViewModel()
         
         self.createBindings()
     }
@@ -65,9 +48,10 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     override func viewWillAppear(_ animated: Bool)
     {
+        //TODO: Figure this out
         if !self.feedbackUIClosing
         {
-            self.initCurrentDateViewController()
+            self.setCurrentViewController(forDate: self.viewModel.currentDate, animated: false)
         }
         
         self.feedbackUIClosing = false
@@ -75,34 +59,23 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
     
     private func createBindings()
     {
-        self.editStateService
+        self.viewModel
+            .dateObservable
+            .subscribe(onNext: self.onDateChanged)
+            .addDisposableTo(self.disposeBag)
+        
+        self.viewModel
             .isEditingObservable
             .subscribe(onNext: onEditChanged)
             .addDisposableTo(self.disposeBag)
         
-        self.appStateService
-            .appStateObservable
-            .subscribe(onNext: self.onAppStateChanged)
+        self.viewModel
+            .refreshObservable
+            .subscribe(onNext: self.onRefreshView)
             .addDisposableTo(self.disposeBag)
     }
     
     // MARK: Methods
-    private func initCurrentDateViewController()
-    {
-        self.currentDateViewController =
-            TimelineViewController(date: Date(),
-                                   metricsService: self.metricsService,
-                                   appStateService: self.appStateService,
-                                   timeSlotService: self.timeSlotService,
-                                   editStateService: self.editStateService)
-        
-        self.setViewControllers(
-            [ currentDateViewController ],
-            direction: .forward,
-            animated: false,
-            completion: nil)
-    }
-    
     private func onEditChanged(_ isEditing: Bool)
     {
         self.view
@@ -111,28 +84,36 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
             .forEach { scrollView in scrollView.isScrollEnabled = !isEditing }
     }
     
-    private func onAppStateChanged(appState: AppState)
+    private func onRefreshView()
     {
-        switch appState
-        {
-            case .active:
-                let today = Date().ignoreTimeComponents()
-                
-                guard let inactiveDate = self.settingsService.lastInactiveDate, today > inactiveDate.ignoreTimeComponents() else { return }
-                
-                self.settingsService.setLastInactiveDate(nil)
-                self.initCurrentDateViewController()
-                break
-            
-            case .inactive:
-                self.settingsService.setLastInactiveDate(Date())
-                break
-            
-            case .needsRefreshing:
-                self.settingsService.setLastInactiveDate(nil)
-                self.initCurrentDateViewController()
-                break
-        }
+        self.initCurrentDateViewController()
+    }
+    
+    private func onDateChanged(_ dateChange: DateChange)
+    {
+        self.setCurrentViewController(forDate: dateChange.newDate,
+                                      animated: true,
+                                      moveBackwards: dateChange.newDate < dateChange.oldDate)
+    }
+    
+    private func initCurrentDateViewController()
+    {
+        let viewModel = self.viewModelLocator.getTimelineViewModel(forDate: Date())
+        self.currentDateViewController = TimelineViewController(viewModel: viewModel)
+        
+        self.setViewControllers(
+            [ currentDateViewController ],
+            direction: .forward,
+            animated: false,
+            completion: nil)
+    }
+    
+    private func setCurrentViewController(forDate date: Date, animated: Bool, moveBackwards: Bool = false)
+    {
+        let viewControllers =
+            [ TimelineViewController(viewModel: self.viewModelLocator.getTimelineViewModel(forDate: date)) ]
+        
+        self.setViewControllers(viewControllers, direction: moveBackwards ? .reverse : .forward, animated: animated, completion: nil)
     }
     
     // MARK: UIPageViewControllerDelegate implementation
@@ -142,12 +123,12 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         let timelineController = self.viewControllers!.first as! TimelineViewController
         
-        if timelineController.date.ignoreTimeComponents() == Date().ignoreTimeComponents()
+        if timelineController.date.ignoreTimeComponents() == self.viewModel.currentDate.ignoreTimeComponents()
         {
             self.currentDateViewController = timelineController
         }
         
-        self.viewModel.date = timelineController.date
+        self.viewModel.currentlySelectedDate = timelineController.date
     }
     
     // MARK: UIPageViewControllerDataSource implementation
@@ -158,11 +139,8 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
-        return TimelineViewController(date: nextDate,
-                                      metricsService: self.metricsService,
-                                      appStateService: self.appStateService,
-                                      timeSlotService: self.timeSlotService,
-                                      editStateService: self.editStateService)
+        let viewModel = self.viewModelLocator.getTimelineViewModel(forDate: nextDate)
+        return TimelineViewController(viewModel: viewModel)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
@@ -172,10 +150,7 @@ class PagerViewController : UIPageViewController, UIPageViewControllerDataSource
         
         guard self.viewModel.canScroll(toDate: nextDate) else { return nil }
         
-        return TimelineViewController(date: nextDate,
-                                      metricsService: self.metricsService,
-                                      appStateService: self.appStateService,
-                                      timeSlotService: self.timeSlotService,
-                                      editStateService: self.editStateService)
+        let viewModel = self.viewModelLocator.getTimelineViewModel(forDate: nextDate)
+        return TimelineViewController(viewModel: viewModel)
     }
 }

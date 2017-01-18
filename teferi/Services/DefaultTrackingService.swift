@@ -7,10 +7,12 @@ import Foundation
 class DefaultTrackingService : TrackingService
 {
     // MARK: Fields
+    private let significantDistanceThreshold = 100.0
     private let notificationBody = "NotificationBody".translate()
     private let notificationTitle = "NotificationTitle".translate()
-    private let notificationTimeout = TimeInterval(20 * 60)
+    private let commuteDetectionLimit = TimeInterval(25 * 60)
     
+    private let timeService : TimeService
     private let loggingService : LoggingService
     private let settingsService : SettingsService
     private let timeSlotService : TimeSlotService
@@ -20,12 +22,14 @@ class DefaultTrackingService : TrackingService
     private var isOnBackground = false
     
     //MARK: Init
-    init(loggingService: LoggingService,
+    init(timeService: TimeService,
+         loggingService: LoggingService,
          settingsService: SettingsService,
          timeSlotService: TimeSlotService,
          smartGuessService: SmartGuessService,
          notificationService: NotificationService)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.settingsService = settingsService
         self.timeSlotService = timeSlotService
@@ -48,20 +52,34 @@ class DefaultTrackingService : TrackingService
         
         guard location.timestamp > previousLocation.timestamp else { return }
         
-        guard location.distance(from: previousLocation) > 50 else { return }
+        guard self.locationsAreSignificantlyDifferent(current: location, previous: previousLocation) else
+        {
+            if location.isMoreAccurate(than: previousLocation)
+            {
+                self.settingsService.setLastLocation(location)
+                self.loggingService.log(withLogLevel: .debug, message: "Location is more accurate than previous")
+            }
+            return
+        }
         
         self.settingsService.setLastLocation(location)
         
-        let currentTimeSlot = self.timeSlotService.getLast()
+        guard let currentTimeSlot = self.timeSlotService.getLast() else { return }
         
         let scheduleNotification : Bool
         
         if self.isCommute(now: location.timestamp, then: previousLocation.timestamp)
         {
-            //If it was smart guessed and we detect movement, we got it wrong and override it with a commute
-            if !currentTimeSlot.categoryWasSetByUser
+            if currentTimeSlot.startTime == previousLocation.timestamp
             {
-                self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute, setByUser: false)
+                if !currentTimeSlot.categoryWasSetByUser
+                {
+                    self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: .commute, setByUser: false)
+                }
+            }
+            else if currentTimeSlot.category != .commute
+            {
+                self.startCommute(fromLocation: previousLocation)
             }
             scheduleNotification = true
         }
@@ -82,23 +100,38 @@ class DefaultTrackingService : TrackingService
         self.cancelNotification(andScheduleNew: scheduleNotification)
     }
     
+    private func locationsAreSignificantlyDifferent(current: CLLocation, previous: CLLocation) -> Bool
+    {
+        let distance = current.distance(from: previous)
+        let isSignificantDistance = distance > self.significantDistanceThreshold
+        
+        self.loggingService.log(withLogLevel: .debug, message:
+            isSignificantDistance
+            ? "distance to previous update (\(distance)) is significant"
+            : "distance to previous update (\(distance)) is insignificant")
+        
+        return isSignificantDistance
+    }
+    
     private func cancelNotification(andScheduleNew scheduleNew : Bool)
     {
         self.notificationService.unscheduleAllNotifications()
         
         guard scheduleNew else { return }
         
-        let notificationDate = Date().addingTimeInterval(self.notificationTimeout)
+        let notificationDate = self.timeService.now.addingTimeInterval(self.commuteDetectionLimit)
+        let possibleFutureSlotStart = timeSlotService.getLast()?.category == Category.commute ? settingsService.lastLocation?.timestamp : nil
         self.notificationService.scheduleNotification(date: notificationDate,
                                                       title: self.notificationTitle,
-                                                      message: self.notificationBody)
+                                                      message: self.notificationBody,
+                                                      possibleFutureSlotStart: possibleFutureSlotStart)
     }
     
     private func onNotificationAction(withCategory category : Category)
     {
-        self.tryStoppingCommuteRetroactively(at: Date())
+        self.tryStoppingCommuteRetroactively(at: self.timeService.now)
         
-        let currentTimeSlot = self.timeSlotService.getLast()
+        guard let currentTimeSlot = self.timeSlotService.getLast() else { return }
         self.timeSlotService.update(timeSlot: currentTimeSlot, withCategory: category, setByUser: true)
     }
     
@@ -111,11 +144,10 @@ class DefaultTrackingService : TrackingService
     {
         guard let lastLocation = self.settingsService.lastLocation else { return }
         
-        let currentTimeSlot = self.timeSlotService.getLast()
-        
         guard
+            let currentTimeSlot = self.timeSlotService.getLast(),
             currentTimeSlot.category == .commute,
-            currentTimeSlot.startTime <= lastLocation.timestamp,
+            currentTimeSlot.startTime < lastLocation.timestamp,
             !self.isCommute(now: time, then: lastLocation.timestamp)
         else { return }
         
@@ -124,17 +156,24 @@ class DefaultTrackingService : TrackingService
     
     private func isCommute(now : Date, then : Date) -> Bool
     {
-        return now.timeIntervalSince(then) / 60 < 25.0
+        return now.timeIntervalSince(then) < self.commuteDetectionLimit
     }
     
     func onAppState(_ appState: AppState)
     {
         if appState == .active
         {
-            self.onAppActivates(at: Date())
+            self.onAppActivates(at: self.timeService.now)
         }
         
         self.isOnBackground = appState == .inactive
+    }
+    
+    private func startCommute(fromLocation location: CLLocation)
+    {
+        let timeSlot = TimeSlot(withStartTime: location.timestamp, category: .commute, location: location, categoryWasSetByUser: false);
+        
+        self.timeSlotService.add(timeSlot: timeSlot)
     }
     
     @discardableResult private func persistTimeSlot(withLocation location: CLLocation) -> Category

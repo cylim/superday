@@ -6,12 +6,25 @@ class PagerViewModelTests : XCTestCase
 {
     //MARK: Fields
     private var viewModel : PagerViewModel!
+    private var timeService : TimeService!
+    private var appStateService : AppStateService!
     private var settingsService : SettingsService!
+    private var editStateService : EditStateService!
+    private var selectedDateService : SelectedDateService!
     
     override func setUp()
     {
+        self.timeService = MockTimeService()
+        self.appStateService = MockAppStateService()
         self.settingsService = MockSettingsService()
-        self.viewModel = PagerViewModel(settingsService: self.settingsService)
+        self.editStateService = MockEditStateService()
+        self.selectedDateService = MockSelectedDateService()
+        
+        self.viewModel = PagerViewModel(timeService: self.timeService,
+                                        appStateService: self.appStateService,
+                                        settingsService: self.settingsService,
+                                        editStateService: self.editStateService,
+                                        selectedDateService: self.selectedDateService)
     }
     
     func testTheViewModelCanNotAllowScrollsAfterTheCurrentDate()

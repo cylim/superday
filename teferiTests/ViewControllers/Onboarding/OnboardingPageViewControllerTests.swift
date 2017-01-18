@@ -16,7 +16,9 @@ class OnboardingPageViewControllerTests : XCTestCase
         let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
         
         self.notificationService = MockNotificationService()
-        self.onBoardingPageViewController = controller.inject(MockSettingsService(),
+        self.onBoardingPageViewController = controller.inject(MockTimeService(),
+                                                              MockTimeSlotService(timeService: MockTimeService()),
+                                                              MockSettingsService(),
                                                               DefaultAppStateService(),
                                                               MainViewController(),
                                                               self.notificationService)
@@ -28,7 +30,7 @@ class OnboardingPageViewControllerTests : XCTestCase
     func testTheGoToNextPageMethodNavigatesBetweenPages()
     {
         let page = self.onBoardingPageViewController.viewControllers!.first!
-        self.onBoardingPageViewController.goToNextPage()
+        self.onBoardingPageViewController.goToNextPage(forceNext: false)
         
         expect(self.onBoardingPageViewController.viewControllers!.first).toNot(equal(page))
     }

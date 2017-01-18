@@ -10,34 +10,19 @@ import SnapKit
 class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
 {
     // MARK: Fields
-    private var isFirstUse = false
     private let animationDuration = 0.08
     
+    private var isFirstUse = false
+    private var viewModel : MainViewModel!
+    private var viewModelLocator : ViewModelLocator!
     private let disposeBag : DisposeBag = DisposeBag()
     private var gestureRecognizer : UIGestureRecognizer!
-    private lazy var viewModel : MainViewModel =
-    {
-        return MainViewModel(metricsService: self.metricsService,
-                             feedbackService: self.feedbackService,
-                             settingsService: self.settingsService,
-                             timeSlotService: self.timeSlotService,
-                             locationService: self.locationService,
-                             editStateService: self.editStateService,
-                             smartGuessService: self.smartGuessService)
-    }()
     
-    private var pagerViewController : PagerViewController { return self.childViewControllers.last as! PagerViewController }
+    private var pagerViewController : PagerViewController { return self.childViewControllers.firstOfType() }
+    
+    private var calendarViewController : CalendarViewController { return self.childViewControllers.firstOfType() }
     
     //Dependencies
-    private var metricsService : MetricsService!
-    private var feedbackService: FeedbackService!
-    private var appStateService : AppStateService!
-    private var locationService : LocationService!
-    private var settingsService : SettingsService!
-    private var timeSlotService : TimeSlotService!
-    private var editStateService : EditStateService!
-    private var smartGuessService: SmartGuessService!
-    
     private var editView : EditTimeSlotView!
     private var addButton : AddTimeSlotView!
     private var permissionView : PermissionView?
@@ -48,24 +33,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet private weak var calendarButton : UIButton!
     @IBOutlet private weak var contactButton: UIButton!
     
-    func inject(_ metricsService: MetricsService,
-                _ appStateService: AppStateService,
-                _ locationService: LocationService,
-                _ settingsService: SettingsService,
-                _ timeSlotService: TimeSlotService,
-                _ editStateService: EditStateService,
-                _ feedbackService: FeedbackService,
-                _ smartGuessService: SmartGuessService) -> MainViewController
+    func inject(viewModelLocator: ViewModelLocator, isFirstUse: Bool) -> MainViewController
     {
-        self.metricsService = metricsService
-        self.feedbackService = feedbackService
-        self.appStateService = appStateService
-        self.locationService = locationService
-        self.settingsService = settingsService
-        self.timeSlotService = timeSlotService
-        self.editStateService = editStateService
-        self.smartGuessService = smartGuessService
-        
+        self.isFirstUse = isFirstUse
+        self.viewModelLocator = viewModelLocator
+        self.viewModel = viewModelLocator.getMainViewModel(forViewController: self)
         return self
     }
     
@@ -74,40 +46,35 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     {
         super.viewDidLoad()
         
-        //Inject PagerViewController's dependencies
-        self.pagerViewController.inject(self.metricsService,
-                                        self.appStateService,
-                                        self.settingsService,
-                                        self.timeSlotService,
-                                        self.editStateService)        
+        //Injecting child ViewController's dependencies
+        self.pagerViewController.inject(viewModelLocator: viewModelLocator)
+        self.calendarViewController.inject(viewModel: viewModelLocator.getCalendarViewModel())
+        
+        //Edit View
+        self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
+        self.view.insertSubview(self.editView, belowSubview: self.calendarViewController.view.superview!)
+        self.editView.constrainEdges(to: self.view)
+        
+        //Add button
+        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
+        self.view.insertSubview(self.addButton, belowSubview: self.editView)
+        self.addButton.snp.makeConstraints { make in
+            make.height.equalTo(320)
+            make.left.right.bottom.equalTo(self.view)
+        }
         
         //Add fade overlay at bottom of timeline
-        let bottomFadeStartColor = Color.white.withAlphaComponent(1.0)
-        let bottomFadeEndColor = Color.white.withAlphaComponent(0.0)
-        let bottomFadeOverlay = self.fadeOverlay(startColor: bottomFadeStartColor, endColor: bottomFadeEndColor)
+        let bottomFadeOverlay = self.fadeOverlay(startColor: Color.white,
+                                                 endColor: Color.white.withAlphaComponent(0.0))
         let fadeView = AutoResizingLayerView(layer: bottomFadeOverlay)
         fadeView.isUserInteractionEnabled = false
-        self.view.addSubview(fadeView)
+        self.view.insertSubview(fadeView, aboveSubview: self.addButton)
         fadeView.snp.makeConstraints { make in
             make.bottom.left.right.equalTo(self.view)
             make.height.equalTo(100)
         }
         
-        //Add button
-        self.addButton = (Bundle.main.loadNibNamed("AddTimeSlotView", owner: self, options: nil)?.first) as? AddTimeSlotView
-        
-        //Edit View
-        self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
-        self.view.addSubview(self.editView)
-        self.editView.constrainEdges(to: self.view)
-        
-        if self.isFirstUse
-        {
-            //Sets the first TimeSlot's category to leisure
-            let timeSlot = TimeSlot(withStartTime: Date(), category: .leisure, categoryWasSetByUser: false)
-            self.timeSlotService.add(timeSlot: timeSlot)
-        }
-        else
+        if !self.isFirstUse
         {
             self.launchAnim = LaunchAnimationView(frame: view.frame)
             self.view.addSubview(launchAnim)
@@ -127,15 +94,15 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
      private func createBindings()
      {
-        self.gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.editStateService.notifyEditingEnded() })
+        self.gestureRecognizer = ClosureGestureRecognizer(withClosure: { self.viewModel.notifyEditingEnded() })
         
         //Edit state
-        self.editStateService
+        self.viewModel
             .isEditingObservable
             .subscribe(onNext: self.onEditChanged)
             .addDisposableTo(self.disposeBag)
         
-        self.editStateService
+        self.viewModel
             .beganEditingObservable
             .subscribe(onNext: self.editView.onEditBegan)
             .addDisposableTo(self.disposeBag)
@@ -147,17 +114,17 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .addDisposableTo(self.disposeBag)
         
         //Date updates for title label
-        self.pagerViewController
+        self.viewModel
             .dateObservable
             .subscribe(onNext: self.onDateChanged)
             .addDisposableTo(self.disposeBag)
         
-        self.editView.addGestureRecognizer(self.gestureRecognizer)
-        
-        self.appStateService
-            .appStateObservable
-            .subscribe(onNext: self.onAppStateChanged)
+        self.viewModel
+            .overlayStateObservable
+            .subscribe(onNext: self.onOverlayStateChanged)
             .addDisposableTo(self.disposeBag)
+        
+        self.editView.addGestureRecognizer(self.gestureRecognizer)
         
         //Add button must be added like this due to .xib/.storyboard restrictions
         self.view.insertSubview(self.addButton, belowSubview: self.editView)
@@ -170,36 +137,26 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     // MARK: Actions
     @IBAction func onCalendarTouchUpInside()
     {
-        let today = Date().ignoreTimeComponents()
-        
-        guard self.viewModel.currentDate.ignoreTimeComponents() != today else { return }
-        
-        self.pagerViewController.setViewControllers(
-            [ TimelineViewController(date: today,
-                                     metricsService: self.metricsService,
-                                     appStateService: self.appStateService,
-                                     timeSlotService: self.timeSlotService,
-                                     editStateService: self.editStateService) ],
-            direction: .forward,
-            animated: true,
-            completion: nil)
-        
-        self.onDateChanged(date: today)
+        if self.calendarViewController.isVisible
+        {
+            self.calendarViewController.hide()
+        }
+        else
+        {
+            self.calendarViewController.show()
+        }
     }
     
+    // MARK: Calendar Actions
     @IBAction func onContactTouchUpInside()
     {
-        self.feedbackService.composeFeedback(parentViewController: self) {
+        self.viewModel.composeFeedback
+        {
             self.pagerViewController.feedbackUIClosing = true
         }
     }
     
     // MARK: Methods
-    func setIsFirstUse()
-    {
-        self.isFirstUse = true
-    }
-    
     private func startLaunchAnimation()
     {
         guard self.launchAnim != nil else { return }
@@ -214,46 +171,42 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         }
     }
     
-    private func onAppStateChanged(appState: AppState)
+    private func onOverlayStateChanged(shouldShow: Bool)
     {
-        if appState == .active
+        if shouldShow
         {
-            if self.viewModel.shouldShowLocationPermissionOverlay
+            guard permissionView == nil else { return }
+            
+            let isFirstTimeUser = !self.viewModel.canIgnoreLocationPermission
+            let view = Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first as! PermissionView!
+            
+            self.permissionView = view!.inject(self.view.frame, { self.viewModel.setLastAskedForLocationPermission() }, isFirstTimeUser: isFirstTimeUser)
+            
+            if self.launchAnim != nil
             {
-                guard permissionView == nil else { return }
-                
-                let isFirstTimeUser = !self.settingsService.canIgnoreLocationPermission
-                let view = Bundle.main.loadNibNamed("PermissionView", owner: self, options: nil)!.first as! PermissionView!
-                
-                self.permissionView = view!.inject(self.view.frame, self.settingsService, isFirstTimeUser: isFirstTimeUser)
-                
-                if self.launchAnim != nil
-                {
-                    self.view.insertSubview(self.permissionView!, belowSubview: self.launchAnim)
-                }
-                else
-                {
-                    self.view.addSubview(self.permissionView!)
-                }
+                self.view.insertSubview(self.permissionView!, belowSubview: self.launchAnim)
             }
             else
             {
-                guard let view = permissionView else { return }
-                
-                view.fadeView()
-                self.permissionView = nil
-                self.settingsService.setAllowedLocationPermission()
+                self.view.addSubview(self.permissionView!)
             }
+        }
+        else
+        {
+            guard let view = permissionView else { return }
+            
+            view.fadeView()
+            self.permissionView = nil
+            self.viewModel.setAllowedLocationPermission()
         }
     }
     
     private func onDateChanged(date: Date)
     {
-        self.viewModel.currentDate = date
         self.titleLabel.text = viewModel.title
         
-        let today = Date().ignoreTimeComponents()
-        let isToday = today == date.ignoreTimeComponents()
+        let today = self.viewModel.currentDate
+        let isToday = today.ignoreTimeComponents() == date.ignoreTimeComponents()
         let alpha = CGFloat(isToday ? 1 : 0)
         
         UIView.animate(withDuration: 0.3)

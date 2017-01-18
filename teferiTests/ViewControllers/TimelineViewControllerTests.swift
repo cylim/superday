@@ -5,32 +5,24 @@ import RxSwift
 
 class TimelineViewControllerTests : XCTestCase
 {
+    private var noon : Date!
+    private var locator : MockLocator!
     private var viewModel : TimelineViewModel!
-    private var mockMetricsService : MockMetricsService!
-    private var mockAppStateService : MockAppStateService!
-    private var mockTimeSlotService : MockTimeSlotService!
-    private var mockEditStateService : MockEditStateService!
     private var timelineViewController : TimelineViewController!
     
     override func setUp()
     {
         super.setUp()
+
+        self.noon = Date().ignoreTimeComponents().addingTimeInterval(12 * 60 * 60)
+        self.locator = MockLocator()
         
-        self.mockMetricsService = MockMetricsService()
-        self.mockAppStateService = MockAppStateService()
-        self.mockTimeSlotService = MockTimeSlotService()
-        self.mockEditStateService = MockEditStateService()
+        self.locator.timeService.mockDate = self.noon.addingTimeInterval(-120)
+        self.locator.timeSlotService.add(timeSlot: TimeSlot(withStartTime: self.noon.addingTimeInterval(-120),
+                                                            categoryWasSetByUser: true))
+        self.viewModel = self.locator.getTimelineViewModel(forDate: self.noon)
         
-        self.viewModel = TimelineViewModel(date: Date(),
-                                           metricsService: self.mockMetricsService,
-                                           appStateService: self.mockAppStateService,
-                                           timeSlotService: self.mockTimeSlotService)
-        
-        self.timelineViewController = TimelineViewController(date: Date(),
-                                                             metricsService: self.mockMetricsService,
-                                                             appStateService: self.mockAppStateService,
-                                                             timeSlotService: self.mockTimeSlotService,
-                                                             editStateService: self.mockEditStateService)
+        self.timelineViewController = TimelineViewController(viewModel: self.viewModel)
     }
     
     override func tearDown()
@@ -43,7 +35,8 @@ class TimelineViewControllerTests : XCTestCase
     
     func testScrollingIsDisabledWhenEnteringEditMode()
     {
-        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
+        self.locator.editStateService.notifyEditingBegan(point: CGPoint(),
+                                                         timeSlot: TimeSlot(withStartTime: Date(),  categoryWasSetByUser: false));
         
         let scrollView = self.timelineViewController.tableView!
         
@@ -52,8 +45,8 @@ class TimelineViewControllerTests : XCTestCase
     
     func testScrollingIsEnabledWhenExitingEditMode()
     {
-        self.mockEditStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
-        self.mockEditStateService.notifyEditingEnded();
+        self.locator.editStateService.notifyEditingBegan(point: CGPoint(), timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false));
+        self.locator.editStateService.notifyEditingEnded();
         
         let scrollView = self.timelineViewController.tableView!
         
@@ -61,14 +54,16 @@ class TimelineViewControllerTests : XCTestCase
     }
     
     func testUIRefreshesAsTimePasses()
-    {
-        let indexPath = IndexPath(row: self.viewModel.timeSlots.count - 1, section: 0)
+    {   
+        let indexPath = IndexPath(row: self.viewModel.timelineItems.count - 1, section: 0)
         let cell = self.timelineViewController.tableView(self.timelineViewController.tableView, cellForRowAt: indexPath) as! TimelineCell
         let elapsedTimeLabel = cell.subviews[4] as! UILabel
         let beforeElapsedTimeText = elapsedTimeLabel.text
         
-        //71 sec. are needed to pass in order to see changes in the UI
-        RunLoop.current.run(until: Date().addingTimeInterval(71))
+        self.locator.timeService.mockDate = self.noon
+        
+        //11 seconds is the time it takes for the TimeObservable to tick
+        RunLoop.current.run(until: Date().addingTimeInterval(11))
         
         expect(elapsedTimeLabel.text).toNot(equal(beforeElapsedTimeText))
     }

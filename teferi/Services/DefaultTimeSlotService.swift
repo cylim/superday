@@ -1,21 +1,35 @@
 import CoreData
+import RxSwift
 import Foundation
 
 class DefaultTimeSlotService : TimeSlotService
 {
-    //MARK: Fields
+    // MARK: Fields
+    private let timeService : TimeService
     private let loggingService : LoggingService
     private let persistencyService : BasePersistencyService<TimeSlot>
     
-    private var createCallbacks = [(TimeSlot) -> ()]()
-    private var updateCallbacks = [(TimeSlot) -> ()]()
+    private let timeSlotCreatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
+    private let timeSlotUpdatedVariable = Variable(TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
     
-    init(loggingService: LoggingService, persistencyService: BasePersistencyService<TimeSlot>)
+    // MARK: Properties
+    init(timeService: TimeService,
+         loggingService: LoggingService,
+         persistencyService: BasePersistencyService<TimeSlot>)
     {
+        self.timeService = timeService
         self.loggingService = loggingService
         self.persistencyService = persistencyService
+
+        self.timeSlotCreatedObservable = timeSlotCreatedVariable.asObservable().skip(1)
+        self.timeSlotUpdatedObservable = timeSlotUpdatedVariable.asObservable().skip(1)
     }
     
+    // MARK: Properties
+    let timeSlotCreatedObservable : Observable<TimeSlot>
+    let timeSlotUpdatedObservable : Observable<TimeSlot>
+
+    // MARK: Methods
     func add(timeSlot: TimeSlot)
     {
         //The previous TimeSlot needs to be finished before a new one can start
@@ -27,7 +41,7 @@ class DefaultTimeSlotService : TimeSlotService
         
         self.loggingService.log(withLogLevel: .info, message: "New TimeSlot with category \"\(timeSlot.category)\" created")
         
-        self.createCallbacks.forEach { callback in callback(timeSlot) }
+        self.timeSlotCreatedVariable.value = timeSlot
     }
     
     func getTimeSlots(forDay day: Date) -> [TimeSlot]
@@ -42,8 +56,7 @@ class DefaultTimeSlotService : TimeSlotService
     
     func update(timeSlot: TimeSlot, withCategory category: Category, setByUser: Bool)
     {
-        //No need to persist anything if the categories are the same
-        guard timeSlot.category != category else { return }
+        guard self.canChangeCategory(of: timeSlot, to: category, setByUser: setByUser) else { return }
         
         let predicate = Predicate(parameter: "startTime", equals: timeSlot.startTime as AnyObject)
         let editFunction = { (timeSlot: TimeSlot) -> (TimeSlot) in
@@ -55,7 +68,8 @@ class DefaultTimeSlotService : TimeSlotService
         
         if self.persistencyService.update(withPredicate: predicate, updateFunction: editFunction)
         {
-            self.updateCallbacks.forEach { callback in callback(timeSlot) }
+            timeSlot.category = category
+            self.timeSlotUpdatedVariable.value = timeSlot
         }
         else
         {
@@ -63,20 +77,45 @@ class DefaultTimeSlotService : TimeSlotService
         }
     }
     
-    func getLast() -> TimeSlot
+    private func canChangeCategory(of timeSlot : TimeSlot, to category : Category, setByUser : Bool) -> Bool
     {
-        return self.persistencyService.getLast() ?? TimeSlot(withStartTime: Date(), categoryWasSetByUser: false)
+        if setByUser == timeSlot.categoryWasSetByUser
+        {
+            return category != timeSlot.category
+        }
+        
+        if setByUser
+        {
+            return true
+        }
+        
+        self.loggingService.log(withLogLevel: .warning, message: "Tried automatically updating category of TimeSlot which was set by user")
+        return false
     }
     
-    func subscribeToTimeSlotChanges(on event: TimeSlotChangeType, _ callback: @escaping (TimeSlot) -> ())
+    func getLast() -> TimeSlot?
     {
-        switch event
-        {
-            case .create:
-                self.createCallbacks.append(callback)
-            case .update:
-                self.updateCallbacks.append(callback)
-        }
+        return self.persistencyService.getLast()
+    }
+    
+    func calculateDuration(ofTimeSlot timeSlot: TimeSlot) -> TimeInterval
+    {
+        let endTime = self.getEndTime(ofTimeSlot: timeSlot)
+        
+        return endTime.timeIntervalSince(timeSlot.startTime)
+    }
+    
+    private func getEndTime(ofTimeSlot timeSlot: TimeSlot) -> Date
+    {
+        if let endTime = timeSlot.endTime { return endTime}
+        
+        let date = self.timeService.now
+        let timeEntryLimit = timeSlot.startTime.tomorrow.ignoreTimeComponents()
+        let timeEntryLastedOverOneDay = date > timeEntryLimit
+        
+        //TimeSlots can't go past midnight
+        let endTime = timeEntryLastedOverOneDay ? timeEntryLimit : date
+        return endTime
     }
     
     private func endPreviousTimeSlot(atDate date: Date) -> Bool
@@ -95,7 +134,7 @@ class DefaultTimeSlotService : TimeSlotService
         //TimeSlot is going for over one day, we should end it at midnight
         if startDate.ignoreTimeComponents() != endDate.ignoreTimeComponents()
         {
-            self.loggingService.log(withLogLevel: .debug, message: "Trying to create a negative duration TimeSlot")
+            self.loggingService.log(withLogLevel: .debug, message: "Early ending TimeSlot at midnight")
             endDate = startDate.tomorrow.ignoreTimeComponents()
         }
         

@@ -49,21 +49,21 @@ class TimelineCell : UITableViewCell
      
      - Parameter timeSlot: TimeSlot that will be bound.
      */
-    func bind(toTimeSlot timeSlot: TimeSlot, index: Int, lastInPastDay: Bool)
+    func bind(toTimelineItem timelineItem: TimelineItem, index: Int, duration: TimeInterval)
     {
         self.currentIndex = index
         
+        let timeSlot = timelineItem.timeSlot
         let isRunning = timeSlot.endTime == nil
-        let interval = Int(timeSlot.duration)
-        let minutes = (interval / 60) % 60
-        let hours = (interval / 3600)
+        let interval = Int(duration)
+        let totalInterval = Int(isRunning ? timelineItem.durations.dropLast(1).reduce(duration, +) : timelineItem.durations.reduce(0.0, +))
         let categoryColor = timeSlot.category.color
         
         //Updates each one of the cell's components
-        self.layoutLine(withColor: categoryColor, hours: hours, minutes: minutes, isRunning: isRunning, lastInPastDay: lastInPastDay)
-        self.layoutSlotTime(withTimeSlot: timeSlot, lastInPastDay: lastInPastDay)
-        self.layoutElapsedTimeLabel(withColor: categoryColor, hours: hours, minutes: minutes)
-        self.layoutDescriptionLabel(withTimeSlot: timeSlot)
+        self.layoutLine(withColor: categoryColor, interval: interval, isRunning: isRunning, lastInPastDay: timelineItem.lastInPastDay)
+        self.layoutSlotTime(withTimeSlot: timeSlot, lastInPastDay: timelineItem.lastInPastDay)
+        self.layoutElapsedTimeLabel(withColor: categoryColor, interval: totalInterval, shouldShow: timelineItem.durations.count > 0)
+        self.layoutDescriptionLabel(withTimelineItem: timelineItem)
         self.layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor)
     }
     
@@ -76,12 +76,13 @@ class TimelineCell : UITableViewCell
     }
     
     /// Updates the label that displays the description and starting time of the slot
-    private func layoutDescriptionLabel(withTimeSlot timeSlot: TimeSlot)
+    private func layoutDescriptionLabel(withTimelineItem timelineItem: TimelineItem)
     {
-        let isCategoryUnknown = timeSlot.category == .unknown
-        let categoryText = isCategoryUnknown ? "" : timeSlot.category.rawValue.capitalized
+        let timeSlot = timelineItem.timeSlot
+        let shouldShowCategory = !timelineItem.shouldDisplayCategoryName || timeSlot.category == .unknown
+        let categoryText = shouldShowCategory ? "" : timeSlot.category.rawValue.capitalized
         self.slotDescription.text = categoryText
-        self.timeSlotDistanceConstraint.constant = isCategoryUnknown ? 0 : 6
+        self.timeSlotDistanceConstraint.constant = shouldShowCategory ? 0 : 6
     }
     
     /// Updates the label that shows the time the TimeSlot was created
@@ -103,15 +104,28 @@ class TimelineCell : UITableViewCell
     }
     
     /// Updates the label that shows how long the slot lasted
-    private func layoutElapsedTimeLabel(withColor color: UIColor, hours: Int, minutes: Int)
+    private func layoutElapsedTimeLabel(withColor color: UIColor, interval: Int, shouldShow: Bool)
     {
-        self.elapsedTime.textColor = color
-        self.elapsedTime.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
+        let minutes = (interval / 60) % 60
+        let hours = (interval / 3600)
+        
+        if shouldShow
+        {
+            self.elapsedTime.textColor = color
+            self.elapsedTime.text = hours > 0 ? String(format: hourMask, hours, minutes) : String(format: minuteMask, minutes)
+        }
+        else
+        {
+            self.elapsedTime.text = ""
+        }
     }
     
     /// Updates the line that displays shows how long the TimeSlot lasted
-    private func layoutLine(withColor color: UIColor, hours: Int, minutes: Int, isRunning: Bool, lastInPastDay: Bool = false)
+    private func layoutLine(withColor color: UIColor, interval: Int, isRunning: Bool, lastInPastDay: Bool = false)
     {
+        let minutes = (interval / 60) % 60
+        let hours = (interval / 3600)
+        
         let newHeight = CGFloat(Constants.minLineSize * (1 + (minutes / 15) + (hours * 4)))
         self.lineHeightConstraint.constant = newHeight
         

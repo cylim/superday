@@ -9,6 +9,7 @@ class DefaultSettingsService : SettingsService
     private let lastLocationLatKey = "lastLocationLat"
     private let lastLocationLngKey = "lastLocationLng"
     private let lastLocationDateKey = "lastLocationDate"
+    private let lastLocationHorizontalAccuracyKey = "lastLocationHorizongalAccuracy"
     private let lastInactiveDateKey = "lastInactiveDate"
     private let canIgnoreLocationPermissionKey = " canIgnoreLocationPermission"
     private let lastAskedForLocationPermissionKey = "lastAskedForLocationPermission"
@@ -16,27 +17,30 @@ class DefaultSettingsService : SettingsService
     //MARK: Properties
     var installDate : Date?
     {
-        return UserDefaults.standard.object(forKey: self.installDateKey) as! Date?
+        return self.get(forKey: self.installDateKey)
     }
     
-     var lastInactiveDate : Date?
+    var lastInactiveDate : Date?
     {
-        return UserDefaults.standard.object(forKey: self.lastInactiveDateKey) as? Date
+        return self.get(forKey: self.lastInactiveDateKey)
     }
     
     var lastLocation : CLLocation?
     {
         var location : CLLocation? = nil
         
-        let possibleTime = UserDefaults.standard.object(forKey: self.lastLocationDateKey) as? Date
+        let possibleTime = self.get(forKey: self.lastLocationDateKey) as Date?
         
         if let time = possibleTime
         {
-            let latitude = UserDefaults.standard.double(forKey: self.lastLocationLatKey)
-            let longitude = UserDefaults.standard.double(forKey: self.lastLocationLngKey)
+            let latitude = self.getDouble(forKey: self.lastLocationLatKey)
+            let longitude = self.getDouble(forKey: self.lastLocationLngKey)
+            let horizontalAccuracy = self.get(forKey: self.lastLocationHorizontalAccuracyKey) as Double? ?? 0.0
             
             let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            location = CLLocation(coordinate: coord, altitude: 0, horizontalAccuracy: 0, verticalAccuracy: 0, timestamp: time)
+            location = CLLocation(coordinate: coord, altitude: 0,
+                                  horizontalAccuracy: horizontalAccuracy,
+                                  verticalAccuracy: 0, timestamp: time)
         }
         
         return location
@@ -56,12 +60,12 @@ class DefaultSettingsService : SettingsService
     
     var lastAskedForLocationPermission : Date?
     {
-        return UserDefaults.standard.object(forKey: self.lastAskedForLocationPermissionKey) as! Date?
+        return self.get(forKey: self.lastAskedForLocationPermissionKey)
     }
     
     var canIgnoreLocationPermission : Bool
     {
-        return UserDefaults.standard.bool(forKey: self.canIgnoreLocationPermissionKey)
+        return self.getBool(forKey: self.canIgnoreLocationPermissionKey)
     }
     
     //MARK: Methods
@@ -69,28 +73,57 @@ class DefaultSettingsService : SettingsService
     {
         guard self.installDate == nil else { return }
         
-        UserDefaults.standard.set(date, forKey: self.installDateKey)
+        self.set(date, forKey: self.installDateKey)
     }
     
     func setLastInactiveDate(_ date: Date?)
     {
-        UserDefaults.standard.set(date, forKey: self.lastInactiveDateKey)
+        self.set(date, forKey: self.lastInactiveDateKey)
     }
     
     func setLastLocation(_ location: CLLocation)
     {
-        UserDefaults.standard.set(location.timestamp, forKey: self.lastLocationDateKey)
-        UserDefaults.standard.set(location.coordinate.latitude, forKey: self.lastLocationLatKey)
-        UserDefaults.standard.set(location.coordinate.longitude, forKey: self.lastLocationLngKey)
+        self.set(location.timestamp, forKey: self.lastLocationDateKey)
+        self.set(location.coordinate.latitude, forKey: self.lastLocationLatKey)
+        self.set(location.coordinate.longitude, forKey: self.lastLocationLngKey)
+        self.set(location.horizontalAccuracy, forKey: self.lastLocationHorizontalAccuracyKey)
     }
     
     func setLastAskedForLocationPermission(_ date: Date)
     {
-        UserDefaults.standard.set(date, forKey: self.lastAskedForLocationPermissionKey)
+        self.set(date, forKey: self.lastAskedForLocationPermissionKey)
     }
     
     func setAllowedLocationPermission()
     {
-        UserDefaults.standard.set(true, forKey: self.canIgnoreLocationPermissionKey)
+        self.set(true, forKey: self.canIgnoreLocationPermissionKey)
     }
+    
+    // MARK: Helpers
+    private func get<T>(forKey key: String) -> T?
+    {
+        return UserDefaults.standard.object(forKey: key) as? T
+    }
+    private func getDouble(forKey key: String) -> Double
+    {
+        return UserDefaults.standard.double(forKey: key)
+    }
+    private func getBool(forKey key: String) -> Bool
+    {
+        return UserDefaults.standard.bool(forKey: key)
+    }
+    
+    private func set(_ value: Date?, forKey key: String)
+    {
+        UserDefaults.standard.set(value, forKey: key)
+    }
+    private func set(_ value: Double, forKey key: String)
+    {
+        UserDefaults.standard.set(value, forKey: key)
+    }
+    private func set(_ value: Bool, forKey key: String)
+    {
+        UserDefaults.standard.set(value, forKey: key)
+    }
+    
 }

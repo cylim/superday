@@ -6,102 +6,217 @@ class TimelineViewModel
 {
     //MARK: Fields
     private let isCurrentDay : Bool
+    private let disposeBag = DisposeBag()
+    
+    private let timeService : TimeService
     private let metricsService : MetricsService
     private let appStateService : AppStateService
     private let timeSlotService : TimeSlotService
-    private let isEditingVariable = Variable(false)
-    private let timeSlotUpdatingVariable = Variable(-1)
-    private let timeSlotCreationVariable = Variable(-1)
+    private let editStateService : EditStateService
     
     //MARK: Properties
     let date : Date
     let timeObservable : Observable<Int>
-    let isEditingObservable : Observable<Bool>
-    let timeSlotUpdatingObservable : Observable<Int>
-    let timeSlotCreationObservable : Observable<Int>
+    
+    private(set) lazy var timeSlotCreatedObservable : Observable<Int> =
+    {
+        let createObservable =
+            self.timeSlotService
+                .timeSlotCreatedObservable
+                .filter(self.timeSlotBelongsToThisDate)
+                .map(self.toTimelineItemIndex)
+        
+        return createObservable
+    }()
     
     private(set) lazy var refreshScreenObservable : Observable<Void> =
     {
-        guard self.isCurrentDay else { return Observable.empty() }
-        
-        return
-            self.appStateService
-                .appStateObservable
-                .filter(self.filterRefreshStates)
+        let updateObservable =
+            self.timeSlotService
+                .timeSlotUpdatedObservable
+                .filter(self.timeSlotBelongsToThisDate)
                 .map(self.refreshTimeSlotsFromService)
+        
+        let stateObservable =
+            self.isCurrentDay ?
+                Observable.empty() :
+                self.appStateService
+                    .appStateObservable
+                    .filter(self.appIsActive)
+                    .map(self.refreshTimeSlotsFromService)
+        
+        return Observable.of(stateObservable, updateObservable).merge()
     }()
-
-    private(set) var timeSlots : [TimeSlot]
-    
-    var isEditing : Bool
+			
+    private(set) lazy var timelineItems : [TimelineItem] =
     {
-        get { return self.isEditingVariable.value }
-        set(value) { self.isEditingVariable.value = value }
-    }
+        let timeSlots = self.timeSlotService.getTimeSlots(forDay: self.date)
+        let timelineItems = self.getTimelineItems(fromTimeSlots: timeSlots)
+    
+        //Creates an empty TimeSlot if there are no TimeSlots for today
+        if self.isCurrentDay && timelineItems.count == 0
+        {
+            self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: self.timeService.now, categoryWasSetByUser: false))
+        }
+    
+        return timelineItems
+    }()
+    
+    var currentDay : Date { return self.timeService.now }
+    var isEditingObservable : Observable<Bool> { return self.editStateService.isEditingObservable }
     
     //MARK: Initializers
     init(date: Date,
+         timeService: TimeService,
          metricsService : MetricsService,
          appStateService: AppStateService,
-         timeSlotService: TimeSlotService)
+         timeSlotService: TimeSlotService,
+         editStateService: EditStateService)
     {
-        self.isCurrentDay = Date().ignoreTimeComponents() == date.ignoreTimeComponents()
-        self.timeSlots = timeSlotService.getTimeSlots(forDay: date)
-        
+        self.timeService = timeService
         self.metricsService = metricsService
         self.appStateService = appStateService
         self.timeSlotService = timeSlotService
+        self.editStateService = editStateService
+        
+        self.isCurrentDay = self.timeService.now.ignoreTimeComponents() == date.ignoreTimeComponents()
         self.date = date.ignoreTimeComponents()
-        self.isEditingObservable = self.isEditingVariable.asObservable()
-        self.timeSlotCreationObservable = self.timeSlotCreationVariable.asObservable()
-        self.timeSlotUpdatingObservable = self.timeSlotUpdatingVariable.asObservable().filter { $0 >= 0 }
         
         self.timeObservable =
             self.isCurrentDay ?
                 Observable<Int>.timer(0, period: 10, scheduler: MainScheduler.instance) :
                 Observable.empty()
-        
-        //Only the current day subscribes for new TimeSlots
-        guard self.isCurrentDay else { return }
-        
-        self.timeSlotService.subscribeToTimeSlotChanges(on: .create, self.onTimeSlotCreated)
-        self.timeSlotService.subscribeToTimeSlotChanges(on: .update, self.onTimeSlotUpdated)
-        
-        //Creates an empty TimeSlot if there are no TimeSlots for today
-        if self.timeSlots.count == 0
-        {
-            self.timeSlotService.add(timeSlot: TimeSlot(withStartTime: Date(), categoryWasSetByUser: false))
-        }
+    }
+    
+    func notifyEditingBegan(point: CGPoint, index: Int)
+    {
+        self.editStateService
+            .notifyEditingBegan(point: point,
+                                timeSlot: self.timelineItems[index].timeSlot)
     }
     
     //MARK: Methods
-    
-    ///Called when the persistency service indicates that a TimeSlot has been created/updated.
-    private func onTimeSlotCreated(timeSlot: TimeSlot)
+
+    func calculateDuration(ofTimeSlot timeSlot: TimeSlot) -> TimeInterval
     {
-        //Finishes last task, if needed
-        if let lastTimeSlot = self.timeSlots.last
+        return self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+    }
+
+    private func appIsActive(_ appState: AppState) -> Bool { return appState == .active }
+
+    private func timeSlotBelongsToThisDate(_ timeSlot: TimeSlot) -> Bool { return timeSlot.startTime.ignoreTimeComponents() == self.date }
+    
+    private func refreshTimeSlotsFromService(_ ignore: Any) -> Void
+    {
+        let timeSlots = self.timeSlotService.getTimeSlots(forDay: self.date)
+        self.timelineItems = self.getTimelineItems(fromTimeSlots: timeSlots)
+    }
+    
+    private func toTimelineItemIndex(_ timeSlot: TimeSlot) -> Int
+    {
+        let previousIndex = self.timelineItems.count - 1
+        
+        let previousTimelineItem = self.timelineItems.safeGetElement(at: previousIndex)
+        let shouldDisplayCategory = TimelineViewModel.shouldDisplay(currentTimeSlot: timeSlot,
+                                                                    otherTimeSlot: previousTimelineItem?.timeSlot)
+        
+        var durations = [ self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot) ]
+        
+        if let slotToRecalculate = previousTimelineItem?.timeSlot, let previousDurations = previousTimelineItem?.durations
         {
-            lastTimeSlot.endTime = Date()
+            slotToRecalculate.endTime = self.timeService.now
+            
+            let shouldDisplayDuration = TimelineViewModel.shouldDisplay(currentTimeSlot: slotToRecalculate,
+                                                                        otherTimeSlot: timeSlot)
+            
+            let recalculatedDuration : [ TimeInterval ]
+            if shouldDisplayDuration
+            {
+                recalculatedDuration = previousDurations
+            }
+            else
+            {
+                recalculatedDuration = []
+                durations = (previousDurations + durations)
+            }
+            
+            let otherTimeSlot = self.timelineItems.safeGetElement(at: previousIndex - 1)?.timeSlot
+            
+            let shouldDisplayPreviousCategory = TimelineViewModel.shouldDisplay(currentTimeSlot: slotToRecalculate,
+                                                                                otherTimeSlot: otherTimeSlot)
+            
+            self.timelineItems[previousIndex] = TimelineItem(timeSlot: slotToRecalculate,
+                                                             durations: recalculatedDuration,
+                                                             lastInPastDay: false,
+                                                             shouldDisplayCategoryName: shouldDisplayPreviousCategory)
         }
         
-        self.timeSlots.append(timeSlot)
-        self.timeSlotCreationVariable.value = self.timeSlots.count - 1
+        
+        let timelineItem = TimelineItem(timeSlot: timeSlot,
+                                        durations: durations,
+                                        lastInPastDay: false,
+                                        shouldDisplayCategoryName: shouldDisplayCategory)
+        
+        self.timelineItems.append(timelineItem)
+        
+        return self.timelineItems.count - 1
     }
     
-    private func onTimeSlotUpdated(timeSlot: TimeSlot)
+    private func isLastInPastDay(_ index: Int, count: Int) -> Bool
     {
-        if let index = self.timeSlots.index(where: { $0.startTime == timeSlot.startTime })
+        guard !self.isCurrentDay else { return false }
+        
+        let isLastEntry = count - 1 == index
+        return isLastEntry
+    }
+    
+    private func getTimelineItems(fromTimeSlots timeSlots: [TimeSlot]) -> [TimelineItem]
+    {
+        let count = timeSlots.count
+        var timelineItems = [TimelineItem]()
+        var previousTimeSlot : TimeSlot? = nil
+        var accumulatedDurations = [ TimeInterval ]()
+        
+        for (index, timeSlot) in timeSlots.enumerated()
         {
-            self.timeSlots[index] = timeSlot
-            self.timeSlotUpdatingVariable.value = index
+            let nextIndex = index + 1
+            let nextTimeSlot = timeSlots.safeGetElement(at: nextIndex)
+            
+            let shouldDisplayCategory = TimelineViewModel.shouldDisplay(currentTimeSlot: timeSlot,
+                                                           otherTimeSlot: previousTimeSlot)
+            
+            let shouldDisplayDuration = TimelineViewModel.shouldDisplay(currentTimeSlot: timeSlot,
+                                                           otherTimeSlot: nextTimeSlot)
+
+            
+            accumulatedDurations.append(self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot))
+            let durations : [ TimeInterval ]
+            
+            if shouldDisplayDuration
+            {
+                durations = accumulatedDurations
+                accumulatedDurations = []
+            }
+            else
+            {
+                durations = []
+            }
+            
+            timelineItems.append(TimelineItem(timeSlot: timeSlot,
+                                              durations: durations,
+                                              lastInPastDay: self.isLastInPastDay(index, count: count),
+                                              shouldDisplayCategoryName: shouldDisplayCategory))
+            
+            previousTimeSlot = timeSlot
         }
+        
+        return timelineItems
     }
     
-    private func filterRefreshStates(_ appState: AppState) -> Bool { return appState == .active }
-    
-    private func refreshTimeSlotsFromService(_ appState: AppState) -> Void
+    private static func shouldDisplay(currentTimeSlot: TimeSlot, otherTimeSlot: TimeSlot?) -> Bool
     {
-        self.timeSlots = self.timeSlotService.getTimeSlots(forDay: self.date)
+        guard let previous = otherTimeSlot else { return true }
+        
+        return previous.category != currentTimeSlot.category
     }
 }

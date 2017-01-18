@@ -26,9 +26,6 @@ class DefaultLocationService : NSObject, CLLocationManagerDelegate, LocationServ
         super.init()
         
         self.locationManager.delegate = self
-        self.locationManager.distanceFilter = Constants.distanceFilter
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.activityType = .other
         
         self.dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         

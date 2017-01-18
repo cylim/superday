@@ -4,12 +4,16 @@ class DefaultEditStateService : EditStateService
 {
     //MARK: Fields
     private let isEditingVariable = Variable(false)
-    private let beganEditingVariable = Variable((CGPoint(), TimeSlot(withStartTime: Date(), categoryWasSetByUser: false)))
+    private let beganEditingVariable : Variable<(CGPoint, TimeSlot)>
     
     //MARK: Initializers
-    init()
+    init(timeService: TimeService)
     {
         self.isEditingObservable = self.isEditingVariable.asObservable()
+        self.beganEditingVariable = Variable((CGPoint(),
+                                              TimeSlot(withStartTime: timeService.now,
+                                                       categoryWasSetByUser: false)))
+        
         self.beganEditingObservable = self.beganEditingVariable.asObservable()
     }
     

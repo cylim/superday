@@ -9,16 +9,18 @@ class MailFeedbackService: NSObject, FeedbackService, MFMailComposeViewControlle
     private let subject : String
     private let body : String
     private var completionHandler: () -> ()
+    private var parentViewController : UIViewController!
     
     //MARK: Properties
     var logURL : URL?
     {
         let fileManager = FileManager.default
-        var logURL: URL?
+        var logURL : URL?
         if let cacheDir = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
         {
             logURL = cacheDir.appendingPathComponent("swiftybeaver.log")
         }
+        
         return logURL
     }
     
@@ -32,7 +34,13 @@ class MailFeedbackService: NSObject, FeedbackService, MFMailComposeViewControlle
         super.init()
     }
     
-    func composeFeedback(parentViewController: UIViewController, completed: @escaping () -> ())
+    func with(viewController: UIViewController) -> FeedbackService
+    {
+        self.parentViewController = viewController
+        return self
+    }
+    
+    func composeFeedback(completed: @escaping () -> ())
     {
         //Assign the completion handler when the UI is dismissed
         self.completionHandler = completed
@@ -43,7 +51,7 @@ class MailFeedbackService: NSObject, FeedbackService, MFMailComposeViewControlle
             let alert = UIAlertController(title: "Oops! Seems like your email account is not set up.", message: "Go to “Settings > Mail > Add Account” to set up an email account or send us your feedback to support@toggl.com", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default)
             alert.addAction(okAction)
-            parentViewController.present(alert, animated: true, completion: nil)
+            self.parentViewController.present(alert, animated: true, completion: nil)
             return
         }
         

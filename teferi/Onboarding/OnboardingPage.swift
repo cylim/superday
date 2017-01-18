@@ -5,6 +5,9 @@ class OnboardingPage : UIViewController
 {
     private(set) var didAppear = false
     private(set) var nextButtonText : String?
+    
+    private(set) var timeService : TimeService!
+    private(set) var timeSlotService : TimeSlotService!
     private(set) var settingsService : SettingsService!
     private(set) var appStateService : AppStateService!
     private(set) var notificationService : NotificationService!
@@ -30,11 +33,15 @@ class OnboardingPage : UIViewController
         NotificationCenter.default.removeObserver(self)
     }
     
-    func inject(_ settingsService: SettingsService,
+    func inject(_ timeService: TimeService,
+                _ timeSlotService: TimeSlotService,
+                _ settingsService: SettingsService,
                 _ appStateService: AppStateService,
                 _ notificationService: NotificationService,
                 _ onboardingPageViewController: OnboardingPageViewController)
     {
+        self.timeService = timeService
+        self.timeSlotService = timeSlotService
         self.appStateService = appStateService
         self.settingsService = settingsService
         self.notificationService = notificationService
@@ -51,7 +58,7 @@ class OnboardingPage : UIViewController
     
     func finish()
     {
-        self.onboardingPageViewController.goToNextPage()
+        self.onboardingPageViewController.goToNextPage(forceNext: false)
     }
     
     func startAnimations()
@@ -64,9 +71,9 @@ class OnboardingPage : UIViewController
         // override in page
     }
     
-    func t(_ hours : Int, _ minutes : Int) -> Date
+    func getDate(addingHours hours : Int, andMinutes minutes : Int) -> Date
     {
-        return Date()
+        return self.timeService.now
             .ignoreTimeComponents()
             .addingTimeInterval(TimeInterval((hours * 60 + minutes) * 60))
     }
@@ -76,7 +83,14 @@ class OnboardingPage : UIViewController
         let cell = Bundle.main
             .loadNibNamed("TimelineCell", owner: self, options: nil)?
             .first as! TimelineCell
-        cell.bind(toTimeSlot: timeSlot, index: 0, lastInPastDay: false)
+        
+        let duration = self.timeSlotService.calculateDuration(ofTimeSlot: timeSlot)
+        let timelineItem = TimelineItem(timeSlot: timeSlot,
+                                        durations:[ duration ],
+                                        lastInPastDay: false,
+                                        shouldDisplayCategoryName: true)
+        
+        cell.bind(toTimelineItem: timelineItem, index: 0, duration: duration)
         return cell
     }
     
@@ -104,7 +118,10 @@ class OnboardingPage : UIViewController
             cell.alpha = 0
             
             let slot = slots[index]
-            let cellHeight = TimelineViewController.timelineCellHeight(duration: slot.duration, isRunning: slot.endTime != nil)
+            let cellHeight =
+                TimelineViewController
+                    .timelineCellHeight(duration: self.timeSlotService.calculateDuration(ofTimeSlot: slot),
+                                        isRunning: slot.endTime != nil)
             
             offset += Double(cellHeight) - 8
         }

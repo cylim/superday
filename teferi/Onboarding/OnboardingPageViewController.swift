@@ -11,6 +11,9 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     @IBOutlet var pager: OnboardingPager!
     
+    private var lastSeenIndex = 0
+    private var timeService : TimeService!
+    private var timeSlotService : TimeSlotService!
     private var settingsService : SettingsService!
     private var appStateService : AppStateService!
     private var mainViewController : MainViewController!
@@ -51,16 +54,20 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     //MARK: Actions
     @IBAction func pagerButtonTouchUpInside()
     {
-        self.goToNextPage()
+        self.goToNextPage(forceNext: false)
     }
     
     //MARK: Methods
-    func inject(_ settingsService: SettingsService,
+    func inject(_ timeService: TimeService,
+                _ timeSlotService: TimeSlotService,
+                _ settingsService: SettingsService,
                 _ appStateService: AppStateService,
                 _ mainViewController: MainViewController,
                 _ notificationService: NotificationService) -> OnboardingPageViewController
     {
+        self.timeService = timeService
         self.appStateService = appStateService
+        self.timeSlotService = timeSlotService
         self.settingsService = settingsService
         self.mainViewController = mainViewController
         self.notificationService = notificationService
@@ -84,12 +91,13 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         }
     }
     
-    func goToNextPage()
+    func goToNextPage(forceNext: Bool)
     {
-        let currentPageIndex = self.index(of: self.viewControllers!.first!)!
+        let currentlyVisibleIndex = self.index(of: self.viewControllers!.first!)!
+        let currentPageIndex = forceNext ? self.lastSeenIndex : currentlyVisibleIndex
         guard let nextPage = self.pageAt(index: currentPageIndex + 1) else
         {
-            self.settingsService.setInstallDate(Date())
+            self.settingsService.setInstallDate(self.timeService.now)
          
             DispatchQueue.main.async
             {
@@ -110,6 +118,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     private func pageAt(index : Int) -> OnboardingPage?
     {
+        self.lastSeenIndex = max(self.lastSeenIndex, index)
         return 0..<self.pages.count ~= index ? self.pages[index] : nil
     }
     
@@ -124,7 +133,12 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
             .instantiateViewController(withIdentifier: "OnboardingScreen\(id)")
             as! OnboardingPage
         
-        page.inject(self.settingsService, self.appStateService, self.notificationService, self)
+        page.inject(self.timeService,
+                    self.timeSlotService,
+                    self.settingsService,
+                    self.appStateService,
+                    self.notificationService, self)
+        
         return page
     }
     

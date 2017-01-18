@@ -41,8 +41,9 @@ class OnboardingPage3 : OnboardingPage, CLLocationManagerDelegate
     
     override func finish()
     {
-        super.finish()
-        disposeBag = nil
+        self.locationManager.delegate = nil
+        self.onboardingPageViewController.goToNextPage(forceNext: true)
+        self.disposeBag = nil
     }
     
     func onAppStateChanged(appState: AppState)

@@ -20,6 +20,7 @@
 		24168E371DC21042004F90AD /* TrackingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24168E361DC21042004F90AD /* TrackingServiceTests.swift */; };
 		24168E3A1DC21125004F90AD /* MockLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24168E381DC21125004F90AD /* MockLoggingService.swift */; };
 		24168E3B1DC21125004F90AD /* MockNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24168E391DC21125004F90AD /* MockNotificationService.swift */; };
+		2416B27D1E278B1300CE283B /* CalendarViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416B27C1E278B1300CE283B /* CalendarViewControllerTests.swift */; };
 		2420A8661DB56B5500C0478C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8651DB56B5500C0478C /* EmptyStateView.swift */; };
 		2420A8681DB56B6800C0478C /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A8671DB56B6800C0478C /* EmptyStateView.xib */; };
 		2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420A8691DB6271000C0478C /* EditTimeSlotView.swift */; };
@@ -27,6 +28,7 @@
 		2420A86E1DB7DD0F00C0478C /* PermissionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2420A86D1DB7DD0F00C0478C /* PermissionView.xib */; };
 		2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */; };
 		2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */; };
+		24224B081E28E37700AD7575 /* TimelineItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24224B071E28E37700AD7575 /* TimelineItem.swift */; };
 		242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */; };
 		243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */; };
 		24526A751D92D98800DA3FA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24526A741D92D98800DA3FA0 /* Constants.swift */; };
@@ -56,6 +58,7 @@
 		246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2465316F1DA7B4150066DFE0 /* NotificationService.swift */; };
 		246531721DA7B4A10066DFE0 /* PreiOSTenNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246531711DA7B4A10066DFE0 /* PreiOSTenNotificationService.swift */; };
 		246531741DA7DDF10066DFE0 /* FabricMetricsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */; };
+		246545BC1E0C3E7F004F6BAD /* ViewModelLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246545BB1E0C3E7F004F6BAD /* ViewModelLocator.swift */; };
 		247E27591DC3B41400A38A2D /* PagerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */; };
 		247F05F81D87322600451BAD /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F71D87322600451BAD /* LocationService.swift */; };
 		247F05FA1D87325600451BAD /* PersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F05F91D87325600451BAD /* PersistencyService.swift */; };
@@ -65,6 +68,7 @@
 		2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */; };
 		2482CAFE1DB12F9F00E892C1 /* OnboardingPage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */; };
 		2482CAFF1DB12F9F00E892C1 /* OnboardingPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */; };
+		249B359D1E1A6015005793B9 /* MockLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B359C1E1A6015005793B9 /* MockLocator.swift */; };
 		24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */; };
 		24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5A1D9E4D1100452D16 /* SettingsService.swift */; };
 		24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B03B5C1D9E4DA300452D16 /* DefaultSettingsService.swift */; };
@@ -83,6 +87,23 @@
 		24D18E301DF06B9E0046B202 /* SmartGuessModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */; };
 		24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AA1DB8CA4600E429CA /* AppStateService.swift */; };
 		24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */; };
+		24D73F2B1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */; };
+		24D73F2D1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D73F2C1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift */; };
+		24DE23EC1E1BB3180089B49E /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23E91E1BB3180089B49E /* CalendarCell.swift */; };
+		24DE23ED1E1BB3180089B49E /* CalendarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24DE23EA1E1BB3180089B49E /* CalendarCell.xib */; };
+		24DE23EE1E1BB3180089B49E /* CalendarDailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23EB1E1BB3180089B49E /* CalendarDailyActivityView.swift */; };
+		24DE23F01E1BB3260089B49E /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23EF1E1BB3260089B49E /* CalendarViewModel.swift */; };
+		24DE23F21E1BB32F0089B49E /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23F11E1BB32F0089B49E /* CalendarViewController.swift */; };
+		24DE23F51E1BB33B0089B49E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23F31E1BB33B0089B49E /* Activity.swift */; };
+		24DE23F61E1BB33B0089B49E /* DateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23F41E1BB33B0089B49E /* DateChange.swift */; };
+		24DE23F91E1BB3450089B49E /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23F71E1BB3450089B49E /* ArrayExtensions.swift */; };
+		24DE23FA1E1BB3450089B49E /* ObservableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23F81E1BB3450089B49E /* ObservableExtensions.swift */; };
+		24DE23FD1E1BB38C0089B49E /* SelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23FB1E1BB38C0089B49E /* SelectedDateService.swift */; };
+		24DE23FE1E1BB38C0089B49E /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23FC1E1BB38C0089B49E /* TimeService.swift */; };
+		24DE24011E1BB3A40089B49E /* DefaultSelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE23FF1E1BB3A40089B49E /* DefaultSelectedDateService.swift */; };
+		24DE24021E1BB3A40089B49E /* DefaultTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE24001E1BB3A40089B49E /* DefaultTimeService.swift */; };
+		24DE24041E1BBD500089B49E /* MockTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE24031E1BBD500089B49E /* MockTimeService.swift */; };
+		24DE24061E1BBD6E0089B49E /* MockSelectedDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE24051E1BBD6E0089B49E /* MockSelectedDateService.swift */; };
 		24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */; };
 		24EB96721DE7080F0040C211 /* DefaultEditStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB966A1DE7080F0040C211 /* DefaultEditStateService.swift */; };
 		24EB96731DE7080F0040C211 /* DefaultTimeSlotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EB966B1DE7080F0040C211 /* DefaultTimeSlotService.swift */; };
@@ -113,10 +134,12 @@
 		51BED8FC1DD26FA800455EF6 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BED8FB1DD26FA800455EF6 /* NotificationViewController.swift */; };
 		51BED8FF1DD26FA800455EF6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51BED8FD1DD26FA800455EF6 /* MainInterface.storyboard */; };
 		51BED9031DD26FA800455EF6 /* NotificationContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 51BED8F51DD26FA800455EF6 /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		51DB18761E26144F00E0182D /* CLLocationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DB18751E26144F00E0182D /* CLLocationExtensions.swift */; };
 		51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */; };
 		51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EAA2871DC0BA910025680D /* UIViewExtensions.swift */; };
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
+		ACA337EC1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +201,7 @@
 		24168E361DC21042004F90AD /* TrackingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingServiceTests.swift; path = Services/TrackingServiceTests.swift; sourceTree = "<group>"; };
 		24168E381DC21125004F90AD /* MockLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLoggingService.swift; path = Mocks/MockLoggingService.swift; sourceTree = "<group>"; };
 		24168E391DC21125004F90AD /* MockNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockNotificationService.swift; path = Mocks/MockNotificationService.swift; sourceTree = "<group>"; };
+		2416B27C1E278B1300CE283B /* CalendarViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewControllerTests.swift; path = ViewControllers/CalendarViewControllerTests.swift; sourceTree = "<group>"; };
 		2420A8651DB56B5500C0478C /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = Views/EmptyStateView.swift; sourceTree = "<group>"; };
 		2420A8671DB56B6800C0478C /* EmptyStateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStateView.xib; path = Views/EmptyStateView.xib; sourceTree = "<group>"; };
 		2420A8691DB6271000C0478C /* EditTimeSlotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditTimeSlotView.swift; path = Views/EditTimeSlotView.swift; sourceTree = "<group>"; };
@@ -185,6 +209,7 @@
 		2420A86D1DB7DD0F00C0478C /* PermissionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PermissionView.xib; path = Views/PermissionView.xib; sourceTree = "<group>"; };
 		2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClosureGestureRecognizer.swift; path = Helpers/ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		2421F8C41D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverLoggingService.swift; path = Services/SwiftyBeaverLoggingService.swift; sourceTree = "<group>"; };
+		24224B071E28E37700AD7575 /* TimelineItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineItem.swift; path = Models/TimelineItem.swift; sourceTree = "<group>"; };
 		242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoResizingLayerView.swift; path = Views/AutoResizingLayerView.swift; sourceTree = "<group>"; };
 		243E37AD1DC8FABC0074032D /* PostiOSTenNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationService.swift; path = Services/PostiOSTenNotificationService.swift; sourceTree = "<group>"; };
 		24526A741D92D98800DA3FA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -214,6 +239,7 @@
 		2465316F1DA7B4150066DFE0 /* NotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationService.swift; path = Services/Protocols/NotificationService.swift; sourceTree = "<group>"; };
 		246531711DA7B4A10066DFE0 /* PreiOSTenNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreiOSTenNotificationService.swift; path = Services/PreiOSTenNotificationService.swift; sourceTree = "<group>"; };
 		246531731DA7DDF10066DFE0 /* FabricMetricsServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FabricMetricsServices.swift; path = Services/FabricMetricsServices.swift; sourceTree = "<group>"; };
+		246545BB1E0C3E7F004F6BAD /* ViewModelLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewModelLocator.swift; path = Presenters/ViewModelLocator.swift; sourceTree = "<group>"; };
 		247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewControllerTests.swift; path = ViewControllers/PagerViewControllerTests.swift; sourceTree = "<group>"; };
 		247F05F71D87322600451BAD /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/Protocols/LocationService.swift; sourceTree = "<group>"; };
 		247F05F91D87325600451BAD /* PersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistencyService.swift; path = Services/Protocols/PersistencyService.swift; sourceTree = "<group>"; };
@@ -223,6 +249,7 @@
 		2482CAF81DB12F9F00E892C1 /* OnboardingPage3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage3.swift; path = Onboarding/OnboardingPage3.swift; sourceTree = "<group>"; };
 		2482CAF91DB12F9F00E892C1 /* OnboardingPage4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage4.swift; path = Onboarding/OnboardingPage4.swift; sourceTree = "<group>"; };
 		2482CAFA1DB12F9F00E892C1 /* OnboardingPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPager.swift; path = Onboarding/OnboardingPager.swift; sourceTree = "<group>"; };
+		249B359C1E1A6015005793B9 /* MockLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockLocator.swift; path = Mocks/MockLocator.swift; sourceTree = "<group>"; };
 		24A21B661D7C3E0800CEB4F3 /* teferiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teferiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A21B6A1D7C3E0800CEB4F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagerViewModel.swift; path = ViewModels/PagerViewModel.swift; sourceTree = "<group>"; };
@@ -244,6 +271,23 @@
 		24D18E2F1DF06B9E0046B202 /* SmartGuessModelAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartGuessModelAdapter.swift; sourceTree = "<group>"; };
 		24D213AA1DB8CA4600E429CA /* AppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppStateService.swift; path = Services/Protocols/AppStateService.swift; sourceTree = "<group>"; };
 		24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultAppStateService.swift; path = Services/DefaultAppStateService.swift; sourceTree = "<group>"; };
+		24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartGuessServiceTests.swift; path = Services/SmartGuessServiceTests.swift; sourceTree = "<group>"; };
+		24D73F2C1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockSmartGuessPersistencyService.swift; path = Mocks/MockSmartGuessPersistencyService.swift; sourceTree = "<group>"; };
+		24DE23E91E1BB3180089B49E /* CalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCell.swift; path = Views/CalendarCell.swift; sourceTree = "<group>"; };
+		24DE23EA1E1BB3180089B49E /* CalendarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CalendarCell.xib; path = Views/CalendarCell.xib; sourceTree = "<group>"; };
+		24DE23EB1E1BB3180089B49E /* CalendarDailyActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarDailyActivityView.swift; path = Views/CalendarDailyActivityView.swift; sourceTree = "<group>"; };
+		24DE23EF1E1BB3260089B49E /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewModel.swift; path = ViewModels/CalendarViewModel.swift; sourceTree = "<group>"; };
+		24DE23F11E1BB32F0089B49E /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewController.swift; path = ViewControllers/CalendarViewController.swift; sourceTree = "<group>"; };
+		24DE23F31E1BB33B0089B49E /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Models/Activity.swift; sourceTree = "<group>"; };
+		24DE23F41E1BB33B0089B49E /* DateChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateChange.swift; path = Models/DateChange.swift; sourceTree = "<group>"; };
+		24DE23F71E1BB3450089B49E /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtensions.swift; path = Extensions/ArrayExtensions.swift; sourceTree = "<group>"; };
+		24DE23F81E1BB3450089B49E /* ObservableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableExtensions.swift; path = Extensions/ObservableExtensions.swift; sourceTree = "<group>"; };
+		24DE23FB1E1BB38C0089B49E /* SelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedDateService.swift; path = Services/Protocols/SelectedDateService.swift; sourceTree = "<group>"; };
+		24DE23FC1E1BB38C0089B49E /* TimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeService.swift; path = Services/Protocols/TimeService.swift; sourceTree = "<group>"; };
+		24DE23FF1E1BB3A40089B49E /* DefaultSelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultSelectedDateService.swift; path = Services/DefaultSelectedDateService.swift; sourceTree = "<group>"; };
+		24DE24001E1BB3A40089B49E /* DefaultTimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeService.swift; path = Services/DefaultTimeService.swift; sourceTree = "<group>"; };
+		24DE24031E1BBD500089B49E /* MockTimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTimeService.swift; path = Mocks/MockTimeService.swift; sourceTree = "<group>"; };
+		24DE24051E1BBD6E0089B49E /* MockSelectedDateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockSelectedDateService.swift; path = Mocks/MockSelectedDateService.swift; sourceTree = "<group>"; };
 		24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPageViewControllerTests.swift; path = ViewControllers/Onboarding/OnboardingPageViewControllerTests.swift; sourceTree = "<group>"; };
 		24EB966A1DE7080F0040C211 /* DefaultEditStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultEditStateService.swift; path = Services/DefaultEditStateService.swift; sourceTree = "<group>"; };
 		24EB966B1DE7080F0040C211 /* DefaultTimeSlotService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultTimeSlotService.swift; path = Services/DefaultTimeSlotService.swift; sourceTree = "<group>"; };
@@ -276,9 +320,11 @@
 		51BED8FB1DD26FA800455EF6 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		51BED8FE1DD26FA800455EF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		51BED9001DD26FA800455EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51DB18751E26144F00E0182D /* CLLocationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CLLocationExtensions.swift; path = Extensions/CLLocationExtensions.swift; sourceTree = "<group>"; };
 		51DDF7171DB4DBC200F9B672 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPage.swift; path = Onboarding/OnboardingPage.swift; sourceTree = "<group>"; };
 		51EAA2871DC0BA910025680D /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
+		ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationServiceTests.swift; path = Services/PostiOSTenNotificationServiceTests.swift; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -358,6 +404,7 @@
 				24D99F691D74B93C00E68163 /* Views */,
 				240AC7171D748C8800F21F4F /* AppDelegate.swift */,
 				24526A741D92D98800DA3FA0 /* Constants.swift */,
+				246545BB1E0C3E7F004F6BAD /* ViewModelLocator.swift */,
 				240AC7211D748C8800F21F4F /* Assets.xcassets */,
 				240AC7261D748C8800F21F4F /* Info.plist */,
 				240AC71E1D748C8800F21F4F /* teferi.xcdatamodeld */,
@@ -380,6 +427,8 @@
 			isa = PBXGroup;
 			children = (
 				24168E361DC21042004F90AD /* TrackingServiceTests.swift */,
+				24D73F2A1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift */,
+				ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -387,9 +436,9 @@
 		2421F8C11D9BAC4A00AF8857 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				24EB96821DE709790040C211 /* DelayedSequence.swift */,
 				24116A031D9DACCD00762BD6 /* AnimationHelpers.swift */,
 				2421F8C21D9BACB500AF8857 /* ClosureGestureRecognizer.swift */,
+				24EB96821DE709790040C211 /* DelayedSequence.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -426,6 +475,7 @@
 		24874DE41D7C3FC40099DC1F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				24DE24031E1BBD500089B49E /* MockTimeService.swift */,
 				24EB96861DE7163E0040C211 /* MockTimeSlotService.swift */,
 				240575B81DC7F39E002C0C06 /* MockAppStateService.swift */,
 				240575BA1DC7F3F4002C0C06 /* MockEditStateService.swift */,
@@ -436,6 +486,9 @@
 				24B03B601D9E5DEE00452D16 /* MockSettingsService.swift */,
 				2FB611431DE785AB007C5646 /* MockFeedbackService.swift */,
 				24D18E271DF0251A0046B202 /* MockSmartGuessService.swift */,
+				249B359C1E1A6015005793B9 /* MockLocator.swift */,
+				24DE24051E1BBD6E0089B49E /* MockSelectedDateService.swift */,
+				24D73F2C1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -466,6 +519,8 @@
 		24BA51A91D74D79C00042CDF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				24DE23F31E1BB33B0089B49E /* Activity.swift */,
+				24DE23F41E1BB33B0089B49E /* DateChange.swift */,
 				24EB967A1DE708570040C211 /* AppState.swift */,
 				24EB967C1DE708570040C211 /* Predicate.swift */,
 				512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */,
@@ -475,6 +530,7 @@
 				24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */,
 				24C72AA51D906BDA00DABAC3 /* LogLevel.swift */,
 				24D18E251DEF6D640046B202 /* SmartGuess.swift */,
+				24224B071E28E37700AD7575 /* TimelineItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -482,12 +538,15 @@
 		24CD8A461D7A13560017C53E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				24DE23F71E1BB3450089B49E /* ArrayExtensions.swift */,
+				24DE23F81E1BB3450089B49E /* ObservableExtensions.swift */,
 				24EB96841DE709830040C211 /* PredicateExtensions.swift */,
 				2407A98A1D9D534B00066889 /* TimerExtensions.swift */,
 				24564F611D83265900D9A8AE /* UIColorExtensions.swift */,
 				24564F621D83265900D9A8AE /* DateExtensions.swift */,
 				24564F631D83265900D9A8AE /* StringExtensions.swift */,
 				51EAA2871DC0BA910025680D /* UIViewExtensions.swift */,
+				51DB18751E26144F00E0182D /* CLLocationExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -505,6 +564,7 @@
 		24D99F661D74B8D700E68163 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				24DE23EF1E1BB3260089B49E /* CalendarViewModel.swift */,
 				24564F4B1D83207900D9A8AE /* MainViewModel.swift */,
 				24B03B581D9E4C3E00452D16 /* PagerViewModel.swift */,
 				24564F4C1D83207900D9A8AE /* TimelineViewModel.swift */,
@@ -516,6 +576,7 @@
 			isa = PBXGroup;
 			children = (
 				513535D41DA2752A00A365A9 /* Onboarding */,
+				24DE23F11E1BB32F0089B49E /* CalendarViewController.swift */,
 				24564F4F1D8320FC00D9A8AE /* MainViewController.swift */,
 				24564F711D832A4F00D9A8AE /* PagerViewController.swift */,
 				24564F501D8320FC00D9A8AE /* TimelineViewController.swift */,
@@ -536,6 +597,9 @@
 		24D99F691D74B93C00E68163 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24DE23E91E1BB3180089B49E /* CalendarCell.swift */,
+				24DE23EA1E1BB3180089B49E /* CalendarCell.xib */,
+				24DE23EB1E1BB3180089B49E /* CalendarDailyActivityView.swift */,
 				242FE7D51DE7689A00EAEEE3 /* AutoResizingLayerView.swift */,
 				24B03B641DA3864500452D16 /* AddTimeSlotView.swift */,
 				24B03B661DA3866400452D16 /* AddTimeSlotView.xib */,
@@ -557,6 +621,7 @@
 				24EB96881DE716620040C211 /* TimelineViewControllerTests.swift */,
 				24E7860B1DC399A90048F577 /* OnboardingPageViewControllerTests.swift */,
 				247E27581DC3B41400A38A2D /* PagerViewControllerTests.swift */,
+				2416B27C1E278B1300CE283B /* CalendarViewControllerTests.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -636,8 +701,10 @@
 		24EB96661DE7079B0040C211 /* State */ = {
 			isa = PBXGroup;
 			children = (
-				24EB966D1DE7080F0040C211 /* EditStateService.swift */,
 				24D213AA1DB8CA4600E429CA /* AppStateService.swift */,
+				24EB966D1DE7080F0040C211 /* EditStateService.swift */,
+				24DE23FB1E1BB38C0089B49E /* SelectedDateService.swift */,
+				24DE23FC1E1BB38C0089B49E /* TimeService.swift */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -655,6 +722,8 @@
 		24EB96681DE707BF0040C211 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				24DE23FF1E1BB3A40089B49E /* DefaultSelectedDateService.swift */,
+				24DE24001E1BB3A40089B49E /* DefaultTimeService.swift */,
 				24EB966A1DE7080F0040C211 /* DefaultEditStateService.swift */,
 				24D213AE1DB8CB8300E429CA /* DefaultAppStateService.swift */,
 			);
@@ -747,20 +816,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 240AC73F1D748C8900F21F4F /* Build configuration list for PBXNativeTarget "teferi" */;
 			buildPhases = (
-				03AF93FC566488D9E337DDFA /* [CP] Check Pods Manifest.lock */,
-				B6B8FA27DE18221515F8176A /* [CP] Check Pods Manifest.lock */,
-				03BB2FC12FBBF7CE970E4CE5 /* [CP] Check Pods Manifest.lock */,
-				6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */,
-				FC6EC524D2876882281CE023 /* [CP] Check Pods Manifest.lock */,
+				B5A85369F13762A0F044C1C3 /* [CP] Check Pods Manifest.lock */,
 				240AC7101D748C8800F21F4F /* Sources */,
 				240AC7111D748C8800F21F4F /* Frameworks */,
 				240AC7121D748C8800F21F4F /* Resources */,
-				A183DA66225D9AABE97CB6E9 /* [CP] Embed Pods Frameworks */,
-				EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */,
-				402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */,
-				9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */,
-				24E0949C1DA823E70035EC19 /* Run Script */,
 				51BED9071DD26FA800455EF6 /* Embed App Extensions */,
+				B9D97B67E7DA98D8C9DB48E9 /* [CP] Embed Pods Frameworks */,
+				8866EB9FABB8B93E2CA7511D /* [CP] Copy Pods Resources */,
+				24E0949C1DA823E70035EC19 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -776,20 +839,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24A21B6D1D7C3E0800CEB4F3 /* Build configuration list for PBXNativeTarget "teferiTests" */;
 			buildPhases = (
-				DF5E0292C7A9CFEFB1BA13CC /* [CP] Check Pods Manifest.lock */,
-				CA7BC18640F124EC423698FE /* [CP] Check Pods Manifest.lock */,
-				5D5009C8A0C8C480B64FB05F /* [CP] Check Pods Manifest.lock */,
-				D056E9F8A84F20A1F9C3F70A /* [CP] Check Pods Manifest.lock */,
-				E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */,
+				1F8483331F874DD129BFA683 /* [CP] Check Pods Manifest.lock */,
 				24A21B621D7C3E0800CEB4F3 /* Sources */,
 				2414EB971D7D95D6001EFB6D /* ShellScript */,
 				2414EB921D7D955C001EFB6D /* Copy Files */,
 				24A21B631D7C3E0800CEB4F3 /* Frameworks */,
 				24A21B641D7C3E0800CEB4F3 /* Resources */,
-				0588D5620A41A329F27EAE6E /* [CP] Embed Pods Frameworks */,
-				BDF80C0A1DD9DB3BB223CA5C /* [CP] Copy Pods Resources */,
-				122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */,
-				A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */,
+				C11F2EF6C15C6329359CBD93 /* [CP] Embed Pods Frameworks */,
+				5310F866AAA64F780D1ECEB7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -825,7 +882,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Toggl;
 				TargetAttributes = {
 					240AC7131D748C8800F21F4F = {
@@ -884,6 +941,7 @@
 				240AC71D1D748C8800F21F4F /* Main.storyboard in Resources */,
 				2420A8681DB56B6800C0478C /* EmptyStateView.xib in Resources */,
 				513535D31DA26E3B00A365A9 /* Onboarding.storyboard in Resources */,
+				24DE23ED1E1BB3180089B49E /* CalendarCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -906,7 +964,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03AF93FC566488D9E337DDFA /* [CP] Check Pods Manifest.lock */ = {
+		1F8483331F874DD129BFA683 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -919,51 +977,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		03BB2FC12FBBF7CE970E4CE5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		0588D5620A41A329F27EAE6E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		122CB97ECAD8DBEE22614F14 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2414EB971D7D95D6001EFB6D /* ShellScript */ = {
@@ -981,7 +994,7 @@
 		};
 		24E0949C1DA823E70035EC19 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -989,116 +1002,11 @@
 			name = "Run Script";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" a6a9bdfca7594e17d7144bad53b3e0aadb2a0dcb 22ad5d692c46e5ad1a3d5b2cff3996776c53f1b5dd510ab6292921220028a812";
 		};
-		402CC9BDF8C661CBF2276FA1 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D5009C8A0C8C480B64FB05F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6822A442545352FE6D56DE66 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9B04A745BDA5E7FEEC3F5901 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A183DA66225D9AABE97CB6E9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A496B8A6FB9673F5851483E8 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B6B8FA27DE18221515F8176A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		BDF80C0A1DD9DB3BB223CA5C /* [CP] Copy Pods Resources */ = {
+		5310F866AAA64F780D1ECEB7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1113,37 +1021,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CA7BC18640F124EC423698FE /* [CP] Check Pods Manifest.lock */ = {
+		8866EB9FABB8B93E2CA7511D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D056E9F8A84F20A1F9C3F70A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		DF5E0292C7A9CFEFB1BA13CC /* [CP] Check Pods Manifest.lock */ = {
+		B5A85369F13762A0F044C1C3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1158,49 +1051,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		E1C304288BF4D49DA86EAC9F /* [CP] Check Pods Manifest.lock */ = {
+		B9D97B67E7DA98D8C9DB48E9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EA8C2DEDDF2BEA382ED8FD74 /* [CP] Copy Pods Resources */ = {
+		C11F2EF6C15C6329359CBD93 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferi/Pods-teferi-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FC6EC524D2876882281CE023 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1219,9 +1097,12 @@
 				24564F721D832A4F00D9A8AE /* PagerViewController.swift in Sources */,
 				24C72AA61D906BDA00DABAC3 /* LogLevel.swift in Sources */,
 				24EB96751DE7080F0040C211 /* EditStateService.swift in Sources */,
+				24DE23F51E1BB33B0089B49E /* Activity.swift in Sources */,
 				2407A9881D9D512D00066889 /* LaunchAnimationView.swift in Sources */,
+				24DE23EC1E1BB3180089B49E /* CalendarCell.swift in Sources */,
 				51899C3B1DED954A00633D82 /* Color.swift in Sources */,
 				24564F4E1D83207900D9A8AE /* TimelineViewModel.swift in Sources */,
+				246545BC1E0C3E7F004F6BAD /* ViewModelLocator.swift in Sources */,
 				246531701DA7B4150066DFE0 /* NotificationService.swift in Sources */,
 				24B03B5D1D9E4DA300452D16 /* DefaultSettingsService.swift in Sources */,
 				24564F511D8320FC00D9A8AE /* MainViewController.swift in Sources */,
@@ -1237,14 +1118,18 @@
 				24EB96831DE709790040C211 /* DelayedSequence.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */,
+				24DE23FE1E1BB38C0089B49E /* TimeService.swift in Sources */,
+				24DE24011E1BB3A40089B49E /* DefaultSelectedDateService.swift in Sources */,
 				24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */,
 				24D18E301DF06B9E0046B202 /* SmartGuessModelAdapter.swift in Sources */,
 				513535D61DA2756C00A365A9 /* OnboardingPageViewController.swift in Sources */,
+				24224B081E28E37700AD7575 /* TimelineItem.swift in Sources */,
 				24EB96761DE7080F0040C211 /* TimeSlotService.swift in Sources */,
 				24D18E261DEF6D640046B202 /* SmartGuess.swift in Sources */,
 				2420A86A1DB6271000C0478C /* EditTimeSlotView.swift in Sources */,
 				24B03B651DA3864500452D16 /* AddTimeSlotView.swift in Sources */,
 				2421F8C31D9BACB500AF8857 /* ClosureGestureRecognizer.swift in Sources */,
+				24DE23EE1E1BB3180089B49E /* CalendarDailyActivityView.swift in Sources */,
 				24526A7D1D92D9BB00DA3FA0 /* Location.swift in Sources */,
 				24116A041D9DACCD00762BD6 /* AnimationHelpers.swift in Sources */,
 				2482CAFC1DB12F9F00E892C1 /* OnboardingPage2.swift in Sources */,
@@ -1255,14 +1140,20 @@
 				2482CAFB1DB12F9F00E892C1 /* OnboardingPage1.swift in Sources */,
 				247F05F81D87322600451BAD /* LocationService.swift in Sources */,
 				24B03B5B1D9E4D1100452D16 /* SettingsService.swift in Sources */,
+				24DE23F21E1BB32F0089B49E /* CalendarViewController.swift in Sources */,
 				51EAA2881DC0BA910025680D /* UIViewExtensions.swift in Sources */,
 				246531721DA7B4A10066DFE0 /* PreiOSTenNotificationService.swift in Sources */,
 				2482CAFF1DB12F9F00E892C1 /* OnboardingPager.swift in Sources */,
 				24564F661D83265900D9A8AE /* StringExtensions.swift in Sources */,
 				247F05FC1D87337300451BAD /* CoreDataPersistencyService.swift in Sources */,
+				24DE23F91E1BB3450089B49E /* ArrayExtensions.swift in Sources */,
 				2482CAFE1DB12F9F00E892C1 /* OnboardingPage4.swift in Sources */,
+				24DE23F01E1BB3260089B49E /* CalendarViewModel.swift in Sources */,
+				24DE23FA1E1BB3450089B49E /* ObservableExtensions.swift in Sources */,
 				240AC7181D748C8800F21F4F /* AppDelegate.swift in Sources */,
 				24526A7C1D92D9BB00DA3FA0 /* CustomEvent.swift in Sources */,
+				24DE23F61E1BB33B0089B49E /* DateChange.swift in Sources */,
+				24DE24021E1BB3A40089B49E /* DefaultTimeService.swift in Sources */,
 				24D18E221DEF69030046B202 /* SmartGuessService.swift in Sources */,
 				24B03B591D9E4C3E00452D16 /* PagerViewModel.swift in Sources */,
 				242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */,
@@ -1273,7 +1164,9 @@
 				24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */,
 				2420A86C1DB7BE6900C0478C /* PermissionView.swift in Sources */,
 				243E37AE1DC8FABC0074032D /* PostiOSTenNotificationService.swift in Sources */,
+				51DB18761E26144F00E0182D /* CLLocationExtensions.swift in Sources */,
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
+				24DE23FD1E1BB38C0089B49E /* SelectedDateService.swift in Sources */,
 				24EB967F1DE708570040C211 /* Predicate.swift in Sources */,
 				24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */,
 				24D18E241DEF6B300046B202 /* DefaultSmartGuessService.swift in Sources */,
@@ -1290,9 +1183,11 @@
 			files = (
 				24564F701D83270000D9A8AE /* MockLocationService.swift in Sources */,
 				240575B91DC7F39E002C0C06 /* MockAppStateService.swift in Sources */,
+				24DE24041E1BBD500089B49E /* MockTimeService.swift in Sources */,
 				24EB96871DE7163E0040C211 /* MockTimeSlotService.swift in Sources */,
 				240575BB1DC7F3F4002C0C06 /* MockEditStateService.swift in Sources */,
 				247E27591DC3B41400A38A2D /* PagerViewControllerTests.swift in Sources */,
+				24DE24061E1BBD6E0089B49E /* MockSelectedDateService.swift in Sources */,
 				2FB611441DE785AB007C5646 /* MockFeedbackService.swift in Sources */,
 				24168E3A1DC21125004F90AD /* MockLoggingService.swift in Sources */,
 				24D18E281DF0251A0046B202 /* MockSmartGuessService.swift in Sources */,
@@ -1302,9 +1197,14 @@
 				24564F6E1D8326F100D9A8AE /* TimelineViewModelTests.swift in Sources */,
 				24168E3B1DC21125004F90AD /* MockNotificationService.swift in Sources */,
 				24B03B5F1D9E5BB900452D16 /* PagerViewModelTests.swift in Sources */,
+				ACA337EC1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift in Sources */,
+				2416B27D1E278B1300CE283B /* CalendarViewControllerTests.swift in Sources */,
 				24564F7D1D83893900D9A8AE /* TimelineCellTests.swift in Sources */,
+				24D73F2B1E1FB8B9009FC2DF /* SmartGuessServiceTests.swift in Sources */,
 				24E7860C1DC399A90048F577 /* OnboardingPageViewControllerTests.swift in Sources */,
 				24564F6A1D8326E700D9A8AE /* DateExtensionsTests.swift in Sources */,
+				249B359D1E1A6015005793B9 /* MockLocator.swift in Sources */,
+				24D73F2D1E1FBA59009FC2DF /* MockSmartGuessPersistencyService.swift in Sources */,
 				24B03B611D9E5DEE00452D16 /* MockSettingsService.swift in Sources */,
 				24564F691D8326E700D9A8AE /* ColorExtensionsTests.swift in Sources */,
 				24564F6D1D8326F100D9A8AE /* MainViewModelTests.swift in Sources */,
