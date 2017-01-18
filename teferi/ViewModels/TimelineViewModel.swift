@@ -50,7 +50,8 @@ class TimelineViewModel
 			
     private(set) lazy var timelineItems : [TimelineItem] =
     {
-        let timelineItems = self.getTimelineItems(fromTimeSlots: self.timeSlotService.getTimeSlots(forDay: self.date))
+        let timeSlots = self.timeSlotService.getTimeSlots(forDay: self.date)
+        let timelineItems = self.getTimelineItems(fromTimeSlots: timeSlots)
     
         //Creates an empty TimeSlot if there are no TimeSlots for today
         if self.isCurrentDay && timelineItems.count == 0
@@ -161,16 +162,17 @@ class TimelineViewModel
         return self.timelineItems.count - 1
     }
     
-    private func isLastInPastDay(_ index: Int) -> Bool
+    private func isLastInPastDay(_ index: Int, count: Int) -> Bool
     {
         guard !self.isCurrentDay else { return false }
         
-        let isLastEntry = self.timelineItems.count - 1 == index
+        let isLastEntry = count - 1 == index
         return isLastEntry
     }
     
     private func getTimelineItems(fromTimeSlots timeSlots: [TimeSlot]) -> [TimelineItem]
     {
+        let count = timeSlots.count
         var timelineItems = [TimelineItem]()
         var previousTimeSlot : TimeSlot? = nil
         var accumulatedDurations = [ TimeInterval ]()
@@ -202,7 +204,7 @@ class TimelineViewModel
             
             timelineItems.append(TimelineItem(timeSlot: timeSlot,
                                               durations: durations,
-                                              lastInPastDay: self.isLastInPastDay(index),
+                                              lastInPastDay: self.isLastInPastDay(index, count: count),
                                               shouldDisplayCategoryName: shouldDisplayCategory))
             
             previousTimeSlot = timeSlot
