@@ -5,11 +5,13 @@ protocol ViewModelLocator
 {
     func getCalendarViewModel() -> CalendarViewModel
     
-    func getMainViewModel(forViewController viewController: UIViewController) -> MainViewModel
+    func getMainViewModel() -> MainViewModel
     
     func getPagerViewModel() -> PagerViewModel
     
     func getTimelineViewModel(forDate date: Date) -> TimelineViewModel
+    
+    func getTopBarViewModel(forViewController viewController: UIViewController) -> TopBarViewModel
 }
 
 class DefaultViewModelLocator : ViewModelLocator
@@ -48,14 +50,11 @@ class DefaultViewModelLocator : ViewModelLocator
         self.selectedDateService = selectedDateService
     }
     
-    func getMainViewModel(forViewController viewController: UIViewController) -> MainViewModel
+    func getMainViewModel() -> MainViewModel
     {
-        let feedbackService = (self.feedbackService as! MailFeedbackService).with(viewController: viewController)
-        
         let viewModel = MainViewModel(timeService: self.timeService,
                              metricsService: self.metricsService,
                              appStateService: self.appStateService,
-                             feedbackService: feedbackService,
                              settingsService: self.settingsService,
                              timeSlotService: self.timeSlotService,
                              locationService: self.locationService,
@@ -93,6 +92,17 @@ class DefaultViewModelLocator : ViewModelLocator
                                           settingsService: self.settingsService,
                                           timeSlotService: self.timeSlotService,
                                           selectedDateService: self.selectedDateService)
+        
+        return viewModel
+    }
+    
+    func getTopBarViewModel(forViewController viewController: UIViewController) -> TopBarViewModel
+    {
+        let feedbackService = (self.feedbackService as! MailFeedbackService).with(viewController: viewController)
+        
+        let viewModel = TopBarViewModel(timeService: self.timeService,
+                                        feedbackService: feedbackService,
+                                        selectedDateService: self.selectedDateService)
         
         return viewModel
     }

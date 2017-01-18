@@ -35,7 +35,6 @@ class MainViewModelTests : XCTestCase
         self.viewModel = MainViewModel(timeService: self.timeService,
                                        metricsService: self.metricsService,
                                        appStateService: self.appStateService,
-                                       feedbackService: self.feedbackService,
                                        settingsService: self.settingsService,
                                        timeSlotService: self.timeSlotService,
                                        locationService: self.locationService,
@@ -47,34 +46,6 @@ class MainViewModelTests : XCTestCase
     override func tearDown()
     {
         self.disposable?.dispose()
-    }
-    
-    func testTheTitlePropertyReturnsSuperdayForTheCurrentDate()
-    {
-        let today = Date()
-        self.selectedDateService.currentlySelectedDate = today
-        
-        expect(self.viewModel.title).to(equal("CurrentDayBarTitle".translate()))
-    }
-    
-    func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
-    {
-        let yesterday = Date().yesterday
-        self.selectedDateService.currentlySelectedDate = yesterday
-        expect(self.viewModel.title).to(equal("YesterdayBarTitle".translate()))
-    }
-    
-    func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()
-    {
-        let olderDate = Date().add(days: -2)
-        self.selectedDateService.currentlySelectedDate = olderDate
-        
-        let formatter = DateFormatter();
-        formatter.timeZone = TimeZone.autoupdatingCurrent;
-        formatter.dateFormat = "EEE, dd MMM";
-        let expectedText = formatter.string(from: olderDate)
-        
-        expect(self.viewModel.title).to(equal(expectedText))
     }
     
     func testTheAddNewSlotsMethodAddsANewSlot()
