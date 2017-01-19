@@ -13,13 +13,13 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private let animationDuration = 0.08
     
     private var isFirstUse = false
+    private let disposeBag = DisposeBag()
     private var viewModel : MainViewModel!
     private var viewModelLocator : ViewModelLocator!
-    private let disposeBag : DisposeBag = DisposeBag()
     private var gestureRecognizer : UIGestureRecognizer!
     
     private var pagerViewController : PagerViewController { return self.childViewControllers.firstOfType() }
-    
+    private var topBarViewController : TopBarViewController { return self.childViewControllers.firstOfType() }
     private var calendarViewController : CalendarViewController { return self.childViewControllers.firstOfType() }
     
     //Dependencies
@@ -28,16 +28,11 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     private var permissionView : PermissionView?
     private var launchAnim : LaunchAnimationView!
     
-    @IBOutlet private weak var icon : UIImageView!
-    @IBOutlet private weak var titleLabel : UILabel!
-    @IBOutlet private weak var calendarButton : UIButton!
-    @IBOutlet private weak var contactButton: UIButton!
-    
     func inject(viewModelLocator: ViewModelLocator, isFirstUse: Bool) -> MainViewController
     {
         self.isFirstUse = isFirstUse
         self.viewModelLocator = viewModelLocator
-        self.viewModel = viewModelLocator.getMainViewModel(forViewController: self)
+        self.viewModel = viewModelLocator.getMainViewModel()
         return self
     }
     
@@ -49,6 +44,9 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         //Injecting child ViewController's dependencies
         self.pagerViewController.inject(viewModelLocator: viewModelLocator)
         self.calendarViewController.inject(viewModel: viewModelLocator.getCalendarViewModel())
+        self.topBarViewController.inject(viewModel: viewModelLocator.getTopBarViewModel(forViewController: self),
+                                         pagerViewController: self.pagerViewController,
+                                         calendarViewController: self.calendarViewController)
         
         //Edit View
         self.editView = EditTimeSlotView(editEndedCallback: self.viewModel.updateTimeSlot)
@@ -88,8 +86,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         super.viewWillAppear(animated)
         
         self.startLaunchAnimation()
-        
-        self.calendarButton.setTitle(viewModel.calendarDay, for: .normal)
     }
     
      private func createBindings()
@@ -113,7 +109,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
             .subscribe(onNext: self.viewModel.addNewSlot)
             .addDisposableTo(self.disposeBag)
         
-        //Date updates for title label
         self.viewModel
             .dateObservable
             .subscribe(onNext: self.onDateChanged)
@@ -131,28 +126,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
         self.addButton.snp.makeConstraints { make in
             make.height.equalTo(320)
             make.left.right.bottom.equalTo(self.view)
-        }
-    }
-    
-    // MARK: Actions
-    @IBAction func onCalendarTouchUpInside()
-    {
-        if self.calendarViewController.isVisible
-        {
-            self.calendarViewController.hide()
-        }
-        else
-        {
-            self.calendarViewController.show()
-        }
-    }
-    
-    // MARK: Calendar Actions
-    @IBAction func onContactTouchUpInside()
-    {
-        self.viewModel.composeFeedback
-        {
-            self.pagerViewController.feedbackUIClosing = true
         }
     }
     
@@ -203,8 +176,6 @@ class MainViewController : UIViewController, MFMailComposeViewControllerDelegate
     
     private func onDateChanged(date: Date)
     {
-        self.titleLabel.text = viewModel.title
-        
         let today = self.viewModel.currentDate
         let isToday = today.ignoreTimeComponents() == date.ignoreTimeComponents()
         let alpha = CGFloat(isToday ? 1 : 0)

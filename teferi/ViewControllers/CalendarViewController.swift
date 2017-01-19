@@ -15,15 +15,13 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     
     private lazy var viewsToAnimate : [ UIView ] =
     {
-        let result : [ UIView ] = [
+        [
             self.calendarView,
             self.monthLabel,
             self.dayOfWeekLabels,
             self.leftButton,
             self.rightButton
         ]
-            
-        return result
     }()
     
     private var layer = CAGradientLayer()
@@ -120,14 +118,12 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     private func fadeElements(fadeIn: Bool) -> (TimeInterval) -> ()
     {
         let yDiff = CGFloat(fadeIn ? 0 : -20)
-        let alpha = CGFloat(fadeIn ? 1.0 : 0.0)
         
         return { delay in
             
             UIView.animate(withDuration: 0.225, delay: delay)
             {
                 self.viewsToAnimate.forEach { v in
-                    v.alpha = alpha
                     v.transform = CGAffineTransform(translationX: 0, y: yDiff)
                 }
             }
@@ -201,10 +197,10 @@ class CalendarViewController : UIViewController, UIGestureRecognizerDelegate, JT
     {
         let monthName = DateFormatter().monthSymbols[(date.month - 1) % 12]
         let result = NSMutableAttributedString(string: "\(monthName) ",
-                                               attributes: [ NSForegroundColorAttributeName: UIColor.black ])
+                                               attributes: [ NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont.systemFont(ofSize: 14) ])
         
         result.append(NSAttributedString(string: String(date.year),
-                                         attributes: [ NSForegroundColorAttributeName: Color.offBlackTransparent ]))
+                                         attributes: [ NSForegroundColorAttributeName: Color.offBlackTransparent, NSFontAttributeName: UIFont.systemFont(ofSize: 14) ]))
         
         return result
     }
