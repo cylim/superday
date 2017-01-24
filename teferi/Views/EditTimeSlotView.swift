@@ -75,7 +75,7 @@ class EditTimeSlotView : UIView
             .filter { c in c != .unknown && c != timeSlot.category }
             .map { category in return self.mapCategoryIntoView(category, timeSlot) }
         
-        let firstImageView = UIImageView(image: UIImage(named: Category.unknown.icon))
+        let firstImageView = UIImageView(image: UIImage(asset: Category.unknown.icon))
         firstImageView.backgroundColor = timeSlot.category.color
         firstImageView.layer.cornerRadius = 16
         firstImageView.contentMode = .center
@@ -124,7 +124,7 @@ class EditTimeSlotView : UIView
     
     private func mapCategoryIntoView(_ category: Category, _ timeSlot: TimeSlot) -> UIImageView
     {
-        let image = UIImage(named: category.icon)
+        let image = UIImage(asset: category.icon)
         let imageView = UIImageView(image: image)
         let gestureRecognizer = ClosureGestureRecognizer(withClosure:
         {

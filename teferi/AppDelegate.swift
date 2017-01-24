@@ -149,15 +149,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         let isFirstUse = self.settingsService.installDate == nil
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyboard.instantiateViewController(withIdentifier: "Main") as! MainViewController
+        let mainViewController = StoryboardScene.Main.instantiateMain()
         var initialViewController : UIViewController =
             mainViewController.inject(viewModelLocator: viewModelLocator, isFirstUse: isFirstUse)
         
         if isFirstUse
         {
-            let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-            let onboardController = storyboard.instantiateViewController(withIdentifier: "OnboardingPager") as! OnboardingPageViewController
+            let onboardController = StoryboardScene.Onboarding.instantiateOnboardingPager()
             
             initialViewController =
                 onboardController.inject(self.timeService,

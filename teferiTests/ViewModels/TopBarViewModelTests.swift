@@ -26,14 +26,14 @@ class TopBarViewModelTests : XCTestCase
         let today = Date()
         self.selectedDateService.currentlySelectedDate = today
         
-        expect(self.viewModel.title).to(equal("CurrentDayBarTitle".translate()))
+        expect(self.viewModel.title).to(equal(L10n.currentDayBarTitle))
     }
     
     func testTheTitlePropertyReturnsSuperyesterdayForYesterday()
     {
         let yesterday = Date().yesterday
         self.selectedDateService.currentlySelectedDate = yesterday
-        expect(self.viewModel.title).to(equal("YesterdayBarTitle".translate()))
+        expect(self.viewModel.title).to(equal(L10n.yesterdayBarTitle))
     }
     
     func testTheTitlePropertyReturnsTheFormattedDayAndMonthForOtherDates()

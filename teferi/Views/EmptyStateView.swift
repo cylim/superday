@@ -19,7 +19,7 @@ class EmptyStateView : UITableViewCell
             let category = self.categories[index]
             let rotationAngle = self.rotationAngles[index]
             
-            let image = UIImage(named: category.icon)!.withRenderingMode(.alwaysTemplate)
+            let image = UIImage(asset: category.icon)!.withRenderingMode(.alwaysTemplate)
             
             imageView.image = image
             imageView.tintColor = category.color

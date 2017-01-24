@@ -113,19 +113,19 @@ class PostiOSTenNotificationService : NotificationService
     {
         let food = UNNotificationAction(
             identifier: Category.food.rawValue,
-            title: Category.food.rawValue.capitalized.translate())
+            title: Category.food.rawValue.capitalized)
         
         let friends = UNNotificationAction(
             identifier: Category.friends.rawValue,
-            title: Category.friends.rawValue.capitalized.translate())
+            title: Category.friends.rawValue.capitalized)
         
         let work = UNNotificationAction(
             identifier: Category.work.rawValue,
-            title: Category.work.rawValue.capitalized.translate())
+            title: Category.work.rawValue.capitalized)
         
         let leisure = UNNotificationAction(
             identifier: Category.leisure.rawValue,
-            title: Category.leisure.rawValue.capitalized.translate())
+            title: Category.leisure.rawValue.capitalized)
         
         let category = UNNotificationCategory(
             identifier: Constants.notificationTimeSlotCategorySelectionIdentifier,

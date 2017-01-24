@@ -64,15 +64,15 @@ class TimelineCell : UITableViewCell
         self.layoutSlotTime(withTimeSlot: timeSlot, lastInPastDay: timelineItem.lastInPastDay)
         self.layoutElapsedTimeLabel(withColor: categoryColor, interval: totalInterval, shouldShow: timelineItem.durations.count > 0)
         self.layoutDescriptionLabel(withTimelineItem: timelineItem)
-        self.layoutCategoryIcon(withImageName: timeSlot.category.icon, color: categoryColor)
+        self.layoutCategoryIcon(withAsset: timeSlot.category.icon, color: categoryColor)
     }
     
     /// Updates the icon that indicates the slot's category
-    private func layoutCategoryIcon(withImageName name: String, color: UIColor)
+    private func layoutCategoryIcon(withAsset asset: Asset, color: UIColor)
     {
         self.categoryIcon.backgroundColor = color
         self.categoryIcon.layer.cornerRadius = 16
-        self.categoryIcon.image = UIImage(named: name)
+        self.categoryIcon.image = UIImage(asset: asset)
     }
     
     /// Updates the label that displays the description and starting time of the slot

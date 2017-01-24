@@ -4,22 +4,22 @@ import RxSwift
 class PermissionView : UIView
 {
     //MARK: Fields
-    private let titleKey = "LocationDisabledTitle"
-    private let descriptionKey = "LocationDisabledDescription"
-    private let titleFirstUseKey = "LocationDisabledTitleFirstUse"
-    private let descriptionFirstUseKey = "LocationDisabledDescriptionFirstUse"
+    private let title = L10n.locationDisabledTitle
+    private let titleFirstUse = L10n.locationDisabledTitleFirstUse
+    private let disabledDescription = L10n.locationDisabledDescription
+    private let disabledDescriptionFirstUse = L10n.locationDisabledDescriptionFirstUse
     
     private var isFirstTimeUser = false
     private var remindMeLaterCallback : (() -> ())!
     
     private var titleText : String
     {
-        return (self.isFirstTimeUser ? titleFirstUseKey : titleKey).translate()
+        return self.isFirstTimeUser ? self.titleFirstUse : self.title
     }
     
     private var descriptionText : String
     {
-        return (self.isFirstTimeUser ? descriptionFirstUseKey : descriptionKey).translate()
+        return self.isFirstTimeUser ? self.disabledDescriptionFirstUse : self.disabledDescription
     }
     
     @IBOutlet private weak var blur : UIView!

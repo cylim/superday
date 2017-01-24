@@ -41,23 +41,23 @@ enum Category : String
         }
     }
     
-    /// Get the AssetInfo for the category.
-    var icon : String
+    /// Get the Asset for the category.
+    var icon : Asset
     {
         switch(self)
         {
         case .friends:
-            return "icFriends"
+            return .icFriends
         case .work:
-            return "icWork"
+            return .icWork
         case .leisure:
-            return "icLeisure"
+            return .icLeisure
         case .commute:
-            return "icCommute"
+            return .icCommute
         case .food:
-            return "icFood"
+            return .icFood
         case .unknown:
-            return "icCancel"
+            return .icCancel
         }
     }
 }

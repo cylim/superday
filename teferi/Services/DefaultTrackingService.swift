@@ -8,8 +8,8 @@ class DefaultTrackingService : TrackingService
 {
     // MARK: Fields
     private let significantDistanceThreshold = 100.0
-    private let notificationBody = "NotificationBody".translate()
-    private let notificationTitle = "NotificationTitle".translate()
+    private let notificationBody = L10n.notificationBody
+    private let notificationTitle = L10n.notificationTitle
     private let commuteDetectionLimit = TimeInterval(25 * 60)
     
     private let timeService : TimeService

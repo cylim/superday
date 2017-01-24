@@ -4,8 +4,8 @@ import Foundation
 class TopBarViewModel
 {
     // MARK: Fields
-    private let currentDayBarTitle = "CurrentDayBarTitle"
-    private let yesterdayBarTitle = "YesterdayBarTitle"
+    private let currentDayBarTitle = L10n.currentDayBarTitle
+    private let yesterdayBarTitle = L10n.yesterdayBarTitle
     
     private let timeService: TimeService
     private let feedbackService: FeedbackService
@@ -48,11 +48,11 @@ class TopBarViewModel
         
         if currentlySelectedDate == today
         {
-            return self.currentDayBarTitle.translate()
+            return self.currentDayBarTitle
         }
         else if currentlySelectedDate == yesterday
         {
-            return self.yesterdayBarTitle.translate()
+            return self.yesterdayBarTitle
         }
         
         return dayOfMonthFormatter.string(from: currentlySelectedDate)
