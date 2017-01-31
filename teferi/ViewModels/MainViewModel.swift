@@ -108,11 +108,13 @@ class MainViewModel
      */
     func updateTimeSlot(_ timeSlot: TimeSlot, withCategory category: Category)
     {
+        let categoryWasOriginallySetByUser = timeSlot.categoryWasSetByUser
+
         self.timeSlotService.update(timeSlot: timeSlot, withCategory: category, setByUser: true)
         self.metricsService.log(event: .timeSlotEditing)
         
         let smartGuessId = timeSlot.smartGuessId
-        if !timeSlot.categoryWasSetByUser && smartGuessId != nil
+        if !categoryWasOriginallySetByUser && smartGuessId != nil
         {
             //Strike the smart guess if it was wrong
             self.smartGuessService.strike(withId: smartGuessId!)
