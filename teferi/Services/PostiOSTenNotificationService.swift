@@ -111,27 +111,21 @@ class PostiOSTenNotificationService : NotificationService
     // MARK: - User Notification Action
     func setUserNotificationActions()
     {
-        let food = UNNotificationAction(
-            identifier: Category.food.rawValue,
-            title: Category.food.description)
+        let categoriesForNotification : [Category] = [.food, .friends, .work, .leisure]
         
-        let friends = UNNotificationAction(
-            identifier: Category.friends.rawValue,
-            title: Category.friends.description)
-        
-        let work = UNNotificationAction(
-            identifier: Category.work.rawValue,
-            title: Category.work.description)
-        
-        let leisure = UNNotificationAction(
-            identifier: Category.leisure.rawValue,
-            title: Category.leisure.description)
+        let actions = categoriesForNotification.map(toNotificationAction)
         
         let category = UNNotificationCategory(
             identifier: Constants.notificationTimeSlotCategorySelectionIdentifier,
-            actions: [food, friends, work, leisure],
+            actions: actions,
             intentIdentifiers: [])
         
         notificationCenter.setNotificationCategories([category])
+    }
+    
+    private func toNotificationAction(from category: Category) -> UNNotificationAction
+    {
+        return UNNotificationAction(identifier: category.rawValue,
+                                    title: category.description)
     }
 }
