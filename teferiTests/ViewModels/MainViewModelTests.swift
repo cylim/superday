@@ -1,6 +1,7 @@
 import RxSwift
 import XCTest
 import Nimble
+import CoreLocation
 @testable import teferi
 
 class MainViewModelTests : XCTestCase
@@ -41,6 +42,7 @@ class MainViewModelTests : XCTestCase
                                        editStateService: self.editStateService,
                                        smartGuessService: self.smartGuessService,
                                        selectedDateService: self.selectedDateService)
+        
     }
     
     override func tearDown()
@@ -145,6 +147,58 @@ class MainViewModelTests : XCTestCase
             .subscribe(onNext:  { shouldShow in wouldShow = shouldShow })
         
         expect(wouldShow).to(beFalse())
+    }
+    
+    func testSmartGuessIsAddedIfLocationServiceReturnsKnownLastLocationOnAddNewSlot()
+    {
+        self.locationService.setMockLocation(CLLocation(latitude:43.4211, longitude:4.7562))
+        let previousCount = self.smartGuessService.smartGuesses.count
+        
+        self.viewModel.addNewSlot(withCategory: .food)
+        
+        expect(self.smartGuessService.smartGuesses.count).to(equal(previousCount + 1))
+    }
+    
+    func testSmartGuessIsStrikedIfCategoryWasWrongOnUpdateTimeSlotMethod()
+    {
+        let location = CLLocation(latitude:43.4211, longitude:4.7562)
+        let timeSlot = TimeSlot(withStartTime: Date(),
+                                smartGuess: SmartGuess(withId: 0, category: .food, location: location, lastUsed: Date()),
+                                location: location)
+        
+        self.timeSlotService.add(timeSlot: timeSlot)
+        self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
+        
+        expect(self.smartGuessService.smartGuesses.last?.errorCount).to(equal(1))
+    }
+    
+    func testSmartGuessIsAddedIfUpdatingATimeSlotWithNoSmartGuesses()
+    {
+        let previousCount = self.smartGuessService.smartGuesses.count
+        let timeSlot = TimeSlot(
+            withStartTime: Date(timeIntervalSinceNow: -100),
+            endTime: Date(),
+            category: .food,
+            location: CLLocation(latitude:43.4211, longitude:4.7562),
+            categoryWasSetByUser: true)
+        
+        self.timeSlotService.add(timeSlot: timeSlot)
+        self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
+        
+        expect(self.smartGuessService.smartGuesses.count).to(equal(previousCount + 1))
+    }
+    
+    func testTheUpdateMethodMarksTimeSlotAsSetByUser()
+    {
+        let location = CLLocation(latitude:43.4211, longitude:4.7562)
+        let timeSlot = TimeSlot(withStartTime: Date(),
+                                smartGuess: SmartGuess(withId: 0, category: .food, location: location, lastUsed: Date()),
+                                location: location)
+        
+        self.timeSlotService.add(timeSlot: timeSlot)
+        self.viewModel.updateTimeSlot(timeSlot, withCategory: .commute)
+        
+        expect(timeSlot.categoryWasSetByUser).to(beTrue())
     }
     
     private func createTimeSlot(withCategory category: teferi.Category) -> TimeSlot
