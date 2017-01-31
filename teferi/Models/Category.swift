@@ -21,62 +21,46 @@ enum Category : String
     
     //MARK: Properties
     
-    /// Get the color associated with the category.
-    var color : UIColor
+    private typealias CategoryData = (description: String, color: UIColor, icon: Asset)
+    
+    private var attributes : CategoryData
     {
-        switch(self)
+        //This enum ensures we have all categories covered
+        switch self
         {
         case .friends:
-            return Color.green
+            return (description: L10n.friends,      color: Color.green,         icon: .icFriends)
         case .work:
-            return Color.yellow
+            return (description: L10n.work,         color: Color.yellow,        icon: .icWork)
         case .leisure:
-            return Color.purple
+            return (description: L10n.leisure,      color: Color.purple,        icon: .icLeisure)
         case .commute:
-            return Color.lightBlue
+            return (description: L10n.commute,      color: Color.lightBlue,     icon: .icCommute)
         case .food:
-            return Color.red
+            return (description: L10n.food,         color: Color.red,           icon: .icFood)
         case .unknown:
-            return Color.gray
+            return (description: L10n.unknown,      color: Color.gray,          icon: .icCancel)
         }
+    }
+    
+    /// Get all categories
+    static let all : [Category] = [.friends, .work, .leisure, .commute, .food, .unknown]
+    
+    /// Get the Color associated with the category.
+    var color : UIColor
+    {
+        return self.attributes.color
     }
     
     /// Get the Asset for the category.
     var icon : Asset
     {
-        switch(self)
-        {
-        case .friends:
-            return .icFriends
-        case .work:
-            return .icWork
-        case .leisure:
-            return .icLeisure
-        case .commute:
-            return .icCommute
-        case .food:
-            return .icFood
-        case .unknown:
-            return .icCancel
-        }
+        return self.attributes.icon
     }
     
-    var name:String
+    /// Get the Localised name for the category.
+    var description : String
     {
-        switch(self)
-        {
-        case .friends:
-            return L10n.friends
-        case .work:
-            return L10n.work
-        case .leisure:
-            return L10n.leisure
-        case .commute:
-            return L10n.commute
-        case .food:
-            return L10n.food
-        case .unknown:
-            return L10n.unknown
-        }
+        return self.attributes.description
     }
 }

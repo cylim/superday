@@ -73,7 +73,7 @@ class TimelineCellTests : XCTestCase
     
     func testTheDescriptionChangesAccordingToTheBoundTimeSlot()
     {
-        expect(self.slotDescription.text).to(equal(self.timelineItem.timeSlot.category.name))
+        expect(self.slotDescription.text).to(equal(self.timelineItem.timeSlot.category.description))
     }
     
     func testTheTimeChangesAccordingToTheBoundTimeSlot()

@@ -80,7 +80,7 @@ class TimelineCell : UITableViewCell
     {
         let timeSlot = timelineItem.timeSlot
         let shouldShowCategory = !timelineItem.shouldDisplayCategoryName || timeSlot.category == .unknown
-        let categoryText = shouldShowCategory ? "" : timeSlot.category.name
+        let categoryText = shouldShowCategory ? "" : timeSlot.category.description
         self.slotDescription.text = categoryText
         self.timeSlotDistanceConstraint.constant = shouldShowCategory ? 0 : 6
     }

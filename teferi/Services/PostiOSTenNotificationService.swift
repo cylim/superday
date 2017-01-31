@@ -55,7 +55,7 @@ class PostiOSTenNotificationService : NotificationService
             timeSlotDictionary["color"] = timeSlot.category.color.hexString
             
             if timeSlot.category != .unknown {
-                timeSlotDictionary["category"] = timeSlot.category.name
+                timeSlotDictionary["category"] = timeSlot.category.description
             }
             
             timeSlotDictionary["date"] = formatter.string(from: timeSlot.startTime)
@@ -113,19 +113,19 @@ class PostiOSTenNotificationService : NotificationService
     {
         let food = UNNotificationAction(
             identifier: Category.food.rawValue,
-            title: Category.food.name)
+            title: Category.food.description)
         
         let friends = UNNotificationAction(
             identifier: Category.friends.rawValue,
-            title: Category.friends.name)
+            title: Category.friends.description)
         
         let work = UNNotificationAction(
             identifier: Category.work.rawValue,
-            title: Category.work.name)
+            title: Category.work.description)
         
         let leisure = UNNotificationAction(
             identifier: Category.leisure.rawValue,
-            title: Category.leisure.name)
+            title: Category.leisure.description)
         
         let category = UNNotificationCategory(
             identifier: Constants.notificationTimeSlotCategorySelectionIdentifier,
