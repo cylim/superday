@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -258,7 +258,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="30" backgroundImage="icCalendar">
-                                    <color key="titleColor" red="0.36862745099999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="onCalendarTouchUpInside" destination="BYZ-38-t0r" eventType="touchUpInside" id="789-Jk-6Rh"/>
@@ -308,8 +308,8 @@
     <resources>
         <image name="icArrowLeft" width="6" height="10"/>
         <image name="icArrowRight" width="6" height="10"/>
-        <image name="icCalendar" width="24" height="24"/>
-        <image name="icFeedback" width="24" height="24"/>
+        <image name="icCalendar" width="18" height="20"/>
+        <image name="icFeedback" width="16" height="17"/>
         <image name="icSuperday" width="24" height="24"/>
     </resources>
 </document>
