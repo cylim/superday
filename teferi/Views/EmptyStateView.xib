@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,37 +16,43 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing here." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nYS-z4-Yhm">
+                    <rect key="frame" x="133" y="283" width="110" height="22"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seems you had a great day!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ep7-j5-QXD">
+                    <rect key="frame" x="76" y="317" width="224" height="22"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icLeisure" translatesAutoresizingMaskIntoConstraints="NO" id="udc-AV-bTg">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icLeisureIcon" translatesAutoresizingMaskIntoConstraints="NO" id="udc-AV-bTg">
+                    <rect key="frame" x="253" y="226" width="32" height="32"/>
                     <color key="tintColor" red="0.72941176470000002" green="0.36862745099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="3hl-6p-5VG"/>
                         <constraint firstAttribute="width" constant="32" id="5xv-7z-Vx6"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icWork" translatesAutoresizingMaskIntoConstraints="NO" id="c0x-Oi-qgk">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icWorkIcon" translatesAutoresizingMaskIntoConstraints="NO" id="c0x-Oi-qgk">
+                    <rect key="frame" x="55" y="257" width="14" height="20"/>
                     <color key="tintColor" red="0.72941176470000002" green="0.36862745099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="1Uc-FE-1BM"/>
                         <constraint firstAttribute="width" constant="14" id="hJ7-Dl-l0F"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFriends" translatesAutoresizingMaskIntoConstraints="NO" id="s6A-Jo-jhm">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFriendsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="s6A-Jo-jhm">
+                    <rect key="frame" x="282" y="371" width="24" height="21"/>
                     <color key="tintColor" red="0.72941176470000002" green="0.36862745099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="Ugm-9m-FTF"/>
                         <constraint firstAttribute="height" constant="21" id="q5X-Va-Vr1"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icCommute" translatesAutoresizingMaskIntoConstraints="NO" id="pSg-rd-khs">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icCommuteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pSg-rd-khs">
+                    <rect key="frame" x="28" y="369" width="20" height="20"/>
                     <color key="tintColor" red="0.72941176470000002" green="0.36862745099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="2CF-FX-isj"/>
@@ -76,9 +85,9 @@
         </view>
     </objects>
     <resources>
-        <image name="icCommute" width="22" height="16"/>
-        <image name="icFriends" width="20" height="18"/>
-        <image name="icLeisure" width="20" height="20"/>
-        <image name="icWork" width="12" height="20"/>
+        <image name="icCommuteIcon" width="18" height="16"/>
+        <image name="icFriendsIcon" width="22" height="17"/>
+        <image name="icLeisureIcon" width="22" height="14"/>
+        <image name="icWorkIcon" width="24" height="16"/>
     </resources>
 </document>

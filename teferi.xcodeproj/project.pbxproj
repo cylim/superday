@@ -45,7 +45,6 @@
 		24564F561D83254E00D9A8AE /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F531D83254E00D9A8AE /* TimelineCell.swift */; };
 		24564F571D83254E00D9A8AE /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24564F541D83254E00D9A8AE /* TimelineCell.xib */; };
 		24564F5A1D83259100D9A8AE /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F591D83259100D9A8AE /* DefaultLocationService.swift */; };
-		24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5B1D8325CC00D9A8AE /* Category.swift */; };
 		24564F601D8325CC00D9A8AE /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */; };
 		24564F641D83265900D9A8AE /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F611D83265900D9A8AE /* UIColorExtensions.swift */; };
 		24564F651D83265900D9A8AE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24564F621D83265900D9A8AE /* DateExtensions.swift */; };
@@ -145,6 +144,8 @@
 		8584336EB8DEB2CEBEFB3918 /* Pods_teferi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */; };
 		86499C439951BA9133439EF2 /* Pods_teferiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43617E462FAF7C2B30BED3B4 /* Pods_teferiTests.framework */; };
 		ACA337EC1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */; };
+		BEA024321E4106980061FE53 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA024311E4106980061FE53 /* Colors.swift */; };
+		BEA024341E41137D0061FE53 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA024331E41137D0061FE53 /* Category.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,7 +232,6 @@
 		24564F531D83254E00D9A8AE /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineCell.swift; path = Views/TimelineCell.swift; sourceTree = "<group>"; };
 		24564F541D83254E00D9A8AE /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimelineCell.xib; path = Views/TimelineCell.xib; sourceTree = "<group>"; };
 		24564F591D83259100D9A8AE /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultLocationService.swift; path = Services/DefaultLocationService.swift; sourceTree = "<group>"; };
-		24564F5B1D8325CC00D9A8AE /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
 		24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSlot.swift; path = Models/TimeSlot.swift; sourceTree = "<group>"; };
 		24564F611D83265900D9A8AE /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = Extensions/UIColorExtensions.swift; sourceTree = "<group>"; };
 		24564F621D83265900D9A8AE /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = Extensions/DateExtensions.swift; sourceTree = "<group>"; };
@@ -336,6 +336,8 @@
 		924EEB50371CD17ACC6BCFF9 /* Pods-teferiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teferiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-teferiTests/Pods-teferiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ACA337EB1E2CE82D00D3753F /* PostiOSTenNotificationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostiOSTenNotificationServiceTests.swift; path = Services/PostiOSTenNotificationServiceTests.swift; sourceTree = "<group>"; };
 		B0E298043A2BB331608A8FD2 /* Pods_teferi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teferi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEA024311E4106980061FE53 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = Generated/Colors.swift; sourceTree = "<group>"; };
+		BEA024331E41137D0061FE53 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Generated/Category.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -538,7 +540,6 @@
 				512A9B421DD49AD200B73F01 /* TimeSlotChangeType.swift */,
 				24526A7A1D92D9BB00DA3FA0 /* CustomEvent.swift */,
 				24526A7B1D92D9BB00DA3FA0 /* Location.swift */,
-				24564F5B1D8325CC00D9A8AE /* Category.swift */,
 				24564F5D1D8325CC00D9A8AE /* TimeSlot.swift */,
 				24C72AA51D906BDA00DABAC3 /* LogLevel.swift */,
 				24D18E251DEF6D640046B202 /* SmartGuess.swift */,
@@ -815,6 +816,8 @@
 			isa = PBXGroup;
 			children = (
 				7E3C06951E30B7CA00859747 /* Assets.swift */,
+				BEA024331E41137D0061FE53 /* Category.swift */,
+				BEA024311E4106980061FE53 /* Colors.swift */,
 				7E3C06961E30B7CA00859747 /* Strings.swift */,
 				7E3C06971E30B7CA00859747 /* Storyboards.swift */,
 			);
@@ -1055,8 +1058,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${SRCROOT}/teferi/Generated\"\ntouch \"${SRCROOT}/teferi/Generated/Strings.swift\"\ntouch \"${SRCROOT}/teferi/Generated/Storyboards.swift\"\ntouch \"${SRCROOT}/teferi/Generated/Assets.swift\"\n\n$PODS_ROOT/SwiftGen/bin/swiftgen strings -t dot-syntax-swift3 -o \"${SRCROOT}/teferi/Generated/Strings.swift\" \"${SRCROOT}/teferi/en.lproj/Localizable.strings\"\n$PODS_ROOT/SwiftGen/bin/swiftgen storyboards -t swift3 -o \"${SRCROOT}/teferi/Generated/Storyboards.swift\" \"${SRCROOT}/teferi\"\n$PODS_ROOT/SwiftGen/bin/swiftgen images -t swift3 -o \"${SRCROOT}/teferi/Generated/Assets.swift\" \"${SRCROOT}/teferi/Assets.xcassets\"";
+			shellPath = "/bin/sh -l";
+			shellScript = "mkdir -p \"${SRCROOT}/teferi/Generated\"\ntouch \"${SRCROOT}/teferi/Generated/Strings.swift\"\ntouch \"${SRCROOT}/teferi/Generated/Storyboards.swift\"\ntouch \"${SRCROOT}/teferi/Generated/Colors.swift\"\ntouch \"${SRCROOT}/teferi/Generated/Assets.swift\"\ntouch \"${SRCROOT}/teferi/Generated/Category.swift\"\n\n$PODS_ROOT/SwiftGen/bin/swiftgen colors -t swift3 -o \"${SRCROOT}/teferi/Generated/Colors.swift\" \"${SRCROOT}/teferi/categories.json\"\n$PODS_ROOT/SwiftGen/bin/swiftgen strings -t dot-syntax-swift3 -o \"${SRCROOT}/teferi/Generated/Strings.swift\" \"${SRCROOT}/teferi/en.lproj/Localizable.strings\"\n$PODS_ROOT/SwiftGen/bin/swiftgen storyboards -t swift3 -o \"${SRCROOT}/teferi/Generated/Storyboards.swift\" \"${SRCROOT}/teferi\"\n$PODS_ROOT/SwiftGen/bin/swiftgen images -t swift3 -o \"${SRCROOT}/teferi/Generated/Assets.swift\" \"${SRCROOT}/teferi/Assets.xcassets\"\n/usr/bin/ruby \"${SRCROOT}/teferi/CategoryGenerator.rb\"";
 		};
 		8866EB9FABB8B93E2CA7511D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1153,7 +1156,6 @@
 				24D213AF1DB8CB8300E429CA /* DefaultAppStateService.swift in Sources */,
 				51DDF7181DB4DBC200F9B672 /* OnboardingPage.swift in Sources */,
 				2421F8C51D9BB4C600AF8857 /* SwiftyBeaverLoggingService.swift in Sources */,
-				24564F5E1D8325CC00D9A8AE /* Category.swift in Sources */,
 				24EB96831DE709790040C211 /* DelayedSequence.swift in Sources */,
 				24C72AAA1D90731C00DABAC3 /* LoggingService.swift in Sources */,
 				512A9B431DD49AD200B73F01 /* TimeSlotChangeType.swift in Sources */,
@@ -1198,6 +1200,7 @@
 				242FE7D61DE7689A00EAEEE3 /* AutoResizingLayerView.swift in Sources */,
 				24EB96771DE7080F0040C211 /* MotionService.swift in Sources */,
 				2482CAFD1DB12F9F00E892C1 /* OnboardingPage3.swift in Sources */,
+				BEA024321E4106980061FE53 /* Colors.swift in Sources */,
 				24EB967D1DE708570040C211 /* AppState.swift in Sources */,
 				24D18E2E1DF06B450046B202 /* TimeSlotModelAdapter.swift in Sources */,
 				24D213AB1DB8CA4600E429CA /* AppStateService.swift in Sources */,
@@ -1207,6 +1210,7 @@
 				240AC7201D748C8800F21F4F /* teferi.xcdatamodeld in Sources */,
 				24DE23FD1E1BB38C0089B49E /* SelectedDateService.swift in Sources */,
 				24EB967F1DE708570040C211 /* Predicate.swift in Sources */,
+				BEA024341E41137D0061FE53 /* Category.swift in Sources */,
 				7E3C06991E30B7CA00859747 /* Strings.swift in Sources */,
 				24EB96851DE709830040C211 /* PredicateExtensions.swift in Sources */,
 				24D18E241DEF6B300046B202 /* DefaultSmartGuessService.swift in Sources */,
