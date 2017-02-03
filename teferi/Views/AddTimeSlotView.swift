@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import QuartzCore
 import CoreGraphics
+import SnapKit
 
 class AddTimeSlotView : UIView
 {
@@ -11,6 +12,14 @@ class AddTimeSlotView : UIView
     
     @IBOutlet private weak var blur : UIView!
     @IBOutlet private weak var addButton : UIButton!
+    {
+        didSet
+        {
+            addButton.snp.makeConstraints { (make) in
+                make.right.bottom.greaterThanOrEqualToSuperview().offset(-16)
+            }
+        }
+    }
     @IBOutlet private weak var foodButton : UIButton!
     @IBOutlet private weak var workButton : UIButton!
     @IBOutlet private weak var leisureButton : UIButton!
@@ -44,6 +53,24 @@ class AddTimeSlotView : UIView
         return Observable.from(taps).merge()
     }()
     
+    private lazy var constraintsArray =
+    {
+        return [
+            [0, -110],
+            [-54, -94],
+            [-94, -54],
+            [-110, 0],
+            [-94, 54],
+            [-54, 94],
+            [0, 110],
+            [54, 94],
+            [94, 54],
+            [110, 0],
+            [94, -54],
+            [54, -94]
+        ]
+    }()
+    
     //MARK: Lifecycle methods
     override func awakeFromNib()
     {
@@ -56,9 +83,8 @@ class AddTimeSlotView : UIView
         self.buttons.values.forEach
         { (button) in
             button.layer.cornerRadius = cornerRadius
-            button.alpha = 0
-            button.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
             button.isHidden = true
+            button.snp.remakeConstraints(self.constraintsToAddButton)
         }
         self.addButton.layer.cornerRadius = cornerRadius
         
@@ -112,7 +138,82 @@ class AddTimeSlotView : UIView
     private func onAddButtonTapped()
     {
         self.isAdding = !self.isAdding
-        self.animateButtons(isAdding: self.isAdding)
+//        self.animateButtons(isAdding: self.isAdding)
+        self.animating(for: self.isAdding)
+    }
+    
+    private func animating(for isOpened: Bool, category: Category = .unknown)
+    {
+        // Add Button animation
+        let degrees:Double = (isOpened ? 45 : 0)
+        UIView.animate(withDuration: 0.192, delay: 0, options: .curveEaseOut, animations:
+        {
+            // TODO: Suggestion for turn the addButton to gray color, or reduce alpha
+            self.addButton.transform = CGAffineTransform(rotationAngle: CGFloat(degrees * (Double.pi / 180.0)))
+        })
+        
+        // Blur View animation
+        let overlayDuration = (isOpened ? 0.09 : 0.225)
+        let alpha = CGFloat(isOpened ? 1.0 : 0.0)
+        UIView.animate(withDuration: overlayDuration)
+        {
+            self.blur.alpha = alpha
+        }
+        
+        // Categories Wheel Open/Close Animation
+        let delay = (isOpened ? 0.04 : 0.02)
+        self.categoriesAnimation(with: delay)
+    }
+    
+    func categoriesAnimation(with delay: Double)
+    {
+        var timerDelay:Double = 0
+        
+        let scale = CGFloat(isAdding ? 1 : 0.3)
+        let transform = CGAffineTransform(scaleX: scale, y: scale)
+        
+        var count = 0
+        self.buttons.values.forEach
+            { (button) in
+                button.isHidden = false
+                
+                self.startCategoriesAnimation(for: button, transform: transform, delay: timerDelay, constraints: constraintsArray[count])
+                
+                count += 1
+                timerDelay += delay
+        }
+    }
+    
+    func startCategoriesAnimation(for button:UIButton, transform: CGAffineTransform, delay: Double, constraints:[Int] )
+    {
+        button.snp.remakeConstraints
+            { (make) in
+                self.isAdding
+                    ? self.constraintsFromAddButton(make, constraints: constraints)
+                    : self.constraintsToAddButton(make)
+        }
+        
+        UIView.animate(withDuration: 0.225, delay: delay, options: .curveEaseInOut , animations:
+        {
+                self.layoutIfNeeded()
+        },
+        completion:
+        { _ in
+            if !self.isAdding
+            {
+                button.isHidden = true
+            }
+        })
+    }
+    
+    func constraintsFromAddButton(_ make:ConstraintMaker, constraints: [Int]){
+        make.centerX.equalTo(self.addButton.snp.centerX).offset(constraints[0]).priority(1000)
+        make.centerY.equalTo(self.addButton.snp.centerY).offset(constraints[1]).priority(1000)
+    }
+    
+    func constraintsToAddButton(_ make: ConstraintMaker)
+    {
+        make.center.equalTo(self.addButton.snp.center).priority(1000)
     }
     
     private func animateButtons(isAdding: Bool, category: Category = .unknown)
@@ -149,7 +250,7 @@ class AddTimeSlotView : UIView
                 let transform = CGAffineTransform(scaleX: scale, y: scale)
                 categoryButtons.forEach { (button) in
                     button.transform = transform
-                    button.alpha = alpha
+                    //button.alpha = alpha
                 }
                 
                 //Add button

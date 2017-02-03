@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -45,15 +45,6 @@
                     </constraints>
                     <state key="normal" image="icCommuteIcon"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X2e-Ng-Zy0">
-                    <rect key="frame" x="173" y="238" width="50" height="50"/>
-                    <color key="backgroundColor" red="0.23921568630000001" green="0.50980392159999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="6Bh-5x-hbf"/>
-                        <constraint firstAttribute="height" constant="50" id="7y5-gY-7dQ"/>
-                    </constraints>
-                    <state key="normal" image="icAdd"/>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9m-zk-L1e">
                     <rect key="frame" x="173" y="144" width="50" height="50"/>
                     <color key="backgroundColor" red="0.15686274510000001" green="0.78823529410000004" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,25 +63,34 @@
                     </constraints>
                     <state key="normal" image="icWorkIcon"/>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X2e-Ng-Zy0">
+                    <rect key="frame" x="173" y="238" width="50" height="50"/>
+                    <color key="backgroundColor" red="0.23921568630000001" green="0.50980392159999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="6Bh-5x-hbf"/>
+                        <constraint firstAttribute="height" constant="50" id="7y5-gY-7dQ"/>
+                    </constraints>
+                    <state key="normal" image="icAdd"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Y9m-zk-L1e" firstAttribute="centerX" secondItem="X2e-Ng-Zy0" secondAttribute="centerX" id="0GJ-0f-Vvm"/>
-                <constraint firstItem="rws-X4-zOr" firstAttribute="leading" secondItem="X2e-Ng-Zy0" secondAttribute="trailing" constant="20" id="3P5-yG-j9Z"/>
+                <constraint firstItem="Y9m-zk-L1e" firstAttribute="centerX" secondItem="X2e-Ng-Zy0" secondAttribute="centerX" priority="250" id="0GJ-0f-Vvm"/>
+                <constraint firstItem="rws-X4-zOr" firstAttribute="leading" secondItem="X2e-Ng-Zy0" secondAttribute="trailing" priority="250" constant="20" id="3P5-yG-j9Z"/>
                 <constraint firstAttribute="bottom" secondItem="b7d-Tp-kcU" secondAttribute="bottom" id="7OW-V0-JMD"/>
-                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="top" secondItem="v6E-zf-iCr" secondAttribute="bottom" constant="20" id="7xs-Kj-TCx"/>
+                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="top" secondItem="v6E-zf-iCr" secondAttribute="bottom" priority="250" constant="20" id="7xs-Kj-TCx"/>
                 <constraint firstItem="b7d-Tp-kcU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CPz-e3-0CV"/>
-                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="top" secondItem="rws-X4-zOr" secondAttribute="bottom" constant="20" id="Kh6-qJ-lHC"/>
-                <constraint firstItem="ouK-Du-1d5" firstAttribute="centerY" secondItem="X2e-Ng-Zy0" secondAttribute="centerY" id="MjN-0h-iWP"/>
+                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="top" secondItem="rws-X4-zOr" secondAttribute="bottom" priority="250" constant="20" id="Kh6-qJ-lHC"/>
+                <constraint firstItem="ouK-Du-1d5" firstAttribute="centerY" secondItem="X2e-Ng-Zy0" secondAttribute="centerY" priority="250" id="MjN-0h-iWP"/>
                 <constraint firstAttribute="trailing" secondItem="b7d-Tp-kcU" secondAttribute="trailing" id="Pqz-FR-w2B"/>
-                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="top" secondItem="Y9m-zk-L1e" secondAttribute="bottom" constant="44" id="RX3-Df-L9O"/>
-                <constraint firstItem="EGK-cB-MG0" firstAttribute="centerY" secondItem="X2e-Ng-Zy0" secondAttribute="centerY" id="STj-Ue-eIl"/>
-                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="leading" secondItem="EGK-cB-MG0" secondAttribute="trailing" constant="44" id="Udc-Jy-BFI"/>
-                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="leading" secondItem="v6E-zf-iCr" secondAttribute="trailing" constant="20" id="aFN-FG-We9"/>
-                <constraint firstItem="ouK-Du-1d5" firstAttribute="leading" secondItem="X2e-Ng-Zy0" secondAttribute="trailing" constant="44" id="dJL-Jx-rTq"/>
+                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="top" secondItem="Y9m-zk-L1e" secondAttribute="bottom" priority="250" constant="44" id="RX3-Df-L9O"/>
+                <constraint firstItem="EGK-cB-MG0" firstAttribute="centerY" secondItem="X2e-Ng-Zy0" secondAttribute="centerY" priority="250" id="STj-Ue-eIl"/>
+                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="leading" secondItem="EGK-cB-MG0" secondAttribute="trailing" priority="250" constant="44" id="Udc-Jy-BFI"/>
+                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="leading" secondItem="v6E-zf-iCr" secondAttribute="trailing" priority="250" constant="20" id="aFN-FG-We9"/>
+                <constraint firstItem="ouK-Du-1d5" firstAttribute="leading" secondItem="X2e-Ng-Zy0" secondAttribute="trailing" priority="250" constant="44" id="dJL-Jx-rTq"/>
                 <constraint firstItem="b7d-Tp-kcU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pvi-Sb-dbx"/>
-                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rQ9-W6-PDg"/>
-                <constraint firstAttribute="bottom" secondItem="X2e-Ng-Zy0" secondAttribute="bottom" constant="32" id="sdQ-x6-oTM"/>
+                <constraint firstItem="X2e-Ng-Zy0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" priority="250" id="rQ9-W6-PDg"/>
+                <constraint firstAttribute="bottom" secondItem="X2e-Ng-Zy0" secondAttribute="bottom" priority="250" constant="32" id="sdQ-x6-oTM"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
