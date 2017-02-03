@@ -62,9 +62,9 @@ class TimelineViewControllerTests : XCTestCase
         
         self.locator.timeService.mockDate = self.noon
         
-        //Wait a bit for the TimeObservable to tick
-        RunLoop.current.run(until: Date().addingTimeInterval(0.010))
-        
-        expect(elapsedTimeLabel.text).toNot(equal(beforeElapsedTimeText))
+        DispatchQueue.main.async
+        {
+            expect(elapsedTimeLabel.text).toNot(equal(beforeElapsedTimeText))
+        }
     }
 }
